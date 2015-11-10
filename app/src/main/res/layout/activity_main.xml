@@ -1,15 +1,74 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <FrameLayout
+        android:id="@+id/activity_main_frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-</RelativeLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/activity_main_radioButton_grab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_navigation_button_grab"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="抢"
+            android:textColor="@drawable/selector_navigation_text_background"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/activity_main_radioButton_rebate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_navigation_button_rebate"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="返"
+            android:textColor="@drawable/selector_navigation_text_background"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/activity_main_radioButton_show"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_navigation_button_show"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="晒"
+            android:textColor="@drawable/selector_navigation_text_background"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/activity_main_radioButton_my"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_navigation_button_my"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="我"
+            android:textColor="@drawable/selector_navigation_text_background"
+            android:textSize="16sp" />
+    </RadioGroup>
+</LinearLayout>
