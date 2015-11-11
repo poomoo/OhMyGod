@@ -3,6 +3,7 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.poomoo.core.AppAction;
 import com.poomoo.ohmygod.application.MyApplication;
@@ -26,5 +27,8 @@ public class BaseActivity extends Activity {
         context = getApplicationContext();
         application = (MyApplication) this.getApplication();
         appAction = application.getAppAction();
+        // 去掉默认标题栏
+        Window window = getWindow();
+        window.requestFeature(Window.FEATURE_NO_TITLE);
     }
 }
