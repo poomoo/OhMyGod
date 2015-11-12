@@ -8,4 +8,7 @@
     <string name="tab_rebate">返</string>
     <string name="tab_show">晒</string>
     <string name="tab_my">我</string>
+    <!--抢-->
+    <string name="tab_winner">获奖者</string>
+    <string name="tab_grab_tip">开奖提醒</string>
 </resources>

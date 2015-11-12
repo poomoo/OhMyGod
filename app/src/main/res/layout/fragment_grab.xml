@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_grab_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -33,10 +34,12 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/fragment_grab_frameLayout_inform"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:onClick="showInform">
 
 
             <ImageView
@@ -104,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="获奖者"
+                        android:text="@string/tab_winner"
                         android:textColor="@color/white"
                         android:textSize="8sp" />
                 </LinearLayout>
@@ -145,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
-                android:text="开抢提醒"
+                android:text="@string/tab_grab_tip"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>
