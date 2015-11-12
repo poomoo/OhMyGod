@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!--导航栏-->
+    <string name="tab_grab">抢</string>
+    <string name="tab_rebate">返</string>
+    <string name="tab_show">晒</string>
+    <string name="tab_my">我</string>
 </resources>
