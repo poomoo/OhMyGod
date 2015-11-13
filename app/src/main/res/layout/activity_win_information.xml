@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/pub_layout_titlebar" />
+
+    <com.poomoo.ohmygod.view.custom.RefreshableView
+        android:id="@+id/activity_win_information_refreshable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/activity_win_information_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.poomoo.ohmygod.view.custom.RefreshableView>
+</LinearLayout>

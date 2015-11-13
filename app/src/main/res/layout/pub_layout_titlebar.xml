@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <!--显示标题-->
+    <TextView
+        android:id="@+id/titlebar_textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textSize="22sp" />
+
+
+    <!--左边返回按钮-->
+    <ImageView
+        android:id="@+id/titlebar_imageView_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:paddingLeft="10dp"
+        android:src="@drawable/ic_back" />
+
+
+    <!--右边菜单按钮-->
+    <ImageView
+        android:id="@+id/titlebar_imageView_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_inform"
+        android:visibility="visible" />
+
+</RelativeLayout>
