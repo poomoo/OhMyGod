@@ -7,12 +7,23 @@
             android:drawable="@drawable/bg_progressbar_normal">
 
         </item>-->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="60dp" />
+            <solid android:color="@color/themeGray" />
+        </shape>
+    </item>
 
 
-    <!--    &lt;!&ndash; 第二条进度条颜色 &ndash;&gt;
-        <item
-            android:id="@android:id/secondaryProgress"
-            android:drawable="@drawable/bg_progressbar_normal"></item>-->
+    <!-- 第二条进度条颜色 -->
+    <!--<item android:id="@android:id/secondaryProgress">-->
+    <!--<clip>-->
+    <!--<shape android:shape="rectangle">-->
+    <!--<corners android:radius="60dp" />-->
+    <!--<solid android:color="@color/themeRed" />-->
+    <!--</shape>-->
+    <!--</clip>-->
+    <!--</item>-->
     <!-- 进度条 -->
     <item android:id="@android:id/progress">
         <clip>

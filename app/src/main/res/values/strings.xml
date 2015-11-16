@@ -12,9 +12,14 @@
     <!--标题栏-->
     <string name="title_win_information">中奖信息</string>
     <string name="title_commodity_information">商品详情</string>
+
+    <!--标签提示-->
     <!--抢-->
     <string name="tab_winner">获奖者</string>
     <string name="tab_grab_tip">开奖提醒</string>
+    <string name="tab_grab_onclick">猛戳开抢 让进度条充满能量</string>
+    <string name="tab_grab_start_date">开抢时间：</string>
+    <string name="tab_grab_countdown">倒计时：</string>
 
     <!--控件-->
     <string name="pull_to_refresh">下拉刷新</string>

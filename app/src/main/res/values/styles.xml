@@ -12,9 +12,8 @@
 
     <style name="mySeekBar" parent="@android:style/Widget.SeekBar">
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:background">@drawable/bg_progressbar_normal</item>
         <item name="android:progressDrawable">@drawable/progressbar_style</item>
         <item name="android:thumb">@drawable/ic_progressbar_normal</item>
-        <item name="android:thumbOffset">10dip</item>
+        <item name="android:thumbOffset">0dip</item>
     </style>
 </resources>
