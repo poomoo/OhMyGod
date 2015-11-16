@@ -76,7 +76,7 @@ public class CommodityInformationActivity extends BaseActivity {
         headTimeCountDownUtil.start();
 
         footTimeCountDownUtil = new TimeCountDownUtil(
-                this, TIME, 1000, headTimeCountdownTxt);
+                this, TIME, 1000, footTimeCountdownTxt);
         footTimeCountDownUtil.start();
     }
 
