@@ -1,25 +1,52 @@
 <resources>
     <string name="app_name">天呐</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <!--导航栏-->
     <string name="tab_grab">抢</string>
     <string name="tab_rebate">返</string>
     <string name="tab_show">晒</string>
     <string name="tab_my">我</string>
+    <!--导航栏-->
 
     <!--标题栏-->
     <string name="title_win_information">中奖信息</string>
     <string name="title_commodity_information">商品详情</string>
+    <string name="title_edit_personal_information">编辑个人资料</string>
+    <!--标题栏-->
 
     <!--标签提示-->
     <!--抢-->
-    <string name="tab_winner">获奖者</string>
-    <string name="tab_grab_tip">开奖提醒</string>
-    <string name="tab_grab_onclick">猛戳开抢 让进度条充满能量</string>
-    <string name="tab_grab_start_date">开抢时间：</string>
-    <string name="tab_grab_countdown">倒计时：</string>
+    <string name="label_winner">获奖者</string>
+    <string name="label_grab_tip">开奖提醒</string>
+    <string name="label_grab_onclick">猛戳开抢 让进度条充满能量</string>
+    <string name="label_grab_start_date">开抢时间：</string>
+    <string name="label_grab_countdown">倒计时：</string>
+
+    <!--个人资料-->
+    <string name="label_realName">真实姓名:</string>
+    <string name="label_idCardNum">身份证号:</string>
+    <string name="label_idCardPic">身份证件:</string>
+    <string name="label_celPhone">手机号码:</string>
+    <string name="label_bankCardNum">银行卡号:</string>
+
+    <!--签到返现-->
+    <string name="label_totalAmount">总金额池</string>
+    <string name="label_supervision">本资金池有中国工商银行全程监督</string>
+    <string name="label_unRebateSum">未返金额</string>
+    <string name="label_rebateSum">已返金额</string>
+    <string name="label_unSign">签到\n即返</string>
+    <string name="label_signed">已返</string>
+    <string name="label_rules">规则说明</string>
+    <string name="label_signRule">签到说明</string>
+    <string name="label_rebateRule">返现说明</string>
+    <!--标签提示-->
+
+    <!--hint-->
+    <string name="hint_realName">请填写真实姓名</string>
+    <string name="hint_idCardNum">请填写本人有效证件号</string>
+    <string name="hint_celPhone">请填写本人有效电话号码</string>
+    <string name="hint_bankCardNum">请填写本人储蓄卡号</string>
+    <!--hint-->
 
     <!--控件-->
     <string name="pull_to_refresh">下拉刷新</string>
@@ -29,7 +56,10 @@
     <string name="not_updated_yet">暂未更新过</string>
     <string name="updated_just_now">刚刚更新</string>
     <string name="time_error">时间有问题</string>
+    <!--控件-->
 
     <!--按钮-->
     <string name="btn_grab">确定开启活动</string>
+    <string name="btn_save">保存</string>
+    <!--按钮-->
 </resources>

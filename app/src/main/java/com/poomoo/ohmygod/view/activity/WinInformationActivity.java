@@ -33,14 +33,7 @@ public class WinInformationActivity extends BaseActivity {
     }
 
     private void initView() {
-        HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.title.setText(R.string.title_win_information);
-        headerViewHolder.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        initTitleBar();
 
         refreshableView = (RefreshableView) findViewById(R.id.activity_win_information_refreshable);
         listView = (ListView) findViewById(R.id.activity_win_information_listView);
@@ -60,5 +53,16 @@ public class WinInformationActivity extends BaseActivity {
 
             }
         }, 0);
+    }
+
+    private void initTitleBar() {
+        HeaderViewHolder headerViewHolder = getHeaderView();
+        headerViewHolder.titleTxt.setText(R.string.title_win_information);
+        headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

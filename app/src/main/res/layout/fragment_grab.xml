@@ -107,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/tab_winner"
+                        android:text="@string/label_winner"
                         android:textColor="@color/white"
                         android:textSize="8sp" />
                 </LinearLayout>
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
-                android:text="@string/tab_grab_tip"
+                android:text="@string/label_grab_tip"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>

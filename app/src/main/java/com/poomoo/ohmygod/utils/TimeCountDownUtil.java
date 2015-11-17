@@ -1,13 +1,14 @@
 package com.poomoo.ohmygod.utils;
 
-import android.app.Activity;
 import android.os.CountDownTimer;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.poomoo.ohmygod.other.CountDownListener;
+
+import java.util.List;
 
 /**
  * 倒计时器
@@ -16,26 +17,32 @@ import android.widget.TextView;
  */
 public class TimeCountDownUtil extends CountDownTimer {
     private String TAG = this.getClass().getSimpleName();
-    private Activity mActivity;
-    private TextView textView;
+    private List<TextView> textViewList;
+    private long millisUntilFinished;
+    private CountDownListener countDownListener;
 
     // 在这个构造方法里需要传入三个参数，一个是Activity，一个是总的时间millisInFuture，一个是countDownInterval，然后就是你在哪个按钮上做这个事，就把这个按钮传过来就可以了
-    public TimeCountDownUtil(Activity mActivity, long millisInFuture,
-                             long countDownInterval, TextView textView) {
+    public TimeCountDownUtil(long millisInFuture,
+                             long countDownInterval, List<TextView> textViewList, final CountDownListener countDownListener) {
         super(millisInFuture, countDownInterval);
-        this.mActivity = mActivity;
-        this.textView = textView;
+        this.textViewList = textViewList;
+        this.countDownListener = countDownListener;
     }
 
     @Override
     public void onTick(long millisUntilFinished) {
+        this.millisUntilFinished = millisUntilFinished;
         Spanned spanned = dealTime(millisUntilFinished / 1000);
-        this.textView.setText(spanned);
+        for (TextView textView : textViewList)
+            textView.setText(spanned);
     }
 
     @Override
     public void onFinish() {
-
+        if (this.countDownListener != null)
+            countDownListener.onFinish(1);
+        for (TextView textView : textViewList)
+            textView.setText("活动已经开始");
     }
 
     /**
@@ -97,4 +104,9 @@ public class TimeCountDownUtil extends CountDownTimer {
         }
         return timeStr;
     }
+
+    public long getMillisUntilFinished() {
+        return millisUntilFinished;
+    }
+
 }

@@ -7,7 +7,7 @@
 
     <!--显示标题-->
     <TextView
-        android:id="@+id/titlebar_textView_name"
+        android:id="@+id/txt_titleBar_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -19,7 +19,7 @@
 
     <!--左边返回按钮-->
     <ImageView
-        android:id="@+id/titlebar_imageView_back"
+        android:id="@+id/img_titleBar_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -30,12 +30,26 @@
 
     <!--右边菜单按钮-->
     <ImageView
-        android:id="@+id/titlebar_imageView_right"
+        android:id="@+id/img_titleBar_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_inform"
-        android:visibility="visible" />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txt_titleBar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
+        android:onClick="toDo"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -14,7 +14,7 @@ import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
  * 作者: 李苜菲
  * 日期: 2015/11/11 16:26.
  */
-public class GrabFrament extends BaseFragment {
+public class GrabFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

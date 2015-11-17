@@ -43,15 +43,17 @@ public class BaseActivity extends Activity {
      */
     protected HeaderViewHolder getHeaderView() {
         HeaderViewHolder headerViewHolder = new HeaderViewHolder();
-        headerViewHolder.title = (TextView) findViewById(R.id.titlebar_textView_name);
-        headerViewHolder.back = (ImageView) findViewById(R.id.titlebar_imageView_back);
-        headerViewHolder.right = (ImageView) findViewById(R.id.titlebar_imageView_right);
+        headerViewHolder.titleTxt = (TextView) findViewById(R.id.txt_titleBar_name);
+        headerViewHolder.backImg = (ImageView) findViewById(R.id.img_titleBar_back);
+        headerViewHolder.rightImg = (ImageView) findViewById(R.id.img_titleBar_right);
+        headerViewHolder.rightTxt = (TextView) findViewById(R.id.txt_titleBar_right);
         return headerViewHolder;
     }
 
     protected class HeaderViewHolder {
-        public TextView title;//标题
-        public ImageView back;//返回键
-        public ImageView right;//右边图标
+        public TextView titleTxt;//标题
+        public TextView rightTxt;//右边标题
+        public ImageView backImg;//返回键
+        public ImageView rightImg;//右边图标
     }
 }
