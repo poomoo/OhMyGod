@@ -272,7 +272,7 @@ public class CalendarView extends View {
         float radius = surface.cellWidth / 3f;
         float left = surface.cellWidth * (x - 1) + surface.cellWidth / 10f;
         float right = left + radius;
-        float bottom = surface.weekHeight + (y - 1) * surface.cellHeight + surface.cellHeight * 2 / 5f;
+        float bottom = surface.weekHeight + (y - 1) * surface.cellHeight + surface.cellHeight * 3 / 5f;
         float top = bottom - radius;
         float rx = radius / 2f;
         float ry = rx;
