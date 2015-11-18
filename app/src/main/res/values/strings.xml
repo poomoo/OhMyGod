@@ -62,4 +62,14 @@
     <string name="btn_grab">确定开启活动</string>
     <string name="btn_save">保存</string>
     <!--按钮-->
+
+    <!--星期-->
+    <string name="mon">一</string>
+    <string name="tus">二</string>
+    <string name="wen">三</string>
+    <string name="thu">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
+    <string name="sun">日</string>
+    <!--星期-->
 </resources>

@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/listview_devider"
+                android:background="@color/divider"
                 android:padding="10dp"
                 android:text="商品详情"
                 android:textSize="20sp"

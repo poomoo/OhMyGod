@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.CalendarView;
 
 import java.text.ParseException;
@@ -52,19 +51,5 @@ public class RebateFragment extends BaseFragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        //设置控件监听，可以监听到点击的每一天（大家也可以在控件中根据需求设定）
-        calendar.setOnItemClickListener(new CalendarView.OnItemClickListener() {
-
-            @Override
-            public void OnItemClick(Date selectedStartDate,
-                                    Date selectedEndDate, Date downDate) {
-                if (calendar.isSelectMore()) {
-                    MyUtil.showToast(getActivity(), format.format(selectedStartDate) + "到" + format.format(selectedEndDate));
-                } else {
-                    MyUtil.showToast(getActivity(), format.format(downDate));
-                }
-            }
-        });
     }
 }
