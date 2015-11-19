@@ -12,6 +12,8 @@
     <string name="title_win_information">中奖信息</string>
     <string name="title_commodity_information">商品详情</string>
     <string name="title_edit_personal_information">编辑个人资料</string>
+    <string name="title_signed_explain">签到声明</string>
+    <string name="title_rebate_explain">返现声明</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -39,10 +41,18 @@
     <string name="label_rules">规则说明</string>
     <string name="label_signRule">签到说明</string>
     <string name="label_rebateRule">返现说明</string>
+    <!--签到返现-->
+
     <!--年月-->
     <string name="label_year">"年"</string>
     <string name="label_month">"月"</string>
+    <!--年月-->
+
     <!--标签提示-->
+
+    <!--intent-->
+    <string name="intent_title">title</string>
+    <!--intent-->
 
     <!--hint-->
     <string name="hint_realName">请填写真实姓名</string>

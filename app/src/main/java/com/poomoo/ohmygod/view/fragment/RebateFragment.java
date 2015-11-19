@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.custom.CalendarView;
 import com.poomoo.ohmygod.view.custom.CustomerDatePickerDialog;
 
@@ -38,6 +40,8 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
     private ImageView yearDownImg;
     private ImageView monthDownImg;
     private CalendarView calendar;
+    private LinearLayout signedLlayout;
+    private LinearLayout rebateLlayout;
 
     private SimpleDateFormat format;
     private Calendar cal = Calendar.getInstance();
@@ -64,11 +68,15 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
         yearLeftImg = (ImageView) getActivity().findViewById(R.id.img_year_left);
         yearDownImg = (ImageView) getActivity().findViewById(R.id.img_year_down);
         monthDownImg = (ImageView) getActivity().findViewById(R.id.img_month_down);
+        signedLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_signed_explain);
+        rebateLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_rebate_explain);
 
         yearTxt.setOnClickListener(this);
         monthTxt.setOnClickListener(this);
         yearDownImg.setOnClickListener(this);
         monthDownImg.setOnClickListener(this);
+        signedLlayout.setOnClickListener(this);
+        rebateLlayout.setOnClickListener(this);
 
         format = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -80,11 +88,13 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 选择年月
+     */
     private void pickDate() {
         final DatePickerDialog mDialog = new CustomerDatePickerDialog(getActivity(), null,
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH));
-
 
         // 手动设置按钮
         mDialog.setButton(DialogInterface.BUTTON_POSITIVE, "完成", new DialogInterface.OnClickListener() {
@@ -124,6 +134,20 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        pickDate();
+        switch (v.getId()) {
+            case R.id.llayout_signed_explain:
+                Bundle bundle = new Bundle();
+                bundle.putString(getString(R.string.intent_title), getString(R.string.title_signed_explain));
+                openActivity(WebViewActivity.class, bundle);
+                break;
+            case R.id.llayout_rebate_explain:
+                bundle = new Bundle();
+                bundle.putString(getString(R.string.intent_title), getString(R.string.title_rebate_explain));
+                openActivity(WebViewActivity.class, bundle);
+                break;
+            default:
+                pickDate();
+                break;
+        }
     }
 }

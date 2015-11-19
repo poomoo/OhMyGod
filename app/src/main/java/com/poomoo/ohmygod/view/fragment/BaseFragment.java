@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.view.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,5 +22,25 @@ public class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    /**
+     * @param pClass
+     */
+    protected void openActivity(Class<?> pClass) {
+        Intent intent = new Intent(getActivity(), pClass);
+        getActivity().startActivity(intent);
+    }
+
+    /**
+     * @param pClass
+     * @param pBundle
+     */
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(getActivity(), pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        getActivity().startActivity(intent);
     }
 }

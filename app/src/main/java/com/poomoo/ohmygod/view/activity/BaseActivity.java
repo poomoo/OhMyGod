@@ -24,6 +24,8 @@ public class BaseActivity extends Activity {
     public MyApplication application;
     // 核心层的Action实例
     public AppAction appAction;
+    //日志标签
+    public String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -224,6 +224,7 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
+                    android:id="@+id/llayout_signed_explain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -250,6 +251,7 @@
                     android:background="@color/divider" />
 
                 <LinearLayout
+                    android:id="@+id/llayout_rebate_explain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

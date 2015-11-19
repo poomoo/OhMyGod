@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
 
         <RadioButton
             android:id="@+id/activity_main_radioButton_grab"

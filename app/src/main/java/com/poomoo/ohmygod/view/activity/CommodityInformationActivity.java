@@ -26,7 +26,6 @@ import java.util.TimerTask;
  * 日期: 2015/11/13 16:15.
  */
 public class CommodityInformationActivity extends BaseActivity {
-    private String TAG = this.getClass().getSimpleName();
     private TextView headTimeCountdownTxt;//头部倒计时控件
     private TextView middleTimeCountdownTxt;//中部部倒计时控件
     private TextView footTimeCountdownTxt;//底部倒计时控件
