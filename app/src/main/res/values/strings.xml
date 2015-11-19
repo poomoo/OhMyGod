@@ -39,6 +39,9 @@
     <string name="label_rules">规则说明</string>
     <string name="label_signRule">签到说明</string>
     <string name="label_rebateRule">返现说明</string>
+    <!--年月-->
+    <string name="label_year">"年"</string>
+    <string name="label_month">"月"</string>
     <!--标签提示-->
 
     <!--hint-->
