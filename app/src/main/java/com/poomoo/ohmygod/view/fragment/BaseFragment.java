@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.poomoo.ohmygod.R;
 
 /**
  * Fragment 基类
@@ -42,5 +46,26 @@ public class BaseFragment extends Fragment {
             intent.putExtras(pBundle);
         }
         getActivity().startActivity(intent);
+    }
+
+    /**
+     * 统一头部条
+     *
+     * @return lHeaderViewHolder 头部条对象
+     */
+    protected HeaderViewHolder getHeaderView() {
+        HeaderViewHolder headerViewHolder = new HeaderViewHolder();
+        headerViewHolder.titleTxt = (TextView) getActivity().findViewById(R.id.txt_titleBar_name);
+        headerViewHolder.backImg = (ImageView) getActivity().findViewById(R.id.img_titleBar_back);
+        headerViewHolder.rightImg = (ImageView) getActivity().findViewById(R.id.img_titleBar_right);
+        headerViewHolder.rightTxt = (TextView) getActivity().findViewById(R.id.txt_titleBar_right);
+        return headerViewHolder;
+    }
+
+    protected class HeaderViewHolder {
+        public TextView titleTxt;//标题
+        public TextView rightTxt;//右边标题
+        public ImageView backImg;//返回键
+        public ImageView rightImg;//右边图标
     }
 }

@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.poomoo.ohmygod.R;
@@ -30,7 +31,7 @@ public class RoundImageView extends ImageView {
 
     private Context mContext;
 
-    private int defaultColor = 0xFFFFFFFF;
+    private int defaultColor = 0;
 
     // 如果只有其中一个有值，则只画一个圆形边框
 
@@ -53,11 +54,9 @@ public class RoundImageView extends ImageView {
     }
 
     public RoundImageView(Context context, AttributeSet attrs) {
-
         super(context, attrs);
-
+        Log.i("RoundImageView", "RoundImageView");
         mContext = context;
-
         setCustomAttributes(attrs);
 
     }
@@ -83,6 +82,9 @@ public class RoundImageView extends ImageView {
         mBorderOutsideColor = a
                 .getColor(R.styleable.roundedimageview_border_outside_color,
                         defaultColor);
+        Log.i("RoundImageView", "setCustomAttributes:" + mBorderOutsideColor);
+        mBorderOutsideColor = getResources().getColor(R.color.white);
+        Log.i("RoundImageView", "setCustomAttributes:" + mBorderOutsideColor);
 
         mBorderInsideColor = a.getColor(
                 R.styleable.roundedimageview_border_inside_color, defaultColor);

@@ -80,5 +80,5 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    abstract public View getView(int i, View view, ViewGroup viewGroup);
+    abstract public View getView(int position, View convertView, ViewGroup parent);
 }

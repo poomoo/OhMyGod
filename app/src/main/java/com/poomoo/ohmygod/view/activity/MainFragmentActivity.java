@@ -10,7 +10,9 @@ import android.view.View;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
+import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
+import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
 
 /**
@@ -23,6 +25,8 @@ public class MainFragmentActivity extends
     private Fragment curFragment;
     private GrabFragment grabFrament;
     private RebateFragment rebateFragment;
+    private ShowFragment showFragment;
+    private MyFragment myFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,10 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToShow(View view) {
-
+        if (showFragment == null)
+            showFragment = new ShowFragment();
+        switchFragment(showFragment);
+        curFragment = showFragment;
     }
 
     /**
@@ -90,7 +97,10 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToMy(View view) {
-
+        if (myFragment == null)
+            myFragment = new MyFragment();
+        switchFragment(myFragment);
+        curFragment = myFragment;
     }
 
     /**

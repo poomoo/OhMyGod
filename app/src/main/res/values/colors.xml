@@ -2,9 +2,15 @@
 <resources>
     <color name="themeRed">#E81540</color>
     <color name="themeGray">#828282</color>
+    <color name="themeYellow">#FCE023</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="grid_divider">#EBEBEB</color>
     <color name="divider">#F8F8F8</color>
     <color name="bg_grab">#212842</color>
     <color name="bg_calender_unsigned">#F2F2F2</color>
     <color name="bg_calender_signed">#FFF2D5</color>
+    <color name="btn_reply">#DADADA</color>
+    <color name="bg_reply">#EEF3FA</color>
 </resources>

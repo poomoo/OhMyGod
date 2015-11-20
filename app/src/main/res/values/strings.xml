@@ -14,6 +14,7 @@
     <string name="title_edit_personal_information">编辑个人资料</string>
     <string name="title_signed_explain">签到声明</string>
     <string name="title_rebate_explain">返现声明</string>
+    <string name="title_personal_center">个人中心</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -23,6 +24,7 @@
     <string name="label_grab_onclick">猛戳开抢 让进度条充满能量</string>
     <string name="label_grab_start_date">开抢时间：</string>
     <string name="label_grab_countdown">倒计时：</string>
+    <!--抢-->
 
     <!--个人资料-->
     <string name="label_realName">真实姓名:</string>
@@ -30,6 +32,15 @@
     <string name="label_idCardPic">身份证件:</string>
     <string name="label_celPhone">手机号码:</string>
     <string name="label_bankCardNum">银行卡号:</string>
+    <!--个人资料-->
+
+    <!--个人中心-->
+    <string name="label_snatch">夺宝记录</string>
+    <string name="label_winning">中奖记录</string>
+    <string name="label_my_withdraw_deposit">我的提现</string>
+    <string name="label_withdraw_deposit_now">立即提现</string>
+    <string name="label_inner_information">站内信息</string>
+    <string name="label_my_show">我的晒单</string>
 
     <!--签到返现-->
     <string name="label_totalAmount">总金额池</string>
