@@ -3,6 +3,8 @@
     package="com.poomoo.ohmygod">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="false"
@@ -19,6 +21,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.WebViewActivity" />
+        <activity android:name=".view.activity.SnatchRecordActivity" />
+        <activity android:name=".view.activity.WinningRecordActivity" />
+        <activity android:name=".view.activity.WinningRecord2Activity" />
+        <activity android:name=".view.activity.ShowAndShareActivity" />
+        <activity android:name=".view.activity.MyWithdrawDepositActivity" />
+
+        <activity android:name=".view.activity.pics.ImageGridActivity" />
+        <activity android:name=".view.activity.pics.PhotosActivity" />
+        <activity android:name=".view.activity.pics.PhotoActivity" />
     </application>
 
 </manifest>

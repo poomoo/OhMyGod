@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/pub_layout_titlebar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/divider"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbtn_all"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawableBottom="@drawable/bottom_line"
+                android:gravity="center"
+                android:onClick="switchToAll"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="@string/tab_all"
+                android:textColor="@drawable/selector_navigation_text_background"
+                android:textSize="20sp" />
+
+
+            <RadioButton
+                android:id="@+id/rbtn_already"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="@drawable/bottom_line"
+                android:gravity="center"
+                android:onClick="switchToAlready"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="@string/tab_already"
+                android:textColor="@drawable/selector_navigation_text_background"
+                android:textSize="20sp" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/flayout_snatch_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

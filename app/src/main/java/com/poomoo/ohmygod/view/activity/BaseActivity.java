@@ -2,6 +2,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ImageView;
@@ -57,5 +58,25 @@ public class BaseActivity extends Activity {
         public TextView rightTxt;//右边标题
         public ImageView backImg;//返回键
         public ImageView rightImg;//右边图标
+    }
+
+    /**
+     * @param pClass
+     */
+    protected void openActivity(Class<?> pClass) {
+        Intent intent = new Intent(this, pClass);
+        this.startActivity(intent);
+    }
+
+    /**
+     * @param pClass
+     * @param pBundle
+     */
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(this, pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        this.startActivity(intent);
     }
 }

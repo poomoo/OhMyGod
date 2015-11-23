@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    android:paddingTop="2dp">
+
+    <RelativeLayout
+        android:id="@+id/rlayout_snatch_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_snatch_record"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_placed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/txt_snatch_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_placed"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:text="活动已结束"
+            android:textColor="@color/themeYellow"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

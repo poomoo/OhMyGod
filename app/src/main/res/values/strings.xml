@@ -6,6 +6,8 @@
     <string name="tab_rebate">返</string>
     <string name="tab_show">晒</string>
     <string name="tab_my">我</string>
+    <string name="tab_all">全部</string>
+    <string name="tab_already">已揭晓</string>
     <!--导航栏-->
 
     <!--标题栏-->
@@ -15,6 +17,11 @@
     <string name="title_signed_explain">签到声明</string>
     <string name="title_rebate_explain">返现声明</string>
     <string name="title_personal_center">个人中心</string>
+    <string name="title_snatch_record">夺宝记录</string>
+    <string name="title_winning_record">中奖记录</string>
+    <string name="title_show_and_share">晒单分享</string>
+    <string name="title_bucket">相册</string>
+    <string name="title_my_withdraw_deposit">我的提现</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -59,6 +66,13 @@
     <string name="label_month">"月"</string>
     <!--年月-->
 
+    <!--中奖记录-->
+    <string name="label_winning_dateTime">"获奖时间 : "</string>
+    <string name="label_winning_endTime">"领取截止日期 : "</string>
+    <string name="label_winning_address">"领取地点 : "</string>
+    <string name="label_winning_requirement">"领取要求 : "</string>
+    <!--中奖记录-->
+
     <!--标签提示-->
 
     <!--intent-->
@@ -70,6 +84,7 @@
     <string name="hint_idCardNum">请填写本人有效证件号</string>
     <string name="hint_celPhone">请填写本人有效电话号码</string>
     <string name="hint_bankCardNum">请填写本人储蓄卡号</string>
+    <string name="hint_show_content">晒单内容</string>
     <!--hint-->
 
     <!--控件-->
@@ -85,6 +100,10 @@
     <!--按钮-->
     <string name="btn_grab">确定开启活动</string>
     <string name="btn_save">保存</string>
+    <string name="btn_show">晒单</string>
+    <string name="btn_complete_information">完善资料</string>
+    <string name="btn_showed">已晒</string>
+    <string name="btn_completed">完成</string>
     <!--按钮-->
 
     <!--星期-->
@@ -96,4 +115,8 @@
     <string name="sat">六</string>
     <string name="sun">日</string>
     <!--星期-->
+
+    <!--吐司-->
+    <string name="toast_9_pics">最多选择9张图片</string>
+    <!--吐司-->
 </resources>

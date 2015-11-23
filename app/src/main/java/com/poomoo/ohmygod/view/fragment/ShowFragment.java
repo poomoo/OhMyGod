@@ -16,6 +16,7 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
+import com.poomoo.ohmygod.config.MyConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class ShowFragment extends BaseFragment {
     private ShowBO showBO;
     private ReplyBO replyBO;
     private List<ShowBO> showBOList;
-    private final String[] urls = {"http://pic1a.nipic.com/2008-12-04/2008124215522671_2.jpg", "http://pic.nipic.com/2007-11-09/2007119122519868_2.jpg", "http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg", "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg", "http://pic25.nipic.com/20121209/9252150_194258033000_2.jpg", "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class ShowFragment extends BaseFragment {
         list.setAdapter(showAdapter);
 
         showBO = new ShowBO();
-        showBO.setPics(urls);
+        showBO.setPics(MyConfig.testUrls);
         replyBO = new ReplyBO();
         replyBO.setContent("测试测试");
         replyBO.setFloor_user_name("十年九梦你");

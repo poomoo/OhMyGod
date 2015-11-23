@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="5dp">
+
+    <include layout="@layout/pub_layout_titlebar" />
+
+    <TextView
+        android:id="@+id/txt_award_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/divider"
+        android:padding="10dp"
+        android:text="恭喜您已获得"
+        android:textColor="@color/themeGray"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
+    <ListView
+        android:id="@+id/list_winning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

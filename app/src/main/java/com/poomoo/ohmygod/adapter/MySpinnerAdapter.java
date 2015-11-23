@@ -24,7 +24,7 @@ public class MySpinnerAdapter extends MyBaseAdapter<List<String>> {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder ;
         if (view == null) {
             view = inflater.inflate(R.layout.myspinner_dropdown_item,
                     null);
