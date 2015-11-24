@@ -103,12 +103,10 @@
         android:padding="26dp">
 
         <Button
+            style="@style/myButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_grab_button_open_activity"
             android:onClick="toFinish"
-            android:text="@string/btn_completed"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:text="@string/btn_completed" />
     </LinearLayout>
 </LinearLayout>

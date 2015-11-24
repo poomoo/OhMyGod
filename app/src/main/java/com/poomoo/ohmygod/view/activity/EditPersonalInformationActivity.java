@@ -31,11 +31,11 @@ public class EditPersonalInformationActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_edit_personal_information);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

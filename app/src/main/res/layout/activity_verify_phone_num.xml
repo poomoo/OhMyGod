@@ -52,13 +52,10 @@
         </LinearLayout>
 
         <Button
+            style="@style/myButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_grab_button_open_activity"
-            android:gravity="center"
             android:onClick="toNext"
-            android:text="@string/btn_next"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:text="@string/btn_next" />
     </LinearLayout>
 </LinearLayout>

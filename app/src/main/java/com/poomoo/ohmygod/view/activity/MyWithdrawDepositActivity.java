@@ -33,7 +33,7 @@ public class MyWithdrawDepositActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         listView = (ListView) findViewById(R.id.list_my_withdraw_deposit);
@@ -44,7 +44,7 @@ public class MyWithdrawDepositActivity extends BaseActivity {
 
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_my_withdraw_deposit);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

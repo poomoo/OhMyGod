@@ -35,7 +35,7 @@ public class PhotosActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
         initData();
 
@@ -60,7 +60,7 @@ public class PhotosActivity extends BaseActivity {
         });
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_bucket);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

@@ -28,6 +28,10 @@
     <string name="title_withdraw_deposit_details">提现详情</string>
     <string name="title_in_station_messages">站内信息</string>
     <string name="title_my_show">我的晒单</string>
+    <string name="title_setting">"设置"</string>
+    <string name="title_userInfo">"个人资料"</string>
+    <string name="title_nickName">"修改昵称"</string>
+    <string name="title_changePhone">"换绑手机"</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -40,11 +44,17 @@
     <!--抢-->
 
     <!--个人资料-->
-    <string name="label_realName">真实姓名:</string>
-    <string name="label_idCardNum">身份证号:</string>
-    <string name="label_idCardPic">身份证件:</string>
-    <string name="label_celPhone">手机号码:</string>
-    <string name="label_bankCardNum">银行卡号:</string>
+    <string name="label_realName">真实姓名</string>
+    <string name="label_idCardNum">身份证号</string>
+    <string name="label_idCardPic">身份证件</string>
+    <string name="label_celPhone">手机号码</string>
+    <string name="label_bankCardNum">银行卡号</string>
+    <string name="label_avatar">头像</string>
+    <string name="label_nickName">我的昵称</string>
+    <string name="label_gender">性别</string>
+    <string name="label_age">年龄</string>
+    <string name="label_bankCard">银行卡</string>
+    <string name="label_changePassWord">修改密码</string>
     <!--个人资料-->
 
     <!--个人中心-->
@@ -92,6 +102,27 @@
     <string name="label_verify_phone_num">"本次操作需要短信确认,验证码已发至手机:147****2513.请按提示操作"</string>
     <!--验证手机号-->
 
+    <!--设置-->
+    <string name="label_user_info">"个人资料"</string>
+    <string name="label_user_help">"用户帮助"</string>
+    <string name="label_about">"关于天呐"</string>
+    <string name="label_share_soft">"软件分享"</string>
+    <string name="label_feed_back">"意见反馈"</string>
+    <string name="label_guide_page">"引导页"</string>
+    <string name="label_check_update">"检查更新"</string>
+    <!--设置-->
+
+    <!--修改昵称-->
+    <string name="label_change_nickName">"1、此昵称非登陆会员名，仅在社区等场景显示"</string>
+    <!--修改昵称-->
+
+    <!--换绑手机-->
+    <string name="label_sent">"验证码已发送至当前手机号:"</string>
+    <string name="label_question">"无法收到验证码?"</string>
+    <string name="label_newPhoneNum">"请输入您需要绑定的新手机号码"</string>
+    <string name="label_newCode">"请输入14752432561收到的短信验证码"</string>
+    <!--换绑手机-->
+
     <!--标签提示-->
 
     <!--intent-->
@@ -106,6 +137,8 @@
     <string name="hint_show_content">晒单内容</string>
     <string name="hint_input_money">请输入提现金额</string>
     <string name="label_input_code">"填写验证码"</string>
+    <string name="label_input_nickName">"输入昵称"</string>
+    <string name="label_input_newPhoneNum">"请输入新手机号"</string>
     <!--hint-->
 
     <!--控件-->
@@ -128,6 +161,9 @@
     <string name="btn_withdraw_deposit">提现</string>
     <string name="btn_get_code">获取验证码</string>
     <string name="btn_next">下一步</string>
+    <string name="btn_log_out">退出登录</string>
+    <string name="btn_submit">提交</string>
+    <string name="btn_get_code_again">重获验证码</string>
     <!--按钮-->
 
     <!--星期-->

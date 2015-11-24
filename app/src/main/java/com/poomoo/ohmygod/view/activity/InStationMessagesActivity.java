@@ -33,7 +33,7 @@ public class InStationMessagesActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         listView = (ListView) findViewById(R.id.list_in_station_messages);
@@ -44,7 +44,7 @@ public class InStationMessagesActivity extends BaseActivity {
 
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_in_station_messages);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

@@ -31,12 +31,12 @@ public class SnatchRecordActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
         setDefaultFragment();
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_snatch_record);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

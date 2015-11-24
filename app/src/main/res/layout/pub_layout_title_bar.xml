@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
-        android:paddingLeft="10dp"
+        android:padding="10dp"
         android:src="@drawable/ic_back" />
 
 

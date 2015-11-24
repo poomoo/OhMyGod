@@ -16,6 +16,7 @@ import com.poomoo.ohmygod.adapter.PersonalCenterAdapter;
 import com.poomoo.ohmygod.view.activity.InStationMessagesActivity;
 import com.poomoo.ohmygod.view.activity.MyShowActivity;
 import com.poomoo.ohmygod.view.activity.MyWithdrawDepositActivity;
+import com.poomoo.ohmygod.view.activity.SettingActivity;
 import com.poomoo.ohmygod.view.activity.SnatchRecordActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
@@ -57,6 +58,12 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         headerViewHolder.backImg.setVisibility(View.GONE);
         headerViewHolder.rightImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_seeting));
         headerViewHolder.rightImg.setVisibility(View.VISIBLE);
+        headerViewHolder.rightImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(SettingActivity.class);
+            }
+        });
     }
 
     @Override

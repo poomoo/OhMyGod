@@ -50,7 +50,7 @@ public class CommodityInformationActivity extends BaseActivity {
         decrease();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         headTimeCountdownTxt = (TextView) findViewById(R.id.txt_head_timeCountDown);
@@ -98,7 +98,7 @@ public class CommodityInformationActivity extends BaseActivity {
 //        footTimeCountDownUtil.start();
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_commodity_information);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

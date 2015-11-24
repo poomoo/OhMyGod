@@ -24,6 +24,12 @@
             android:text="@string/label_realName"
             android:textSize="22sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="22sp" />
+
         <EditText
             android:id="@+id/edit_realName"
             android:layout_width="0dp"
@@ -50,6 +56,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardNum"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
             android:textSize="22sp" />
 
         <EditText
@@ -79,6 +91,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardPic"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
             android:textSize="22sp" />
 
         <LinearLayout
@@ -122,6 +140,12 @@
             android:text="@string/label_celPhone"
             android:textSize="22sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="22sp" />
+
         <EditText
             android:id="@+id/edit_celPhone"
             android:layout_width="0dp"
@@ -148,6 +172,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_bankCardNum"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
             android:textSize="22sp" />
 
         <EditText

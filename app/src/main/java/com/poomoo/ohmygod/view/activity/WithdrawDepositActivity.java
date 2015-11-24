@@ -27,14 +27,14 @@ public class WithdrawDepositActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         balanceTxt = (TextView) findViewById(R.id.txt_account_balance);
         moneyEdt = (EditText) findViewById(R.id.edt_withdraw_deposit_money);
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_withdraw_deposit);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

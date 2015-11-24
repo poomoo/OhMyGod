@@ -31,7 +31,7 @@ public class WebViewActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         webView = (WebView) findViewById(R.id.web);
@@ -45,7 +45,7 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         title = getIntent().getStringExtra(getString(R.string.intent_title));
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(title);

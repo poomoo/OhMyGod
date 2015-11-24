@@ -9,26 +9,28 @@ import android.view.View;
 import com.poomoo.ohmygod.R;
 
 /**
- * 提现详情
+ * 换绑手机3
  * 作者: 李苜菲
- * 日期: 2015/11/24 10:56.
+ * 日期: 2015/11/24 16:30.
  */
-public class WithdrawDepositDetailsActivity extends BaseActivity {
+public class ChangePhone3Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_withdraw_deposit_details);
+        setContentView(R.layout.activity_change_phone3);
 
         initView();
     }
 
+    @Override
     protected void initView() {
         initTitleBar();
     }
 
+    @Override
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_withdraw_deposit_details);
+        headerViewHolder.titleTxt.setText(R.string.title_changePhone);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

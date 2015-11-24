@@ -39,6 +39,12 @@ public class BaseActivity extends Activity {
         window.requestFeature(Window.FEATURE_NO_TITLE);
     }
 
+    protected void initView() {
+    }
+
+    protected void initTitleBar() {
+    }
+
     /**
      * 统一头部条
      *
@@ -66,7 +72,6 @@ public class BaseActivity extends Activity {
     protected void openActivity(Class<?> pClass) {
         Intent intent = new Intent(this, pClass);
         this.startActivity(intent);
-        this.finish();
     }
 
     /**
@@ -79,6 +84,5 @@ public class BaseActivity extends Activity {
             intent.putExtras(pBundle);
         }
         this.startActivity(intent);
-        this.finish();
     }
 }

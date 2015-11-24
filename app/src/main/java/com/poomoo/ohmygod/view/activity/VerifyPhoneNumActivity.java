@@ -22,11 +22,11 @@ public class VerifyPhoneNumActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_verify_phone_num);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

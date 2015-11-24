@@ -21,7 +21,7 @@ public class WinningRecord2Activity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
 
     }
 

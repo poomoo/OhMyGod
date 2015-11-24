@@ -40,7 +40,7 @@ public class MyShowActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         replyRlayout = (RelativeLayout) findViewById(R.id.rlayout_reply);
@@ -75,7 +75,7 @@ public class MyShowActivity extends BaseActivity {
         });
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_my_show);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

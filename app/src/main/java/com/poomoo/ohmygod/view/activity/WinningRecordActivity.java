@@ -41,7 +41,7 @@ public class WinningRecordActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         listView = (ListView) findViewById(R.id.list_winning);
@@ -63,7 +63,7 @@ public class WinningRecordActivity extends BaseActivity {
         textView.setText(spannableString);
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_winning_record);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

@@ -50,7 +50,7 @@ public class ShowAndShareActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         gridView = (GridView) findViewById(R.id.grid_add_pics);
@@ -72,7 +72,7 @@ public class ShowAndShareActivity extends BaseActivity {
         });
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_show_and_share);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

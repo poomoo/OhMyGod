@@ -32,7 +32,7 @@ public class WinInformationActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         initTitleBar();
 
         refreshableView = (RefreshableView) findViewById(R.id.activity_win_information_refreshable);
@@ -55,7 +55,7 @@ public class WinInformationActivity extends BaseActivity {
         }, 0);
     }
 
-    private void initTitleBar() {
+    protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_win_information);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

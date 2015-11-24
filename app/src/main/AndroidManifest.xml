@@ -31,6 +31,12 @@
         <activity android:name=".view.activity.WithdrawDepositDetailsActivity" />
         <activity android:name=".view.activity.InStationMessagesActivity" />
         <activity android:name=".view.activity.MyShowActivity" />
+        <activity android:name=".view.activity.SettingActivity" />
+        <activity android:name=".view.activity.UserInfoActivity" />
+        <activity android:name=".view.activity.ChangePhone1Activity" />
+        <activity android:name=".view.activity.ChangePhone2Activity" />
+        <activity android:name=".view.activity.ChangePhone3Activity" />
+
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />
