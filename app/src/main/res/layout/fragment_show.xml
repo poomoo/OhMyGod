@@ -5,45 +5,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_titlebar" />
+    <include layout="@layout/pub_layout_title_bar" />
 
-    <ListView
-        android:id="@+id/list_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <RelativeLayout
-        android:id="@+id/rlayout_reply"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <EditText
-                android:id="@+id/edt_reply"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_reply"
-                android:padding="3dp" />
-
-            <Button
-                android:id="@+id/btn_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:background="@color/btn_reply"
-                android:padding="3dp"
-                android:text="回　复"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
+    <include layout="@layout/layout_show" />
 </LinearLayout>

@@ -13,9 +13,12 @@ import android.widget.GridView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.PersonalCenterAdapter;
+import com.poomoo.ohmygod.view.activity.InStationMessagesActivity;
+import com.poomoo.ohmygod.view.activity.MyShowActivity;
 import com.poomoo.ohmygod.view.activity.MyWithdrawDepositActivity;
 import com.poomoo.ohmygod.view.activity.SnatchRecordActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
+import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
 
 /**
  * 我
@@ -25,7 +28,8 @@ import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 public class MyFragment extends BaseFragment implements OnItemClickListener {
     private GridView gridView;
     private PersonalCenterAdapter personalCenterAdapter;
-    private static final Class[] menu = {SnatchRecordActivity.class, WinningRecordActivity.class, MyWithdrawDepositActivity.class};
+    private static final Class[] menu = {SnatchRecordActivity.class, WinningRecordActivity.class, MyWithdrawDepositActivity.class
+            , WithdrawDepositActivity.class, InStationMessagesActivity.class, MyShowActivity.class};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

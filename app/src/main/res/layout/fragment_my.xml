@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_titlebar" />
+    <include layout="@layout/pub_layout_title_bar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

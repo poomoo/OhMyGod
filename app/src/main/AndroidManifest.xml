@@ -26,6 +26,11 @@
         <activity android:name=".view.activity.WinningRecord2Activity" />
         <activity android:name=".view.activity.ShowAndShareActivity" />
         <activity android:name=".view.activity.MyWithdrawDepositActivity" />
+        <activity android:name=".view.activity.WithdrawDepositActivity" />
+        <activity android:name=".view.activity.VerifyPhoneNumActivity" />
+        <activity android:name=".view.activity.WithdrawDepositDetailsActivity" />
+        <activity android:name=".view.activity.InStationMessagesActivity" />
+        <activity android:name=".view.activity.MyShowActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

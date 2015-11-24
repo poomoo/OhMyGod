@@ -5,7 +5,7 @@
     android:background="@color/divider"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_titlebar" />
+    <include layout="@layout/pub_layout_title_bar" />
 
     <TextView
         android:layout_width="match_parent"

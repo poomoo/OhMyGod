@@ -22,6 +22,12 @@
     <string name="title_show_and_share">晒单分享</string>
     <string name="title_bucket">相册</string>
     <string name="title_my_withdraw_deposit">我的提现</string>
+    <string name="title_withdraw_deposit">提现</string>
+    <string name="title_withdraw_deposit_help">提现帮助</string>
+    <string name="title_verify_phone_num">验证手机号</string>
+    <string name="title_withdraw_deposit_details">提现详情</string>
+    <string name="title_in_station_messages">站内信息</string>
+    <string name="title_my_show">我的晒单</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -73,6 +79,19 @@
     <string name="label_winning_requirement">"领取要求 : "</string>
     <!--中奖记录-->
 
+    <!--提现-->
+    <string name="label_account_balance">"账户余额"</string>
+    <string name="label_help">"提现帮助"</string>
+    <string name="label_submitted">"提现申请已提交"</string>
+    <string name="label_card">"存储卡"</string>
+    <string name="label_money">"提现金额"</string>
+    <!--提现-->
+
+
+    <!--验证手机号-->
+    <string name="label_verify_phone_num">"本次操作需要短信确认,验证码已发至手机:147****2513.请按提示操作"</string>
+    <!--验证手机号-->
+
     <!--标签提示-->
 
     <!--intent-->
@@ -85,6 +104,8 @@
     <string name="hint_celPhone">请填写本人有效电话号码</string>
     <string name="hint_bankCardNum">请填写本人储蓄卡号</string>
     <string name="hint_show_content">晒单内容</string>
+    <string name="hint_input_money">请输入提现金额</string>
+    <string name="label_input_code">"填写验证码"</string>
     <!--hint-->
 
     <!--控件-->
@@ -104,6 +125,9 @@
     <string name="btn_complete_information">完善资料</string>
     <string name="btn_showed">已晒</string>
     <string name="btn_completed">完成</string>
+    <string name="btn_withdraw_deposit">提现</string>
+    <string name="btn_get_code">获取验证码</string>
+    <string name="btn_next">下一步</string>
     <!--按钮-->
 
     <!--星期-->

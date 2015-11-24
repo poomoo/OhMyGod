@@ -66,6 +66,7 @@ public class BaseActivity extends Activity {
     protected void openActivity(Class<?> pClass) {
         Intent intent = new Intent(this, pClass);
         this.startActivity(intent);
+        this.finish();
     }
 
     /**
@@ -78,5 +79,6 @@ public class BaseActivity extends Activity {
             intent.putExtras(pBundle);
         }
         this.startActivity(intent);
+        this.finish();
     }
 }

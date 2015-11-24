@@ -2,19 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/divider"
     android:orientation="vertical">
 
     <include layout="@layout/pub_layout_title_bar" />
 
-    <com.poomoo.ohmygod.view.custom.RefreshableView
-        android:id="@+id/activity_win_information_refreshable"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <ListView
-            android:id="@+id/activity_win_information_listView"
+            android:id="@+id/list_in_station_messages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.poomoo.ohmygod.view.custom.RefreshableView>
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:divider="@color/divider"
+            android:dividerHeight="10dp" />
+    </LinearLayout>
 </LinearLayout>
