@@ -9,26 +9,36 @@
         android:id="@+id/title"
         layout="@layout/pub_layout_title_bar" />
 
-    <EditText
-        android:id="@+id/sh"
-        android:layout_width="fill_parent"
-        android:layout_height="55dp"
+    <LinearLayout
+        android:id="@+id/llayout_placed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_margin="10dip"
-        android:background="@color/white"
-        android:drawableLeft="@drawable/ic_search"
-        android:drawablePadding="5dp"
-        android:hint="@string/hint_search"
-        android:padding="10dip"
-        android:textColor="#515151"
-        android:textSize="16dp" />
+        android:paddingBottom="4dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="4dp">
+
+        <EditText
+            android:id="@+id/sh"
+            android:layout_width="fill_parent"
+            android:layout_height="55dp"
+            android:layout_margin="10dip"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="5dp"
+            android:hint="@string/hint_search"
+            android:padding="10dip"
+            android:textColor="#515151"
+            android:textSize="16dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/sh"
+        android:layout_below="@id/llayout_placed"
         android:layout_marginTop="7dp"
+        android:background="@color/divider"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"
         android:dividerHeight="0dp"
@@ -39,7 +49,7 @@
         android:id="@+id/search_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/sh"
+        android:layout_below="@id/llayout_placed"
         android:layout_marginTop="7dp"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"
@@ -52,7 +62,7 @@
         android:id="@+id/tv_noresult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sh"
+        android:layout_below="@id/llayout_placed"
         android:gravity="center"
         android:padding="10dp"
         android:text="抱歉,暂时没有找到相关城市"
@@ -65,7 +75,7 @@
         android:layout_width="25dip"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/sh"
+        android:layout_below="@id/llayout_placed"
         android:layout_marginRight="2dp"
         android:layout_marginTop="7dp" />
 

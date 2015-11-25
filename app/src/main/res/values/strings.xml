@@ -161,6 +161,7 @@
     <!--城市列表-->
     <string name="label_history">历史</string>
     <string name="label_hot">热门</string>
+    <string name="label_all">全部</string>
     <!--城市列表-->
 
     <!--标签提示-->
