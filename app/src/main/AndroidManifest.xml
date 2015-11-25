@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.MainFragmentActivity"
+            android:name=".view.activity.CityListActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +33,18 @@
         <activity android:name=".view.activity.MyShowActivity" />
         <activity android:name=".view.activity.SettingActivity" />
         <activity android:name=".view.activity.UserInfoActivity" />
-        <activity android:name=".view.activity.ChangePhone1Activity" />
+        <activity android:name=".view.activity.VerifyPhoneNum2Activity" />
         <activity android:name=".view.activity.ChangePhone2Activity" />
         <activity android:name=".view.activity.ChangePhone3Activity" />
-
+        <activity android:name=".view.activity.ChangeIdCardInfoActivity" />
+        <activity android:name=".view.activity.IdCardInfoActivity" />
+        <activity android:name=".view.activity.BankCardActivity" />
+        <activity android:name=".view.activity.ChangeBankCardNumActivity" />
+        <activity android:name=".view.activity.ChangeBankCardInfoActivity" />
+        <activity android:name=".view.activity.ResetPassWordActivity" />
+        <activity android:name=".view.activity.MainFragmentActivity" />
+        <activity android:name=".view.activity.RegisterActivity" />
+        <activity android:name=".view.activity.LogInActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

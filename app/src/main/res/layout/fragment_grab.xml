@@ -87,7 +87,7 @@
                 <com.poomoo.ohmygod.view.custom.RoundImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_head" />
+                    android:src="@drawable/ic_avatar" />
 
                 <TextView
                     android:id="@+id/fragmetn_grab_txt_middle"

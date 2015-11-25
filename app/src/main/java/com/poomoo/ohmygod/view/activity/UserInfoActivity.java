@@ -80,7 +80,9 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toCelPhone(View view) {
-        openActivity(ChangePhone1Activity.class);
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_phone));
+        openActivity(VerifyPhoneNum2Activity.class, pBundle);
     }
 
     /**
@@ -89,7 +91,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toIdCardNum(View view) {
-        MyUtil.showToast(getApplicationContext(), "身份证号");
+        openActivity(ChangeIdCardInfoActivity.class);
     }
 
     /**
@@ -98,7 +100,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toBankCard(View view) {
-        MyUtil.showToast(getApplicationContext(), "银行卡");
+        openActivity(BankCardActivity.class);
     }
 
     /**
@@ -107,6 +109,8 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toChangePassWord(View view) {
-        MyUtil.showToast(getApplicationContext(), "修改密码");
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_passWord));
+        openActivity(VerifyPhoneNum2Activity.class, pBundle);
     }
 }

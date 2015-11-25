@@ -9,15 +9,15 @@ import android.view.View;
 import com.poomoo.ohmygod.R;
 
 /**
- * 换绑手机1
+ * 修改银行卡信息
  * 作者: 李苜菲
- * 日期: 2015/11/24 16:30.
+ * 日期: 2015/11/25 11:14.
  */
-public class ChangePhone1Activity extends BaseActivity {
+public class ChangeBankCardInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_phone1);
+        setContentView(R.layout.activity_change_bankcard_info);
 
         initView();
     }
@@ -30,7 +30,7 @@ public class ChangePhone1Activity extends BaseActivity {
     @Override
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_changePhone);
+        headerViewHolder.titleTxt.setText(R.string.title_changeBankCardInfo);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +45,9 @@ public class ChangePhone1Activity extends BaseActivity {
      * @param view
      */
     public void toNext(View view) {
-        openActivity(ChangePhone2Activity.class);
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getClass().getSimpleName());
+        openActivity(VerifyPhoneNumActivity.class, pBundle);
         finish();
     }
 }

@@ -9,30 +9,36 @@ import android.view.View;
 import com.poomoo.ohmygod.R;
 
 /**
- * 验证手机号
+ * 换绑手机1
  * 作者: 李苜菲
- * 日期: 2015/11/24 10:33.
+ * 日期: 2015/11/24 16:30.
  */
-public class VerifyPhoneNumActivity extends BaseActivity {
+public class VerifyPhoneNum2Activity extends BaseActivity {
     private String PARENT;//父activity
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_phone_num);
+        setContentView(R.layout.activity_verify_phone_num2);
 
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        if (PARENT.equals(getString(R.string.intent_phone)))
+            title = getString(R.string.title_changePhone);
+        if (PARENT.equals(getString(R.string.intent_passWord)))
+            title = getString(R.string.title_safe);
         initView();
     }
 
+    @Override
     protected void initView() {
         initTitleBar();
-
-        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
     }
 
+    @Override
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_verify_phone_num);
+        headerViewHolder.titleTxt.setText(title);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,28 +48,16 @@ public class VerifyPhoneNumActivity extends BaseActivity {
     }
 
     /**
-     * 获取验证码
-     *
-     * @param view
-     */
-    public void toGetCode(View view) {
-
-    }
-
-    /**
      * 下一步
      *
      * @param view
      */
     public void toNext(View view) {
-        if (PARENT.equals("ChangeIdCardInfoActivity")) {
-            openActivity(IdCardInfoActivity.class);
-            finish();
-        }
-        if (PARENT.equals("ChangeBankCardInfoActivity")) {
-            openActivity(BankCardActivity.class);
-            finish();
-        } else
-            openActivity(WithdrawDepositDetailsActivity.class);
+        if (PARENT.equals(getString(R.string.intent_phone)))
+            openActivity(ChangePhone2Activity.class);
+        if (PARENT.equals(getString(R.string.intent_passWord)))
+            openActivity(ResetPassWordActivity.class);
+
+        finish();
     }
 }

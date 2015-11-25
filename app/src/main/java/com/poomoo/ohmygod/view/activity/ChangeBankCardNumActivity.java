@@ -5,34 +5,39 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
- * 验证手机号
+ * 修改银行卡号
  * 作者: 李苜菲
- * 日期: 2015/11/24 10:33.
+ * 日期: 2015/11/25 10:46.
  */
-public class VerifyPhoneNumActivity extends BaseActivity {
-    private String PARENT;//父activity
+public class ChangeBankCardNumActivity extends BaseActivity {
+    private EditText bankCardNumEdt;//银行卡号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_phone_num);
+        setContentView(R.layout.activity_change_bankcard_num);
 
         initView();
     }
 
+    @Override
     protected void initView() {
         initTitleBar();
 
-        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
+        MyUtil.fortmatCardNum(bankCardNumEdt);
     }
 
+    @Override
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_verify_phone_num);
+        headerViewHolder.titleTxt.setText(R.string.title_changeBankCardNum);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,28 +47,12 @@ public class VerifyPhoneNumActivity extends BaseActivity {
     }
 
     /**
-     * 获取验证码
-     *
-     * @param view
-     */
-    public void toGetCode(View view) {
-
-    }
-
-    /**
      * 下一步
      *
      * @param view
      */
     public void toNext(View view) {
-        if (PARENT.equals("ChangeIdCardInfoActivity")) {
-            openActivity(IdCardInfoActivity.class);
-            finish();
-        }
-        if (PARENT.equals("ChangeBankCardInfoActivity")) {
-            openActivity(BankCardActivity.class);
-            finish();
-        } else
-            openActivity(WithdrawDepositDetailsActivity.class);
+        openActivity(ChangeBankCardInfoActivity.class);
+        finish();
     }
 }

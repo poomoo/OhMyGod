@@ -32,7 +32,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:hint="@string/label_input_code"
+                android:hint="@string/hint_input_code"
                 android:inputType="number"
                 android:padding="10dp" />
 

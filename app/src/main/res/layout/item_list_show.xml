@@ -25,7 +25,7 @@
                 android:id="@+id/img_show_avatar"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/ic_head" />
+                android:src="@drawable/ic_avatar" />
 
             <LinearLayout
                 android:layout_width="match_parent"

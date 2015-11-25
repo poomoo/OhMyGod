@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:background="@color/white"
-            android:hint="@string/label_input_code"
+            android:hint="@string/hint_input_code"
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingTop="8dp" />
