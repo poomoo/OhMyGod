@@ -60,7 +60,7 @@
     </RelativeLayout>
 
     <com.poomoo.ohmygod.view.custom.SlideShowView
-        android:id="@+id/fragment_grab_viewFlipper"
+        android:id="@+id/flipper_ad"
         android:layout_width="match_parent"
         android:layout_height="132dp" />
 

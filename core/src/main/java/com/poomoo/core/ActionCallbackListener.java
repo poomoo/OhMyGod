@@ -17,8 +17,8 @@ public interface ActionCallbackListener<T> {
     /**
      * 失败时调用
      *
-     * @param errorEvent 错误码
+     * @param errorCode 错误码
      * @param message    错误信息
      */
-    public void onFailure(String errorEvent, String message);
+    public void onFailure(int errorCode, String message);
 }

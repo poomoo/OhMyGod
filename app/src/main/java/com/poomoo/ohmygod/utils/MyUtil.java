@@ -10,6 +10,10 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+import com.poomoo.model.ResponseBO;
+
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

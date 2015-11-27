@@ -48,6 +48,7 @@
                 android:padding="4dp" />
 
             <EditText
+                android:id="@+id/edt_register_phoneNum"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -99,6 +100,7 @@
                 android:padding="4dp" />
 
             <EditText
+                android:id="@+id/edt_register_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -114,12 +116,14 @@
 
 
             <Button
+                android:id="@+id/btn_register_code"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:background="@drawable/selector_get_code_button"
                 android:padding="6dp"
                 android:text="@string/btn_get_code"
                 android:textColor="@color/white"
+                android:onClick="toCode"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -160,30 +164,39 @@
                 android:background="@color/white"
                 android:padding="4dp" />
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/hint_select_age"
-                android:inputType="phone"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="20sp" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="toAge"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txt_age"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_down3" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_select_age"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_down3" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -223,30 +236,39 @@
                 android:background="@color/white"
                 android:padding="4dp" />
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/hint_select_gender"
-                android:inputType="phone"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="20sp" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="toGender"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txt_gender"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_down3" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_select_gender"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_down3" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -287,6 +309,7 @@
                 android:padding="4dp" />
 
             <EditText
+                android:id="@+id/edt_register_passWord"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -322,6 +345,7 @@
             android:paddingTop="10dp">
 
             <CheckBox
+                android:id="@+id/chk_agree"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:background="@drawable/selector_check_box"
@@ -342,6 +366,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="toProtocol"
                 android:text="@string/label_protocol"
                 android:textColor="@color/themeRed"
                 android:textSize="14sp" />
@@ -357,8 +383,8 @@
             <Button
                 style="@style/myButton"
                 android:layout_width="match_parent"
-                android:onClick="toRegister"
                 android:layout_height="wrap_content"
+                android:onClick="toRegister"
                 android:text="@string/btn_register" />
         </LinearLayout>
     </LinearLayout>

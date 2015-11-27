@@ -1,8 +1,5 @@
 package com.poomoo.ohmygod.view.custom;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,18 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.poomoo.ohmygod.R;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 日历控件

@@ -40,6 +40,8 @@
     <string name="title_safe">"安全校验"</string>
     <string name="title_resetPassWord">"重置密码"</string>
     <string name="title_selectCity">"选择城市"</string>
+    <string name="title_selectAge">"选择年龄"</string>
+    <string name="title_selectGender">"选择性别"</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -171,6 +173,8 @@
     <string name="intent_parent">parent</string>
     <string name="intent_phone">phone</string>
     <string name="intent_passWord">passWord</string>
+    <string name="intent_age">age</string>
+    <string name="intent_gender">gender</string>
     <!--intent-->
 
     <!--hint-->
@@ -234,4 +238,10 @@
     <!--吐司-->
     <string name="toast_9_pics">最多选择9张图片</string>
     <!--吐司-->
+
+    <!--SharedPreferences-->
+    <string name="sp_phoneNum">phoneNum</string>
+    <string name="sp_passWord">passWord</string>
+    <string name="sp_rememberPassWord">isRemember</string>
+    <!--SharedPreferences-->
 </resources>

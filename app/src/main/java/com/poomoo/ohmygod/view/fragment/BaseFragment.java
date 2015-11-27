@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.poomoo.core.AppAction;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.application.MyApplication;
 
 /**
  * Fragment 基类
@@ -17,9 +19,15 @@ import com.poomoo.ohmygod.R;
  * 日期: 2015/11/11 16:23.
  */
 public class BaseFragment extends Fragment {
+    // 应用全局的实例
+    public MyApplication application;
+    // 核心层的Action实例
+    public AppAction appAction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        application = (MyApplication) getActivity().getApplication();
+        appAction = application.getAppAction();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

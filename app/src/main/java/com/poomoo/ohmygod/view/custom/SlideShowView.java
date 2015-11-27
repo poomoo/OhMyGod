@@ -74,9 +74,14 @@ public class SlideShowView extends FrameLayout {
 
     };
 
-    public SlideShowView(Context context) {
-        this(context, null);
+    public SlideShowView(Context context, String[] imageUrls) {
+        super(context);
         // TODO Auto-generated constructor stub
+        initData();
+        this.imageUrls = imageUrls;
+        if (isAutoPlay) {
+            startPlay();
+        }
     }
 
     public SlideShowView(Context context, AttributeSet attrs) {
@@ -88,12 +93,7 @@ public class SlideShowView extends FrameLayout {
         super(context, attrs, defStyle);
         this.context = context;
 
-        initImageLoader(context);
-
-        initData();
-        if (isAutoPlay) {
-            startPlay();
-        }
+//        initImageLoader(context);
 
     }
 
@@ -120,7 +120,7 @@ public class SlideShowView extends FrameLayout {
         dotViewsList = new ArrayList<>();
 
         // 一步任务获取图片
-        new GetListTask().execute("");
+//        new GetListTask().execute("");
     }
 
     /**
@@ -315,18 +315,18 @@ public class SlideShowView extends FrameLayout {
      *
      * @param context
      */
-    public static void initImageLoader(Context context) {
-        // This configuration tuning is custom. You can tune every option, you
-        // may tune some of them,
-        // or you can create default configuration by
-        // ImageLoaderConfiguration.createDefault(this);
-        // method.
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
-                // for
-                // release
-                // app
-                .build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
-    }
+//    public static void initImageLoader(Context context) {
+//        // This configuration tuning is custom. You can tune every option, you
+//        // may tune some of them,
+//        // or you can create default configuration by
+//        // ImageLoaderConfiguration.createDefault(this);
+//        // method.
+//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
+//                // for
+//                // release
+//                // app
+//                .build();
+//        // Initialize ImageLoader with configuration.
+//        ImageLoader.getInstance().init(config);
+//    }
 }

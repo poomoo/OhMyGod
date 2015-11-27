@@ -1,5 +1,6 @@
 package com.poomoo.ohmygod.view.popupwindow;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -39,6 +40,12 @@ public class InformPopupWindow extends PopupWindow {
         this.setBackgroundDrawable(dw);
         this.setAnimationStyle(R.style.PopupAnimation);
 
+
+//        ObjectAnimator mAnimator;
+//        mAnimator=ObjectAnimator.ofFloat(mMenuView,View.X,View.Y,path);
+//        mAnimator.start();
+
+
         mMenuView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int height_top = mMenuView.findViewById(R.id.popup_inform_layout).getTop();
@@ -64,4 +71,6 @@ public class InformPopupWindow extends PopupWindow {
         bytestream.close();
         return imgdata;
     }
+
+
 }

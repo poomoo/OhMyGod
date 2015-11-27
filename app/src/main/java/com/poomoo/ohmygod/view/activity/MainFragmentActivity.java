@@ -6,9 +6,11 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
 import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
@@ -27,6 +29,7 @@ public class MainFragmentActivity extends
     private RebateFragment rebateFragment;
     private ShowFragment showFragment;
     private MyFragment myFragment;
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,5 +124,24 @@ public class MainFragmentActivity extends
 
     public void showInform(View view) {
         show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO 自动生成的方法存根
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitApp();
+        }
+        return true;
+    }
+
+    private void exitApp() {
+        // 判断2次点击事件时间
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            MyUtil.showToast(getApplicationContext(), "再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
     }
 }
