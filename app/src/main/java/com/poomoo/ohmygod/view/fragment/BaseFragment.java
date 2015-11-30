@@ -23,16 +23,17 @@ public class BaseFragment extends Fragment {
     public MyApplication application;
     // 核心层的Action实例
     public AppAction appAction;
+    public String TAG = getClass().getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        application = (MyApplication) getActivity().getApplication();
-        appAction = application.getAppAction();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        application = (MyApplication) getActivity().getApplication();
+        appAction = application.getAppAction();
         super.onActivityCreated(savedInstanceState);
     }
 

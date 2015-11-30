@@ -1,9 +1,6 @@
 package com.poomoo.api;
 
-import com.poomoo.model.AdBO;
 import com.poomoo.model.ResponseBO;
-
-import java.util.List;
 
 /**
  * Api接口
@@ -13,11 +10,15 @@ import java.util.List;
  */
 public interface Api {
 
-    ResponseBO<Void> login(String phoneNum, String passWord);
+    ResponseBO login(String phoneNum, String passWord);
 
-    ResponseBO<Void> getCode(String phoneNum);
+    ResponseBO getCode(String phoneNum);
 
-    ResponseBO<Void> register(String phoneNum, String passWord, String code, String age, String sex, String channelId);
+    ResponseBO register(String phoneNum, String passWord, String code, String age, String sex, String channelId);
 
-    ResponseBO<List<AdBO>> getAdvertisement();
+    ResponseBO getAdvertisement();
+
+    ResponseBO getGrabList(String cityName);
+
+    ResponseBO getCommodityInformation(String userId, String activeId);
 }

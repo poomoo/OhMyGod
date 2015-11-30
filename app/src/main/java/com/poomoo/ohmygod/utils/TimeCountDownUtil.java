@@ -17,9 +17,11 @@ import java.util.List;
  */
 public class TimeCountDownUtil extends CountDownTimer {
     private String TAG = this.getClass().getSimpleName();
+    private TextView textView;
     private List<TextView> textViewList;
     private long millisUntilFinished;
     private CountDownListener countDownListener;
+    private boolean isList;//是否传入list
 
     // 在这个构造方法里需要传入三个参数，一个是Activity，一个是总的时间millisInFuture，一个是countDownInterval，然后就是你在哪个按钮上做这个事，就把这个按钮传过来就可以了
     public TimeCountDownUtil(long millisInFuture,
@@ -27,13 +29,25 @@ public class TimeCountDownUtil extends CountDownTimer {
         super(millisInFuture, countDownInterval);
         this.textViewList = textViewList;
         this.countDownListener = countDownListener;
+        this.isList = true;
+    }
+
+    public TimeCountDownUtil(long millisInFuture,
+                             long countDownInterval, TextView textView, final CountDownListener countDownListener) {
+        super(millisInFuture, countDownInterval);
+        this.textView = textView;
+        this.countDownListener = countDownListener;
+        this.isList = false;
     }
 
     @Override
     public void onTick(long millisUntilFinished) {
         this.millisUntilFinished = millisUntilFinished;
         Spanned spanned = dealTime(millisUntilFinished / 1000);
-        for (TextView textView : textViewList)
+        if (isList)
+            for (TextView textView : textViewList)
+                textView.setText(spanned);
+        else
             textView.setText(spanned);
     }
 
@@ -41,7 +55,10 @@ public class TimeCountDownUtil extends CountDownTimer {
     public void onFinish() {
         if (this.countDownListener != null)
             countDownListener.onFinish(1);
-        for (TextView textView : textViewList)
+        if (isList)
+            for (TextView textView : textViewList)
+                textView.setText("活动已经开始");
+        else
             textView.setText("活动已经开始");
     }
 
@@ -59,7 +76,7 @@ public class TimeCountDownUtil extends CountDownTimer {
         long hours = (time % (24 * 60 * 60)) / (60 * 60);
         long minutes = ((time % (24 * 60 * 60)) % (60 * 60)) / 60;
         long second = ((time % (24 * 60 * 60)) % (60 * 60)) % 60;
-        Log.i(TAG, "time:" + time + "day:" + day + "hours:" + hours + "minutes:" + minutes + "second:" + second);
+//        Log.i(TAG, "time:" + time + "day:" + day + "hours:" + hours + "minutes:" + minutes + "second:" + second);
         String dayStr = String.valueOf(day);
         String hoursStr = timeStrFormat(String.valueOf(hours));
         String minutesStr = timeStrFormat(String.valueOf(minutes));

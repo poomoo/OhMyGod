@@ -1,7 +1,11 @@
 package com.poomoo.api;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.AdBO;
+import com.poomoo.model.CommodityBO;
+import com.poomoo.model.GrabBO;
 import com.poomoo.model.ResponseBO;
 
 import java.io.IOException;
@@ -24,40 +28,39 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO<Void> login(String phoneNum, String passWord) {
+    public ResponseBO login(String phoneNum, String passWord) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.LOGIN);
         paramMap.put("tel", phoneNum);
         paramMap.put("password", passWord);
 
-        Type type = new TypeToken<ResponseBO<Void>>() {
-        }.getType();
+//        Type type = new TypeToken<ResponseBO<Void>>() {
+//        }.getType();
         try {
-            return httpEngine.postHandle(paramMap, type);
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
     }
 
     @Override
-    public ResponseBO<Void> getCode(String phoneNum) {
+    public ResponseBO getCode(String phoneNum) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.CODE);
         paramMap.put("tel", phoneNum);
 
-        Type type = new TypeToken<ResponseBO<Void>>() {
-        }.getType();
+
         try {
-            return httpEngine.postHandle(paramMap, type);
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
     }
 
     @Override
-    public ResponseBO<Void> register(String phoneNum, String passWord, String code, String age, String sex, String channelId) {
+    public ResponseBO register(String phoneNum, String passWord, String code, String age, String sex, String channelId) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.REGISTER);
@@ -69,25 +72,50 @@ public class ApiImpl implements Api {
         paramMap.put("channelId", channelId);
         paramMap.put("deviceType", "1");//--设备类型，1android，2ios，3PC(参数非空)
 
-        Type type = new TypeToken<ResponseBO<Void>>() {
-        }.getType();
         try {
-            return httpEngine.postHandle(paramMap, type);
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
     }
 
     @Override
-    public ResponseBO<List<AdBO>> getAdvertisement() {
+    public ResponseBO<AdBO> getAdvertisement() {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.PUBACTION);
         paramMap.put("method", Config.AD);
 
-        Type type = new TypeToken<ResponseBO<Void>>() {
-        }.getType();
         try {
-            return httpEngine.postHandle(paramMap, type);
+            return httpEngine.postHandle(paramMap, AdBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<GrabBO> getGrabList(String cityName) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.ACTIVITYLIST);
+        paramMap.put("cityName", cityName);
+
+        try {
+            return httpEngine.postHandle(paramMap, GrabBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<CommodityBO> getCommodityInformation(String userId, String activeId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.ACTIVITY);
+        paramMap.put("uerId", userId);
+        paramMap.put("activeId", activeId);
+
+        try {
+            return httpEngine.postHandle(paramMap, CommodityBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

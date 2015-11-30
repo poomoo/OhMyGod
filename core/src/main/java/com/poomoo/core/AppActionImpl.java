@@ -7,10 +7,10 @@ import android.text.TextUtils;
 import com.poomoo.api.Api;
 import com.poomoo.api.ApiImpl;
 import com.poomoo.model.AdBO;
+import com.poomoo.model.GrabBO;
 import com.poomoo.model.ResponseBO;
 
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +29,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void logIn(final String phoneNum, final String passWord, final ActionCallbackListener<Void> listener) {
+    public void logIn(final String phoneNum, final String passWord, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
             if (listener != null) {
@@ -74,7 +74,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getCode(final String phoneNum, final ActionCallbackListener<ResponseBO> listener) {
+    public void getCode(final String phoneNum, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
             if (listener != null) {
@@ -112,7 +112,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void register(final String phoneNum, final String passWord, final String code, final String age, final String sex, final String channelId, final ActionCallbackListener<Void> listener) {
+    public void register(final String phoneNum, final String passWord, final String code, final String age, final String sex, final String channelId, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
             if (listener != null) {
@@ -165,19 +165,64 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getAdvertisement(final ActionCallbackListener<ResponseBO<List<AdBO>>> listener) {
+    public void getAdvertisement(final ActionCallbackListener listener) {
         // 请求Api
-        new AsyncTask<Void, Void, ResponseBO<List<AdBO>>>() {
+        new AsyncTask<Void, Void, ResponseBO<AdBO>>() {
             @Override
-            protected ResponseBO<List<AdBO>> doInBackground(Void... params) {
+            protected ResponseBO<AdBO> doInBackground(Void... params) {
                 return api.getAdvertisement();
             }
 
             @Override
-            protected void onPostExecute(ResponseBO<List<AdBO>> response) {
+            protected void onPostExecute(ResponseBO<AdBO> response) {
                 if (listener != null && response != null) {
                     if (response.isSuccess()) {
-                        listener.onSuccess(null);
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getGrabList(final String cityName, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<GrabBO>>() {
+            @Override
+            protected ResponseBO<GrabBO> doInBackground(Void... params) {
+                return api.getGrabList(cityName);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<GrabBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getCommodityInformation(String userId, String activeId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<GrabBO>>() {
+            @Override
+            protected ResponseBO<GrabBO> doInBackground(Void... params) {
+//                return api.getGrabList(cityName);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<GrabBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
                     } else {
                         listener.onFailure(response.getRsCode(), response.getMsg());
                     }

@@ -67,7 +67,7 @@ public class RegisterActivity extends BaseActivity {
     public void toCode(View view) {
         phoneNum = phoneNumEdt.getText().toString().trim();
 
-        this.appAction.getCode(phoneNum, new ActionCallbackListener<ResponseBO>() {
+        this.appAction.getCode(phoneNum, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
@@ -102,9 +102,9 @@ public class RegisterActivity extends BaseActivity {
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId();
 
         showProgressDialog("注册中...");
-        this.appAction.register(phoneNum, passWord, code, age, sex, imei, new ActionCallbackListener<Void>() {
+        this.appAction.register(phoneNum, passWord, code, age, sex, imei, new ActionCallbackListener() {
             @Override
-            public void onSuccess(Void data) {
+            public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "注册成功");
                 finish();

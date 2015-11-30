@@ -18,17 +18,23 @@ package com.poomoo.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.poomoo.model.ResponseBO;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,7 +49,7 @@ public class HttpEngine {
     private final static String REQUEST_METHOD = "POST";
     private final static String ENCODE_TYPE = "UTF-8";
     // IP
-    public static final String BaseLocalUrl = "http://192.168.0.115:8080/zgqg/app/";// 本地
+    public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://zgqg.91jiaoyou.cn/zgqg/app/";// 远程
     public static final String URL = BaseLocalUrl + "call.htm";
 
@@ -63,7 +69,7 @@ public class HttpEngine {
         return instance;
     }
 
-    public <T> T postHandle(Map<String, String> paramsMap, Type typeOfT) throws IOException {
+    public ResponseBO postHandle(Map<String, String> paramsMap, Type typeOfT) throws IOException {
 //        String data = joinParams(paramsMap);
         Gson gson = new Gson();
         String data = gson.toJson(paramsMap);
@@ -109,8 +115,27 @@ public class HttpEngine {
             final String result = new String(baos.toByteArray());
             // 打印出结果
             Log.i(TAG, "response: " + result);
-
-            return gson.fromJson(result, typeOfT);
+            ResponseBO responseBO = gson.fromJson(result, ResponseBO.class);
+            String jsonData = responseBO.getJsonData().toString();
+            if (jsonData.contains("records")) {
+                try {
+                    responseBO.setObjList(new ArrayList());
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(jsonData);
+                    JSONArray pager = jsonObject.getJSONArray("records");
+                    int length = pager.length();
+                    Log.i(TAG, "typeOfT: " + typeOfT);
+                    for (int i = 0; i < length; i++) {
+                        responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
+                        responseBO.getObjList().add(responseBO.getObj());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                responseBO.setObj(gson.fromJson(jsonData, typeOfT));
+            }
+            return responseBO;
         } else {
             connection.disconnect();
             return null;

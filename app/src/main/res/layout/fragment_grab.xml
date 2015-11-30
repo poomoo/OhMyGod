@@ -155,7 +155,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/fragment_grab_listView"
+        android:id="@+id/list_grab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 </LinearLayout>

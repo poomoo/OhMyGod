@@ -18,7 +18,7 @@ public interface AppAction {
      * @param passWord 密码
      * @param listener 回调监听器
      */
-    void logIn(String phoneNum, String passWord, ActionCallbackListener<Void> listener);
+    void logIn(String phoneNum, String passWord, ActionCallbackListener listener);
 
     /**
      * 获取验证码
@@ -26,7 +26,7 @@ public interface AppAction {
      * @param phoneNum
      * @param listener
      */
-    void getCode(String phoneNum, ActionCallbackListener<ResponseBO> listener);
+    void getCode(String phoneNum, ActionCallbackListener listener);
 
     /**
      * 注册
@@ -38,12 +38,29 @@ public interface AppAction {
      * @param sex       --性别（可选；1：男，2：女）
      * @param channelId --设备编号
      */
-    void register(String phoneNum, String passWord, String code, String age, String sex, String channelId, ActionCallbackListener<Void> listener);
+    void register(String phoneNum, String passWord, String code, String age, String sex, String channelId, ActionCallbackListener listener);
 
     /**
      * 获取广告
      *
      * @param listener
      */
-    void getAdvertisement(ActionCallbackListener<ResponseBO<List<AdBO>>> listener);
+    void getAdvertisement(ActionCallbackListener listener);
+
+    /**
+     * 获取活动列表
+     *
+     * @param cityName
+     * @param listener
+     */
+    void getGrabList(String cityName, ActionCallbackListener listener);
+
+    /**
+     * 活动详情
+     *
+     * @param userId
+     * @param activeId
+     * @param listener
+     */
+    void getCommodityInformation(String userId, String activeId, ActionCallbackListener listener);
 }

@@ -50,7 +50,8 @@
     <string name="label_grab_tip">开奖提醒</string>
     <string name="label_grab_onclick">猛戳开抢 让进度条充满能量</string>
     <string name="label_grab_start_date">开抢时间：</string>
-    <string name="label_grab_countdown">倒计时：</string>
+    <string name="label_countDown">倒计时：</string>
+    <string name="label_grab_countDown">开抢倒计时：</string>
     <!--抢-->
 
     <!--个人资料-->

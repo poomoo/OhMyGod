@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.custom.ProgressSeekBar;
+import com.poomoo.ohmygod.view.custom.SlideShowView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +30,11 @@ import java.util.TimerTask;
  * 日期: 2015/11/13 16:15.
  */
 public class CommodityInformationActivity extends BaseActivity {
+    private SlideShowView slideShowView;
     private TextView headTimeCountdownTxt;//头部倒计时控件
     private TextView middleTimeCountdownTxt;//中部部倒计时控件
     private TextView footTimeCountdownTxt;//底部倒计时控件
+    private WebView webView;
     private TextView openActivityTxt;//确认开启活动按钮
     private Button grabBtn;
     private LinearLayout llayout;//底部倒计时显示layout
@@ -53,10 +59,12 @@ public class CommodityInformationActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
+        slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
         headTimeCountdownTxt = (TextView) findViewById(R.id.txt_head_timeCountDown);
         middleTimeCountdownTxt = (TextView) findViewById(R.id.txt_middle_timeCountDown);
         footTimeCountdownTxt = (TextView) findViewById(R.id.txt_foot_timeCountDown);
         openActivityTxt = (TextView) findViewById(R.id.txt_openActivity);
+        webView = (WebView) findViewById(R.id.web_commodity);
         seek = (ProgressSeekBar) findViewById(R.id.seek_grab);
         grabBtn = (Button) findViewById(R.id.btn_grab);
         llayout = (LinearLayout) findViewById(R.id.llayout_foot_timeCountDown);
@@ -105,6 +113,20 @@ public class CommodityInformationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    public void getData() {
+        this.appAction.getCommodityInformation("", "", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
             }
         });
     }

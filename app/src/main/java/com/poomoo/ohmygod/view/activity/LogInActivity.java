@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
@@ -55,10 +56,10 @@ public class LogInActivity extends BaseActivity {
     public void toLogin(View view) {
         phoneNum = phoneNumEdt.getText().toString().trim();
         passWord = passWordEdt.getText().toString().trim();
-        showProgressDialog("登录中...");
-        this.appAction.logIn(phoneNum, passWord, new ActionCallbackListener<Void>() {
+        showProgressDialog("登陆中...");
+        this.appAction.logIn(phoneNum, passWord, new ActionCallbackListener() {
             @Override
-            public void onSuccess(Void data) {
+            public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_phoneNum), phoneNum);
                 if (rememberPassWordChk.isChecked()) {
