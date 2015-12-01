@@ -73,4 +73,11 @@ public interface AppAction {
      */
     void putGrab(String activeId, String userId, ActionCallbackListener listener);
 
+    /**
+     * 获取中奖人列表
+     * @param cityName
+     * @param listener
+     */
+    void getWinnerList(String cityName,ActionCallbackListener listener);
+
 }

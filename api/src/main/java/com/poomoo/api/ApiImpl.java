@@ -9,6 +9,7 @@ import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
+import com.poomoo.model.WinnerBO;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -133,6 +134,20 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, GrabResultBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<WinnerBO> getWinnerList(String cityName) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.WINNERLIST);
+        paramMap.put("cityName", cityName);
+
+        try {
+            return httpEngine.postHandle(paramMap, WinnerBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

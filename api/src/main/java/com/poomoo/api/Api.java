@@ -23,4 +23,6 @@ public interface Api {
     ResponseBO getCommodityInformation(String userId, String activeId);
 
     ResponseBO putGrabInfo(String activeId, String userId);
+
+    ResponseBO getWinnerList(String cityName);
 }

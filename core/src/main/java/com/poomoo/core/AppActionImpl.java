@@ -11,6 +11,7 @@ import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
+import com.poomoo.model.WinnerBO;
 
 
 import java.util.regex.Matcher;
@@ -245,6 +246,28 @@ public class AppActionImpl implements AppAction {
 
             @Override
             protected void onPostExecute(ResponseBO<GrabResultBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getWinnerList(final String cityName,final  ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<WinnerBO>>() {
+            @Override
+            protected ResponseBO<WinnerBO> doInBackground(Void... params) {
+                return api.getWinnerList(cityName);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<WinnerBO> response) {
                 if (listener != null && response != null) {
                     if (response.isSuccess()) {
                         listener.onSuccess(response);

@@ -21,7 +21,8 @@ public class Config {
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号
     public final static String ACTIVITYLIST = "20001";//活动列表
     public final static String ACTIVITY = "20002";//活动详情
-    public final static String SUBMIT = "20003";//活动详情
+    public final static String SUBMIT = "20003";//提交申请
+    public final static String WINNERLIST = "20004";//中奖信息
 
     //ACTION 40000
     public final static String PUBACTION = "40000";//公共接口统一业务编号

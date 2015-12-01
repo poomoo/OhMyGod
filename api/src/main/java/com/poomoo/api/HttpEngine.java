@@ -55,7 +55,7 @@ public class HttpEngine {
     public static final String URL = BaseLocalUrl + "call.htm";
 
     // 时间
-    public static final int TIMEOUT = 1 * 30 * 1000;// 网络通讯超时
+    public static final int TIMEOUT = 1 * 3 * 1000;// 网络通讯超时
 
     private static HttpEngine instance = null;
 
@@ -71,7 +71,6 @@ public class HttpEngine {
     }
 
     public ResponseBO postHandle(Map<String, String> paramsMap, Type typeOfT) throws IOException {
-//        String data = joinParams(paramsMap);
         Gson gson = new Gson();
         String data = gson.toJson(paramsMap);
         HttpURLConnection connection = getConnection();

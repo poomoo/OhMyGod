@@ -32,7 +32,7 @@ public class InformPopupWindow extends PopupWindow {
         webView = (WebView) mMenuView.findViewById(R.id.popup_inform_webView);
 
         this.setContentView(mMenuView);
-        mMenuView.setPadding(20, 15, 20, 20);
+        mMenuView.setPadding(30, 20, 30, 30);
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setFocusable(true);
