@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class SlideShowView extends FrameLayout {
-
+    private String TAG = "SlideShowView";
     // 使用universal-image-loader插件读取网络图片，需要工程导入universal-image-loader-1.8.6-with-sources.jar
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -74,28 +75,20 @@ public class SlideShowView extends FrameLayout {
 
     };
 
-    public SlideShowView(Context context, String[] imageUrls) {
-        super(context);
-        // TODO Auto-generated constructor stub
+    public SlideShowView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+    public void setPics(String[] urls) {
+//        initImageLoader(context);
+        this.imageUrls = urls;
         initData();
-        this.imageUrls = imageUrls;
         if (isAutoPlay) {
             startPlay();
         }
     }
 
-    public SlideShowView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-        // TODO Auto-generated constructor stub
-    }
-
-    public SlideShowView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.context = context;
-
-//        initImageLoader(context);
-
-    }
 
     /**
      * 开始轮播图切换
@@ -105,12 +98,6 @@ public class SlideShowView extends FrameLayout {
         scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 1, 4, TimeUnit.SECONDS);
     }
 
-    /**
-     * 停止轮播图切换
-     */
-    private void stopPlay() {
-        scheduledExecutorService.shutdown();
-    }
 
     /**
      * 初始化相关Data
@@ -121,6 +108,7 @@ public class SlideShowView extends FrameLayout {
 
         // 一步任务获取图片
 //        new GetListTask().execute("");
+        initUI(context);
     }
 
     /**
@@ -135,19 +123,21 @@ public class SlideShowView extends FrameLayout {
         LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
 
+        LogUtils.i(TAG, "imageUrls.length:" + imageUrls.length);
         // 热点个数与图片特殊相等
         for (int i = 0; i < imageUrls.length; i++) {
             ImageView view = new ImageView(context);
+            LogUtils.i(TAG, "imageUrls:" + imageUrls[i]);
             view.setTag(imageUrls[i]);
-            if (i == 0)//给一个默认图
+//            if (i == 0)//给一个默认图
                 view.setBackgroundResource(R.mipmap.ic_launcher);
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);
 
             ImageView dotView = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 10;
-            params.rightMargin = 10;
+            params.leftMargin = 4;
+            params.rightMargin = 4;
             dotLayout.addView(dotView, params);
             dotViewsList.add(dotView);
         }
@@ -172,14 +162,9 @@ public class SlideShowView extends FrameLayout {
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object o) {
-            return view == o;
-        }
-
-        @Override
         public Object instantiateItem(View container, int position) {
             ImageView imageView = imageViewsList.get(position);
-
+            LogUtils.i(TAG, "instantiateItem");
             imageLoader.displayImage(imageView.getTag() + "", imageView);
 
             ((ViewPager) container).addView(imageViewsList.get(position));
@@ -189,8 +174,40 @@ public class SlideShowView extends FrameLayout {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
+//            LogUtils.i("pic", "imageViewsList.size():"+imageViewsList.size());
             return imageViewsList.size();
         }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            // TODO Auto-generated method stub
+            return arg0 == arg1;
+        }
+
+        @Override
+        public void restoreState(Parcelable arg0, ClassLoader arg1) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public Parcelable saveState() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public void startUpdate(View arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void finishUpdate(View arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
     }
 
     /**
@@ -289,8 +306,8 @@ public class SlideShowView extends FrameLayout {
                 // 这里一般调用服务端接口获取一组轮播图片，下面是从百度找的几个图片
 
                 imageUrls = new String[]{
-                        "http://image.zcool.com.cn/56/35/1303967876491.jpg",
-                        "http://image.zcool.com.cn/59/54/m_1303967870670.jpg",
+                        "http://zgqg.91jiaoyou.cn/zgqg/upload/adv/1448335697378.png",
+                        "http://zgqg.91jiaoyou.cn:80/zgqg/upload/adv/1448335718107.png",
                         "http://image.zcool.com.cn/47/19/1280115949992.jpg",
                         "http://image.zcool.com.cn/59/11/m_1303967844788.jpg"
                 };
@@ -315,18 +332,18 @@ public class SlideShowView extends FrameLayout {
      *
      * @param context
      */
-//    public static void initImageLoader(Context context) {
-//        // This configuration tuning is custom. You can tune every option, you
-//        // may tune some of them,
-//        // or you can create default configuration by
-//        // ImageLoaderConfiguration.createDefault(this);
-//        // method.
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
-//                // for
-//                // release
-//                // app
-//                .build();
-//        // Initialize ImageLoader with configuration.
-//        ImageLoader.getInstance().init(config);
-//    }
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you
+        // may tune some of them,
+        // or you can create default configuration by
+        // ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
+                // for
+                // release
+                // app
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);
+    }
 }

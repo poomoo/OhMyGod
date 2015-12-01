@@ -12,8 +12,10 @@ public class GrabBO {
     private String activeId;//--活动编号
     private String title;//--活动标题
     private String goodsName;//--商品名称
-    private long countdown;//--表示剩余时间
+    //    private long countdown;//--表示剩余时间
     private String picture;//--活动图片
+    private long startCountdown;//--开始时间倒计时
+    private long endCountdown;//--结束时间倒计时
 
 
     public String getActiveId() {
@@ -40,13 +42,6 @@ public class GrabBO {
         this.goodsName = goodsName;
     }
 
-    public long getCountdown() {
-        return countdown;
-    }
-
-    public void setCountdown(long countdown) {
-        this.countdown = countdown;
-    }
 
     public String getPicture() {
         return picture;
@@ -54,5 +49,21 @@ public class GrabBO {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public long getStartCountdown() {
+        return startCountdown;
+    }
+
+    public void setStartCountdown(long startCountdown) {
+        this.startCountdown = startCountdown;
+    }
+
+    public long getEndCountdown() {
+        return endCountdown;
+    }
+
+    public void setEndCountdown(long endCountdown) {
+        this.endCountdown = endCountdown;
     }
 }

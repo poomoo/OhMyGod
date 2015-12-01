@@ -29,34 +29,77 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/txt_commodityName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="悉尼花园景观别墅 Camperdown"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="价值    ￥300.00"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="开抢时间：2015年10月10日15点整"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_grab_value"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_head_timeCountDown"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/txt_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥300.00"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="倒计时：2天5小时29分30秒"
-                    android:textColor="@color/themeRed"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_grab_start_date"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_startDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2015年10月10日15点整"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_countDown"
+                        android:textColor="@color/themeRed"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_head_timeCountDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2天5小时29分30秒"
+                        android:textColor="@color/themeRed"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -90,10 +133,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="10dp"
-                android:visibility="gone">
+                android:padding="10dp">
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -101,7 +144,13 @@
                     android:gravity="center"
                     android:text="开启活动声明"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <WebView
+                    android:id="@+id/web_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -109,7 +158,8 @@
                     android:gravity="center_vertical"
                     android:text="活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
@@ -221,6 +271,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/txt_foot_startDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2015年10月25日14点2分4秒"

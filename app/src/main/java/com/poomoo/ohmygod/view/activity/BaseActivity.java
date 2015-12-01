@@ -28,7 +28,7 @@ public class BaseActivity extends Activity {
     //日志标签
     public String TAG = getClass().getSimpleName();
     //进度对话框
-    private ProgressDialog progressDialog = null;
+    public ProgressDialog progressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

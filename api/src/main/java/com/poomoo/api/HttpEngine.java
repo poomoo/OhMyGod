@@ -15,6 +15,7 @@
  */
 package com.poomoo.api;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -54,7 +55,7 @@ public class HttpEngine {
     public static final String URL = BaseLocalUrl + "call.htm";
 
     // 时间
-    public static final int TIMEOUT = 1 * 5 * 1000;// 网络通讯超时
+    public static final int TIMEOUT = 1 * 30 * 1000;// 网络通讯超时
 
     private static HttpEngine instance = null;
 
@@ -75,22 +76,19 @@ public class HttpEngine {
         String data = gson.toJson(paramsMap);
         HttpURLConnection connection = getConnection();
         // 打印出请求
-        Log.i(TAG, "request: " + data + "url:" + connection.getURL());
+        Log.i(TAG, "request: " + data + "url:" + connection.getURL() + "  connection:" + connection);
         connection.setRequestProperty("Content-Length", String.valueOf(data.getBytes().length));
         connection.connect();
 
         if (data != null && data.trim().length() > 0) {
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+            Log.i(TAG, "getOutputStream: " + connection.getOutputStream());
             byte[] content = data.toString().getBytes("utf-8");
+            Log.i(TAG, "content: " + content + "   length:" + content.length);
             out.write(content, 0, content.length);
             out.flush();
             out.close();
         }
-
-//        OutputStream os = connection.getOutputStream();
-//        os.write(data.getBytes());
-//        os.flush();
-//        os.close();
 
         Log.i(TAG, "getResponseCode: " + connection.getResponseCode());
         if (connection.getResponseCode() == 200) {
@@ -99,7 +97,7 @@ public class HttpEngine {
             // 创建字节输出流对象
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             // 定义读取的长度
-            int len = 0;
+            int len;
             // 定义缓冲区
             byte buffer[] = new byte[1024];
             // 按照缓冲区的大小，循环读取
@@ -116,24 +114,29 @@ public class HttpEngine {
             // 打印出结果
             Log.i(TAG, "response: " + result);
             ResponseBO responseBO = gson.fromJson(result, ResponseBO.class);
-            String jsonData = responseBO.getJsonData().toString();
-            if (jsonData.contains("records")) {
-                try {
-                    responseBO.setObjList(new ArrayList());
-                    JSONObject jsonObject;
-                    jsonObject = new JSONObject(jsonData);
-                    JSONArray pager = jsonObject.getJSONArray("records");
-                    int length = pager.length();
-                    Log.i(TAG, "typeOfT: " + typeOfT);
-                    for (int i = 0; i < length; i++) {
-                        responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
-                        responseBO.getObjList().add(responseBO.getObj());
+
+            if (typeOfT != null) {
+                String jsonData = responseBO.getJsonData().toString();
+                if (!TextUtils.isEmpty(jsonData)) {
+                    if (jsonData.contains("records")) {
+                        try {
+                            responseBO.setObjList(new ArrayList());
+                            JSONObject jsonObject;
+                            jsonObject = new JSONObject(jsonData);
+                            JSONArray pager = jsonObject.getJSONArray("records");
+                            int length = pager.length();
+                            Log.i(TAG, "typeOfT: " + typeOfT);
+                            for (int i = 0; i < length; i++) {
+                                responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
+                                responseBO.getObjList().add(responseBO.getObj());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            } else {
-                responseBO.setObj(gson.fromJson(jsonData, typeOfT));
             }
             return responseBO;
         } else {
@@ -165,23 +168,8 @@ public class HttpEngine {
             connection.setRequestProperty("Content-Type", "application/json");
         } catch (IOException e) {
             e.printStackTrace();
+            Log.i(TAG, "异常:" + e.getMessage());
         }
         return connection;
-    }
-
-    // 拼接参数列表
-    private String joinParams(Map<String, String> paramsMap) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String key : paramsMap.keySet()) {
-            stringBuilder.append(key);
-            stringBuilder.append("=");
-            try {
-                stringBuilder.append(URLEncoder.encode(paramsMap.get(key), ENCODE_TYPE));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            stringBuilder.append("&");
-        }
-        return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 }

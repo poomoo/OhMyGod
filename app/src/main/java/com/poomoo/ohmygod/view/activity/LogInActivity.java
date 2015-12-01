@@ -4,12 +4,14 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
@@ -66,6 +68,9 @@ public class LogInActivity extends BaseActivity {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_rememberPassWord), true);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_passWord), passWord);
                 }
+                UserBO userBO = (UserBO) data.getObj();
+                Log.i(TAG, "data:" + userBO);
+                setAppInfo(userBO);
                 openActivity(MainFragmentActivity.class);
                 finish();
             }
@@ -77,6 +82,7 @@ public class LogInActivity extends BaseActivity {
             }
         });
     }
+
 
     /**
      * 注册
@@ -94,5 +100,23 @@ public class LogInActivity extends BaseActivity {
      */
     public void toForgetPassWord(View view) {
         MyUtil.showToast(getApplicationContext(), "忘记密码");
+    }
+
+    private void setAppInfo(UserBO userBO) {
+        this.application.setUserId(userBO.getUserId());
+        this.application.setTel(userBO.getTel());
+        this.application.setNickName(userBO.getNickName());
+        this.application.setRealName(userBO.getRealName());
+        this.application.setHeadPic(userBO.getHeadPic());
+        this.application.setCurrentFee(userBO.getCurrentFee());
+        this.application.setRealNameAuth(userBO.getRealNameAuth());
+        this.application.setIdCardNum(userBO.getIdCardNum());
+        this.application.setSex(userBO.getSex());
+        this.application.setAge(userBO.getAge());
+        this.application.setIdFrontPic(userBO.getIdFrontPic());
+        this.application.setIdOpsitePic(userBO.getIdOpsitePic());
+        this.application.setBankCardNum(userBO.getBankCardNum());
+        this.application.setBankName(userBO.getBankName());
+        this.application.setIsActiveWarm(userBO.getIsActiveWarm());
     }
 }

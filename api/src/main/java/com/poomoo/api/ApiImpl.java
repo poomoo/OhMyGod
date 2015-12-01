@@ -6,7 +6,9 @@ import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.GrabBO;
+import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -38,7 +40,7 @@ public class ApiImpl implements Api {
 //        Type type = new TypeToken<ResponseBO<Void>>() {
 //        }.getType();
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, UserBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -111,11 +113,26 @@ public class ApiImpl implements Api {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.ACTIVITYACTION);
         paramMap.put("method", Config.ACTIVITY);
-        paramMap.put("uerId", userId);
+        paramMap.put("userId", userId);
         paramMap.put("activeId", activeId);
 
         try {
             return httpEngine.postHandle(paramMap, CommodityBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<GrabResultBO> putGrabInfo(String activeId, String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.SUBMIT);
+        paramMap.put("activeId", activeId);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, GrabResultBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

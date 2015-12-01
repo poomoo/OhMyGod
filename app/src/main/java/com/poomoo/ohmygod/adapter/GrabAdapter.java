@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
@@ -25,11 +27,14 @@ import com.poomoo.ohmygod.utils.TimeCountDownUtil;
  */
 public class GrabAdapter extends MyBaseAdapter<GrabBO> {
     private GrabBO grabBO = new GrabBO();
-    private TimeCountDownUtil headTimeCountDownUtil;
+    private TimeCountDownUtil timeCountDownUtil;
+    private static SparseArray<TimeCountDownUtil> countDownUtils;
 
     public GrabAdapter(Context context) {
         super(context);
+        countDownUtils = new SparseArray<>();
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -48,10 +53,6 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
         viewHolder.rlayout.setTag(grabBO.getPicture());
 
-        if (position == 1)
-            grabBO.setPicture("1");
-
-
         ImageLoader.getInstance().loadImage(grabBO.getPicture(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -63,14 +64,24 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             }
         });
 
-        headTimeCountDownUtil = null;
-        headTimeCountDownUtil = new TimeCountDownUtil(grabBO.getCountdown(), 1000, viewHolder.txt, null);
-        headTimeCountDownUtil.start();
+        LogUtils.i("GrabAdapter",viewHolder.txt.getTag()+"");
+        if (viewHolder.txt.getTag() == null) {
+            viewHolder.txt.setTag(grabBO.getPicture());
+            timeCountDownUtil = null;
+            timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, null);
+            timeCountDownUtil.start();
+            getCountDownUtils().put(position, timeCountDownUtil);
+        }
+
         return convertView;
     }
 
     class ViewHolder {
         private RelativeLayout rlayout;
         private TextView txt;
+    }
+
+    public SparseArray<TimeCountDownUtil> getCountDownUtils() {
+        return countDownUtils;
     }
 }

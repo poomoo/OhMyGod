@@ -57,9 +57,9 @@ public class TimeCountDownUtil extends CountDownTimer {
             countDownListener.onFinish(1);
         if (isList)
             for (TextView textView : textViewList)
-                textView.setText("活动已经开始");
+                textView.setText("活动已开始");
         else
-            textView.setText("活动已经开始");
+            textView.setText("活动已开始");
     }
 
     /**

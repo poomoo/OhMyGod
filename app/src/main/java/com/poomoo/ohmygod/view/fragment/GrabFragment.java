@@ -1,5 +1,6 @@
 package com.poomoo.ohmygod.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,16 @@ import android.widget.ListView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.AdBO;
+import com.poomoo.model.CommodityBO;
+import com.poomoo.model.GrabBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者: 李苜菲
@@ -26,6 +32,7 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
     private GrabAdapter adapter;
     private String[] urls;
     private AdBO adBO;
+    private List<GrabBO> grabBOList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,10 +67,11 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
                 for (int i = 0; i < len; i++) {
                     adBO = new AdBO();
                     adBO = (AdBO) data.getObjList().get(i);
+                    adBO.setPicture("http://image.zcool.com.cn/56/35/1303967876491.jpg");
                     urls[i] = adBO.getPicture();
                     Log.i(TAG, urls[i]);
                 }
-                slideShowView = new SlideShowView(getActivity(), urls);
+                slideShowView.setPics(urls);
             }
 
             @Override
@@ -79,7 +87,8 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void onSuccess(ResponseBO data) {
                 Log.i("lmf", "data:" + data.toString());
-                adapter.setItems(data.getObjList());
+                grabBOList = data.getObjList();
+                adapter.setItems(grabBOList);
             }
 
             @Override
@@ -92,6 +101,12 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle pBundle = new Bundle();
-        openActivity(CommodityInformationActivity.class, pBundle);
+        pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+        pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
+
+
+//        openActivity(CommodityInformationActivity.class, pBundle);
+        Intent intent = new Intent(getActivity(), CommodityInformationActivity.class);
+        startActivity(intent);
     }
 }

@@ -46,6 +46,7 @@
         <activity android:name=".view.activity.RegisterActivity" />
         <activity android:name=".view.activity.MainFragmentActivity" />
         <activity android:name=".view.activity.SelectActivity" />
+        <activity android:name=".view.activity.CommodityInformationActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

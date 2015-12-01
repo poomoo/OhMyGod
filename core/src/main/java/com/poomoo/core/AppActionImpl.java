@@ -8,7 +8,9 @@ import com.poomoo.api.Api;
 import com.poomoo.api.ApiImpl;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
+import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 
 
 import java.util.regex.Matcher;
@@ -53,17 +55,17 @@ public class AppActionImpl implements AppAction {
             return;
         }
         // 请求Api
-        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+        new AsyncTask<Void, Void, ResponseBO<UserBO>>() {
             @Override
-            protected ResponseBO<Void> doInBackground(Void... voids) {
+            protected ResponseBO<UserBO> doInBackground(Void... params) {
                 return api.login(phoneNum, passWord);
             }
 
             @Override
-            protected void onPostExecute(ResponseBO<Void> response) {
+            protected void onPostExecute(ResponseBO<UserBO> response) {
                 if (listener != null && response != null) {
                     if (response.isSuccess()) {
-                        listener.onSuccess(null);
+                        listener.onSuccess(response);
                     } else {
                         listener.onFailure(response.getRsCode(), response.getMsg());
                     }
@@ -209,17 +211,40 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getCommodityInformation(String userId, String activeId, final ActionCallbackListener listener) {
+    public void getCommodityInformation(final String userId, final String activeId, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<GrabBO>>() {
             @Override
             protected ResponseBO<GrabBO> doInBackground(Void... params) {
-//                return api.getGrabList(cityName);
-                return null;
+                return api.getCommodityInformation(userId, activeId);
             }
 
             @Override
             protected void onPostExecute(ResponseBO<GrabBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                } else {
+                    listener.onFailure(400, "连接错误");
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void putGrab(final String activeId, final String userId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<GrabResultBO>>() {
+            @Override
+            protected ResponseBO<GrabResultBO> doInBackground(Void... params) {
+                return api.putGrabInfo(activeId, userId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<GrabResultBO> response) {
                 if (listener != null && response != null) {
                     if (response.isSuccess()) {
                         listener.onSuccess(response);

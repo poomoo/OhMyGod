@@ -14,11 +14,14 @@ public class CommodityBO {
     private List<String> picList;//--图片集合
     private String goodsName;//--商品名称
     private String price;//--价格
+    private String startDt;//	--活动开始时间
     private String endDt;//--活动结束时间
     private String content;//--商品详情介绍内容（html富文本）
     private String statement;//--活动声明（html富文本）
     private String playFlag;//--当前用户是否参与过此活动，0未参加，1参加
-    private long countdown;//--表示剩余时间
+    //    private long countdown;//--表示剩余时间
+    private long startCountdown;//--开始时间倒计时
+    private long endCountdown;//--结束时间倒计时
 
     public List<String> getPicList() {
         return picList;
@@ -42,6 +45,14 @@ public class CommodityBO {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getStartDt() {
+        return startDt;
+    }
+
+    public void setStartDt(String startDt) {
+        this.startDt = startDt;
     }
 
     public String getEndDt() {
@@ -76,11 +87,34 @@ public class CommodityBO {
         this.playFlag = playFlag;
     }
 
-    public long getCountdown() {
-        return countdown;
+    public long getStartCountdown() {
+        return startCountdown;
     }
 
-    public void setCountdown(long countdown) {
-        this.countdown = countdown;
+    public void setStartCountdown(long startCountdown) {
+        this.startCountdown = startCountdown;
+    }
+
+    public long getEndCountdown() {
+        return endCountdown;
+    }
+
+    public void setEndCountdown(long endCountdown) {
+        this.endCountdown = endCountdown;
+    }
+
+    @Override
+    public String toString() {
+        return "CommodityBO{" +
+                "picList=" + picList +
+                ", goodsName='" + goodsName + '\'' +
+                ", price='" + price + '\'' +
+                ", endDt='" + endDt + '\'' +
+                ", content='" + content + '\'' +
+                ", statement='" + statement + '\'' +
+                ", playFlag='" + playFlag + '\'' +
+                ", startCountdown=" + startCountdown +
+                ", endCountdown=" + endCountdown +
+                '}';
     }
 }

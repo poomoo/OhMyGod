@@ -52,6 +52,7 @@
     <string name="label_grab_start_date">开抢时间：</string>
     <string name="label_countDown">倒计时：</string>
     <string name="label_grab_countDown">开抢倒计时：</string>
+    <string name="label_grab_value">价值　　　</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -176,6 +177,8 @@
     <string name="intent_passWord">passWord</string>
     <string name="intent_age">age</string>
     <string name="intent_gender">gender</string>
+    <string name="intent_activeId">activeId</string>
+    <string name="intent_countDownTime">countDownTime</string>
     <!--intent-->
 
     <!--hint-->

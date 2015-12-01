@@ -21,4 +21,6 @@ public interface Api {
     ResponseBO getGrabList(String cityName);
 
     ResponseBO getCommodityInformation(String userId, String activeId);
+
+    ResponseBO putGrabInfo(String activeId, String userId);
 }

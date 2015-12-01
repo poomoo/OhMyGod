@@ -63,4 +63,14 @@ public interface AppAction {
      * @param listener
      */
     void getCommodityInformation(String userId, String activeId, ActionCallbackListener listener);
+
+    /**
+     * 提交抢单数据
+     *
+     * @param activeId
+     * @param userId
+     * @param listener
+     */
+    void putGrab(String activeId, String userId, ActionCallbackListener listener);
+
 }
