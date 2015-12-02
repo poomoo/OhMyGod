@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llayout_editPersonalInformation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -31,7 +32,7 @@
             android:textSize="22sp" />
 
         <EditText
-            android:id="@+id/edit_realName"
+            android:id="@+id/edt_realName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -65,12 +66,14 @@
             android:textSize="22sp" />
 
         <EditText
-            android:id="@+id/edit_idCardNum"
+            android:id="@+id/edt_idCardNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+            android:digits="0123456789xyzXYZ"
             android:hint="@string/hint_idCardNum"
+            android:maxLength="18"
             android:paddingLeft="15dp"
             android:textSize="20sp" />
     </LinearLayout>
@@ -107,8 +110,9 @@
 
             <ImageView
                 android:id="@+id/img_front_idCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:onClick="toSelectFront"
                 android:src="@drawable/bg_idcrad_front" />
 
             <TextView
@@ -117,44 +121,11 @@
 
             <ImageView
                 android:id="@+id/img_back_idCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:onClick="toSelectBack"
                 android:src="@drawable/bg_idcrad_back" />
         </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_celPhone"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="22sp" />
-
-        <EditText
-            android:id="@+id/edit_celPhone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/hint_celPhone"
-            android:paddingLeft="15dp"
-            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -181,12 +152,14 @@
             android:textSize="22sp" />
 
         <EditText
-            android:id="@+id/edit_bankCardNum"
+            android:id="@+id/edt_bankCardNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/hint_bankCardNum"
+            android:inputType="number"
+            android:maxLength="23"
             android:paddingLeft="15dp"
             android:textSize="20sp" />
     </LinearLayout>

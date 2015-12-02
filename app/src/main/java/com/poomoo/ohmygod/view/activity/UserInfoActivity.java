@@ -3,8 +3,10 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -15,6 +17,13 @@ import com.poomoo.ohmygod.utils.MyUtil;
  * 日期: 2015/11/24 15:37.
  */
 public class UserInfoActivity extends BaseActivity {
+    private TextView nickNameTxt;
+    private TextView genderTxt;
+    private TextView ageTxt;
+    private TextView phoneNumTxt;
+    private TextView idCardNumTxt;
+    private TextView bankCardNumTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +34,17 @@ public class UserInfoActivity extends BaseActivity {
 
     protected void initView() {
         initTitleBar();
+
+        nickNameTxt = (TextView) findViewById(R.id.txt_userInfo_nickName);
+        genderTxt = (TextView) findViewById(R.id.txt_userInfo_gender);
+        ageTxt = (TextView) findViewById(R.id.txt_userInfo_age);
+        phoneNumTxt = (TextView) findViewById(R.id.txt_userInfo_phoneNum);
+        idCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_idCardNum);
+        bankCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_bankCardNum);
+
+        initData();
     }
+
 
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
@@ -36,6 +55,15 @@ public class UserInfoActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private void initData() {
+        nickNameTxt.setText(this.application.getNickName());
+        genderTxt.setText(this.application.getSex().equals("1") ? "男" : "女");
+        ageTxt.setText(this.application.getAge());
+        phoneNumTxt.setText(this.application.getTel());
+        idCardNumTxt.setText(this.application.getIdCardNum());
+        bankCardNumTxt.setText(this.application.getBankCardNum());
     }
 
     /**
@@ -53,7 +81,9 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toNickName(View view) {
-        MyUtil.showToast(getApplicationContext(), "昵称");
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_nickName));
+        openActivityForResult(NickNameActivity.class, pBundle, 1);
     }
 
     /**
@@ -71,7 +101,9 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toAge(View view) {
-        MyUtil.showToast(getApplicationContext(), "年龄");
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_age));
+        openActivityForResult(NickNameActivity.class, pBundle, 2);
     }
 
     /**
@@ -112,5 +144,14 @@ public class UserInfoActivity extends BaseActivity {
         Bundle pBundle = new Bundle();
         pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_passWord));
         openActivity(VerifyPhoneNum2Activity.class, pBundle);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == 1)
+            nickNameTxt.setText(data.getStringExtra("value"));
+
+        if (requestCode == 2 && resultCode == 1)
+            ageTxt.setText(data.getStringExtra("value"));
     }
 }

@@ -27,7 +27,7 @@ public class Bimp {
 		BitmapFactory.decodeStream(in, null, options);
 		in.close();
 		int i = 0;
-		Bitmap bitmap = null;
+		Bitmap bitmap;
 		while (true) {
 			if ((options.outWidth >> i <= 1000)
 					&& (options.outHeight >> i <= 1000)) {

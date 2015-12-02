@@ -89,6 +89,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_userInfo_nickName"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -140,6 +141,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_userInfo_gender"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -191,6 +193,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_userInfo_age"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -243,6 +246,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_userInfo_phoneNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -295,6 +299,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txt_userInfo_idCardNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -338,12 +343,34 @@
             android:textColor="@color/themeGray"
             android:textSize="22sp" />
 
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_right" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_userInfo_bankCardNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="123"
+                android:textColor="@color/themeGray"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
     </RelativeLayout>
 
     <TextView

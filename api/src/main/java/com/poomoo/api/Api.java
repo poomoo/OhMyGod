@@ -1,5 +1,6 @@
 package com.poomoo.api;
 
+import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
 
 /**
@@ -25,4 +26,10 @@ public interface Api {
     ResponseBO putGrabInfo(String activeId, String userId);
 
     ResponseBO getWinnerList(String cityName);
+
+    ResponseBO uploadPics(FileBO fileBO);
+
+    ResponseBO putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic);
+
+    ResponseBO changePersonalInfo(String userId, String key, String value);
 }

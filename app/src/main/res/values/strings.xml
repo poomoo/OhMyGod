@@ -42,6 +42,7 @@
     <string name="title_selectCity">"选择城市"</string>
     <string name="title_selectAge">"选择年龄"</string>
     <string name="title_selectGender">"选择性别"</string>
+    <string name="title_age">"年龄"</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -179,6 +180,7 @@
     <string name="intent_gender">gender</string>
     <string name="intent_activeId">activeId</string>
     <string name="intent_countDownTime">countDownTime</string>
+    <string name="intent_nickName">nickName</string>
     <!--intent-->
 
     <!--hint-->
@@ -189,7 +191,7 @@
     <string name="hint_show_content">晒单内容</string>
     <string name="hint_input_money">请输入提现金额</string>
     <string name="hint_input_code">"填写验证码"</string>
-    <string name="hint_input_nickName">"输入昵称"</string>
+    <string name="hint_input_nickName">"请输入昵称"</string>
     <string name="hint_input_newPhoneNum">"请输入新手机号"</string>
     <string name="hint_input_cardNum">"请输入卡号"</string>
     <string name="hint_select_bankCard">"请选择银行卡"</string>
@@ -197,6 +199,7 @@
     <string name="hint_input_your_phoneNum">"请输入您的手机号"</string>
     <string name="hint_input_your_passWord">"请输入您的密码"</string>
     <string name="hint_select_age">"请选择您的年龄"</string>
+    <string name="hint_input_age">"请输入您的年龄"</string>
     <string name="hint_select_gender">"请选择您的性别"</string>
     <string name="hint_search">"城市名、拼音首字母..."</string>
     <!--hint-->

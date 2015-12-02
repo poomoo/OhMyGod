@@ -1,8 +1,10 @@
 package com.poomoo.core;
 
 import com.poomoo.model.AdBO;
+import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -75,9 +77,40 @@ public interface AppAction {
 
     /**
      * 获取中奖人列表
+     *
      * @param cityName
      * @param listener
      */
-    void getWinnerList(String cityName,ActionCallbackListener listener);
+    void getWinnerList(String cityName, ActionCallbackListener listener);
 
+    /**
+     * 上传图片
+     *
+     * @param fileBO
+     * @param listener
+     */
+    void uploadPics(FileBO fileBO, ActionCallbackListener listener);
+
+    /**
+     * 上传个人资料
+     *
+     * @param userId
+     * @param realName
+     * @param idCardNum
+     * @param bankCardNum
+     * @param idFrontPic
+     * @param idOpsitePic
+     * @param listener
+     */
+    void putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic, ActionCallbackListener listener);
+
+    /**
+     * 修改用户信息接口（单独修改用户某个字段信息，如昵称）
+     *
+     * @param userId
+     * @param key--修改字段的key
+     * @param value--修改字段的value
+     * @param listener
+     */
+    void changePersonalInfo(String userId, String key, String value, ActionCallbackListener listener);
 }

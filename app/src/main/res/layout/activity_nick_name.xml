@@ -18,6 +18,7 @@
         android:padding="10dp">
 
         <EditText
+            android:id="@+id/edt_inPut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -34,11 +35,9 @@
             android:layout_height="wrap_content"
             android:text="@string/label_change_nickName"
             android:textColor="@color/themeGray"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <Button
             style="@style/myButton"

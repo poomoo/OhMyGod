@@ -16,6 +16,8 @@ public class Config {
     public final static String CODE = "10002";//获取验证码
     public final static String REGISTER = "10004";//注册
     public final static String LOGIN = "10005";//登陆
+    public final static String CHANGE = "10006";//修改用户信息接口（单独修改用户某个字段信息，如昵称）
+    public final static String PERSONALINFO = "10007";//编辑个人资料页面接口（实名认证接口）
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号

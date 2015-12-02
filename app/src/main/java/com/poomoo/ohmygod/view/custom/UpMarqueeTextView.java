@@ -43,8 +43,8 @@ public class UpMarqueeTextView extends TextView implements Animator.AnimatorList
      * --- 初始化向上脱离屏幕的动画效果 ---
      */
     private void initStartAnimation() {
-        Log.i(TAG, "--- initStartAnimation ---" + height);
-        ObjectAnimator translate = ObjectAnimator.ofFloat(this, "translationY", 0, -height);
+//        Log.i(TAG, "--- initStartAnimation ---" + height);
+        ObjectAnimator translate = ObjectAnimator.ofFloat(this, "translationY", 0, -(height * 2 / 3));
         ObjectAnimator alpha = ObjectAnimator.ofFloat(this, "alpha", 1f, 0f);
         mAnimatorStartSet = new AnimatorSet();
         mAnimatorStartSet.play(translate).with(alpha);
@@ -56,7 +56,7 @@ public class UpMarqueeTextView extends TextView implements Animator.AnimatorList
      * --- 初始化从屏幕下面向上的动画效果 ---
      */
     private void initEndAnimation() {
-        Log.i(TAG, "--- initEndAnimation ---" + height);
+//        Log.i(TAG, "--- initEndAnimation ---" + height);
         ObjectAnimator translate = ObjectAnimator.ofFloat(this, "translationY", height, 0);
         ObjectAnimator alpha = ObjectAnimator.ofFloat(this, "alpha", 0f, 1f);
         mAnimatorEndSet = new AnimatorSet();
@@ -75,7 +75,7 @@ public class UpMarqueeTextView extends TextView implements Animator.AnimatorList
         }
         mText = text;
 
-        Log.i(TAG, "--- setText ---mAnimatorStartSet" + mAnimatorStartSet);
+//        Log.i(TAG, "--- setText ---mAnimatorStartSet" + mAnimatorStartSet);
         if (null == mAnimatorStartSet) {
             initStartAnimation();
         }

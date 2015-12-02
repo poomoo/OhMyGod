@@ -1,20 +1,17 @@
 package com.poomoo.api;
 
-import android.util.Log;
-
-import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CommodityBO;
+import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.model.WinnerBO;
 
+import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -148,6 +145,49 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, WinnerBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<Void> uploadPics(FileBO fileBO) {
+        try {
+            return httpEngine.uploadFile(fileBO);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<Void> putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.PERSONALINFO);
+        paramMap.put("userId", userId);
+        paramMap.put("realName", realName);
+        paramMap.put("idCardNum", idCardNum);
+        paramMap.put("bankCardNum", bankCardNum);
+        paramMap.put("idFrontPic", idFrontPic);
+        paramMap.put("idOpsitePic", idOpsitePic);
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO changePersonalInfo(String userId, String key, String value) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.CHANGE);
+        paramMap.put("userId", userId);
+        paramMap.put("key", key);
+        paramMap.put(key, value);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

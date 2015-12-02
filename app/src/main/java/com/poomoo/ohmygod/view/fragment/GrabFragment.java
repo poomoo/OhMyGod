@@ -1,6 +1,5 @@
 package com.poomoo.ohmygod.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.poomoo.api.Config;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
@@ -19,12 +20,15 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +37,7 @@ import java.util.TimerTask;
  * 日期: 2015/11/11 16:26.
  */
 public class GrabFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+    private LinearLayout remindLlayout;
     private UpMarqueeTextView marqueeTextView;
     private ListView listView;
     private SlideShowView slideShowView;
@@ -60,33 +65,35 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (ListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
+        remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
 
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
         getAd();
-//        getGrabList();
-        for (int i = 0; i < 3; i++) {
-            grabBO = new GrabBO();
-            grabBO.setStartCountdown(5500000);
-            grabBOList.add(grabBO);
-        }
-        adapter.setItems(grabBOList);
-        for (int i = 0; i < 6; i++) {
-            winnerBO = new WinnerBO();
-            winnerBO.setPlayDt("2015年12月" + (i + 1) + "号");
-            winnerBO.setWinNickName("中奖王" + i + 1);
-            winnerBO.setGoodsName("保時捷911");
-            winnerBOList.add(winnerBO);
-        }
-        TimerTask t = new TimerTask() {
-            public void run() {
-                handler.sendEmptyMessage(1);
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(t, 0, 15 * 1000);
+        getGrabList();
+        getWinnerList();
+
+//        remindLlayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getWinnerList();
+//            }
+//        });
+//        for (int i = 0; i < 3; i++) {
+//            grabBO = new GrabBO();
+//            grabBO.setStartCountdown(5500000);
+//            grabBOList.add(grabBO);
+//        }
+
+//        for (int i = 0; i < 6; i++) {
+//            winnerBO = new WinnerBO();
+//            winnerBO.setPlayDt("2015年12月" + (i + 1) + "号");
+//            winnerBO.setWinNickName("中奖王" + i + 1);
+//            winnerBO.setGoodsName("保時捷911");
+//            winnerBOList.add(winnerBO);
+//        }
     }
 
     Handler handler = new Handler() {
@@ -94,8 +101,8 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    SpannableString spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名稱:" + winnerBOList.get(index).getGoodsName());
-                    marqueeTextView.setText(spannableString+"");
+                    SpannableString spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName());
+                    marqueeTextView.setText(spannableString + "");
                     index++;
                     if (index == winnerBOList.size())
                         index = 0;
@@ -149,7 +156,14 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         this.appAction.getWinnerList("贵阳市", new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-
+                winnerBOList = data.getObjList();
+                TimerTask t = new TimerTask() {
+                    public void run() {
+                        handler.sendEmptyMessage(1);
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(t, 0, 15 * 1000);
             }
 
             @Override
@@ -164,10 +178,6 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         Bundle pBundle = new Bundle();
         pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
-
-
-//        openActivity(CommodityInformationActivity.class, pBundle);
-        Intent intent = new Intent(getActivity(), CommodityInformationActivity.class);
-        startActivity(intent);
+        openActivity(CommodityInformationActivity.class, pBundle);
     }
 }

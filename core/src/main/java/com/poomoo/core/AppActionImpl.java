@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.poomoo.api.Api;
 import com.poomoo.api.ApiImpl;
 import com.poomoo.model.AdBO;
+import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
@@ -14,6 +15,7 @@ import com.poomoo.model.UserBO;
 import com.poomoo.model.WinnerBO;
 
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -258,7 +260,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getWinnerList(final String cityName,final  ActionCallbackListener listener) {
+    public void getWinnerList(final String cityName, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<WinnerBO>>() {
             @Override
@@ -277,5 +279,72 @@ public class AppActionImpl implements AppAction {
                 }
             }
         }.execute();
+    }
+
+    @Override
+    public void uploadPics(final FileBO fileBO, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.uploadPics(fileBO);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void putPersonalInfo(final String userId, final String realName, final String idCardNum, final String bankCardNum, final String idFrontPic, final String idOpsitePic, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.putPersonalInfo(userId, realName, idCardNum, bankCardNum, idFrontPic, idOpsitePic);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void changePersonalInfo(final String userId, final String key, final String value, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.changePersonalInfo(userId, key, value);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+
     }
 }

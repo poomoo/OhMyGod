@@ -71,12 +71,13 @@ public class CommodityInformationActivity extends BaseActivity {
         setContentView(R.layout.activity_commodity_information);
 
         initView();
+        getData();
     }
 
     private void getData() {
-//        activeId = getIntent().getStringExtra(getString(R.string.intent_activeId));
-//        countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
-//        initCountDown();
+        activeId = getIntent().getStringExtra(getString(R.string.intent_activeId));
+        countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
+        initCountDown();
         showProgressDialog("通讯中...");
         LogUtils.i(TAG, "appAction:" + appAction);
 
@@ -92,7 +93,7 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onFailure(int errorEvent, String message) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), message);
-//                finish();
+                finish();
             }
         });
     }
@@ -133,13 +134,6 @@ public class CommodityInformationActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
-            }
-        });
-
-        nameTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
             }
         });
 
@@ -281,9 +275,10 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
-                if (grabResultBO.equals("true"))
+                if (grabResultBO.equals("true")) {
                     MyUtil.showToast(getApplicationContext(), "抢单成功!");
-                else if (grabResultBO.equals("true"))
+                    openActivity(EditPersonalInformationActivity.class);
+                } else if (grabResultBO.equals("true"))
                     MyUtil.showToast(getApplicationContext(), "抢单失败!");
                 else
                     MyUtil.showToast(getApplicationContext(), data.getMsg());
