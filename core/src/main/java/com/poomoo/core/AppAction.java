@@ -113,4 +113,70 @@ public interface AppAction {
      * @param listener
      */
     void changePersonalInfo(String userId, String key, String value, ActionCallbackListener listener);
+
+    /**
+     * 签到
+     *
+     * @param userId
+     * @param listener
+     */
+    void toSign(String userId, ActionCallbackListener listener);
+
+    /**
+     * 获取签到列表
+     *
+     * @param userId
+     * @param year
+     * @param month
+     * @param listener
+     */
+    void getSignedList(String userId, String year, String month, ActionCallbackListener listener);
+
+    /**
+     * 查询声明信息
+     *
+     * @param type --1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+     */
+    void getStatement(String type, ActionCallbackListener listener);
+
+    /**
+     * 查询我的中奖列表（分页）
+     *
+     * @param userId
+     * @param flag
+     * @param currPage --1：我的夺宝记录，2：我的中奖记录
+     * @param pageSize --当前页号码
+     * @param listener --页面大小
+     */
+    void getWinningList(String userId, String flag, int currPage, int pageSize, ActionCallbackListener listener);
+
+    /**
+     * 查询我的提现
+     *
+     * @param userId
+     * @param listener
+     */
+    void getMyWithdrawDepositList(String userId, ActionCallbackListener listener);
+
+    /**
+     * 晒单分享接口
+     *
+     * @param userId
+     * @param activeId--活动编号
+     * @param content--发表内容
+     * @param pictures--图片地址
+     * @param listener
+     */
+    void putShow(String userId, String activeId, String content, String pictures, ActionCallbackListener listener);
+
+    /**
+     * 查询晒单分享列表
+     *
+     * @param flag--接口标识，1表示晒单分享列表，2表示我的晒单列表
+     * @param userId
+     * @param currPage
+     * @param pageSize
+     * @param listener
+     */
+    void getShowList(int flag, String userId, int currPage, int pageSize, ActionCallbackListener listener);
 }

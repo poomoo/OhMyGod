@@ -50,10 +50,11 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_totalAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
-                            android:text="68899000"
+                            android:text="0"
                             android:textColor="@color/themeRed"
                             android:textSize="34sp" />
                     </LinearLayout>
@@ -83,14 +84,16 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/txt_useAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="504955"
+                            android:text="0"
                             android:textColor="@color/themeRed"
                             android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llayout_signed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
@@ -100,7 +103,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/base_line"
+                            android:id="@+id/txt_sign"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -125,9 +128,10 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/txt_usedAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="504955"
+                            android:text="0"
                             android:textColor="@color/themeRed"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -189,7 +193,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerInParent="true"
                         android:paddingLeft="10dp"
-                        android:text="9月"
+                        android:text="12月"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 

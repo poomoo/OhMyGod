@@ -9,68 +9,15 @@ package com.poomoo.model;
  * 日期: 2015/11/20 10:43.
  */
 public class ShowBO {
-    private String avatar;//头像
-    private String userName;//用户名
-    private String dateTime;//日期时间
-    private String content;//内容
-    private String title;//标题
-    private String[] pics;//图片地址
-    private ReplyBO replyBO;//评论
+    private String activeId;//--活动编号
+    private String content;//--评论内容
+    private String dynamicDt;//dynamicDt
+    private String dynamicId;//--动态编号
+    private String headPic;//--分享人头部图片
+    private String nickName;//--分享人昵称
+    private String picList;//--分享的图片集合
+    private String userId;//--分享人编号
+    private ReplyBO comments;//--评论集合
 
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String[] getPics() {
-        return pics;
-    }
-
-    public void setPics(String[] pics) {
-        this.pics = pics;
-    }
-
-    public ReplyBO getReplyBO() {
-        return replyBO;
-    }
-
-    public void setReplyBO(ReplyBO replyBO) {
-        this.replyBO = replyBO;
-    }
 }

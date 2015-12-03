@@ -123,7 +123,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toIdCardNum(View view) {
-        openActivity(ChangeIdCardInfoActivity.class);
+        openActivity(EditPersonalInformationActivity.class);
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toBankCard(View view) {
-        openActivity(BankCardActivity.class);
+        openActivity(EditPersonalInformationActivity.class);
     }
 
     /**

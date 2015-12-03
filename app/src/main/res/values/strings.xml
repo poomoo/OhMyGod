@@ -181,6 +181,9 @@
     <string name="intent_activeId">activeId</string>
     <string name="intent_countDownTime">countDownTime</string>
     <string name="intent_nickName">nickName</string>
+    <string name="intent_rebate">rebate</string>
+    <string name="intent_signed">signed</string>
+    <string name="intent_value">values</string>
     <!--intent-->
 
     <!--hint-->

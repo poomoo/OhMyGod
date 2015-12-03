@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WithdrawDepositBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.MyWithdrawDepositAdapter;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class MyWithdrawDepositActivity extends BaseActivity {
         setContentView(R.layout.activity_my_withdraw_deposit);
 
         initView();
+        getData();
     }
 
     protected void initView() {
@@ -40,7 +44,7 @@ public class MyWithdrawDepositActivity extends BaseActivity {
         adapter = new MyWithdrawDepositAdapter(this);
         listView.setAdapter(adapter);
 
-        initTestData();
+        withdrawDepositBOList = new ArrayList<>();
 
     }
 
@@ -55,24 +59,44 @@ public class MyWithdrawDepositActivity extends BaseActivity {
         });
     }
 
+    private void getData() {
+        showProgressDialog("查询中...");
+        this.appAction.getMyWithdrawDepositList(application.getUserId(), new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                withdrawDepositBOList = data.getObjList();
+                if (withdrawDepositBOList != null)
+                    adapter.setItems(withdrawDepositBOList);
+                MyUtil.showToast(getApplicationContext(), data.getMsg());
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
     private void initTestData() {
-        withdrawDepositBOList = new ArrayList<>();
+
         withdrawDepositBO = new WithdrawDepositBO();
-        withdrawDepositBO.setDateTime("2015年09月15日");
+        withdrawDepositBO.setDrawDt("2015年09月15日");
         withdrawDepositBO.setStatus("已提");
-        withdrawDepositBO.setAccount("￥10.00元");
+        withdrawDepositBO.setDrawFee("￥10.00元");
         withdrawDepositBOList.add(withdrawDepositBO);
 
         withdrawDepositBO = new WithdrawDepositBO();
-        withdrawDepositBO.setDateTime("2015年08月20日");
+        withdrawDepositBO.setDrawDt("2015年08月20日");
         withdrawDepositBO.setStatus("已提");
-        withdrawDepositBO.setAccount("￥10.00元");
+        withdrawDepositBO.setDrawFee("￥10.00元");
         withdrawDepositBOList.add(withdrawDepositBO);
 
         withdrawDepositBO = new WithdrawDepositBO();
-        withdrawDepositBO.setDateTime("2015年08月03日");
+        withdrawDepositBO.setDrawDt("2015年08月03日");
         withdrawDepositBO.setStatus("已提");
-        withdrawDepositBO.setAccount("￥10.00元");
+        withdrawDepositBO.setDrawFee("￥10.00元");
         withdrawDepositBOList.add(withdrawDepositBO);
 
         adapter.setItems(withdrawDepositBOList);

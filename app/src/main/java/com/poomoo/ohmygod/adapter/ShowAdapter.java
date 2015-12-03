@@ -70,12 +70,12 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 
         showBO = itemList.get(position);
         urlList = new ArrayList<>();
-        for (String url : showBO.getPics())
-            urlList.add(url);
+//        for (String url : showBO.getPics())
+//            urlList.add(url);
         viewHolder.gridView.setAdapter(picsGridAdapter);
         picsGridAdapter.setItems(urlList);
 
-        replyBO = showBO.getReplyBO();
+//        replyBO = showBO.getReplyBO();
         replyBOList = new ArrayList<>();
         replyBOList.add(replyBO);
 

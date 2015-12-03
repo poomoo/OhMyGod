@@ -32,4 +32,18 @@ public interface Api {
     ResponseBO putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic);
 
     ResponseBO changePersonalInfo(String userId, String key, String value);
+
+    ResponseBO toSigned(String userId);
+
+    ResponseBO getSignedList(String userId, String year, String month);
+
+    ResponseBO getStatement(String type);
+
+    ResponseBO getWinningList(String userId, String flag, int currPage, int pageSize);
+
+    ResponseBO getMyWithdrawDepositList(String userId);
+
+    ResponseBO putShow(String userId, String activeId, String content, String pictures);
+
+    ResponseBO getShowList(int flag, String userId, int currPage, int pageSize);
 }

@@ -68,7 +68,7 @@ public class UpMarqueeTextView extends TextView implements Animator.AnimatorList
      * --- 设置内容 ---
      **/
     public void setText(String text) {
-        Log.i(TAG, "--- setText ---" + text);
+//        Log.i(TAG, "--- setText ---" + text);
         if (TextUtils.isEmpty(text)) {
             Log.e(TAG, "--- 请确保text不为空 ---");
             return;

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.provider.MediaStore.Images.Media;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
@@ -89,6 +90,16 @@ public class EditPersonalInformationActivity extends BaseActivity {
         bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
         frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
         backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
+
+        realNameEdt.setText(application.getRealName());
+        idCardNumEdt.setText(application.getIdCardNum());
+        bankCardNumEdt.setText(application.getBankCardNum());
+
+        if (!TextUtils.isEmpty(application.getIdFrontPic()) && !TextUtils.isEmpty(application.getIdOpsitePic())) {
+            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg);
+            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg);
+        }
+
 
         MyUtil.fortmatCardNum(bankCardNumEdt);
     }

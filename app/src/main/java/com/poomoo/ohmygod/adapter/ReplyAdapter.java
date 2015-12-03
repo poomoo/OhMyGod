@@ -48,9 +48,9 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         }
         ReplyBO replyBO = itemList.get(position);
 
-        replyName = replyBO.getRevert_user_name();
-        commentName = replyBO.getFloor_user_name();
-        replyContentStr = replyBO.getContent();
+//        replyName = replyBO.getRevert_user_name();
+//        commentName = replyBO.getFloor_user_name();
+//        replyContentStr = replyBO.getContent();
         //用来标识在 Span 范围内的文本前后输入新的字符时是否把它们也应用这个效果
         //Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括)
         //Spanned.SPAN_INCLUSIVE_EXCLUSIVE(前面包括，后面不包括)

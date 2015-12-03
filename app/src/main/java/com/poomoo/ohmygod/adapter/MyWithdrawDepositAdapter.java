@@ -20,7 +20,6 @@ import com.poomoo.ohmygod.R;
  * 日期: 2015/11/23 17:11.
  */
 public class MyWithdrawDepositAdapter extends MyBaseAdapter<WithdrawDepositBO> {
-    private SpannableString spannableString;
     private WithdrawDepositBO withdrawDepositBO;
     private String date;
     private String status;
@@ -36,27 +35,29 @@ public class MyWithdrawDepositAdapter extends MyBaseAdapter<WithdrawDepositBO> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_my_withdraw_deposit, null);
-            viewHolder.contentTxt = (TextView) convertView.findViewById(R.id.txt_withdraw_deposit);
+            viewHolder.dateTxt = (TextView) convertView.findViewById(R.id.txt_withdraw_deposit_date);
+            viewHolder.statusTxt = (TextView) convertView.findViewById(R.id.txt_withdraw_deposit_status);
+            viewHolder.moneyTxt = (TextView) convertView.findViewById(R.id.txt_withdraw_deposit_money);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
 
         withdrawDepositBO = new WithdrawDepositBO();
         withdrawDepositBO = itemList.get(position);
-        date = withdrawDepositBO.getDateTime();
+        date = withdrawDepositBO.getDrawDt();
         status = withdrawDepositBO.getStatus();
-        account = withdrawDepositBO.getAccount();
+        account = withdrawDepositBO.getDrawFee();
 
-        spannableString = new SpannableString(date + "  " + status + "  " + account);
-        spannableString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeGray)), 13,
-                15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        viewHolder.contentTxt.setText(spannableString);
+        viewHolder.dateTxt.setText(date);
+        viewHolder.statusTxt.setText(status);
+        viewHolder.moneyTxt.setText("￥" + account);
 
         return convertView;
     }
 
     class ViewHolder {
-        private TextView contentTxt;
+        private TextView dateTxt;
+        private TextView statusTxt;
+        private TextView moneyTxt;
     }
 }

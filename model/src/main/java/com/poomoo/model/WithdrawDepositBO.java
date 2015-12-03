@@ -9,16 +9,16 @@ package com.poomoo.model;
  * 日期: 2015/11/23 17:15.
  */
 public class WithdrawDepositBO {
-    private String dateTime;//提现日期
+    private String drawDt;//提现日期
     private String status;//提现状态
-    private String account;//提现金额
+    private String drawFee;//提现金额
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDrawDt() {
+        return drawDt;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDrawDt(String drawDt) {
+        this.drawDt = drawDt;
     }
 
     public String getStatus() {
@@ -29,11 +29,11 @@ public class WithdrawDepositBO {
         this.status = status;
     }
 
-    public String getAccount() {
-        return account;
+    public String getDrawFee() {
+        return drawFee;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setDrawFee(String drawFee) {
+        this.drawFee = drawFee;
     }
 }

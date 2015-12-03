@@ -19,6 +19,7 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.view.activity.BaseActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -90,12 +91,21 @@ public class ImageGridActivity extends BaseActivity {
     }
 
     public void toCompleted(View view) {
-        ArrayList<String> list = new ArrayList<String>();
+        //图片地址
+        ArrayList<String> list = new ArrayList<>();
         Collection<String> c = adapter.map.values();
         Iterator<String> it = c.iterator();
         for (; it.hasNext(); ) {
             list.add(it.next());
         }
+        //图片文件
+        ArrayList<File> list1 = new ArrayList<>();
+        Collection<File> c1 = adapter.files.values();
+        Iterator<File> it1 = c1.iterator();
+        for (; it1.hasNext(); ) {
+            list1.add(it1.next());
+        }
+
         if (Bimp.act_bool) {
             finish();
             Bimp.act_bool = false;
@@ -103,6 +113,7 @@ public class ImageGridActivity extends BaseActivity {
         for (int i = 0; i < list.size(); i++) {
             if (Bimp.drr.size() < 9) {
                 Bimp.drr.add(list.get(i));
+                Bimp.files.add(list1.get(i));
             }
         }
         finish();

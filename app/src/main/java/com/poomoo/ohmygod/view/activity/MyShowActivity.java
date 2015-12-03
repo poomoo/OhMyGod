@@ -49,16 +49,16 @@ public class MyShowActivity extends BaseActivity {
         list.setAdapter(showAdapter);
 
         showBO = new ShowBO();
-        showBO.setPics(MyConfig.testUrls);
-        replyBO = new ReplyBO();
-        replyBO.setContent("测试测试");
-        replyBO.setFloor_user_name("十年九梦你");
-        replyBO.setRevert_user_name("糊涂图");
-        showBO.setReplyBO(replyBO);
+//        showBO.setPics(MyConfig.testUrls);
+//        replyBO = new ReplyBO();
+//        replyBO.setContent("测试测试");
+//        replyBO.setFloor_user_name("十年九梦你");
+//        replyBO.setRevert_user_name("糊涂图");
+//        showBO.setReplyBO(replyBO);
 
         showBOList = new ArrayList<>();
-        showBOList.add(showBO);
-        showAdapter.setItems(showBOList);
+//        showBOList.add(showBO);
+//        showAdapter.setItems(showBOList);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,7 +12,7 @@ import com.poomoo.model.WinInformationBO;
 import com.poomoo.ohmygod.R;
 
 /**
- * 中奖信息适配
+ * 中奖信息
  * 作者: 李苜菲
  * 日期: 2015/11/13 11:18.
  */

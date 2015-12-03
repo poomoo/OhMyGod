@@ -12,7 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ReplyBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
@@ -43,6 +45,7 @@ public class ShowFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        getData();
     }
 
     private void initView() {
@@ -52,12 +55,12 @@ public class ShowFragment extends BaseFragment {
         list.setAdapter(showAdapter);
 
         showBO = new ShowBO();
-        showBO.setPics(MyConfig.testUrls);
-        replyBO = new ReplyBO();
-        replyBO.setContent("测试测试");
-        replyBO.setFloor_user_name("十年九梦你");
-        replyBO.setRevert_user_name("糊涂图");
-        showBO.setReplyBO(replyBO);
+//        showBO.setPics(MyConfig.testUrls);
+//        replyBO = new ReplyBO();
+//        replyBO.setContent("测试测试");
+//        replyBO.setFloor_user_name("十年九梦你");
+//        replyBO.setRevert_user_name("糊涂图");
+//        showBO.setReplyBO(replyBO);
 
         showBOList = new ArrayList<>();
         showBOList.add(showBO);
@@ -74,6 +77,21 @@ public class ShowFragment extends BaseFragment {
                 //隐藏键盘
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
+    }
+
+    private void getData() {
+        showProgressDialog("查询中...");
+        this.appAction.getShowList(1, application.getUserId(), 1, 10, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
             }
         });
     }

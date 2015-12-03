@@ -19,6 +19,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/txt_getRewardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="悉尼豪华别墅"
@@ -38,6 +39,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/txt_getRewardAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="观山湖区世纪城"
@@ -57,6 +59,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/txt_getRewardEndDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015年8月5-2015年8月10日"
@@ -76,6 +79,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/txt_getRewardRequirement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="携带本人身份证至活动领取地点领取已中奖商品"
@@ -91,6 +95,7 @@
         android:padding="10dp">
 
         <Button
+            android:id="@+id/btn_show"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -111,6 +116,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_grab_button_open_activity"
             android:gravity="center"
+            android:onClick="toCompletedUserInfo"
             android:text="@string/btn_complete_information"
             android:textColor="@color/white"
             android:textSize="20sp" />

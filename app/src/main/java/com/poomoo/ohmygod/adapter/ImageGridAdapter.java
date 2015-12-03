@@ -17,7 +17,10 @@ import com.poomoo.model.ImageItem;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.BitmapCache;
+import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +33,9 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
 
     private TextCallback textcallback = null;
     public Map<String, String> map = new HashMap<>();
+    public Map<String, File> files = new HashMap<>();
+    private Bitmap bitmap;
+    private File file;
     private BitmapCache cache;
     private Handler mHandler;
     private int selectTotal = 0;
@@ -109,6 +115,13 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
                         if (textcallback != null)
                             textcallback.onListen(selectTotal);
                         map.put(path, path);
+                        try {
+                            bitmap = Bimp.revitionImageSize(path);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        file = FileUtils.saveBitmapByPath(bitmap, path);
+                        files.put(path, file);
 
                     } else if (!item.isSelected) {
                         holder.selected.setImageResource(-1);
@@ -117,6 +130,7 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
                         if (textcallback != null)
                             textcallback.onListen(selectTotal);
                         map.remove(path);
+                        files.remove(path);
                     }
                 } else if ((Bimp.drr.size() + selectTotal) >= 9) {
                     if (item.isSelected == true) {
@@ -125,6 +139,7 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
                         holder.text.setBackgroundColor(0x00000000);
                         selectTotal--;
                         map.remove(path);
+                        files.remove(path);
                     } else {
                         Message message = Message.obtain(mHandler, 0);
                         message.sendToTarget();

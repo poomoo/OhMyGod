@@ -7,73 +7,68 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.poomoo.model.GrabBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
- * 中奖记录
+ * 夺宝记录
  * 作者: 李苜菲
- * 日期: 2015/11/23 13:43.
+ * 日期: 2015/11/30 14:49.
  */
-public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
+public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
     private WinningRecordsBO winningRecordsBO;
 
-    public WinningRecordAdapter(Context context) {
+    public SnatchAdapter(Context context) {
         super(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
-
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_list_winning_record, null);
+            convertView = inflater.inflate(R.layout.item_list_grab, null);
+            viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
+            viewHolder.countDownTxt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
+            viewHolder.labelTxt = (TextView) convertView.findViewById(R.id.txt_label);
 
-            viewHolder.fLayout = (FrameLayout) convertView.findViewById(R.id.flayout_winning_record);
-            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.img_status);
-            viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winning_dateTime);
-            viewHolder.endDateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winning_endTime);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
 
-
         winningRecordsBO = itemList.get(position);
-        if (winningRecordsBO.getIsGot().equals("1"))
-            viewHolder.statusImg.setImageResource(R.drawable.ic_yes);
-        else
-            viewHolder.statusImg.setImageResource(R.drawable.ic_no);
-        viewHolder.dateTimeTxt.setText(winningRecordsBO.getPlayDt());
-        viewHolder.endDateTimeTxt.setText(winningRecordsBO.getGetEndDt());
-        viewHolder.fLayout.setTag(winningRecordsBO.getPicture());
+        viewHolder.countDownTxt.setText("测试数据");
+        viewHolder.labelTxt.setVisibility(View.GONE);
+        viewHolder.rlayout.setTag(winningRecordsBO.getPicture());
+
         ImageLoader.getInstance().loadImage(winningRecordsBO.getPicture(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 Drawable drawable = new BitmapDrawable(context.getResources(), loadedImage);
                 // 通过 tag 来防止图片错位
-                if (viewHolder.fLayout.getTag() != null && viewHolder.fLayout.getTag().equals(imageUri)) {
-                    viewHolder.fLayout.setBackground(drawable);
+                if (viewHolder.rlayout.getTag() != null && viewHolder.rlayout.getTag().equals(imageUri)) {
+                    viewHolder.rlayout.setBackground(drawable);
                 }
             }
         });
+
         return convertView;
     }
 
     class ViewHolder {
-        private FrameLayout fLayout;
-        private ImageView statusImg;//奖品状态
-        private TextView dateTimeTxt;//获奖时间
-        private TextView endDateTimeTxt;//截止时间
+        private RelativeLayout rlayout;
+        private TextView countDownTxt;
+        private TextView labelTxt;
     }
 }

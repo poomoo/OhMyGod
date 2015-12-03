@@ -5,42 +5,70 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.FileBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.AddPicsAdapter;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
+import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.activity.pics.PhotoActivity;
 import com.poomoo.ohmygod.view.activity.pics.PhotosActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 晒单分享
  * 作者: 李苜菲
  * 日期: 2015/11/23 15:27.
  */
-public class ShowAndShareActivity extends BaseActivity {
+public class ShowAndShareActivity extends BaseActivity implements OnItemClickListener {
+    private TextView titleTxt;
+    private EditText contentEdt;
     private GridView gridView;
     private AddPicsAdapter addPicsAdapter;
 
     private static final int TAKE_PICTURE = 0x000000;
-    private String path = "";
+    private String path;
+    private String title;
+    private String activeId;
+    private String content;
+    private String pictures;
+    private FileBO fileBO;
+    private List<FileBO> fileBOList;
+    private int index = 0;
+    private File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +81,18 @@ public class ShowAndShareActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
+        titleTxt = (TextView) findViewById(R.id.txt_show_title);
+        contentEdt = (EditText) findViewById(R.id.edt_show_content);
         gridView = (GridView) findViewById(R.id.grid_add_pics);
+
+        title = getIntent().getStringExtra(getString(R.string.intent_title));
+        activeId = getIntent().getStringExtra(getString(R.string.intent_activeId));
+        titleTxt.setText(title);
         gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         addPicsAdapter = new AddPicsAdapter(this);
         addPicsAdapter.update();
         gridView.setAdapter(addPicsAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if (arg2 == Bimp.bmp.size()) {
-                    new PopupWindows(ShowAndShareActivity.this, gridView);
-                } else {
-                    Intent intent = new Intent(ShowAndShareActivity.this, PhotoActivity.class);
-                    intent.putExtra("ID", arg2);
-                    startActivity(intent);
-                }
-            }
-        });
+        gridView.setOnItemClickListener(this);
     }
 
     protected void initTitleBar() {
@@ -145,8 +168,9 @@ public class ShowAndShareActivity extends BaseActivity {
 
     public void photo() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(Environment.getExternalStorageDirectory() + "/myimage/",
+        file = new File(Environment.getExternalStorageDirectory() + "/myimage/",
                 String.valueOf(System.currentTimeMillis()) + ".jpg");
+        Bimp.files.add(file);
         path = file.getPath();
         Uri imageUri = Uri.fromFile(file);
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -158,8 +182,104 @@ public class ShowAndShareActivity extends BaseActivity {
             case TAKE_PICTURE:
                 if (Bimp.drr.size() < 9 && resultCode == -1) {
                     Bimp.drr.add(path);
+                    Bimp.files.add(file);
                 }
                 break;
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position == Bimp.bmp.size()) {
+            new PopupWindows(ShowAndShareActivity.this, gridView);
+        } else {
+            Intent intent = new Intent(ShowAndShareActivity.this, PhotoActivity.class);
+            intent.putExtra("ID", position);
+            startActivity(intent);
+        }
+    }
+
+    private boolean checkInput() {
+        content = contentEdt.getText().toString().trim();
+        if (TextUtils.isEmpty(content)) {
+            MyUtil.showToast(getApplicationContext(), "请填写评论");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 晒单
+     *
+     * @param view
+     */
+    public void toShow(View view) {
+        if (checkInput()) {
+            int len = Bimp.drr.size();
+            fileBOList=new ArrayList<>();
+            for (int i = 0; i < len; i++) {
+                fileBO = new FileBO();
+                fileBO.setType("4");
+                fileBO.setImgFile(Bimp.files.get(i));
+                fileBOList.add(fileBO);
+            }
+            showProgressDialog("上传中...");
+            uploadPics();
+        }
+
+    }
+
+    public void putShow() {
+        this.appAction.putShow(application.getUserId(), activeId, content, pictures, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                MyUtil.showToast(getApplicationContext(), data.getMsg());
+                finish();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
+    public void uploadPics() {
+        this.appAction.uploadPics(fileBOList.get(index++), new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                JSONObject result;
+                try {
+                    result = new JSONObject(data.getJsonData().toString());
+                    String url = result.getString("picUrl");
+                    pictures += url + ";";
+                    Message message = new Message();
+                    message.what = 1;
+                    myHandler.sendMessage(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            if (msg.what == 1) {
+                if (index == Bimp.drr.size()) {
+                    putShow();
+                } else {
+                    uploadPics();
+                }
+            }
+            super.handleMessage(msg);
+        }
+    };
 }

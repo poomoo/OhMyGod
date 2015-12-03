@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.view.fragment;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ public class BaseFragment extends Fragment {
     // 核心层的Action实例
     public AppAction appAction;
     public String TAG = getClass().getSimpleName();
+    //进度对话框
+    public ProgressDialog progressDialog = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,5 +79,29 @@ public class BaseFragment extends Fragment {
         public TextView rightTxt;//右边标题
         public ImageView backImg;//返回键
         public ImageView rightImg;//右边图标
+    }
+
+    /**
+     * 显示进度对话框
+     *
+     * @param msg
+     */
+    protected void showProgressDialog(String msg) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(msg);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.show();
+    }
+
+    /**
+     * 关闭对话框
+     */
+    protected void closeProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 }

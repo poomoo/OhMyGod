@@ -137,6 +137,7 @@ public class HttpEngine {
                                 responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
                                 responseBO.getObjList().add(responseBO.getObj());
                             }
+                            responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -182,7 +183,7 @@ public class HttpEngine {
         sb.append(LINE_END);
         sb.append(fileBO.getType());
         sb.append(LINE_END);
-        Log.i(TAG,"sb:"+sb.toString());
+        Log.i(TAG, "sb:" + sb.toString());
 
 
         DataOutputStream outStream = new DataOutputStream(

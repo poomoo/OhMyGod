@@ -18,6 +18,9 @@ public class Config {
     public final static String LOGIN = "10005";//登陆
     public final static String CHANGE = "10006";//修改用户信息接口（单独修改用户某个字段信息，如昵称）
     public final static String PERSONALINFO = "10007";//编辑个人资料页面接口（实名认证接口）
+    public final static String SIGNEDLIST = "10010";//签到列表
+    public final static String SIGNED = "10011";//保存签到接口
+    public final static String WITHDRAWDEPOSIT = "10012";//保存签到接口
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号
@@ -25,8 +28,14 @@ public class Config {
     public final static String ACTIVITY = "20002";//活动详情
     public final static String SUBMIT = "20003";//提交申请
     public final static String WINNERLIST = "20004";//中奖信息
+    public final static String RECORDS = "20006";//中奖记录
+
+    //ACTION 30000
+    public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号
+    public final static String SHOW = "30001";//30001
 
     //ACTION 40000
     public final static String PUBACTION = "40000";//公共接口统一业务编号
     public final static String AD = "40001";//广告
+    public final static String STATEMENT = "40002";//查询声明信息接口
 }

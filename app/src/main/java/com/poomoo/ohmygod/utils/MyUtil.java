@@ -28,7 +28,7 @@ public class MyUtil {
     }
 
     //把字符串转为日期
-    public static Date ConverToDate(String strDate) throws Exception {
+    public static Date ConvertToDate(String strDate) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM");
         return df.parse(strDate);
     }

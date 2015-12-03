@@ -15,8 +15,12 @@ import android.view.View;
 
 import com.poomoo.ohmygod.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 日历控件
@@ -34,9 +38,13 @@ public class CalendarView extends View {
     private int column = 7; //日历列数
     private int row = 0; //日历行数(除去星期)
     private int dayInWeek;
+    private int dayInMonth;
     private int curStartIndex, curEndIndex; // 当前显示的日历起始的索引
     private int curMonthDay;//当前月份天数
     private boolean isSigned = false;//是否签到
+    private List<String> dateList;//已签到的日期集合
+    private List<Integer> isSignedList = new ArrayList<>();//已签到的日期下标集合
+    private SimpleDateFormat format;
 
     public CalendarView(Context context) {
         super(context);
@@ -125,7 +133,7 @@ public class CalendarView extends View {
 
         for (int i = 0; i < column * row; i++) {
             //背景
-            if (i == 8 || i == 9 || i == 10) {
+            if (isSignedList.contains(i)) {
                 isSigned = true;
                 drawDateBg(canvas, i, surface.signedBgColor);
             } else {
@@ -163,6 +171,21 @@ public class CalendarView extends View {
         Log.i(TAG, curMonthDay + "");
         for (int i = 1; i < curMonthDay; i++) {
             date[dayInWeek + i] = i + 1 + "";
+        }
+        //计算已签到的日期下标
+        if (dateList != null) {
+            int len = dateList.size();
+            format = new SimpleDateFormat("yyyy-MM-dd");
+            for (int i = 0; i < len; i++) {
+                try {
+                    Date date = format.parse(dateList.get(i));
+                    calendar.setTime(date);
+                    dayInMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                    isSignedList.add(dayInMonth + curStartIndex - 1);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         curEndIndex = dayInWeek + curMonthDay;
     }
@@ -298,8 +321,10 @@ public class CalendarView extends View {
 
     //设置日历时间
     public void
-    setCalendarData(Date date) {
+    setCalendarData(Date date, List<String> dateList) {
         Log.i(TAG, "Date:" + date);
+        if (dateList != null)
+            this.dateList = dateList;
         calendar.setTime(date);
         curDate = calendar.getTime();
         calculateRow();

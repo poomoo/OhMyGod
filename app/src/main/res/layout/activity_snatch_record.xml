@@ -7,13 +7,25 @@
 
     <include layout="@layout/pub_layout_title_bar" />
 
+    <com.poomoo.ohmygod.view.custom.RefreshLayout
+        android:id="@+id/refresh_snatch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_snatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.poomoo.ohmygod.view.custom.RefreshLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/divider"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:visibility="gone">
 
         <RadioGroup
             android:layout_width="match_parent"

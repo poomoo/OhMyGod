@@ -11,8 +11,11 @@ import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.StatementBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.model.WinnerBO;
+import com.poomoo.model.WinningRecordsBO;
+import com.poomoo.model.WithdrawDepositBO;
 
 
 import java.io.File;
@@ -345,6 +348,159 @@ public class AppActionImpl implements AppAction {
                 }
             }
         }.execute();
+    }
 
+    @Override
+    public void toSign(final String userId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.toSigned(userId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getSignedList(final String userId, final String year, final String month, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getSignedList(userId, year, month);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getStatement(final String type, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<StatementBO>>() {
+            @Override
+            protected ResponseBO<StatementBO> doInBackground(Void... params) {
+                return api.getStatement(type);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<StatementBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getWinningList(final String userId, final String flag, final int currPage, final int pageSize, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<WinningRecordsBO>>() {
+            @Override
+            protected ResponseBO<WinningRecordsBO> doInBackground(Void... params) {
+                return api.getWinningList(userId, flag, currPage, pageSize);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<WinningRecordsBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getMyWithdrawDepositList(final String userId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<WithdrawDepositBO>>() {
+            @Override
+            protected ResponseBO<WithdrawDepositBO> doInBackground(Void... params) {
+                return api.getMyWithdrawDepositList(userId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<WithdrawDepositBO> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void putShow(final String userId, final String activeId, final String content, final String pictures, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.putShow(userId, activeId, content, pictures);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getShowList(final int flag, final String userId, final int currPage, final int pageSize, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getShowList(flag, userId, currPage, pageSize);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
     }
 }

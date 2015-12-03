@@ -6,8 +6,12 @@ import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.SignedBO;
+import com.poomoo.model.StatementBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.model.WinnerBO;
+import com.poomoo.model.WinningRecordsBO;
+import com.poomoo.model.WithdrawDepositBO;
 
 import java.io.File;
 import java.io.IOException;
@@ -185,6 +189,115 @@ public class ApiImpl implements Api {
         paramMap.put("userId", userId);
         paramMap.put("key", key);
         paramMap.put(key, value);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<Void> toSigned(String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.SIGNED);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<SignedBO> getSignedList(String userId, String year, String month) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.SIGNEDLIST);
+        paramMap.put("userId", userId);
+        paramMap.put("year", year);
+        paramMap.put("month", month);
+
+        try {
+            return httpEngine.postHandle(paramMap, SignedBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO<StatementBO> getStatement(String type) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.STATEMENT);
+        paramMap.put("type", type);
+
+        try {
+            return httpEngine.postHandle(paramMap, StatementBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getWinningList(String userId, String flag, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.RECORDS);
+        paramMap.put("userId", userId);
+        paramMap.put("flag", flag);
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, WinningRecordsBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getMyWithdrawDepositList(String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.WITHDRAWDEPOSIT);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, WithdrawDepositBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO putShow(String userId, String activeId, String content, String pictures) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.SHOWANDSHARE);
+        paramMap.put("method", Config.SHOW);
+        paramMap.put("userId", userId);
+        paramMap.put("activeId", activeId);
+        paramMap.put("content", content);
+        paramMap.put("pictures", pictures);
+
+        try {
+            return httpEngine.postHandle(paramMap, WithdrawDepositBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getShowList(int flag, String userId, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.SHOWANDSHARE);
+        paramMap.put("method", Config.SHOW);
+        paramMap.put("userId", userId);
+        paramMap.put("flag", flag + "");
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pictures", pageSize + "");
 
         try {
             return httpEngine.postHandle(paramMap, null);
