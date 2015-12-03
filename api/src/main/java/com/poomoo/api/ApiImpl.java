@@ -297,7 +297,7 @@ public class ApiImpl implements Api {
         paramMap.put("userId", userId);
         paramMap.put("flag", flag + "");
         paramMap.put("currPage", currPage + "");
-        paramMap.put("pictures", pageSize + "");
+        paramMap.put("pageSize", pageSize + "");
 
         try {
             return httpEngine.postHandle(paramMap, null);

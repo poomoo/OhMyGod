@@ -52,7 +52,7 @@ public class ShowFragment extends BaseFragment {
         replyRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_reply);
         list = (ListView) getActivity().findViewById(R.id.list_show);
         showAdapter = new ShowAdapter(getActivity());
-        list.setAdapter(showAdapter);
+//        list.setAdapter(showAdapter);
 
         showBO = new ShowBO();
 //        showBO.setPics(MyConfig.testUrls);
