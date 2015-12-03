@@ -276,7 +276,7 @@ public class ApiImpl implements Api {
     public ResponseBO putShow(String userId, String activeId, String content, String pictures) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.SHOWANDSHARE);
-        paramMap.put("method", Config.SHOW);
+        paramMap.put("method", Config.SHOWLIST);
         paramMap.put("userId", userId);
         paramMap.put("activeId", activeId);
         paramMap.put("content", content);
