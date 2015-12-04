@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.poomoo.ohmygod.utils.LogUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,9 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     public void setItems(List<T> itemList) {
         this.itemList.clear();
         this.itemList = itemList;
+        for(int i=0;i<itemList.size();i++){
+            LogUtils.i("MyBaseAdapter","i:"+i+"itemList:"+itemList.toString());
+        }
         notifyDataSetChanged();
     }
 

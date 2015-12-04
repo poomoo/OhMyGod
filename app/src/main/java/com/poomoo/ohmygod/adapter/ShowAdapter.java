@@ -19,6 +19,7 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.ReplyListener;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,8 +82,9 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         picsGridAdapter.setItems(showBO.getPicList());
 
 
-        commentAdapter = new CommentAdapter(context, listener);
+        commentAdapter = new CommentAdapter(context, listener,position);
         viewHolder.listView.setAdapter(commentAdapter);
+        LogUtils.i( "position:"+position+"comments:" + showBO.getComments().toString());
         commentAdapter.setItems(showBO.getComments());
 
         return convertView;

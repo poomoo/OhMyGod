@@ -65,4 +65,16 @@ public class CommentBO {
     public void setReplies(List<ReplyBO> replies) {
         this.replies = replies;
     }
+
+    @Override
+    public String toString() {
+        return "CommentBO{" +
+                "commentDt='" + commentDt + '\'' +
+                ", commentId='" + commentId + '\'' +
+                ", content='" + content + '\'' +
+                ", dynamicId='" + dynamicId + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", replies=" + replies +
+                '}';
+    }
 }

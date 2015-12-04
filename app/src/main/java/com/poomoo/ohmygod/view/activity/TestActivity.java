@@ -53,7 +53,9 @@ public class TestActivity extends BaseActivity {
     private List<ReplyBO> replyBOList = new ArrayList<>();
     private List<CommentBO> commentBOList = new ArrayList<>();
     private List<String> picList = new ArrayList<>();
-    private int heightDifference;
+    private int selectPosition;
+    private int screenHeight;
+    private int keyBoardHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,39 +84,31 @@ public class TestActivity extends BaseActivity {
             }
         });
 
-//        replyLlayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            /**
-//             * the result is pixels
-//             */
-//            @Override
-//            public void onGlobalLayout() {
-//
-//                Rect r = new Rect();
-//                replyLlayout.getWindowVisibleDisplayFrame(r);
-//
-//                int screenHeight = replyLlayout.getRootView().getHeight();
-//                heightDifference = screenHeight - (r.bottom - r.top);
-//                Log.e("Keyboard Size", "Size:" + heightDifference);
-//
-//                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) replyLlayout.getLayoutParams();
-//                params.setMargins(0, 647 - params.height, 0, 647);// 通过自定义坐标来放置你的控件
-//                replyLlayout.setLayoutParams(params);
-//            }
-//        });
+        replyLlayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                replyLlayout.getWindowVisibleDisplayFrame(r);
+                screenHeight = replyLlayout.getRootView().getHeight();
+                keyBoardHeight = screenHeight - (r.bottom - r.top);
+                boolean visible = keyBoardHeight > screenHeight / 3;
+//                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+                if (visible) {
+                    moveList(selectPosition);
+                    LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+                }
+            }
+        });
 
 
         showAdapter = new ShowAdapter(this, new ReplyListener() {
             @Override
-            public void onResult(String name) {
+            public void onResult(String name, int position) {
                 MyUtil.showToast(getApplication(), "onResult 点击:" + name);
+                selectPosition = position;
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
                 replyLlayout.setVisibility(View.VISIBLE);
-                int location[] = new int[2];
-//                replyLlayout.getLocationOnScreen(location);
-//                LogUtils.i(TAG,"x:"+location[0] + "y:" + location[1]);
-//                LogUtils.i(TAG, "height:" + replyLlayout.getLayoutParams().height + "  heightDifference:" + heightDifference);
                 MyUtil.showToast(getApplication(), "replyRlayout状态:" + replyLlayout.getVisibility());
                 replyEdt.setFocusable(true);
                 replyEdt.setFocusableInTouchMode(true);
@@ -122,36 +116,6 @@ public class TestActivity extends BaseActivity {
             }
         });
         list.setAdapter(showAdapter);
-
-        showBO = new ShowBO();
-        int len = MyConfig.testUrls.length;
-        for (int i = 0; i < len; i++)
-            picList.add(MyConfig.testUrls[i]);
-        showBO.setPicList(picList);
-        showBO.setNickName("十年九梦你");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("货已经收到了，东西不错");
-        showBO.setTitle("(第123期)电脑疯抢玩命中...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("十年九梦你");
-        commentBO.setContent("你运气真好");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("十年九梦你");
-        replyBO.setToNickName("糊涂图");
-        replyBO.setContent("是的");
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-        showBOList.add(showBO);
-        showBOList.add(showBO);
-        showBOList.add(showBO);
-//        showBOList.add(showBO);
-
-        showAdapter.setItems(showBOList);
 
         replyLlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,8 +129,109 @@ public class TestActivity extends BaseActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
+
+        testData();
     }
 
+    private void testData() {
+        int len = MyConfig.testUrls.length;
+        for (int i = 0; i < len; i++)
+            picList.add(MyConfig.testUrls[i]);
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("十年九梦你");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("货已经收到了，东西不错");
+        showBO.setTitle("(第123期)电脑疯抢玩命中...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("糊涂图");
+        commentBO.setContent("你运气真好");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("十年九梦你");
+        replyBO.setToNickName("糊涂图");
+        replyBO.setContent("是的");
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("跑马安卓小飞");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("什么玩意儿");
+        showBO.setTitle("(第124期)疯狂搬砖中...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("马云");
+        commentBO.setContent("小伙子好好干");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("跑马安卓小飞");
+        replyBO.setToNickName("马云");
+        replyBO.setContent("好的");
+        replyBOList = new ArrayList<>();
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList = new ArrayList<>();
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("劉強東");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("大愛奶茶妹");
+        showBO.setTitle("(第125期)愛愛愛...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("劉強東");
+        commentBO.setContent("我媳婦是奶茶妹 ");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("奶茶妹");
+        replyBO.setToNickName("劉強東");
+        replyBO.setContent("老公我愛你");
+        replyBOList = new ArrayList<>();
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList = new ArrayList<>();
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+
+//        for(int i=0;i<showBOList.size();i++){
+//            LogUtils.i(TAG,"i:"+i+"itemList:"+showBOList.get(i).getComments());
+//        }
+        showAdapter.setItems(showBOList);
+    }
+
+    private void moveList(int selectPosition) {
+        if (showAdapter == null)
+            return;
+
+        LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
+        if (showAdapter.getCount() == selectPosition + 1) {
+            list.setSelection(list.getBottom());
+        } else {
+            LogUtils.i(TAG, "screenHeight:" + screenHeight + "keyBoardHeight:" + keyBoardHeight);
+            int off = screenHeight - screenHeight;
+            LogUtils.i(TAG, "off:" + off);
+            list.setSelectionFromTop(selectPosition + 1, off);
+        }
+    }
 //    public void toTest(View view) {
 //        int[] location = new int[2];
 //        startTxt.getLocationOnScreen(location);

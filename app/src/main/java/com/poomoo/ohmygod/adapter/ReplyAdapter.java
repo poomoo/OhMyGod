@@ -31,10 +31,12 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private String toName;//被回复的人
     private String content;//内容
     private ReplyListener listener;
+    private int selectPosition;
 
-    public ReplyAdapter(Context context, ReplyListener listener) {
+    public ReplyAdapter(Context context, ReplyListener listener,int selectPosition) {
         super(context);
         this.listener = listener;
+        this.selectPosition=selectPosition;
     }
 
     @Override
@@ -101,10 +103,10 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         public void onClick(View v) {
             if (status) {
 //                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name);
+                listener.onResult(name,selectPosition);
             } else {
 //                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name);
+                listener.onResult(name,selectPosition);
             }
 
 //            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);

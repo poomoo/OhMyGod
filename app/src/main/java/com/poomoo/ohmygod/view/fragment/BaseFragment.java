@@ -36,7 +36,6 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         application = (MyApplication) getActivity().getApplication();
         appAction = application.getAppAction();
         super.onActivityCreated(savedInstanceState);

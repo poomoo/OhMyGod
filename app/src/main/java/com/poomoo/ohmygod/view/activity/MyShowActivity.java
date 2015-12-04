@@ -48,7 +48,7 @@ public class MyShowActivity extends BaseActivity {
         list = (ListView) findViewById(R.id.list_show);
         showAdapter = new ShowAdapter(this, new ReplyListener() {
             @Override
-            public void onResult(String name) {
+            public void onResult(String name, int selectPositon) {
 
             }
         });

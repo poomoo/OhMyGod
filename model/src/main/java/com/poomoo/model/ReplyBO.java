@@ -81,4 +81,18 @@ public class ReplyBO {
     public void setToUserId(String toUserId) {
         this.toUserId = toUserId;
     }
+
+    @Override
+    public String toString() {
+        return "ReplyBO{" +
+                "commentId='" + commentId + '\'' +
+                ", content='" + content + '\'' +
+                ", fromNickName='" + fromNickName + '\'' +
+                ", fromUserId='" + fromUserId + '\'' +
+                ", replyDt='" + replyDt + '\'' +
+                ", replyId='" + replyId + '\'' +
+                ", toNickName='" + toNickName + '\'' +
+                ", toUserId='" + toUserId + '\'' +
+                '}';
+    }
 }

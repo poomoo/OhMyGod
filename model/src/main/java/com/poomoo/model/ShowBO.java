@@ -101,4 +101,20 @@ public class ShowBO {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "ShowBO{" +
+                "activeId='" + activeId + '\'' +
+                ", comments=" + comments +
+                ", content='" + content + '\'' +
+                ", dynamicDt='" + dynamicDt + '\'' +
+                ", dynamicId='" + dynamicId + '\'' +
+                ", headPic='" + headPic + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", picList=" + picList +
+                ", title='" + title + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
