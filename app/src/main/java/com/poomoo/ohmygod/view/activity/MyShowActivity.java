@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 
@@ -36,7 +37,7 @@ public class MyShowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_show);
-        
+
         initView();
     }
 
@@ -45,7 +46,12 @@ public class MyShowActivity extends BaseActivity {
 
         replyRlayout = (RelativeLayout) findViewById(R.id.rlayout_reply);
         list = (ListView) findViewById(R.id.list_show);
-        showAdapter = new ShowAdapter(this);
+        showAdapter = new ShowAdapter(this, new ReplyListener() {
+            @Override
+            public void onResult(String name) {
+
+            }
+        });
         list.setAdapter(showAdapter);
 
         showBO = new ShowBO();

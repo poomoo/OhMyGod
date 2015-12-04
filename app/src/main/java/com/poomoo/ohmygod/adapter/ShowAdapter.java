@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.ReplyListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +30,16 @@ import java.util.List;
  */
 public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     private PicsGridAdapter picsGridAdapter;
-    private ReplyAdapter replyAdapter;
+    private CommentAdapter commentAdapter;
     private ShowBO showBO;
-    private ReplyBO replyBO;
+    private CommentBO commentBO;
     private List<String> urlList;
-    private List<ReplyBO> replyBOList;
+    private ReplyListener listener;
 
-    public ShowAdapter(Context context) {
+    public ShowAdapter(Context context, ReplyListener listener) {
         super(context);
-        picsGridAdapter = new PicsGridAdapter(context);
+        this.picsGridAdapter = new PicsGridAdapter(context);
+        this.listener = listener;
     }
 
     @Override
@@ -69,19 +72,18 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 //        holderView.gridView.setEnabled(false);
 
         showBO = itemList.get(position);
-        urlList = new ArrayList<>();
-//        for (String url : showBO.getPics())
-//            urlList.add(url);
+        viewHolder.nameTxt.setText(showBO.getNickName());
+        viewHolder.dateTimeTxt.setText(showBO.getDynamicDt());
+        viewHolder.contentTxt.setText(showBO.getContent());
+        viewHolder.titleTxt.setText(showBO.getTitle());
+
         viewHolder.gridView.setAdapter(picsGridAdapter);
-        picsGridAdapter.setItems(urlList);
+        picsGridAdapter.setItems(showBO.getPicList());
 
-//        replyBO = showBO.getReplyBO();
-        replyBOList = new ArrayList<>();
-        replyBOList.add(replyBO);
 
-        replyAdapter = new ReplyAdapter(context, viewHolder);
-        viewHolder.listView.setAdapter(replyAdapter);
-        replyAdapter.setItems(replyBOList);
+        commentAdapter = new CommentAdapter(context, listener);
+        viewHolder.listView.setAdapter(commentAdapter);
+        commentAdapter.setItems(showBO.getComments());
 
         return convertView;
     }

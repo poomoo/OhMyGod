@@ -12,27 +12,29 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.poomoo.model.ReplyBO;
+import com.poomoo.model.CommentBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.ReplyListener;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
- * 回复
+ * 评论
  * 作者: 李苜菲
- * 日期: 2015/11/20 11:49.
+ * 日期: 2015/12/4 10:11.
  */
-public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
-    private SpannableString ss;
-    private ReplyBO replyBO = new ReplyBO();//回复
-    private String replyName;//回复人
-    private String toName;//被回复的人
+public class CommentAdapter extends MyBaseAdapter<CommentBO> {
+    private ReplyAdapter replyAdapter;
+    private CommentBO commentBO = new CommentBO();//评论
+    private String commentName;//评论人
     private String content;//内容
+    private SpannableString ss;
     private ReplyListener listener;
 
-    public ReplyAdapter(Context context, ReplyListener listener) {
+    public CommentAdapter(Context context, ReplyListener listener) {
         super(context);
         this.listener = listener;
     }
@@ -42,52 +44,38 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_list_reply, null);
-            viewHolder.textView = (TextView) convertView.findViewById(R.id.txt_reply_content);
+            convertView = inflater.inflate(R.layout.item_list_comment, null);
+            viewHolder.textView = (TextView) convertView.findViewById(R.id.txt_comment_content);
+            viewHolder.listView = (ListView) convertView.findViewById(R.id.list_reply);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        replyBO = itemList.get(position);
 
-        replyName = replyBO.getFromNickName();
-        toName = replyBO.getToNickName();
-        content = replyBO.getContent();
-
-        //用来标识在 Span 范围内的文本前后输入新的字符时是否把它们也应用这个效果
-        //Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括)
-        //Spanned.SPAN_INCLUSIVE_EXCLUSIVE(前面包括，后面不包括)
-        //Spanned.SPAN_EXCLUSIVE_INCLUSIVE(前面不包括，后面包括)
-        //Spanned.SPAN_INCLUSIVE_INCLUSIVE(前后都包括)
-
-        ss = new SpannableString(replyName + "回复" + toName
-                + "：" + content);
-
+        commentBO = itemList.get(position);
+        commentName = commentBO.getNickName();
+        content = commentBO.getContent();
+        ss = new SpannableString(commentName + ":" + content);
         //为回复的人昵称添加点击事件
-        ss.setSpan(new TextClick(true, replyName), 0,
-                replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //为评论的人的添加点击事件
-        ss.setSpan(new TextClick(false, toName), replyName.length() + 2,
-                replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //设置字体颜色
+        ss.setSpan(new TextClick(commentName), 0,
+                commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), 0,
-                replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), replyName.length() + 2,
-                replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+                commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.textView.setText(ss);
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        replyAdapter = new ReplyAdapter(context, listener);
+        viewHolder.listView.setAdapter(replyAdapter);
+        replyAdapter.setItems(commentBO.getReplies());
         return convertView;
     }
 
     public final class TextClick extends ClickableSpan {
         private String name;
-        private boolean status;
 
-        public TextClick(boolean status, String name) {
+        public TextClick(String name) {
             super();
-            this.status = status;
             this.name = name;
         }
 
@@ -99,13 +87,9 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
 
         @Override
         public void onClick(View v) {
-            if (status) {
-//                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name);
-            } else {
-//                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name);
-            }
+//            MyUtil.showToast(context, "点击" + name);
+            listener.onResult(name);
+
 
 //            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);
 //            viewHolder.replyEdt.setHint("@" + this.name);
@@ -120,6 +104,6 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
 
     class ViewHolder {
         public TextView textView;
+        public ListView listView;
     }
-
 }

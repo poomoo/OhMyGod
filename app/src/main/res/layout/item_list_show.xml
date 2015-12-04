@@ -123,6 +123,11 @@
             android:layout_height="wrap_content"
             android:divider="@null" />
 
+        <ImageView
+            android:id="@+id/img_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reply" />
 
         <LinearLayout
             android:id="@+id/llayout_comment"
@@ -130,7 +135,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/edt_comment"

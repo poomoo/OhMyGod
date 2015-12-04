@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class PicsGridAdapter extends MyBaseAdapter<String> {
             holderView = (HolderView) convertView.getTag();
         }
         String url = itemList.get(position) + "";
+        LogUtils.i("PicsGridAdapter", "url:" + url);
         ImageLoader.getInstance().displayImage(url, holderView.imageView);
         return convertView;
     }

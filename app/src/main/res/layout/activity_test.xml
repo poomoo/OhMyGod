@@ -4,35 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include layout="@layout/pub_layout_title_bar" />
 
-        <com.poomoo.ohmygod.view.custom.BezierView
-            android:id="@+id/BezierView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <include layout="@layout/layout_show" />
 
-        <TextView
-            android:id="@+id/txt_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="start" />
 
-        <Button
-            style="@style/myButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:onClick="toTest"
-            android:text="确定" />
-
-        <TextView
-            android:id="@+id/txt_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="end" />
-    </RelativeLayout>
 </LinearLayout>

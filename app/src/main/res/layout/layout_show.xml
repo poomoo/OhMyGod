@@ -4,43 +4,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/list_show"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rlayout_reply"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="visible">
+        <ListView
+            android:id="@+id/list_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
 
         <LinearLayout
+            android:id="@+id/rlayout_reply"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <EditText
-                android:id="@+id/edt_reply"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_reply"
-                android:padding="3dp" />
+            <LinearLayout
+                android:id="@+id/layout_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/divider"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <Button
-                android:id="@+id/btn_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:background="@color/btn_reply"
-                android:padding="3dp"
-                android:text="回　复"
-                android:textColor="@color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/edt_reply"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_reply"
+                    android:padding="3dp" />
+
+                <Button
+                    android:id="@+id/btn_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="@color/btn_reply"
+                    android:padding="3dp"
+                    android:text="回　复"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-    </RelativeLayout>
+    </FrameLayout>
 </LinearLayout>

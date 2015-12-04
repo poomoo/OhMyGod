@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.MainFragmentActivity" />
         <activity android:name=".view.activity.WebViewActivity" />
         <activity android:name=".view.activity.SnatchRecordActivity" />
         <activity android:name=".view.activity.WinningRecordActivity" />
@@ -44,7 +45,6 @@
         <activity android:name=".view.activity.ChangeBankCardInfoActivity" />
         <activity android:name=".view.activity.ResetPassWordActivity" />
         <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.MainFragmentActivity" />
         <activity android:name=".view.activity.SelectActivity" />
         <activity android:name=".view.activity.CommodityInformationActivity" />
         <activity android:name=".view.activity.EditPersonalInformationActivity" />

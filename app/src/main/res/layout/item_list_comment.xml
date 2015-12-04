@@ -5,11 +5,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_reply_content"
+        android:id="@+id/txt_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:paddingBottom="6dp"
         android:textSize="12sp" />
 
+    <com.poomoo.ohmygod.view.custom.NoScrollListView
+        android:id="@+id/list_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
 </LinearLayout>

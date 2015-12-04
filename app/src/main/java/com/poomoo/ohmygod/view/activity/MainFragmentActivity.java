@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -23,6 +24,7 @@ import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
 public class MainFragmentActivity extends
         BaseActivity {
     private String TAG = this.getClass().getSimpleName();
+    private RadioGroup group;
     private InformPopupWindow informPopupWindow;
     private Fragment curFragment;
     private GrabFragment grabFrament;
@@ -30,13 +32,16 @@ public class MainFragmentActivity extends
     private ShowFragment showFragment;
     private MyFragment myFragment;
     private long exitTime = 0;
+    public static MainFragmentActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        group = (RadioGroup) findViewById(R.id.group_main);
         setDefaultFragment();
+        instance = this;
     }
 
     private void setDefaultFragment() {
@@ -143,5 +148,13 @@ public class MainFragmentActivity extends
         } else {
             finish();
         }
+    }
+
+    public void invisible() {
+        group.setVisibility(View.GONE);
+    }
+
+    public void visible() {
+        group.setVisibility(View.VISIBLE);
     }
 }
