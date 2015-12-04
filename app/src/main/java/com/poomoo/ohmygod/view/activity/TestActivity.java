@@ -95,7 +95,7 @@ public class TestActivity extends BaseActivity {
 //                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible) {
                     moveList(selectPosition);
-                    LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+//                    LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 }
             }
         });
@@ -227,9 +227,9 @@ public class TestActivity extends BaseActivity {
             list.setSelection(list.getBottom());
         } else {
             LogUtils.i(TAG, "screenHeight:" + screenHeight + "keyBoardHeight:" + keyBoardHeight);
-            int off = screenHeight - screenHeight;
+            int off = screenHeight - keyBoardHeight;
             LogUtils.i(TAG, "off:" + off);
-            list.setSelectionFromTop(selectPosition + 1, off);
+            list.setSelectionFromTop(selectPosition+1, off);
         }
     }
 //    public void toTest(View view) {
