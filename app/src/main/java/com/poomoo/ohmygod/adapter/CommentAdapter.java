@@ -16,10 +16,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.poomoo.model.CommentBO;
+import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.ReplyListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 评论
@@ -34,11 +38,13 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
     private SpannableString ss;
     private ReplyListener listener;
     private int selectPosition;
+    private ShowBO showBO;
+    private List<CommentBO> list;
 
-    public CommentAdapter(Context context, ReplyListener listener,int selectPosition) {
+    public CommentAdapter(Context context, ReplyListener listener, int selectPosition) {
         super(context);
         this.listener = listener;
-        this.selectPosition=selectPosition;
+        this.selectPosition = selectPosition;
     }
 
     @Override
@@ -59,7 +65,11 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         content = commentBO.getContent();
         ss = new SpannableString(commentName + ":" + content);
         //为回复的人昵称添加点击事件
-        ss.setSpan(new TextClick(commentName), 0,
+        showBO = new ShowBO();
+        list = new ArrayList<>();
+        list.add(commentBO);
+        showBO.setComments(list);
+        ss.setSpan(new TextClick(commentName, showBO), 0,
                 commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), 0,
                 commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -67,7 +77,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        replyAdapter = new ReplyAdapter(context, listener,selectPosition);
+        replyAdapter = new ReplyAdapter(context, listener, selectPosition, position);
         viewHolder.listView.setAdapter(replyAdapter);
         replyAdapter.setItems(commentBO.getReplies());
         return convertView;
@@ -75,10 +85,12 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
 
     public final class TextClick extends ClickableSpan {
         private String name;
+        private ShowBO showBO;
 
-        public TextClick(String name) {
+        public TextClick(String name, ShowBO showBO) {
             super();
             this.name = name;
+            this.showBO = showBO;
         }
 
         @Override
@@ -90,7 +102,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         @Override
         public void onClick(View v) {
 //            MyUtil.showToast(context, "点击" + name);
-            listener.onResult(name,selectPosition);
+            listener.onResult(name, selectPosition, v, showBO,0);
 
 
 //            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);

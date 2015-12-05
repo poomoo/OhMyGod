@@ -34,6 +34,8 @@ public class Config {
     public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号
     public final static String SHOW = "30001";//晒单分享接口
     public final static String SHOWLIST = "30003";//查询晒单分享列表
+    public final static String COMMENT = "30004";//评论动态
+    public final static String REPLY = "30006";//回复评论
 
     //ACTION 40000
     public final static String PUBACTION = "40000";//公共接口统一业务编号

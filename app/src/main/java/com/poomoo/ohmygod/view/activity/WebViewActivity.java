@@ -63,6 +63,11 @@ public class WebViewActivity extends BaseActivity {
             title = getString(R.string.title_rebate_explain);
         }
 
+        if (PARENT.equals(getString(R.string.intent_withDrawDeposit))) {
+            type = "4";
+            title = getString(R.string.title_withdraw_deposit_help);
+        }
+
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(title);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {

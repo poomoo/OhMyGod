@@ -112,7 +112,7 @@
 
 
     <!--验证手机号-->
-    <string name="label_verify_phone_num">"本次操作需要短信确认,验证码已发至手机:147****2513.请按提示操作"</string>
+    <string name="label_verify_phone_num">本次操作需要短信确认,验证码已发至手机:%1$s.请按提示操作</string>
     <!--验证手机号-->
 
     <!--设置-->
@@ -184,6 +184,7 @@
     <string name="intent_rebate">rebate</string>
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>
+    <string name="intent_withDrawDeposit">withDrawDeposit</string>
     <!--intent-->
 
     <!--hint-->

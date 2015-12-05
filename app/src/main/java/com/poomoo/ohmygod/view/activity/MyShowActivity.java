@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * 日期: 2015/11/24 11:38.
  */
 public class MyShowActivity extends BaseActivity {
-    private RelativeLayout replyRlayout;
+    private LinearLayout replyRlayout;
     private ListView list;
     private ShowAdapter showAdapter;
     private ShowBO showBO;
@@ -44,11 +45,11 @@ public class MyShowActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-        replyRlayout = (RelativeLayout) findViewById(R.id.rlayout_reply);
+        replyRlayout = (LinearLayout) findViewById(R.id.rlayout_reply);
         list = (ListView) findViewById(R.id.list_show);
         showAdapter = new ShowAdapter(this, new ReplyListener() {
             @Override
-            public void onResult(String name, int selectPositon) {
+            public void onResult(String name, int selectPositon, View v, ShowBO showBO, int commentPos) {
 
             }
         });

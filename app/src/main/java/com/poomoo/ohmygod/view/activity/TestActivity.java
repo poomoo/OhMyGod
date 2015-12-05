@@ -6,13 +6,11 @@ package com.poomoo.ohmygod.view.activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -44,6 +42,7 @@ public class TestActivity extends BaseActivity {
     private EditText replyEdt;
     private Button replyBtn;
     private LinearLayout replyLlayout;
+    private LinearLayout rootView;
     private ListView list;
     private ShowAdapter showAdapter;
     private ShowBO showBO;
@@ -56,6 +55,13 @@ public class TestActivity extends BaseActivity {
     private int selectPosition;
     private int screenHeight;
     private int keyBoardHeight;
+    private View view;
+    private int viewTop;
+    private int itemTop;
+    private int y1;//键盘弹出后剩余的界面底部y坐标
+    private int y2;//点击的view距离当前item顶端的距离
+    private boolean isKeyBoardShow = false;
+    private int commentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,7 @@ public class TestActivity extends BaseActivity {
 //    }
 
     protected void initView() {
+//        rootView = (LinearLayout) findViewById(R.id.rootView);
         replyLlayout = (LinearLayout) findViewById(R.id.rlayout_reply);
         replyEdt = (EditText) findViewById(R.id.edt_reply);
         replyBtn = (Button) findViewById(R.id.btn_reply);
@@ -95,6 +102,7 @@ public class TestActivity extends BaseActivity {
 //                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible) {
                     moveList(selectPosition);
+//                    replyLlayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 //                    LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 }
             }
@@ -103,9 +111,13 @@ public class TestActivity extends BaseActivity {
 
         showAdapter = new ShowAdapter(this, new ReplyListener() {
             @Override
-            public void onResult(String name, int position) {
+            public void onResult(String name, int position, View v, ShowBO showBO, int replyPos) {
                 MyUtil.showToast(getApplication(), "onResult 点击:" + name);
                 selectPosition = position;
+                view = v;
+                commentPosition = replyPos;
+                viewTop = view.getTop();
+                LogUtils.i(TAG, "item-->" + "y:" + viewTop);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 replyLlayout.setVisibility(View.VISIBLE);
@@ -113,6 +125,7 @@ public class TestActivity extends BaseActivity {
                 replyEdt.setFocusable(true);
                 replyEdt.setFocusableInTouchMode(true);
                 replyEdt.requestFocus();
+                isKeyBoardShow = true;
             }
         });
         list.setAdapter(showAdapter);
@@ -127,6 +140,7 @@ public class TestActivity extends BaseActivity {
                 //隐藏键盘
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                isKeyBoardShow = false;
             }
         });
 
@@ -222,15 +236,22 @@ public class TestActivity extends BaseActivity {
         if (showAdapter == null)
             return;
 
-        LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
-        if (showAdapter.getCount() == selectPosition + 1) {
-            list.setSelection(list.getBottom());
-        } else {
+        LogUtils.i(TAG, "selectPosition:" + selectPosition);
+        if (isKeyBoardShow) {
+            LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
             LogUtils.i(TAG, "screenHeight:" + screenHeight + "keyBoardHeight:" + keyBoardHeight);
-            int off = screenHeight - keyBoardHeight;
-            LogUtils.i(TAG, "off:" + off);
-            list.setSelectionFromTop(selectPosition+1, off);
+
+            y1 = screenHeight - keyBoardHeight;
+            itemTop = list.getChildAt(selectPosition).getTop();
+            LogUtils.i(TAG, "viewTop:" + viewTop + "list.getChildAt(selectPosition).getTop():" + itemTop);
+            y2 = viewTop - list.getChildAt(selectPosition).getTop();
+            int off = y1 - y2;
+            LogUtils.i(TAG, "off:" + off + "y1:" + y1 + "y2:" + y2);
+
+            list.setSelectionFromTop(selectPosition, off);
         }
+        isKeyBoardShow = false;
+
     }
 //    public void toTest(View view) {
 //        int[] location = new int[2];

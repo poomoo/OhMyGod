@@ -14,10 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
+import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.ReplyListener;
 import com.poomoo.ohmygod.utils.MyUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 回复
@@ -32,11 +37,17 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private String content;//内容
     private ReplyListener listener;
     private int selectPosition;
+    private int commentPostion;
+    private ShowBO showBO;
+    private CommentBO commentBO;
+    private List<CommentBO> commentBOList;
+    private List<ReplyBO> replyBOList;
 
-    public ReplyAdapter(Context context, ReplyListener listener,int selectPosition) {
+    public ReplyAdapter(Context context, ReplyListener listener, int selectPosition, int commentPostion) {
         super(context);
         this.listener = listener;
-        this.selectPosition=selectPosition;
+        this.selectPosition = selectPosition;
+        this.commentPostion = commentPostion;
     }
 
     @Override
@@ -52,6 +63,18 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         }
         replyBO = itemList.get(position);
 
+
+
+        replyBOList = new ArrayList<>();
+        replyBOList.add(replyBO);
+        commentBO = new CommentBO();
+        commentBO.setReplies(replyBOList);
+        commentBOList = new ArrayList<>();
+        commentBOList.add(commentBO);
+        showBO = new ShowBO();
+        showBO.setComments(commentBOList);
+
+
         replyName = replyBO.getFromNickName();
         toName = replyBO.getToNickName();
         content = replyBO.getContent();
@@ -66,10 +89,10 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
                 + "：" + content);
 
         //为回复的人昵称添加点击事件
-        ss.setSpan(new TextClick(true, replyName), 0,
+        ss.setSpan(new TextClick(true, replyName, showBO), 0,
                 replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //为评论的人的添加点击事件
-        ss.setSpan(new TextClick(false, toName), replyName.length() + 2,
+        ss.setSpan(new TextClick(false, toName, showBO), replyName.length() + 2,
                 replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置字体颜色
         ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), 0,
@@ -86,11 +109,14 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     public final class TextClick extends ClickableSpan {
         private String name;
         private boolean status;
+        private ShowBO showBO;
 
-        public TextClick(boolean status, String name) {
+
+        public TextClick(boolean status, String name, ShowBO showBO) {
             super();
             this.status = status;
             this.name = name;
+            this.showBO = showBO;
         }
 
         @Override
@@ -103,10 +129,10 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         public void onClick(View v) {
             if (status) {
 //                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name,selectPosition);
+                listener.onResult(name, selectPosition, v, showBO, commentPostion);
             } else {
 //                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name,selectPosition);
+                listener.onResult(name, selectPosition, v, showBO, commentPostion);
             }
 
 //            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);

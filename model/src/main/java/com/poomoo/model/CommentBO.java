@@ -17,6 +17,7 @@ public class CommentBO {
     private String dynamicId;//--动态编号
     private String nickName;//--评论人昵称
     private List<ReplyBO> replies;//--回复集合
+    private String userId;//评论人编号
 
     public String getCommentDt() {
         return commentDt;
@@ -66,6 +67,14 @@ public class CommentBO {
         this.replies = replies;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "CommentBO{" +
@@ -75,6 +84,7 @@ public class CommentBO {
                 ", dynamicId='" + dynamicId + '\'' +
                 ", nickName='" + nickName + '\'' +
                 ", replies=" + replies +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

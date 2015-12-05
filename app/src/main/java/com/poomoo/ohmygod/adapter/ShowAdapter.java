@@ -33,8 +33,6 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     private PicsGridAdapter picsGridAdapter;
     private CommentAdapter commentAdapter;
     private ShowBO showBO;
-    private CommentBO commentBO;
-    private List<String> urlList;
     private ReplyListener listener;
 
     public ShowAdapter(Context context, ReplyListener listener) {
@@ -61,7 +59,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
             viewHolder.commentBtn = (Button) convertView.findViewById(R.id.btn_comment);
             viewHolder.replyBtn = (Button) convertView.findViewById(R.id.btn_reply);
             viewHolder.commentLlayout = (LinearLayout) convertView.findViewById(R.id.llayout_comment);
-//            viewHolder.replyLlayout = (RelativeLayout) convertView.findViewById(R.id.llayout_reply);
+            viewHolder.replyImg = (ImageView) convertView.findViewById(R.id.img_reply);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -82,10 +80,12 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         picsGridAdapter.setItems(showBO.getPicList());
 
 
-        commentAdapter = new CommentAdapter(context, listener,position);
+        commentAdapter = new CommentAdapter(context, listener, position);
         viewHolder.listView.setAdapter(commentAdapter);
-        LogUtils.i( "position:"+position+"comments:" + showBO.getComments().toString());
+        LogUtils.i("position:" + position + "comments:" + showBO.getComments().toString());
         commentAdapter.setItems(showBO.getComments());
+
+        viewHolder.replyImg.setOnClickListener(new imgClickListener(position, showBO));
 
         return convertView;
     }
@@ -102,7 +102,22 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         public EditText replyEdt;
         public Button commentBtn;
         public Button replyBtn;
-        //        public RelativeLayout replyLlayout;
         public LinearLayout commentLlayout;
+        public ImageView replyImg;
+    }
+
+    public class imgClickListener implements View.OnClickListener {
+        int position;
+        ShowBO showBO;
+
+        public imgClickListener(int position, ShowBO showBO) {
+            this.position = position;
+            this.showBO = showBO;
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onResult("", position, v, showBO, 0);
+        }
     }
 }

@@ -179,4 +179,25 @@ public interface AppAction {
      * @param listener
      */
     void getShowList(int flag, String userId, int currPage, int pageSize, ActionCallbackListener listener);
+
+    /**
+     * 评论动态
+     *
+     * @param userId
+     * @param content
+     * @param dynamicId
+     * @param listener
+     */
+    void putComment(String userId, String content, String dynamicId, ActionCallbackListener listener);
+
+    /**
+     * 回复评论
+     *
+     * @param fromUserId--回复人编号
+     * @param toUserId--被回复人编号
+     * @param content--评论内容
+     * @param commentId--评论编号
+     * @param listener
+     */
+    void putReply(String fromUserId, String toUserId, String content, String commentId, ActionCallbackListener listener);
 }

@@ -8,5 +8,4 @@
 
     <include layout="@layout/layout_show" />
 
-
 </LinearLayout>

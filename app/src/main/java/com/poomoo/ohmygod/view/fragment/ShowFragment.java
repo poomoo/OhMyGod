@@ -6,7 +6,9 @@ package com.poomoo.ohmygod.view.fragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -56,6 +58,20 @@ public class ShowFragment extends BaseFragment {
     private List<String> picList = new ArrayList<>();
     private int screenHeight;
     private int keyBoardHeight;
+    private int selectPosition;
+    private boolean isKeyBoardShow = false;
+    private View view;
+    private int viewTop;
+    private int itemTop;
+    private int y1;//键盘弹出后剩余的界面底部y坐标
+    private int y2;//点击的view距离当前item顶端的距离
+    private String content;
+    private int commentPosition;
+    private boolean isComment = false;//评论
+    private boolean isReply = false;//回复
+    private boolean isReplyComment = false;//true-回复评论 false-回复回复列表里面的评论
+    private String toNickName;
+    private String toUserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +82,7 @@ public class ShowFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-//        getData();
+        getData();
     }
 
     private void initView() {
@@ -79,7 +95,17 @@ public class ShowFragment extends BaseFragment {
         replyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyUtil.showToast(getActivity().getApplicationContext(), "点击回复按钮");
+                content = replyEdt.getText().toString().trim();
+                if (TextUtils.isEmpty(content))
+                    MyUtil.showToast(application.getApplicationContext(), "请输入内容");
+                else {
+                    hiddenReply(v);
+                    if (isComment)
+                        putComment();
+                    if (isReply)
+                        putReply();
+                }
+
             }
         });
         fragmentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -92,7 +118,8 @@ public class ShowFragment extends BaseFragment {
                 boolean visible = keyBoardHeight > screenHeight / 3;
                 LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible)
-                    LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+                    moveList(selectPosition);
+                LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
 
 //                    Rect fragmentWindowRect = new Rect();
 //                    Rect fragmentLocalRect = new Rect();
@@ -121,7 +148,15 @@ public class ShowFragment extends BaseFragment {
 
         showAdapter = new ShowAdapter(getActivity(), new ReplyListener() {
             @Override
-            public void onResult(String name, int selectPositon) {
+            public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
+                toNickName = name;
+                selectPosition = position;
+                view = v;
+                commentPosition = commentPos;
+                viewTop = view.getTop();
+                showBO = show;
+                LogUtils.i(TAG, "showBO:" + showBO);
+
                 MyUtil.showToast(getActivity().getApplication(), "onResult 点击:" + name);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -131,8 +166,19 @@ public class ShowFragment extends BaseFragment {
                 replyEdt.setFocusable(true);
                 replyEdt.setFocusableInTouchMode(true);
                 replyEdt.requestFocus();
-
-                moveList(selectPositon);
+                isKeyBoardShow = true;
+                //名字为空则是评论
+                if (TextUtils.isEmpty(toNickName)) {
+                    replyEdt.setHint("");
+                    isComment = true;
+                    isReply = false;
+                }
+                //否则为回复
+                else {
+                    replyEdt.setHint("回复" + name);
+                    isComment = false;
+                    isReply = true;
+                }
             }
         });
         list.setAdapter(showAdapter);
@@ -141,16 +187,21 @@ public class ShowFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 LogUtils.i(TAG, "点击屏幕");
-                MainFragmentActivity.instance.visible();
-                if (replyRlayout.getVisibility() == View.VISIBLE) {
-                    replyRlayout.setVisibility(View.GONE);
-                }
-                //隐藏键盘
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                hiddenReply(view);
             }
         });
-        testData();
+//        testData();
+    }
+
+    public void hiddenReply(View view) {
+        MainFragmentActivity.instance.visible();
+        if (replyRlayout.getVisibility() == View.VISIBLE) {
+            replyRlayout.setVisibility(View.GONE);
+        }
+        //隐藏键盘
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        isKeyBoardShow = false;
     }
 
     private void testData() {
@@ -243,35 +294,114 @@ public class ShowFragment extends BaseFragment {
         this.appAction.getShowList(1, application.getUserId(), 1, 10, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                LogUtils.i(TAG, data.getObjList().toString());
+                showBOList = data.getObjList();
+                showAdapter.setItems(showBOList);
                 closeProgressDialog();
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+                MyUtil.showToast(getActivity().getApplicationContext(), message);
             }
         });
     }
 
+    /**
+     * 评论
+     */
+    private void putComment() {
+        showProgressDialog("提交中...");
+        this.appAction.putComment(application.getUserId(), content, showBO.getDynamicId(), new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                commentBO = new CommentBO();
+                commentBO.setNickName(application.getNickName());
+                commentBO.setContent(content);
+                commentBO.setDynamicId(showBO.getDynamicId());
+                replyBOList = new ArrayList<>();
+                commentBO.setReplies(replyBOList);
+                showBOList.get(selectPosition).getComments().add(commentBO);
+                showAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(application.getApplicationContext(), message);
+            }
+        });
+    }
+
+    /**
+     * 回复
+     */
+    private void putReply() {
+        showProgressDialog("提交中...");
+        final String fromUserId = application.getUserId();
+        //回复评论
+        if (!TextUtils.isEmpty(showBO.getComments().get(0).getUserId())) {
+            isReplyComment = true;
+            toUserId = showBO.getComments().get(0).getUserId();
+        }
+        LogUtils.i(TAG, "replyList:" + showBO.getComments().get(0).getReplies());
+        //回复回复
+        if (showBO.getComments().get(0).getReplies() != null && showBO.getComments().get(0).getReplies().size() > 0) {
+            isReplyComment = false;
+            toUserId = showBO.getComments().get(0).getReplies().get(0).getToUserId();
+        }
+
+
+        final String commentId = showBO.getComments().get(0).getCommentId();
+        this.appAction.putReply(fromUserId, toUserId, content, commentId, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                replyBO = new ReplyBO();
+                replyBO.setFromUserId(fromUserId);
+                replyBO.setToUserId(toUserId);
+                replyBO.setContent(content);
+                replyBO.setCommentId(commentId);
+                replyBO.setToNickName(toNickName);
+                replyBO.setFromNickName(application.getNickName());
+                if (isReplyComment) {
+                    replyBOList = new ArrayList<>();
+                    replyBOList.add(replyBO);
+                    showBOList.get(selectPosition).getComments().get(commentPosition).setReplies(replyBOList);
+                } else {
+                    showBOList.get(selectPosition).getComments().get(commentPosition).getReplies().add(replyBO);
+                }
+                showAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(application.getApplicationContext(), message);
+            }
+        });
+    }
 
     private void moveList(int selectPosition) {
         if (showAdapter == null)
             return;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                list.setSelection(1);
-            }
-        }).start();
-//        LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
-//        if (showAdapter.getCount() == selectPosition + 1) {
-//            list.setSelection(list.getBottom());
-//        } else {
+        LogUtils.i(TAG, "selectPosition:" + selectPosition);
+        if (isKeyBoardShow) {
+//            LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
 //            LogUtils.i(TAG, "screenHeight:" + screenHeight + "keyBoardHeight:" + keyBoardHeight);
-//            int off = screenHeight - 647;
-//            LogUtils.i(TAG, "off:" + off);
-//            list.setSelectionFromTop(selectPosition+1, off);
-//        }
+//
+//            y1 = screenHeight - keyBoardHeight;
+//            itemTop = list.getChildAt(selectPosition).getTop();
+//            LogUtils.i(TAG, "viewTop:" + viewTop + "list.getChildAt(selectPosition).getTop():" + itemTop);
+//            y2 = viewTop - list.getChildAt(selectPosition).getTop();
+//            int off = y1 - y2;
+//            LogUtils.i(TAG, "off:" + off + "y1:" + y1 + "y2:" + y2);
+            list.setSelectionFromTop(selectPosition, 0);
+        }
+        isKeyBoardShow = false;
     }
+
 }

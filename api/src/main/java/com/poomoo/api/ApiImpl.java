@@ -6,6 +6,7 @@ import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.ShowBO;
 import com.poomoo.model.SignedBO;
 import com.poomoo.model.StatementBO;
 import com.poomoo.model.UserBO;
@@ -298,6 +299,39 @@ public class ApiImpl implements Api {
         paramMap.put("flag", flag + "");
         paramMap.put("currPage", currPage + "");
         paramMap.put("pageSize", pageSize + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, ShowBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO putComment(String userId, String content, String dynamicId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.SHOWANDSHARE);
+        paramMap.put("method", Config.COMMENT);
+        paramMap.put("userId", userId);
+        paramMap.put("content", content);
+        paramMap.put("dynamicId", dynamicId);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO putReply(String fromUserId, String toUserId, String content, String commentId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.SHOWANDSHARE);
+        paramMap.put("method", Config.REPLY);
+        paramMap.put("fromUserId", fromUserId);
+        paramMap.put("toUserId", toUserId);
+        paramMap.put("content", content);
+        paramMap.put("commentId", commentId);
 
         try {
             return httpEngine.postHandle(paramMap, null);

@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 
@@ -15,6 +16,7 @@ import com.poomoo.ohmygod.R;
  */
 public class VerifyPhoneNumActivity extends BaseActivity {
     private String PARENT;//父activity
+    private TextView remindTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class VerifyPhoneNumActivity extends BaseActivity {
         initTitleBar();
 
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        remindTxt = (TextView) findViewById(R.id.txt_remind);
+
+        CharSequence text = getString(R.string.label_verify_phone_num, application.getTel());
+        remindTxt.setText(text);
     }
 
     protected void initTitleBar() {

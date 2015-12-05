@@ -46,4 +46,8 @@ public interface Api {
     ResponseBO putShow(String userId, String activeId, String content, String pictures);
 
     ResponseBO getShowList(int flag, String userId, int currPage, int pageSize);
+
+    ResponseBO putComment(String userId, String content, String dynamicId);
+
+    ResponseBO putReply(String fromUserId, String toUserId, String content, String commentId);
 }
