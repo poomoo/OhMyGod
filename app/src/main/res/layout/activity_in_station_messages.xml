@@ -9,15 +9,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp">
 
-        <ListView
-            android:id="@+id/list_in_station_messages"
+        <com.poomoo.ohmygod.view.custom.RefreshLayout
+            android:id="@+id/refresh_inStationMessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:divider="@color/divider"
-            android:dividerHeight="10dp" />
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/list_in_station_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/divider"
+                android:dividerHeight="10dp"
+                android:scrollbars="none" />
+        </com.poomoo.ohmygod.view.custom.RefreshLayout>
     </LinearLayout>
 </LinearLayout>

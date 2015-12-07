@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.hp.hpl.sparta.xpath.ThisNodeTest;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinningRecordsBO;
@@ -18,6 +17,7 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/23 09:23.
  */
-public class SnatchRecordActivity extends BaseActivity implements OnLoadListener {
+public class SnatchRecordActivity extends BaseActivity implements OnLoadListener, OnRefreshListener {
     //    private Fragment curFragment;
 //    private AllFragment allFragment;
 //    private AlreadyFragment alreadyFragment;
@@ -115,7 +115,12 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
         }, 2000);
     }
 
-//    private void setDefaultFragment() {
+    @Override
+    public void onRefresh() {
+
+    }
+
+    //    private void setDefaultFragment() {
 //        // TODO 自动生成的方法存根
 //        FragmentManager fragmentManager = getFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -18,6 +18,7 @@ import java.util.List;
  * 日期: 2015/11/13 11:12.
  */
 public abstract class MyBaseAdapter<T> extends BaseAdapter {
+    private String TAG="MyBaseAdapter";
     protected Context context;
     protected LayoutInflater inflater;
     protected List<T> itemList = new ArrayList<>();
@@ -42,6 +43,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
      * @param itemList
      */
     public void addItems(List<T> itemList) {
+//        LogUtils.i(TAG,"addItems");
         this.itemList.addAll(itemList);
         notifyDataSetChanged();
     }
@@ -52,11 +54,12 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
      * @param itemList
      */
     public void setItems(List<T> itemList) {
+//        LogUtils.i(TAG,"setItems");
         this.itemList.clear();
         this.itemList = itemList;
-        for(int i=0;i<itemList.size();i++){
-            LogUtils.i("MyBaseAdapter","i:"+i+"itemList:"+itemList.toString());
-        }
+//        for(int i=0;i<itemList.size();i++){
+//            LogUtils.i("MyBaseAdapter","i:"+i+"itemList:"+itemList.toString());
+//        }
         notifyDataSetChanged();
     }
 

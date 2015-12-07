@@ -79,9 +79,9 @@ public class CommodityInformationActivity extends BaseActivity {
         countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
         initCountDown();
         showProgressDialog("通讯中...");
-        LogUtils.i(TAG, "appAction:" + appAction);
+        LogUtils.i(TAG, "activeId:" + activeId);
 
-        this.appAction.getCommodityInformation("9", "1", new ActionCallbackListener() {
+        this.appAction.getCommodityInformation(application.getUserId(), activeId, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();

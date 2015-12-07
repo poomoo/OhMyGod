@@ -9,9 +9,11 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.StatementBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class WebViewActivity extends BaseActivity {
     private String title;
     private WebView webView;
     private String type;//--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+    private int statementId;//--声明编号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +37,12 @@ public class WebViewActivity extends BaseActivity {
         setContentView(R.layout.activity_pub_webview);
 
         initView();
-        getData();
     }
 
     protected void initView() {
         initTitleBar();
 
         webView = (WebView) findViewById(R.id.web);
-//        try {
-//            webView.loadData(new
-//                            String(InputStreamToByte(getAssets().open("test.html"))),
-//                    "text/html; charset=UTF-8", null);
-//        } catch (IOException e) {
-//            // TODO 自动生成的 catch 块
-//            e.printStackTrace();
-//        }
     }
 
     protected void initTitleBar() {
@@ -56,16 +50,25 @@ public class WebViewActivity extends BaseActivity {
         if (PARENT.equals(getString(R.string.intent_signed))) {
             type = "6";
             title = getString(R.string.title_signed_explain);
+            getData();
         }
 
         if (PARENT.equals(getString(R.string.intent_rebate))) {
             type = "3";
             title = getString(R.string.title_rebate_explain);
+            getData();
         }
 
         if (PARENT.equals(getString(R.string.intent_withDrawDeposit))) {
             type = "4";
             title = getString(R.string.title_withdraw_deposit_help);
+            getData();
+        }
+
+        if (PARENT.equals(getString(R.string.intent_message))) {
+            statementId = getIntent().getIntExtra(getString(R.string.intent_value), 0);
+            title = getIntent().getStringExtra(getString(R.string.intent_title));
+            getInfo();
         }
 
         HeaderViewHolder headerViewHolder = getHeaderView();
@@ -90,9 +93,11 @@ public class WebViewActivity extends BaseActivity {
 //    }
 
     private void getData() {
+        showProgressDialog("请稍后...");
         this.appAction.getStatement(type, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
                 StatementBO statementBO = (StatementBO) data.getObj();
                 webView.getSettings().setDefaultTextEncodingName("UTF-8");
                 webView.loadData(statementBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
@@ -100,7 +105,26 @@ public class WebViewActivity extends BaseActivity {
 
             @Override
             public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+            }
+        });
+    }
 
+    private void getInfo() {
+        showProgressDialog("请稍后...");
+        this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
+                webView.getSettings().setDefaultTextEncodingName("UTF-8");
+                webView.loadData(messageInfoBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
             }
         });
     }

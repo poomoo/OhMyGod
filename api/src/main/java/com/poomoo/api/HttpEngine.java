@@ -129,6 +129,7 @@ public class HttpEngine {
                         try {
                             responseBO.setObjList(new ArrayList());
                             JSONObject jsonObject;
+                            Log.i(TAG, "jsonData:" + jsonData);
                             jsonObject = new JSONObject(jsonData);
                             JSONArray pager = jsonObject.getJSONArray("records");
                             int length = pager.length();
@@ -140,6 +141,7 @@ public class HttpEngine {
                             responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.i(TAG,"异常:"+e.getMessage());
                         }
                     } else {
                         responseBO.setObj(gson.fromJson(jsonData, typeOfT));

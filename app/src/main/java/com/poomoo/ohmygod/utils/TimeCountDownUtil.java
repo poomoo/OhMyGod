@@ -1,11 +1,15 @@
 package com.poomoo.ohmygod.utils;
 
+import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.provider.CalendarContract;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.other.CountDownListener;
 
 import java.util.List;
@@ -17,7 +21,7 @@ import java.util.List;
  */
 public class TimeCountDownUtil extends CountDownTimer {
     private String TAG = this.getClass().getSimpleName();
-    private TextView textView;
+    private View view;
     private List<TextView> textViewList;
     private long millisUntilFinished;
     private CountDownListener countDownListener;
@@ -33,9 +37,9 @@ public class TimeCountDownUtil extends CountDownTimer {
     }
 
     public TimeCountDownUtil(long millisInFuture,
-                             long countDownInterval, TextView textView, final CountDownListener countDownListener) {
+                             long countDownInterval, View view, final CountDownListener countDownListener) {
         super(millisInFuture, countDownInterval);
-        this.textView = textView;
+        this.view = view;
         this.countDownListener = countDownListener;
         this.isList = false;
     }
@@ -47,8 +51,18 @@ public class TimeCountDownUtil extends CountDownTimer {
         if (isList)
             for (TextView textView : textViewList)
                 textView.setText(spanned);
-        else
-            textView.setText(spanned);
+        else {
+            if (view instanceof TextView)
+                ((TextView) view).setText(spanned);
+            if (view instanceof Button) {
+                view.setClickable(false);// 设置不能点击
+                ((Button) view).setText(millisUntilFinished / 1000 + "s");// 设置倒计时时间
+                ((Button) view).setTextColor(Color.parseColor("#E81540"));
+                // 设置按钮为灰色，这时是不能点击的
+                view.setBackgroundResource(R.drawable.bg_get_code_pressed);
+            }
+        }
+
     }
 
     @Override
@@ -58,8 +72,17 @@ public class TimeCountDownUtil extends CountDownTimer {
         if (isList)
             for (TextView textView : textViewList)
                 textView.setText("活动已开始");
-        else
-            textView.setText("活动已开始");
+        else {
+            if (view instanceof TextView)
+                ((TextView) view).setText("活动已开始");
+            if (view instanceof Button) {
+                ((Button) view).setText("重新获取");
+                view.setClickable(true);// 重新获得点击
+                view.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
+                ((Button) view).setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        }
+
     }
 
     /**

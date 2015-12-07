@@ -77,7 +77,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        replyAdapter = new ReplyAdapter(context, listener, selectPosition, position);
+        replyAdapter = new ReplyAdapter(context, listener, selectPosition, commentBO.getCommentId(), position);
         viewHolder.listView.setAdapter(replyAdapter);
         replyAdapter.setItems(commentBO.getReplies());
         return convertView;
@@ -102,7 +102,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         @Override
         public void onClick(View v) {
 //            MyUtil.showToast(context, "点击" + name);
-            listener.onResult(name, selectPosition, v, showBO,0);
+            listener.onResult(name, selectPosition, v, showBO, 0);
 
 
 //            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);

@@ -1,11 +1,6 @@
 package com.poomoo.core;
 
-import com.poomoo.model.AdBO;
 import com.poomoo.model.FileBO;
-import com.poomoo.model.ResponseBO;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * 接收app层的各种Action
@@ -29,6 +24,15 @@ public interface AppAction {
      * @param listener
      */
     void getCode(String phoneNum, ActionCallbackListener listener);
+
+    /**
+     * 校验验证码
+     *
+     * @param tel
+     * @param code
+     * @param listener
+     */
+    void checkCode(String tel, String code, ActionCallbackListener listener);
 
     /**
      * 注册
@@ -200,4 +204,49 @@ public interface AppAction {
      * @param listener
      */
     void putReply(String fromUserId, String toUserId, String content, String commentId, ActionCallbackListener listener);
+
+    /**
+     * 提现
+     *
+     * @param userId
+     * @param drawFee
+     * @param listener
+     */
+    void withDrawDeposit(String userId, String drawFee, ActionCallbackListener listener);
+
+    /**
+     * 同步用户信息
+     *
+     * @param userId
+     * @param listener
+     */
+    void getUserInfo(String userId, ActionCallbackListener listener);
+
+    /**
+     * 提现手续费查询
+     *
+     * @param userId
+     * @param drawFee
+     * @param listener
+     */
+    void getWithDrawDepositFee(String userId, String drawFee, ActionCallbackListener listener);
+
+    /**
+     * 获取消息
+     *
+     * @param type
+     * @param currPage
+     * @param pageSize
+     * @param listener
+     */
+    void getMessages(String type, int currPage, int pageSize, ActionCallbackListener listener);
+
+    /**
+     * 获取消息详情
+     *
+     * @param statementId
+     * @param listener
+     */
+    void getMessageInfo(String statementId, ActionCallbackListener listener);
+
 }

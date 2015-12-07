@@ -5,6 +5,8 @@ import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
+import com.poomoo.model.MessageBO;
+import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.model.SignedBO;
@@ -14,7 +16,6 @@ import com.poomoo.model.WinnerBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.model.WithdrawDepositBO;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +57,21 @@ public class ApiImpl implements Api {
         paramMap.put("method", Config.CODE);
         paramMap.put("tel", phoneNum);
 
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO checkCode(String tel, String code) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.CHECK);
+        paramMap.put("tel", tel);
+        paramMap.put("code", code);
 
         try {
             return httpEngine.postHandle(paramMap, null);
@@ -263,7 +279,7 @@ public class ApiImpl implements Api {
     public ResponseBO getMyWithdrawDepositList(String userId) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
-        paramMap.put("method", Config.WITHDRAWDEPOSIT);
+        paramMap.put("method", Config.WITHDRAWDEPOSITLIST);
         paramMap.put("userId", userId);
 
         try {
@@ -335,6 +351,81 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO withDrawDeposit(String userId, String drawFee) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.WITHDRAWDEPOSIT);
+        paramMap.put("userId", userId);
+        paramMap.put("drawFee", drawFee);
+
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getUserInfo(String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.SYNC);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, UserBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getWithDrawDepositFee(String userId, String drawFee) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.FEE);
+        paramMap.put("userId", userId);
+        paramMap.put("drawFee", drawFee);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getMessages(String type, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.STATEMENT);
+        paramMap.put("type", type);
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, MessageBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getMessageInfo(String statementId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.INFO);
+        paramMap.put("statementId", statementId);
+
+        try {
+            return httpEngine.postHandle(paramMap, MessageInfoBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

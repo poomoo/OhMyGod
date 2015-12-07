@@ -68,6 +68,8 @@
     <string name="label_age">年龄</string>
     <string name="label_bankCard">银行卡</string>
     <string name="label_changePassWord">修改密码</string>
+    <string name="label_gender_man">男</string>
+    <string name="label_gender_woman">女</string>
     <!--个人资料-->
 
     <!--个人中心-->
@@ -185,6 +187,7 @@
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>
     <string name="intent_withDrawDeposit">withDrawDeposit</string>
+    <string name="intent_message">message</string>
     <!--intent-->
 
     <!--hint-->

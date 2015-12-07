@@ -26,7 +26,7 @@ public class MyApplication extends Application {
     private String currentFee;//--用户余额
     private String realNameAuth;
     private String idCardNum;
-    private String sex;
+    private String sex;//1：男，2：女
     private String age;
     private String idFrontPic;//--正面照
     private String idOpsitePic;//--反面照

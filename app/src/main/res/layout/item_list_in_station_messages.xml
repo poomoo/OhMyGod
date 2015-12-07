@@ -17,7 +17,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:padding="10dp"
-            android:src="@drawable/picture" />
+            android:src="@drawable/picture"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -35,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="系统消息"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/txt_message_datetime"
@@ -54,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:text="系统消息系统消息系统消息系统消息系统消息"
                 android:textColor="@color/themeGray"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>

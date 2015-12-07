@@ -4,12 +4,14 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.poomoo.model.InStationMessagesBO;
+import com.poomoo.model.MessageBO;
+import com.poomoo.model.StatementBO;
 import com.poomoo.ohmygod.R;
 
 /**
@@ -17,7 +19,9 @@ import com.poomoo.ohmygod.R;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:06.
  */
-public class InStationMessagesAdapter extends MyBaseAdapter<InStationMessagesBO> {
+public class InStationMessagesAdapter extends MyBaseAdapter<MessageBO> {
+    private MessageBO messageBO;
+
     public InStationMessagesAdapter(Context context) {
         super(context);
     }
@@ -35,6 +39,11 @@ public class InStationMessagesAdapter extends MyBaseAdapter<InStationMessagesBO>
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
+
+        messageBO = itemList.get(position);
+        viewHolder.titleTxt.setText(messageBO.getTitle());
+//        viewHolder.conentTxt.setText(statementBO.getContent());
+        viewHolder.dateTimeTxt.setText(messageBO.getInsertDt());
         return convertView;
     }
 

@@ -3,16 +3,24 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 提现
@@ -25,6 +33,8 @@ public class WithdrawDepositActivity extends BaseActivity {
     private EditText moneyEdt;
     private Button button;
     private double balance;
+    private double money;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +54,8 @@ public class WithdrawDepositActivity extends BaseActivity {
 
         button.setBackgroundResource(R.drawable.bg_open_activity_pressed);
         balanceTxt.setText("￥" + application.getCurrentFee());
-//        balance = Double.parseDouble(application.getCurrentFee());
+        balance = Double.parseDouble(application.getCurrentFee());
 
-        balance = 10;
         moneyEdt.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -77,7 +86,7 @@ public class WithdrawDepositActivity extends BaseActivity {
                     return;
                 }
 
-                double money = Double.parseDouble(s.toString().trim());
+                money = Double.parseDouble(s.toString().trim());
                 if (money == 0) {
                     isEnoughTxt.setVisibility(View.GONE);
                     button.setClickable(false);
@@ -124,7 +133,12 @@ public class WithdrawDepositActivity extends BaseActivity {
      * @param view
      */
     public void toWithdrawDeposit(View view) {
-        openActivity(VerifyPhoneNumActivity.class);
+        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
+        if (TextUtils.isEmpty(application.getRealNameAuth())) {
+            MyUtil.showToast(getApplicationContext(), "请进行实名认证");
+            openActivity(EditPersonalInformationActivity.class);
+        } else
+            queryFee();
     }
 
     /**
@@ -134,7 +148,40 @@ public class WithdrawDepositActivity extends BaseActivity {
      */
     public void toHelp(View view) {
         Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_withDrawDeposit));
+        pBundle.putString(getString(R.string.intent_parent), TAG);
         openActivity(WebViewActivity.class, pBundle);
+    }
+
+    private void queryFee() {
+        showProgressDialog("请稍后...");
+        this.appAction.getWithDrawDepositFee(application.getUserId(), money + "", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                String message = data.getMsg();
+                dialog = new AlertDialog.Builder(WithdrawDepositActivity.this).setMessage(message).setPositiveButton("确定", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bundle pBundle = new Bundle();
+                        pBundle.putString(getString(R.string.intent_parent), TAG);
+                        pBundle.putDouble(getString(R.string.intent_value), money);
+                        openActivity(VerifyPhoneNumActivity.class, pBundle);
+                        finish();
+
+                    }
+                }).setNegativeButton("取消", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).create();
+                dialog.show();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
     }
 }

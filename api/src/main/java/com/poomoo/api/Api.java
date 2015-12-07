@@ -15,6 +15,8 @@ public interface Api {
 
     ResponseBO getCode(String phoneNum);
 
+    ResponseBO checkCode(String tel, String code);
+
     ResponseBO register(String phoneNum, String passWord, String code, String age, String sex, String channelId);
 
     ResponseBO getAdvertisement();
@@ -50,4 +52,15 @@ public interface Api {
     ResponseBO putComment(String userId, String content, String dynamicId);
 
     ResponseBO putReply(String fromUserId, String toUserId, String content, String commentId);
+
+    ResponseBO withDrawDeposit(String userId, String drawFee);
+
+    ResponseBO getUserInfo(String userId);
+
+    ResponseBO getWithDrawDepositFee(String userId, String drawFee);
+
+    ResponseBO getMessages(String type, int currPage, int pageSize);
+
+    ResponseBO getMessageInfo(String statementId);
+
 }

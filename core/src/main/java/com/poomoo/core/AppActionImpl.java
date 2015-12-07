@@ -120,6 +120,36 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
+    public void checkCode(final String tel, final String code, final ActionCallbackListener listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(code)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "验证码为空");
+            }
+            return;
+        }
+
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... voids) {
+                return api.checkCode(tel, code);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
     public void register(final String phoneNum, final String passWord, final String code, final String age, final String sex, final String channelId, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
@@ -533,6 +563,116 @@ public class AppActionImpl implements AppAction {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
                 return api.putReply(fromUserId, toUserId, content, commentId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void withDrawDeposit(final String userId, final String drawFee, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.withDrawDeposit(userId, drawFee);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getUserInfo(final String userId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getUserInfo(userId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getWithDrawDepositFee(final String userId, final String drawFee, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getWithDrawDepositFee(userId, drawFee);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getMessages(final String type, final int currPage, final int pageSize, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getMessages(type, currPage, pageSize);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getMessageInfo(final String statementId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getMessageInfo(statementId);
             }
 
             @Override

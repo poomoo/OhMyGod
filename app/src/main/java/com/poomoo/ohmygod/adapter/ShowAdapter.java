@@ -37,7 +37,6 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 
     public ShowAdapter(Context context, ReplyListener listener) {
         super(context);
-        this.picsGridAdapter = new PicsGridAdapter(context);
         this.listener = listener;
     }
 
@@ -76,6 +75,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.contentTxt.setText(showBO.getContent());
         viewHolder.titleTxt.setText(showBO.getTitle());
 
+        picsGridAdapter=new PicsGridAdapter(context);
         viewHolder.gridView.setAdapter(picsGridAdapter);
         picsGridAdapter.setItems(showBO.getPicList());
 

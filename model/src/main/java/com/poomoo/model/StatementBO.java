@@ -36,4 +36,6 @@ public class StatementBO {
     public void setStatementId(String statementId) {
         this.statementId = statementId;
     }
+
+
 }

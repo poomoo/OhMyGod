@@ -14,13 +14,17 @@ public class Config {
     //ACTION 10000
     public final static String USERACTION = "10000";//用户相关接口统一业务编号
     public final static String CODE = "10002";//获取验证码
+    public final static String CHECK = "10003";//校验验证码
     public final static String REGISTER = "10004";//注册
     public final static String LOGIN = "10005";//登陆
     public final static String CHANGE = "10006";//修改用户信息接口（单独修改用户某个字段信息，如昵称）
     public final static String PERSONALINFO = "10007";//编辑个人资料页面接口（实名认证接口）
+    public final static String FEE = "10008";//查询提现费用提现信息
     public final static String SIGNEDLIST = "10010";//签到列表
+    public final static String WITHDRAWDEPOSIT = "10009";//提现
     public final static String SIGNED = "10011";//保存签到接口
-    public final static String WITHDRAWDEPOSIT = "10012";//保存签到接口
+    public final static String WITHDRAWDEPOSITLIST = "10012";//保存签到接口
+    public final static String SYNC = "10013";//同步用户信息统一接口
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号
@@ -40,5 +44,6 @@ public class Config {
     //ACTION 40000
     public final static String PUBACTION = "40000";//公共接口统一业务编号
     public final static String AD = "40001";//广告
-    public final static String STATEMENT = "40002";//查询声明信息接口
+    public final static String STATEMENT = "40002";//查询声明信息
+    public final static String INFO = "40003";//查询声明列表详情信息
 }

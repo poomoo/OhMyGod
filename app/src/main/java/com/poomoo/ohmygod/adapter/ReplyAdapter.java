@@ -35,6 +35,7 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private String replyName;//回复人
     private String toName;//被回复的人
     private String content;//内容
+    private String commentId;//评论的ID
     private ReplyListener listener;
     private int selectPosition;
     private int commentPostion;
@@ -43,11 +44,12 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private List<CommentBO> commentBOList;
     private List<ReplyBO> replyBOList;
 
-    public ReplyAdapter(Context context, ReplyListener listener, int selectPosition, int commentPostion) {
+    public ReplyAdapter(Context context, ReplyListener listener, int selectPosition, String commentId, int commentPostion) {
         super(context);
         this.listener = listener;
         this.selectPosition = selectPosition;
         this.commentPostion = commentPostion;
+        this.commentId = commentId;
     }
 
     @Override
@@ -64,10 +66,10 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         replyBO = itemList.get(position);
 
 
-
         replyBOList = new ArrayList<>();
         replyBOList.add(replyBO);
         commentBO = new CommentBO();
+        commentBO.setCommentId(commentId);
         commentBO.setReplies(replyBOList);
         commentBOList = new ArrayList<>();
         commentBOList.add(commentBO);

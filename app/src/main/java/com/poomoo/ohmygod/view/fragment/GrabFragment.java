@@ -44,8 +44,6 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
     private GrabAdapter adapter;
     private String[] urls;
     private AdBO adBO;
-    private GrabBO grabBO;
-    private WinnerBO winnerBO;
     private List<GrabBO> grabBOList = new ArrayList<>();
     private List<WinnerBO> winnerBOList = new ArrayList<>();
     private int index = 0;
@@ -74,26 +72,6 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         getAd();
         getGrabList();
         getWinnerList();
-
-//        remindLlayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getWinnerList();
-//            }
-//        });
-//        for (int i = 0; i < 3; i++) {
-//            grabBO = new GrabBO();
-//            grabBO.setStartCountdown(5500000);
-//            grabBOList.add(grabBO);
-//        }
-
-//        for (int i = 0; i < 6; i++) {
-//            winnerBO = new WinnerBO();
-//            winnerBO.setPlayDt("2015年12月" + (i + 1) + "号");
-//            winnerBO.setWinNickName("中奖王" + i + 1);
-//            winnerBO.setGoodsName("保時捷911");
-//            winnerBOList.add(winnerBO);
-//        }
     }
 
     Handler handler = new Handler() {
@@ -121,7 +99,6 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
                 for (int i = 0; i < len; i++) {
                     adBO = new AdBO();
                     adBO = (AdBO) data.getObjList().get(i);
-                    adBO.setPicture("http://image.zcool.com.cn/56/35/1303967876491.jpg");
                     urls[i] = adBO.getPicture();
                     Log.i(TAG, urls[i]);
                 }

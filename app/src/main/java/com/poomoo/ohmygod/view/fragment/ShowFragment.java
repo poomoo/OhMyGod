@@ -6,9 +6,9 @@ package com.poomoo.ohmygod.view.fragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommentBO;
@@ -31,8 +30,13 @@ import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
+import com.poomoo.ohmygod.view.custom.RefreshLayout;
+import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 
 import java.util.ArrayList;
+
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+
 import java.util.Date;
 import java.util.List;
 
@@ -41,14 +45,15 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/20 09:50.
  */
-public class ShowFragment extends BaseFragment {
+public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener {
+    private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
     private LinearLayout fragmentView;
     private LinearLayout replyRlayout;
     private LinearLayout editLlayout;
     private ListView list;
-    private ShowAdapter showAdapter;
+    private ShowAdapter adapter;
     private ShowBO showBO;
     private CommentBO commentBO;
     private ReplyBO replyBO;
@@ -72,6 +77,8 @@ public class ShowFragment extends BaseFragment {
     private boolean isReplyComment = false;//true-回复评论 false-回复回复列表里面的评论
     private String toNickName;
     private String toUserId;
+    private boolean isLoad = false;//true 加载 false刷新
+    private int currPage = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,16 +89,22 @@ public class ShowFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        showProgressDialog("请稍后...");
         getData();
     }
 
     private void initView() {
+        refreshLayout = (RefreshLayout) getActivity().findViewById(R.id.refresh_show);
         fragmentView = (LinearLayout) getActivity().findViewById(R.id.fragment_view);
         replyRlayout = (LinearLayout) getActivity().findViewById(R.id.rlayout_reply);
         editLlayout = (LinearLayout) getActivity().findViewById(R.id.layout_edittext);
         replyEdt = (EditText) getActivity().findViewById(R.id.edt_reply);
         replyBtn = (Button) getActivity().findViewById(R.id.btn_reply);
         list = (ListView) getActivity().findViewById(R.id.list_show);
+
+        refreshLayout.setOnLoadListener(this);
+        refreshLayout.setOnRefreshListener(this);
+
         replyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +113,7 @@ public class ShowFragment extends BaseFragment {
                     MyUtil.showToast(application.getApplicationContext(), "请输入内容");
                 else {
                     hiddenReply(v);
+                    replyEdt.setText("");
                     if (isComment)
                         putComment();
                     if (isReply)
@@ -116,10 +130,10 @@ public class ShowFragment extends BaseFragment {
                 screenHeight = fragmentView.getRootView().getHeight();
                 keyBoardHeight = screenHeight - (r.bottom - r.top);
                 boolean visible = keyBoardHeight > screenHeight / 3;
-                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+//                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible)
                     moveList(selectPosition);
-                LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
+//                LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
 
 //                    Rect fragmentWindowRect = new Rect();
 //                    Rect fragmentLocalRect = new Rect();
@@ -146,7 +160,7 @@ public class ShowFragment extends BaseFragment {
             }
         });
 
-        showAdapter = new ShowAdapter(getActivity(), new ReplyListener() {
+        adapter = new ShowAdapter(getActivity(), new ReplyListener() {
             @Override
             public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
                 toNickName = name;
@@ -157,7 +171,6 @@ public class ShowFragment extends BaseFragment {
                 showBO = show;
                 LogUtils.i(TAG, "showBO:" + showBO);
 
-                MyUtil.showToast(getActivity().getApplication(), "onResult 点击:" + name);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 MainFragmentActivity.instance.invisible();
@@ -181,7 +194,7 @@ public class ShowFragment extends BaseFragment {
                 }
             }
         });
-        list.setAdapter(showAdapter);
+        list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,23 +299,41 @@ public class ShowFragment extends BaseFragment {
 //        for(int i=0;i<showBOList.size();i++){
 //            LogUtils.i(TAG,"i:"+i+"itemList:"+showBOList.get(i).getComments());
 //        }
-        showAdapter.setItems(showBOList);
+        adapter.setItems(showBOList);
     }
 
     private void getData() {
-        showProgressDialog("查询中...");
-        this.appAction.getShowList(1, application.getUserId(), 1, 10, new ActionCallbackListener() {
+        //1表示晒单分享列表，2表示我的晒单列表
+        this.appAction.getShowList(1, application.getUserId(), currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getObjList().toString());
-                showBOList = data.getObjList();
-                showAdapter.setItems(showBOList);
                 closeProgressDialog();
+                currPage++;
+                // 更新完后调用该方法结束刷新
+                if (isLoad) {
+                    refreshLayout.setLoading(false);
+                    int len = data.getObjList().size();
+                    for (int i = 0; i < len; i++)
+                        showBOList.add((ShowBO) data.getObjList().get(i));
+                    if (len > 0)
+                        adapter.addItems(showBOList);
+                } else {
+                    currPage++;
+                    refreshLayout.setRefreshing(false);
+                    showBOList = data.getObjList();
+                    if (showBOList.size() > 0)
+                        adapter.setItems(showBOList);
+                }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+                if (isLoad)
+                    refreshLayout.setLoading(false);
+                else
+                    refreshLayout.setRefreshing(false);
                 MyUtil.showToast(getActivity().getApplicationContext(), message);
             }
         });
@@ -324,7 +355,7 @@ public class ShowFragment extends BaseFragment {
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
                 showBOList.get(selectPosition).getComments().add(commentBO);
-                showAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -355,6 +386,7 @@ public class ShowFragment extends BaseFragment {
 
 
         final String commentId = showBO.getComments().get(0).getCommentId();
+        LogUtils.i(TAG,"showBO:"+showBO);
         this.appAction.putReply(fromUserId, toUserId, content, commentId, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -373,7 +405,7 @@ public class ShowFragment extends BaseFragment {
                 } else {
                     showBOList.get(selectPosition).getComments().get(commentPosition).getReplies().add(replyBO);
                 }
-                showAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -385,7 +417,7 @@ public class ShowFragment extends BaseFragment {
     }
 
     private void moveList(int selectPosition) {
-        if (showAdapter == null)
+        if (adapter == null)
             return;
 
         LogUtils.i(TAG, "selectPosition:" + selectPosition);
@@ -404,4 +436,30 @@ public class ShowFragment extends BaseFragment {
         isKeyBoardShow = false;
     }
 
+    @Override
+    public void onLoad() {
+        isLoad = true;
+        refreshLayout.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // 更新数据
+                getData();
+            }
+        }, 0);
+    }
+
+    @Override
+    public void onRefresh() {
+        currPage = 1;
+        isLoad = false;
+        refreshLayout.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // 更新数据
+                getData();
+            }
+        }, 0);
+    }
 }
