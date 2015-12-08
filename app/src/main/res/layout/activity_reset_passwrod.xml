@@ -33,6 +33,7 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/edt_newPassWord"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,7 +64,7 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/edt_bankCardNum"
+                android:id="@+id/edt_newPassWordAgain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

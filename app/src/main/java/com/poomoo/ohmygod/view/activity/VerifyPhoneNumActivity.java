@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -69,7 +70,7 @@ public class VerifyPhoneNumActivity extends BaseActivity {
      * @param view
      */
     public void toGetCode(View view) {
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(60000, 1000, getCodeBtn, null);
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, getCodeBtn, null);
         timeCountDownUtil.start();
         getCode();
     }

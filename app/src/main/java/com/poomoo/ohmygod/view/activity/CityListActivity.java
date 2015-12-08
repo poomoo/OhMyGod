@@ -4,14 +4,12 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,19 +26,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
+import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CityBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.utils.DBHelper;
 import com.poomoo.ohmygod.utils.DatabaseHelper;
+import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.PingYinUtil;
 import com.poomoo.ohmygod.view.custom.MyLetterListView;
 import com.poomoo.ohmygod.view.custom.MyLetterListView.OnTouchingLetterChangedListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -64,11 +66,11 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     private String[] sections;// 存放存在的汉语拼音首字母
     private Handler handler;
     private OverlayThread overlayThread; // 显示首字母对话框
-    private ArrayList<CityBO> allCity_lists; // 所有城市列表
-    private ArrayList<CityBO> city_lists;// 城市列表
-    private ArrayList<CityBO> city_hot;
-    private ArrayList<CityBO> city_result;
-    private ArrayList<String> city_history;
+    private List<CityBO> allCity_lists; // 所有城市列表
+    private List<CityBO> city_lists;// 城市列表
+    private List<CityBO> city_hot;
+    private List<CityBO> city_result;
+    private List<String> city_history;
     private EditText sh;
     private TextView tv_noresult;
 
@@ -99,12 +101,18 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         letterListView = (MyLetterListView) findViewById(R.id.MyLetterListView01);
 
         initData();
+        getCityList();
     }
 
     protected void initTitleBar() {
-        BaseActivity.HeaderViewHolder headerViewHolder = getHeaderView();
+        HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_selectCity);
-        headerViewHolder.backImg.setVisibility(View.GONE);
+        headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initData() {
@@ -119,7 +127,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (s.toString() == null || "".equals(s.toString())) {
+                if (TextUtils.isEmpty(s + "")) {
                     letterListView.setVisibility(View.VISIBLE);
                     personList.setVisibility(View.VISIBLE);
                     resultList.setVisibility(View.GONE);
@@ -163,10 +171,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (position >= 4) {
-
-                    Toast.makeText(getApplicationContext(),
-                            allCity_lists.get(position).getName(),
-                            Toast.LENGTH_SHORT).show();
+                    application.setCurrCity(allCity_lists.get(position).getCityName());
+                    finish();
                 }
             }
         });
@@ -180,44 +186,42 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        city_result.get(position).getName(), Toast.LENGTH_SHORT)
-                        .show();
+                application.setCurrCity(city_result.get(position).getCityName());
+                finish();
             }
         });
         initOverlay();
         cityInit();
-        hotCityInit();
-        hisCityInit();
-        setAdapter(allCity_lists, city_hot, city_history);
 
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(mMyLocationListener);
-        InitLocation();
+        initLocation();
+        LogUtils.i("location", "1mLocationClient.start()");
         mLocationClient.start();
+        LogUtils.i("location", "2mLocationClient.start()");
     }
 
-    private void InitLocation() {
-        // 设置定位参数
-        LocationClientOption option = new LocationClientOption();
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(10000); // 10分钟扫描1次
-        // 需要地址信息，设置为其他任何值（string类型，且不能为null）时，都表示无地址信息。
-        option.setAddrType("all");
-        // 设置是否返回POI的电话和地址等详细信息。默认值为false，即不返回POI的电话和地址信息。
-        option.setPoiExtraInfo(true);
-        // 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
-        option.setProdName("通过GPS定位我当前的位置");
-        // 禁用启用缓存定位数据
-        option.disableCache(true);
-        // 设置最多可返回的POI个数，默认值为3。由于POI查询比较耗费流量，设置最多返回的POI个数，以便节省流量。
-        option.setPoiNumber(3);
-        // 设置定位方式的优先级。
-        // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
-        option.setPriority(LocationClientOption.GpsFirst);
-        mLocationClient.setLocOption(option);
-    }
+//    private void InitLocation() {
+//        // 设置定位参数
+//        LocationClientOption option = new LocationClientOption();
+//        option.setCoorType("bd09ll"); // 设置坐标类型
+//        option.setScanSpan(10 * 1000); // 10秒钟扫描1次
+//        // 需要地址信息，设置为其他任何值（string类型，且不能为null）时，都表示无地址信息。
+//        option.setAddrType("all");
+//        // 设置是否返回POI的电话和地址等详细信息。默认值为false，即不返回POI的电话和地址信息。
+//        option.setPoiExtraInfo(true);
+//        // 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+//        option.setProdName("通过GPS定位我当前的位置");
+//        // 禁用启用缓存定位数据
+//        option.disableCache(true);
+//        // 设置最多可返回的POI个数，默认值为3。由于POI查询比较耗费流量，设置最多返回的POI个数，以便节省流量。
+//        option.setPoiNumber(3);
+//        // 设置定位方式的优先级。
+//        // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
+//        option.setPriority(LocationClientOption.GpsFirst);
+//        mLocationClient.setLocOption(option);
+//    }
 
     private void cityInit() {
         CityBO city = new CityBO("定位", "0"); // 当前定位城市
@@ -228,80 +232,53 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         allCity_lists.add(city);
         city = new CityBO("全部", "3"); // 全部城市
         allCity_lists.add(city);
-        city_lists = getCityList();
-        allCity_lists.addAll(city_lists);
     }
 
     /**
      * 热门城市
      */
     public void hotCityInit() {
-        CityBO city = new CityBO("遵义", "2");
-        city_hot.add(city);
-        city = new CityBO("重庆", "2");
-        city_hot.add(city);
-        city = new CityBO("桂林", "2");
-        city_hot.add(city);
-        city = new CityBO("黔东南", "2");
-        city_hot.add(city);
-        city = new CityBO("安顺", "2");
-        city_hot.add(city);
-        city = new CityBO("自贡", "2");
-        city_hot.add(city);
-    }
-
-    private void hisCityInit() {
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "select * from recentcity order by date desc limit 0, 3", null);
-        while (cursor.moveToNext()) {
-            city_history.add(cursor.getString(1));
-        }
-        cursor.close();
-        db.close();
-    }
-
-    @SuppressWarnings("unchecked")
-    private ArrayList<CityBO> getCityList() {
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<CityBO> list = new ArrayList<>();
-        try {
-            dbHelper.createDataBase();
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            Cursor cursor = db.rawQuery("select * from city", null);
-            CityBO city;
-            while (cursor.moveToNext()) {
-                city = new CityBO(cursor.getString(1), cursor.getString(2));
-                list.add(city);
+        int len = city_lists.size();
+        CityBO city;
+        for (int i = 0; i < len; i++) {
+            if (city_lists.get(i).getIsHot().equals("1")) {
+                city = new CityBO(city_lists.get(i).getCityName(), "2");
+                city_hot.add(city);
             }
-            cursor.close();
-            db.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
-        Collections.sort(list, comparator);
-        return list;
     }
 
-    @SuppressWarnings("unchecked")
+    private void getCityList() {
+        showProgressDialog("请稍后...");
+        this.appAction.getCitys(new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                city_lists = data.getObjList();
+                hotCityInit();
+                Collections.sort(city_lists, comparator);
+                allCity_lists.addAll(city_lists);
+                setAdapter(allCity_lists, city_hot, city_history);
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+
+    }
+
     private void getResultCityList(String keyword) {
-        DBHelper dbHelper = new DBHelper(this);
-        try {
-            dbHelper.createDataBase();
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            Cursor cursor = db.rawQuery(
-                    "select * from city where name like \"%" + keyword
-                            + "%\" or pinyin like \"%" + keyword + "%\"", null);
-            CityBO city;
-            Log.e("info", "length = " + cursor.getCount());
-            while (cursor.moveToNext()) {
-                city = new CityBO(cursor.getString(1), cursor.getString(2));
+        int len = city_lists.size();
+        CityBO city;
+        for (int i = 0; i < len; i++) {
+            city = city_lists.get(i);
+
+            if (city.getPinyin().contains(keyword) || city.getPinyin().contains(keyword.toUpperCase()))
                 city_result.add(city);
-            }
-            cursor.close();
-            db.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         Collections.sort(city_result, comparator);
     }
@@ -309,12 +286,11 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     /**
      * a-z排序
      */
-    @SuppressWarnings("rawtypes")
     Comparator comparator = new Comparator<CityBO>() {
         @Override
         public int compare(CityBO lhs, CityBO rhs) {
-            String a = lhs.getPinyi().substring(0, 1);
-            String b = rhs.getPinyi().substring(0, 1);
+            String a = lhs.getPinyin().substring(0, 1);
+            String b = rhs.getPinyin().substring(0, 1);
             int flag = a.compareTo(b);
             if (flag == 0) {
                 return a.compareTo(b);
@@ -333,39 +309,48 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     /**
      * 实现实位回调监听
      */
+    private void initLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
+        int span = 1 * 10 * 1000;
+
+        option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
+        option.setOpenGps(true);// 可选，默认false,设置是否使用gps
+        option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        mLocationClient.setLocOption(option);
+    }
+
     public class MyLocationListener implements BDLocationListener {
 
         @Override
-        public void onReceiveLocation(BDLocation arg0) {
-            Log.e("info", "city = " + arg0.getCity());
-            if (!isNeedFresh) {
+        public void onReceiveLocation(BDLocation location) {
+            LogUtils.i("location", "location.getLongitude():" + location.getLongitude() + "location.getLatitude():"
+                    + location.getLatitude());
+            if (!isNeedFresh)
                 return;
-            }
-            isNeedFresh = false;
-            if (arg0.getCity() == null) {
+
+            if (location.getCity() == null) {
                 locateProcess = 3; // 定位失败
                 personList.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 return;
             }
-            currentCity = arg0.getCity().substring(0,
-                    arg0.getCity().length() - 1);
+            currentCity = location.getCity().substring(0, location.getCity().length() - 1);
             locateProcess = 2; // 定位成功
             personList.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onReceivePoi(BDLocation arg0) {
-
+//            mLocationClient.unRegisterLocationListener(mMyLocationListener);
         }
     }
 
     private class ResultListAdapter extends BaseAdapter {
         private LayoutInflater inflater;
-        private ArrayList<CityBO> results = new ArrayList<>();
+        private List<CityBO> results = new ArrayList<>();
 
-        public ResultListAdapter(Context context, ArrayList<CityBO> results) {
+        public ResultListAdapter(Context context, List<CityBO> results) {
             inflater = LayoutInflater.from(context);
             this.results = results;
         }
@@ -397,7 +382,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.name.setText(results.get(position).getName());
+            viewHolder.name.setText(results.get(position).getCityName());
             return convertView;
         }
 
@@ -425,12 +410,12 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             sections = new String[list.size()];
             for (int i = 0; i < list.size(); i++) {
                 // 当前汉语拼音首字母
-                String currentStr = getAlpha(list.get(i).getPinyi());
+                String currentStr = getAlpha(list.get(i).getPinyin());
                 // 上一个汉语拼音首字母，如果不存在为" "
                 String previewStr = (i - 1) >= 0 ? getAlpha(list.get(i - 1)
-                        .getPinyi()) : " ";
+                        .getPinyin()) : " ";
                 if (!previewStr.equals(currentStr)) {
-                    String name = getAlpha(list.get(i).getPinyi());
+                    String name = getAlpha(list.get(i).getPinyin());
                     alphaIndexer.put(name, i);
                     sections[i] = name;
                 }
@@ -486,7 +471,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             adapter.notifyDataSetChanged();
                             mLocationClient.stop();
                             isNeedFresh = true;
-                            InitLocation();
+                            initLocation();
                             currentCity = "";
                             mLocationClient.start();
                         }
@@ -542,7 +527,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                                             int position, long id) {
 
                         Toast.makeText(getApplicationContext(),
-                                city_hot.get(position).getName(),
+                                city_hot.get(position).getCityName(),
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -566,10 +551,10 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     holder = (ViewHolder) convertView.getTag();
                 }
                 if (position >= 1) {
-                    holder.name.setText(list.get(position).getName());
-                    String currentStr = getAlpha(list.get(position).getPinyi());
+                    holder.name.setText(list.get(position).getCityName());
+                    String currentStr = getAlpha(list.get(position).getPinyin());
                     String previewStr = (position - 1) >= 0 ? getAlpha(list
-                            .get(position - 1).getPinyi()) : " ";
+                            .get(position - 1).getPinyin()) : " ";
                     if (!previewStr.equals(currentStr)) {
                         holder.alpha.setVisibility(View.VISIBLE);
                         holder.alpha.setText(currentStr);
@@ -623,7 +608,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         public View getView(int position, View convertView, ViewGroup parent) {
             convertView = inflater.inflate(R.layout.item_city, null);
             TextView city = (TextView) convertView.findViewById(R.id.city);
-            city.setText(hotCitys.get(position).getName());
+            city.setText(hotCitys.get(position).getCityName());
             return convertView;
         }
     }
@@ -753,8 +738,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
 
         if (mReady) {
             String text;
-            String name = allCity_lists.get(firstVisibleItem).getName();
-            String pinyin = allCity_lists.get(firstVisibleItem).getPinyi();
+            String name = allCity_lists.get(firstVisibleItem).getCityName();
+            String pinyin = allCity_lists.get(firstVisibleItem).getPinyin();
             if (firstVisibleItem < 4) {
                 text = name;
             } else {

@@ -52,8 +52,14 @@ public class TimeCountDownUtil extends CountDownTimer {
             for (TextView textView : textViewList)
                 textView.setText(spanned);
         else {
-            if (view instanceof TextView)
-                ((TextView) view).setText(spanned);
+            if (view instanceof TextView) {
+                if (view.getTag() != null) {
+                    view.setClickable(false);// 设置不能点击
+                    ((TextView) view).setText(millisUntilFinished / 1000 + "s");
+                } else
+                    ((TextView) view).setText(spanned);
+            }
+
             if (view instanceof Button) {
                 view.setClickable(false);// 设置不能点击
                 ((Button) view).setText(millisUntilFinished / 1000 + "s");// 设置倒计时时间
@@ -73,8 +79,14 @@ public class TimeCountDownUtil extends CountDownTimer {
             for (TextView textView : textViewList)
                 textView.setText("活动已开始");
         else {
-            if (view instanceof TextView)
-                ((TextView) view).setText("活动已开始");
+            if (view instanceof TextView) {
+                if (view.getTag().equals("TextView")) {
+                    view.setClickable(true);// 设置点击
+                    ((TextView) view).setText("重新获取");
+                } else
+                    ((TextView) view).setText("活动已开始");
+            }
+
             if (view instanceof Button) {
                 ((Button) view).setText("重新获取");
                 view.setClickable(true);// 重新获得点击

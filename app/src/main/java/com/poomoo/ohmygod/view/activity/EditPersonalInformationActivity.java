@@ -25,6 +25,7 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
@@ -191,15 +192,15 @@ public class EditPersonalInformationActivity extends BaseActivity {
             return false;
         }
 
-        bankCardNum = bankCardNumEdt.getText().toString().trim();
+        bankCardNum = MyUtil.trimAll(bankCardNumEdt.getText().toString().trim());
         if (TextUtils.isEmpty(bankCardNum)) {
             MyUtil.showToast(getApplicationContext(), "请填写银行卡号");
             return false;
         }
-        if (bankCardNum.length() != 23) {
+        if (bankCardNum.length() != 19) {
             idCardNumEdt.setFocusable(true);
             idCardNumEdt.requestFocus();
-            MyUtil.showToast(getApplicationContext(), "请输入23位有效卡号");
+            MyUtil.showToast(getApplicationContext(), "请输入19位有效卡号");
             return false;
         }
 
@@ -246,10 +247,16 @@ public class EditPersonalInformationActivity extends BaseActivity {
     };
 
     public void submit() {
-        this.appAction.putPersonalInfo(this.application.getUserId(), realName, idCardNum, idCardNum, urlList.get(0), urlList.get(1), new ActionCallbackListener() {
+        this.appAction.putPersonalInfo(this.application.getUserId(), realName, idCardNum, bankCardNum, urlList.get(0), urlList.get(1), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 MyUtil.showToast(getApplicationContext(), "上传成功");
+                application.setRealName(realName);
+                application.setIdCardNum(idCardNum);
+                application.setIdFrontPic(urlList.get(0));
+                application.setIdOpsitePic(urlList.get(1));
+                application.setBankCardNum(bankCardNum);
+                startService(new Intent(EditPersonalInformationActivity.this, Get_UserInfo_Service.class));
                 finish();
             }
 

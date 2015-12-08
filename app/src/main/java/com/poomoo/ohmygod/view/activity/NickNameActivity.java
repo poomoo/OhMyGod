@@ -88,9 +88,6 @@ public class NickNameActivity extends BaseActivity {
                     application.setAge(value);
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
-                Intent out = getIntent();
-                out.putExtra("value", value);
-                setResult(1, out);
                 finish();
             }
 

@@ -30,6 +30,7 @@ import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
+import com.poomoo.ohmygod.view.activity.SettingActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 
@@ -205,6 +206,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         });
 //        testData();
     }
+
 
     public void hiddenReply(View view) {
         MainFragmentActivity.instance.visible();
@@ -386,7 +388,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
 
 
         final String commentId = showBO.getComments().get(0).getCommentId();
-        LogUtils.i(TAG,"showBO:"+showBO);
+        LogUtils.i(TAG, "showBO:" + showBO);
         this.appAction.putReply(fromUserId, toUserId, content, commentId, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

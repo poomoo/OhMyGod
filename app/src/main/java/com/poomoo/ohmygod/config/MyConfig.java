@@ -22,4 +22,6 @@ public class MyConfig {
     public static final int GENDER = 2;
 
     public static final int PAGESIZE = 10;//--页面大小，默认值10
+    public static final long SMSCOUNTDOWNTIME = 60 * 1000;//发送验证码倒计时
+    public static final long COUNTDOWNTIBTERVAL = 1000;//倒计时间隔时间
 }

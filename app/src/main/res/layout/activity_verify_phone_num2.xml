@@ -27,6 +27,7 @@
 
 
         <TextView
+            android:id="@+id/txt_verify_phoneNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="14725852341"
@@ -41,6 +42,7 @@
         android:padding="10dp">
 
         <EditText
+            android:id="@+id/edt_verify_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -57,11 +59,14 @@
             android:padding="8dp" />
 
         <TextView
+            android:id="@+id/txt_verify_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
+            android:clickable="true"
             android:gravity="center"
+            android:onClick="toGetCode"
             android:padding="8dp"
             android:text="@string/btn_get_code_again"
             android:textColor="@color/themeRed"

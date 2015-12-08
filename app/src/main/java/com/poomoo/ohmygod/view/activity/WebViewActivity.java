@@ -4,7 +4,6 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -15,12 +14,8 @@ import com.poomoo.model.StatementBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
- * webview
+ * webView
  * 作者: 李苜菲
  * 日期: 2015/11/19 16:59.
  */
@@ -47,11 +42,6 @@ public class WebViewActivity extends BaseActivity {
 
     protected void initTitleBar() {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
-        if (PARENT.equals(getString(R.string.intent_signed))) {
-            type = "6";
-            title = getString(R.string.title_signed_explain);
-            getData();
-        }
 
         if (PARENT.equals(getString(R.string.intent_rebate))) {
             type = "3";
@@ -62,6 +52,24 @@ public class WebViewActivity extends BaseActivity {
         if (PARENT.equals(getString(R.string.intent_withDrawDeposit))) {
             type = "4";
             title = getString(R.string.title_withdraw_deposit_help);
+            getData();
+        }
+
+        if (PARENT.equals(getString(R.string.intent_signed))) {
+            type = "6";
+            title = getString(R.string.title_signed_explain);
+            getData();
+        }
+
+        if (PARENT.equals(getString(R.string.intent_about))) {
+            type = "7";
+            title = getString(R.string.title_about);
+            getData();
+        }
+
+        if (PARENT.equals(getString(R.string.intent_userHelp))) {
+            type = "9";
+            title = getString(R.string.title_userHelp);
             getData();
         }
 

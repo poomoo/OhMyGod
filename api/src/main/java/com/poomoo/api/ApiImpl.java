@@ -1,6 +1,7 @@
 package com.poomoo.api;
 
 import com.poomoo.model.AdBO;
+import com.poomoo.model.CityBO;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
@@ -426,6 +427,50 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, MessageInfoBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO changePassWord(String tel, String password) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.PASSWORD);
+        paramMap.put("tel", tel);
+        paramMap.put("password", password);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO putFeedBack(String userId, String content, String contact) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.FEEDBACK);
+        paramMap.put("userId", userId);
+        paramMap.put("content", content);
+        paramMap.put("contact", contact);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getCitys() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.CITYS);
+
+        try {
+            return httpEngine.postHandle(paramMap, CityBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

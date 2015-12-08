@@ -25,6 +25,7 @@ public class Config {
     public final static String SIGNED = "10011";//保存签到接口
     public final static String WITHDRAWDEPOSITLIST = "10012";//保存签到接口
     public final static String SYNC = "10013";//同步用户信息统一接口
+    public final static String PASSWORD = "10014";//重置帐号登录密码
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号
@@ -46,4 +47,6 @@ public class Config {
     public final static String AD = "40001";//广告
     public final static String STATEMENT = "40002";//查询声明信息
     public final static String INFO = "40003";//查询声明列表详情信息
+    public final static String CITYS = "40004";//查询城市
+    public final static String FEEDBACK = "40005";//查询声明列表详情信息
 }

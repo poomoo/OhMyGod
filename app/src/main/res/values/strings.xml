@@ -14,6 +14,7 @@
     <string name="title_win_information">中奖信息</string>
     <string name="title_commodity_information">商品详情</string>
     <string name="title_edit_personal_information">编辑个人资料</string>
+    <string name="title_signed_and_rebate">签到返现</string>
     <string name="title_signed_explain">签到声明</string>
     <string name="title_rebate_explain">返现声明</string>
     <string name="title_personal_center">个人中心</string>
@@ -43,6 +44,9 @@
     <string name="title_selectAge">"选择年龄"</string>
     <string name="title_selectGender">"选择性别"</string>
     <string name="title_age">"年龄"</string>
+    <string name="title_userHelp">用户帮助</string>
+    <string name="title_about">关于天呐</string>
+    <string name="title_feedBack">新反馈</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -187,7 +191,9 @@
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>
     <string name="intent_withDrawDeposit">withDrawDeposit</string>
+    <string name="intent_userHelp">userHelp</string>
     <string name="intent_message">message</string>
+    <string name="intent_about">about</string>
     <!--intent-->
 
     <!--hint-->
@@ -209,6 +215,8 @@
     <string name="hint_input_age">"请输入您的年龄"</string>
     <string name="hint_select_gender">"请选择您的性别"</string>
     <string name="hint_search">"城市名、拼音首字母..."</string>
+    <string name="hint_feedBack">"请留下您的宝贵意见和建议，我们将努力改进"</string>
+    <string name="hint_connection">联系方式(邮箱/手机)</string>
     <!--hint-->
 
     <!--控件-->

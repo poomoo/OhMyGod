@@ -148,7 +148,7 @@ public class WithdrawDepositActivity extends BaseActivity {
      */
     public void toHelp(View view) {
         Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_parent), TAG);
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_withDrawDeposit));
         openActivity(WebViewActivity.class, pBundle);
     }
 

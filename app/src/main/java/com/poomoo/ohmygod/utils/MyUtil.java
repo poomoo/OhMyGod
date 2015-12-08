@@ -4,15 +4,21 @@
 package com.poomoo.ohmygod.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.ResponseBO;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -120,5 +126,80 @@ public class MyUtil {
                 }
             }
         });
+    }
+
+    /**
+     * 隐藏手机号
+     *
+     * @param tel
+     * @return
+     */
+    public static String hiddenTel(String tel) {
+        String temp;
+        temp = tel.substring(0, 3) + tel.substring(3, 8).replaceAll("[0123456789]", "*")
+                + tel.substring(8, tel.length());
+        return temp;
+    }
+
+    /**
+     * 隐藏身份证号
+     *
+     * @param num
+     * @return
+     */
+    public static String hiddenIdCardNum(String num) {
+        String temp;
+        temp = num.substring(0, 3) + num.substring(3, 14).replaceAll("[0123456789]", "*")
+                + num.substring(14, num.length());
+        return temp;
+    }
+
+    /**
+     * 隐藏银行卡号
+     *
+     * @param num
+     * @return
+     */
+    public static String hiddenBankCardNum(String num) {
+        String temp;
+        temp = num.substring(0, 4) + num.substring(4, 16).replaceAll("[0123456789]", "*")
+                + num.substring(16, num.length());
+        return temp;
+    }
+
+    /**
+     * 去掉所有空格
+     *
+     * @param string
+     * @return
+     */
+    public static String trimAll(String string) {
+        return string.replaceAll(" ", "");
+    }
+
+    /**
+     * 把bitmap保存到sharedPreference
+     *
+     * @param bitmap
+     * @return
+     */
+    public static String saveDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        String imageBase64 = new String(Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT));
+        return imageBase64;
+    }
+
+    /**
+     * 把保存到sharedPreference的bitmap取出来
+     *
+     * @param context
+     * @return
+     */
+    public static Drawable loadDrawable(Context context) {
+        String temp = (String) SPUtils.get(context, "headPic", "");
+        LogUtils.i("loadDrawable", "temp:" + temp);
+        ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(temp.getBytes(), Base64.DEFAULT));
+        return Drawable.createFromStream(bais, "");
     }
 }

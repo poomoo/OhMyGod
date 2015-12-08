@@ -9,33 +9,37 @@ package com.poomoo.model;
  * 日期: 2015/11/25 15:55.
  */
 public class CityBO {
-    public String name;
-    public String pinyi;
+    private  String cityName;//--城市名称
+    private String pinyin;//--拼音
+    private String isHot;//--是否为热门城市，0否，1是
 
-    public CityBO(String name, String pinyi) {
+    public CityBO(String cityName, String pinyin) {
         super();
-        this.name = name;
-        this.pinyi = pinyi;
+        this.cityName = cityName;
+        this.pinyin = pinyin;
     }
 
-    public CityBO() {
-        super();
+    public String getCityName() {
+        return cityName;
     }
 
-    public String getName() {
-        return name;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPinyin() {
+        return pinyin;
     }
 
-    public String getPinyi() {
-        return pinyi;
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 
-    public void setPinyi(String pinyi) {
-        this.pinyi = pinyi;
+    public String getIsHot() {
+        return isHot;
     }
 
+    public void setIsHot(String isHot) {
+        this.isHot = isHot;
+    }
 }

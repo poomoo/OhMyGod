@@ -63,4 +63,10 @@ public interface Api {
 
     ResponseBO getMessageInfo(String statementId);
 
+    ResponseBO changePassWord(String tel, String passWord);
+
+    ResponseBO putFeedBack(String userId, String content, String contact);
+
+    ResponseBO getCitys();
+
 }

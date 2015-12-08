@@ -687,4 +687,105 @@ public class AppActionImpl implements AppAction {
             }
         }.execute();
     }
+
+    @Override
+    public void changePassWord(final String tel, final String passWord1, String passWord2, final ActionCallbackListener listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(passWord1)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "新密码为空");
+            }
+            return;
+        }
+        if (TextUtils.isEmpty(passWord2)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "确认密码为空");
+            }
+            return;
+        }
+
+        if (!passWord1.equals(passWord2)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "两次输入的密码不一致");
+            }
+            return;
+        }
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.changePassWord(tel, passWord1);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void putFeedBack(final String userId, final String content, final String contact, final ActionCallbackListener listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(content)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入内容");
+            }
+            return;
+        }
+
+        if (TextUtils.isEmpty(contact)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入联系方式");
+            }
+            return;
+        }
+
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.putFeedBack(userId, content, contact);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getCitys(final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getCitys();
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
 }

@@ -3,6 +3,9 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,11 +18,14 @@ import com.poomoo.ohmygod.utils.MyUtil;
  * 日期: 2015/11/24 15:03.
  */
 public class SettingActivity extends BaseActivity {
+    public static SettingActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        instance = this;
         initView();
     }
 
@@ -53,7 +59,9 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toUserHelp(View view) {
-        MyUtil.showToast(getApplicationContext(), "用户帮助");
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_userHelp));
+        openActivity(WebViewActivity.class, pBundle);
     }
 
     /**
@@ -62,7 +70,9 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toAbout(View view) {
-        MyUtil.showToast(getApplicationContext(), "关于天呐");
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_about));
+        openActivity(WebViewActivity.class, pBundle);
     }
 
     /**
@@ -80,8 +90,7 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toFeedBack(View view) {
-        MyUtil.showToast(getApplicationContext(), "意见反馈");
-
+        openActivity(FeedBackActivity.class);
     }
 
     /**
@@ -108,6 +117,18 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toLogOut(View view) {
-        MyUtil.showToast(getApplicationContext(), "退出登录");
+        Dialog dialog = new AlertDialog.Builder(this).setTitle("确认退出?").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainFragmentActivity.instance.finish();
+                finish();
+                openActivity(LogInActivity.class);
+            }
+        }).create();
+        dialog.show();
     }
 }

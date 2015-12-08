@@ -1,5 +1,6 @@
 package com.poomoo.ohmygod.view.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,12 +8,14 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.poomoo.api.Config;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
@@ -20,15 +23,13 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
-import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.view.activity.CityListActivity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,8 +37,10 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/11 16:26.
  */
-public class GrabFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener {
     private LinearLayout remindLlayout;
+    private LinearLayout currCityLlayout;
+    private TextView currCityTxt;
     private UpMarqueeTextView marqueeTextView;
     private ListView listView;
     private SlideShowView slideShowView;
@@ -60,11 +63,15 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     private void initView() {
+        currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
+        currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (ListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
 
+
+        currCityLlayout.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -156,5 +163,14 @@ public class GrabFragment extends BaseFragment implements AdapterView.OnItemClic
         pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
         openActivity(CommodityInformationActivity.class, pBundle);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.llayout_currCity:
+                openActivity(CityListActivity.class);
+                break;
+        }
     }
 }

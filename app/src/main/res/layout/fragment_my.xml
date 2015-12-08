@@ -6,7 +6,32 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_title_bar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+
+        <!--显示标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/title_personal_center"
+            android:textSize="22sp" />
+
+        <!--右边菜单按钮-->
+        <ImageView
+            android:id="@+id/img_personal_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_setting" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

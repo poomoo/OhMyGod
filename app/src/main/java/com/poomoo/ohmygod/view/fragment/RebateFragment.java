@@ -21,7 +21,9 @@ import com.poomoo.model.SignedBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.view.activity.SettingActivity;
 import com.poomoo.ohmygod.view.activity.WebViewActivity;
+import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
 import com.poomoo.ohmygod.view.custom.CalendarView;
 import com.poomoo.ohmygod.view.custom.CustomerDatePickerDialog;
 
@@ -35,6 +37,7 @@ import java.util.Date;
  * 日期: 2015/11/17 14:51.
  */
 public class RebateFragment extends BaseFragment implements View.OnClickListener {
+    private TextView withDrawDepositTxt;
     private TextView yearTxt;
     private TextView monthTxt;
     private TextView totalAmountTxt;//总金额池
@@ -65,7 +68,6 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         initView();
     }
 
@@ -74,6 +76,7 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
         Log.i(TAG, "initView");
         calendar = (CalendarView) getActivity().findViewById(R.id.calendar);
 
+        withDrawDepositTxt = (TextView) getActivity().findViewById(R.id.txt_withDrawDeposit);
         yearTxt = (TextView) getActivity().findViewById(R.id.txt_year);
         monthTxt = (TextView) getActivity().findViewById(R.id.txt_month);
         totalAmountTxt = (TextView) getActivity().findViewById(R.id.txt_totalAmount);
@@ -87,6 +90,7 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
         signedLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_signed_explain);
         rebateLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_rebate_explain);
 
+        withDrawDepositTxt.setOnClickListener(this);
         yearTxt.setOnClickListener(this);
         monthTxt.setOnClickListener(this);
         yearDownImg.setOnClickListener(this);
@@ -99,7 +103,7 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
         nMonth = cal.get(Calendar.MONTH) + 1;
         strYear = nYear + "";
         strMonth = nMonth + "";
-        curDate=new Date();
+        curDate = new Date();
         getData(strYear, strMonth);
     }
 
@@ -163,6 +167,9 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.llayout_signed:
                 toSign();
+                break;
+            case R.id.txt_withDrawDeposit:
+                openActivity(WithdrawDepositActivity.class);
                 break;
             default:
                 pickDate();

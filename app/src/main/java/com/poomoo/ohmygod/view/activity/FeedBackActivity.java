@@ -10,24 +10,25 @@ import android.widget.EditText;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
- * 重置密码
+ * 新反馈
  * 作者: 李苜菲
- * 日期: 2015/11/25 11:58.
+ * 日期: 2015/12/8 15:28.
  */
-public class ResetPassWordActivity extends BaseActivity {
-    private EditText passWordEdt;
-    private EditText passWordAgainEdt;
+public class FeedBackActivity extends BaseActivity {
+    private EditText contentEdt;
+    private EditText contactEdt;
 
-    private String passWord;
-    private String passWordAgain;
+    private String content;
+    private String contact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_passwrod);
+        setContentView(R.layout.activity_feed_back);
 
         initView();
     }
@@ -36,45 +37,41 @@ public class ResetPassWordActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-        passWordEdt = (EditText) findViewById(R.id.edt_newPassWord);
-        passWordAgainEdt = (EditText) findViewById(R.id.edt_newPassWordAgain);
+        contentEdt = (EditText) findViewById(R.id.edt_feedBack_content);
+        contactEdt = (EditText) findViewById(R.id.edt_feedBack_contact);
     }
 
     @Override
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_resetPassWord);
+        headerViewHolder.titleTxt.setText(R.string.title_feedBack);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        headerViewHolder.rightTxt.setVisibility(View.VISIBLE);
+        headerViewHolder.rightTxt.setText("提交");
+        headerViewHolder.rightTxt.setTextColor(getResources().getColor(R.color.themeRed));
+        headerViewHolder.rightTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toSubmit();
+            }
+        });
     }
 
-    /**
-     * 完成
-     *
-     * @param view
-     */
-    public void toFinish(View view) {
-        changePassWord();
-    }
-
-    private void changePassWord() {
-        passWord = passWordEdt.getText().toString().trim();
-        passWordAgain = passWordAgainEdt.getText().toString().trim();
+    private void toSubmit() {
+        content = contentEdt.getText().toString().trim();
+        contact = contactEdt.getText().toString().trim();
         showProgressDialog("请稍后...");
-        this.appAction.changePassWord(application.getTel(), passWord, passWordAgain, new ActionCallbackListener() {
+        this.appAction.putFeedBack(application.getUserId(), content, contact, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), "密码重置成功,请重新登录");
+                MyUtil.showToast(getApplicationContext(), "提交成功");
                 finish();
-                openActivity(LogInActivity.class);
-                UserInfoActivity.instance.finish();
-                SettingActivity.instance.finish();
-                MainFragmentActivity.instance.finish();
             }
 
             @Override

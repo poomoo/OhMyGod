@@ -6,7 +6,21 @@
     android:descendantFocusability="afterDescendants"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_title_bar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+        <!--显示标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/title_show_and_share"
+            android:textSize="22sp" />
+    </RelativeLayout>
 
     <include layout="@layout/layout_show" />
 

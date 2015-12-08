@@ -249,4 +249,31 @@ public interface AppAction {
      */
     void getMessageInfo(String statementId, ActionCallbackListener listener);
 
+    /**
+     * 修改密码
+     *
+     * @param tel
+     * @param passWord1
+     * @param passWord2
+     * @param listener
+     */
+    void changePassWord(String tel, String passWord1, String passWord2, ActionCallbackListener listener);
+
+    /**
+     * 提交反馈
+     *
+     * @param userId
+     * @param content
+     * @param contact
+     * @param listener
+     */
+    void putFeedBack(String userId, String content, String contact, ActionCallbackListener listener);
+
+    /**
+     * 获取城市列表
+     *
+     * @param listener
+     */
+    void getCitys(ActionCallbackListener listener);
+
 }

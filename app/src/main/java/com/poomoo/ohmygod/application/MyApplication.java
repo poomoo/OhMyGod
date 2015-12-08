@@ -33,6 +33,8 @@ public class MyApplication extends Application {
     private String bankCardNum;//--银行卡号码
     private String bankName;//--开户行名称
     private String isActiveWarm;//--活动警告1开启，0未开启
+    private String currCity;//当前城市
+    private String localCity;//定位城市
 
     @Override
     public void onCreate() {
@@ -180,5 +182,25 @@ public class MyApplication extends Application {
 
     public void setIsActiveWarm(String isActiveWarm) {
         this.isActiveWarm = isActiveWarm;
+    }
+
+    public void setAppAction(AppAction appAction) {
+        this.appAction = appAction;
+    }
+
+    public String getCurrCity() {
+        return currCity;
+    }
+
+    public void setCurrCity(String currCity) {
+        this.currCity = currCity;
+    }
+
+    public String getLocalCity() {
+        return localCity;
+    }
+
+    public void setLocalCity(String localCity) {
+        this.localCity = localCity;
     }
 }
