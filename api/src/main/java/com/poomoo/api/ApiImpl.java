@@ -13,6 +13,7 @@ import com.poomoo.model.ShowBO;
 import com.poomoo.model.SignedBO;
 import com.poomoo.model.StatementBO;
 import com.poomoo.model.UserBO;
+import com.poomoo.model.WinInformationBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.model.WithdrawDepositBO;
@@ -471,6 +472,21 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, CityBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getWinningInfo(String cityName, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.WININFOLIST);
+        paramMap.put("cityName", cityName);
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
+        try {
+            return httpEngine.postHandle(paramMap, WinInformationBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

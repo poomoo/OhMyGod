@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="贵阳"
+                android:text=""
                 android:textColor="@color/themeRed"
                 android:textSize="20sp" />
 
@@ -64,15 +64,18 @@
     <com.poomoo.ohmygod.view.custom.SlideShowView
         android:id="@+id/flipper_ad"
         android:layout_width="match_parent"
-        android:layout_height="132dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1.5" />
 
     <RelativeLayout
+        android:id="@+id/rlayout_grab_winner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp">
+        android:paddingTop="5dp"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,10 +86,13 @@
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/rlayout_grab_avatar"
                 android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_height="55dp"
+                android:visibility="gone">
 
                 <com.poomoo.ohmygod.view.custom.RoundImageView
+                    android:id="@+id/img_grab_winner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_avatar" />
@@ -125,7 +131,7 @@
                 android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="中奖用户: 中奖王中奖用户: 中奖王中奖用户: 中奖王中奖用户: 中奖王中奖用户: 中奖王中奖用户: 中奖王中奖王中奖用户: 中奖王中奖王中奖用户: 中奖王中奖王中奖用户: 中奖王"
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -167,5 +173,7 @@
     <ListView
         android:id="@+id/list_grab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:scrollbars="none" />
 </LinearLayout>

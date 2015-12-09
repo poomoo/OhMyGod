@@ -33,6 +33,7 @@ public class Config {
     public final static String ACTIVITY = "20002";//活动详情
     public final static String SUBMIT = "20003";//提交申请
     public final static String WINNERLIST = "20004";//中奖信息
+    public final static String WININFOLIST = "20005";//查询活动中奖列表（分页）
     public final static String RECORDS = "20006";//中奖记录
 
     //ACTION 30000

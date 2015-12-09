@@ -34,7 +34,7 @@ public class MyApplication extends Application {
     private String bankName;//--开户行名称
     private String isActiveWarm;//--活动警告1开启，0未开启
     private String currCity;//当前城市
-    private String localCity;//定位城市
+    private String locateCity;//定位城市
 
     @Override
     public void onCreate() {
@@ -196,11 +196,11 @@ public class MyApplication extends Application {
         this.currCity = currCity;
     }
 
-    public String getLocalCity() {
-        return localCity;
+    public String getLocateCity() {
+        return locateCity;
     }
 
-    public void setLocalCity(String localCity) {
-        this.localCity = localCity;
+    public void setLocateCity(String locateCity) {
+        this.locateCity = locateCity;
     }
 }

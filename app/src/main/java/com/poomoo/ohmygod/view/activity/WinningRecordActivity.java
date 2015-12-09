@@ -19,6 +19,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.WinningRecordAdapter;
+import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
     private WinningRecordsBO winningBO;
     private SpannableString spannableString;
     private int currPage = 1;
-    private int PAGESIZE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
 
     private void getData() {
         showProgressDialog("查询中...");
-        this.appAction.getWinningList(this.application.getUserId(), "2", currPage, PAGESIZE, new ActionCallbackListener() {
+        this.appAction.getWinningList(this.application.getUserId(), "2", currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();

@@ -3,7 +3,9 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -57,11 +59,25 @@ public class MainFragmentActivity extends
 
     private void show() {
         // 实例化SelectPicPopupWindow
-        informPopupWindow = new InformPopupWindow(this);
+        informPopupWindow = new InformPopupWindow(this, itemsOnClick);
         // 显示窗口
         informPopupWindow.showAtLocation(
                 this.findViewById(R.id.activity_main_frameLayout), Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
+
+    // 为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            informPopupWindow.dismiss();
+            switch (view.getId()) {
+                case R.id.img_more:
+                    MyUtil.showToast(getApplicationContext(), "更多");
+                    break;
+            }
+        }
+    };
 
     /**
      * 切换到抢

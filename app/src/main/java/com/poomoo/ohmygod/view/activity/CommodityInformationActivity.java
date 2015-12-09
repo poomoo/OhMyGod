@@ -275,10 +275,10 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
-                if (grabResultBO.equals("true")) {
+                if (grabResultBO.getIsWin().equals("true")) {
                     MyUtil.showToast(getApplicationContext(), "抢单成功!");
                     openActivity(EditPersonalInformationActivity.class);
-                } else if (grabResultBO.equals("true"))
+                } else if (grabResultBO.getIsWin().equals("false"))
                     MyUtil.showToast(getApplicationContext(), "抢单失败!");
                 else
                     MyUtil.showToast(getApplicationContext(), data.getMsg());

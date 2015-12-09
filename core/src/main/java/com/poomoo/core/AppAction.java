@@ -276,4 +276,14 @@ public interface AppAction {
      */
     void getCitys(ActionCallbackListener listener);
 
+    /**
+     * 查询活动中奖列表（分页）
+     *
+     * @param cityName
+     * @param currPage
+     * @param pageSize
+     * @param listener
+     */
+    void getWinningInfo(String cityName, int currPage, int pageSize, ActionCallbackListener listener);
+
 }

@@ -17,6 +17,7 @@
             android:padding="10dp">
 
             <ImageView
+                android:id="@+id/img_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -33,12 +34,13 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:id="@+id/img_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/ic_dot_normal" />
+                android:src="@drawable/ic_close" />
         </RelativeLayout>
 
         <LinearLayout

@@ -60,7 +60,7 @@ public class HttpEngine {
     public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://zgqg.91jiaoyou.cn/zgqg/app/";// 远程
     public static final String URL = BaseLocalUrl + "call.htm";
-    public static final String PICSURL = BaseLocalUrl + "/common/uploadPic.ajax";
+    public static final String PICSURL = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间
     public static final int TIMEOUT = 1 * 3 * 1000;// 网络通讯超时
@@ -141,7 +141,7 @@ public class HttpEngine {
                             responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.i(TAG,"异常:"+e.getMessage());
+                            Log.i(TAG, "异常:" + e.getMessage());
                         }
                     } else {
                         responseBO.setObj(gson.fromJson(jsonData, typeOfT));

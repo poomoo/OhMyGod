@@ -3,7 +3,10 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,7 +80,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     private LocationClient mLocationClient;
     private MyLocationListener mMyLocationListener;
 
-    private String currentCity; // 用于保存定位到的城市
+    private String currentCity; // 当前城市
+    private String locateCity; // 定位城市
     private int locateProcess = 1; // 记录当前定位的状态 正在定位-定位成功-定位失败
     private boolean isNeedFresh;
 
@@ -171,8 +175,26 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (position >= 4) {
-                    application.setCurrCity(allCity_lists.get(position).getCityName());
-                    finish();
+                    currentCity = allCity_lists.get(position).getCityName();
+                    if (!locateCity.equals(currentCity)) {
+                        String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
+                        Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                application.setCurrCity(currentCity);
+                                finish();
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create();
+                        dialog.show();
+                    } else {
+                        application.setCurrCity(currentCity);
+                        finish();
+                    }
                 }
             }
         });
@@ -186,12 +208,32 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                application.setCurrCity(city_result.get(position).getCityName());
-                finish();
+                currentCity = city_result.get(position).getCityName();
+                if (!locateCity.equals(currentCity)) {
+                    String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
+                    Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            application.setCurrCity(currentCity);
+                            finish();
+                        }
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).create();
+                    dialog.show();
+                } else {
+                    application.setCurrCity(currentCity);
+                    finish();
+                }
+
             }
         });
         initOverlay();
         cityInit();
+        setAdapter(allCity_lists, city_hot, city_history);
 
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
@@ -201,27 +243,6 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         mLocationClient.start();
         LogUtils.i("location", "2mLocationClient.start()");
     }
-
-//    private void InitLocation() {
-//        // 设置定位参数
-//        LocationClientOption option = new LocationClientOption();
-//        option.setCoorType("bd09ll"); // 设置坐标类型
-//        option.setScanSpan(10 * 1000); // 10秒钟扫描1次
-//        // 需要地址信息，设置为其他任何值（string类型，且不能为null）时，都表示无地址信息。
-//        option.setAddrType("all");
-//        // 设置是否返回POI的电话和地址等详细信息。默认值为false，即不返回POI的电话和地址信息。
-//        option.setPoiExtraInfo(true);
-//        // 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
-//        option.setProdName("通过GPS定位我当前的位置");
-//        // 禁用启用缓存定位数据
-//        option.disableCache(true);
-//        // 设置最多可返回的POI个数，默认值为3。由于POI查询比较耗费流量，设置最多返回的POI个数，以便节省流量。
-//        option.setPoiNumber(3);
-//        // 设置定位方式的优先级。
-//        // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
-//        option.setPriority(LocationClientOption.GpsFirst);
-//        mLocationClient.setLocOption(option);
-//    }
 
     private void cityInit() {
         CityBO city = new CityBO("定位", "0"); // 当前定位城市
@@ -259,7 +280,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 hotCityInit();
                 Collections.sort(city_lists, comparator);
                 allCity_lists.addAll(city_lists);
-                setAdapter(allCity_lists, city_hot, city_history);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -320,6 +341,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         option.setOpenGps(true);// 可选，默认false,设置是否使用gps
         option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
         option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.setPriority(LocationClientOption.GpsFirst);    // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
         mLocationClient.setLocOption(option);
     }
 
@@ -328,7 +350,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
             LogUtils.i("location", "location.getLongitude():" + location.getLongitude() + "location.getLatitude():"
-                    + location.getLatitude());
+                    + location.getLatitude() + "location.getCity():" + location.getCity());
+//            MyUtil.showToast(getApplicationContext(), "city:" + location.getCity());
             if (!isNeedFresh)
                 return;
 
@@ -338,7 +361,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 adapter.notifyDataSetChanged();
                 return;
             }
-            currentCity = location.getCity().substring(0, location.getCity().length() - 1);
+            locateCity = location.getCity();
+            application.setLocateCity(locateCity);
             locateProcess = 2; // 定位成功
             personList.setAdapter(adapter);
             adapter.notifyDataSetChanged();
@@ -462,9 +486,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     @Override
                     public void onClick(View v) {
                         if (locateProcess == 2) {
-                            Toast.makeText(getApplicationContext(),
-                                    city.getText().toString(),
-                                    Toast.LENGTH_SHORT).show();
+                            application.setCurrCity(city.getText().toString());
+                            finish();
                         } else if (locateProcess == 3) {
                             locateProcess = 1;
                             personList.setAdapter(adapter);
@@ -472,7 +495,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             mLocationClient.stop();
                             isNeedFresh = true;
                             initLocation();
-                            currentCity = "";
+                            locateCity = "";
                             mLocationClient.start();
                         }
                     }
@@ -484,15 +507,16 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     city.setVisibility(View.GONE);
                     pbLocate.setVisibility(View.VISIBLE);
                 } else if (locateProcess == 2) { // 定位成功
-                    locateHint.setText("GPS定位");
+                    locateHint.setText("当前定位城市");
+                    LogUtils.i(TAG, "定位成功:" + "currentCity:" + currentCity + "city:" + city);
                     city.setVisibility(View.VISIBLE);
-                    city.setText(currentCity);
+                    city.setText(locateCity);
                     mLocationClient.stop();
                     pbLocate.setVisibility(View.GONE);
                 } else if (locateProcess == 3) {
                     locateHint.setText("未定位到城市,请选择");
                     city.setVisibility(View.VISIBLE);
-                    city.setText("重新选择");
+                    city.setText("重新定位");
                     pbLocate.setVisibility(View.GONE);
                 }
             } else if (viewType == 1) { // 最近访问城市
@@ -506,11 +530,26 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
+                        currentCity = city_history.get(position);
+                        if (!locateCity.equals(currentCity)) {
+                            String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
+                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    application.setCurrCity(currentCity);
+                                    finish();
+                                }
+                            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(getApplicationContext(),
-                                city_history.get(position), Toast.LENGTH_SHORT)
-                                .show();
-
+                                }
+                            }).create();
+                            dialog.show();
+                        } else {
+                            application.setCurrCity(currentCity);
+                            finish();
+                        }
                     }
                 });
                 TextView recentHint = (TextView) convertView
@@ -525,11 +564,26 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
+                        currentCity = city_hot.get(position).getCityName();
+                        if (!locateCity.equals(currentCity)) {
+                            String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
+                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    application.setCurrCity(currentCity);
+                                    finish();
+                                }
+                            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(getApplicationContext(),
-                                city_hot.get(position).getCityName(),
-                                Toast.LENGTH_SHORT).show();
-
+                                }
+                            }).create();
+                            dialog.show();
+                        } else {
+                            application.setCurrCity(currentCity);
+                            finish();
+                        }
                     }
                 });
                 hotCity.setAdapter(new HotCityAdapter(context, this.hotList));

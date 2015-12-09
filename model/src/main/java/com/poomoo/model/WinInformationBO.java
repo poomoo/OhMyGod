@@ -6,13 +6,42 @@ package com.poomoo.model;
  * 日期: 2015/11/13 11:20.
  */
 public class WinInformationBO {
-    public String title = "";//标题
-    public String winner = "";//中奖者
-    public String win_date = "";//获奖日期
-    public String address = "";//领奖地址
-    public String end_date = "";//领奖截止日期
-    public String reason = "";//其他原因
-    public String picture_urls = "";//图片URL
+    private String transferMsg;//--转让信息，为空表示不转让，不为空表示已经转让给某人，列表中显示起信息
+    private String picture;//
+    private String goodsId;//
+    private String title;//
+    private String activeId;//
+    private String winTel;//--中奖人昵称
+    private String winNickName;//--中奖人昵称
+    private String userId; //
+    private String playDt;//
+    private String goodsName;//
+    private String getEndDt;
+    private String getAddress;
+
+    public String getTransferMsg() {
+        return transferMsg;
+    }
+
+    public void setTransferMsg(String transferMsg) {
+        this.transferMsg = transferMsg;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getTitle() {
         return title;
@@ -22,51 +51,67 @@ public class WinInformationBO {
         this.title = title;
     }
 
-    public String getWinner() {
-        return winner;
+    public String getActiveId() {
+        return activeId;
     }
 
-    public void setWinner(String winner) {
-        this.winner = winner;
+    public void setActiveId(String activeId) {
+        this.activeId = activeId;
     }
 
-    public String getWin_date() {
-        return win_date;
+    public String getWinTel() {
+        return winTel;
     }
 
-    public void setWin_date(String win_date) {
-        this.win_date = win_date;
+    public void setWinTel(String winTel) {
+        this.winTel = winTel;
     }
 
-    public String getAddress() {
-        return address;
+    public String getWinNickName() {
+        return winNickName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setWinNickName(String winNickName) {
+        this.winNickName = winNickName;
     }
 
-    public String getEnd_date() {
-        return end_date;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getReason() {
-        return reason;
+    public String getPlayDt() {
+        return playDt;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setPlayDt(String playDt) {
+        this.playDt = playDt;
     }
 
-    public String getPicture_urls() {
-        return picture_urls;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setPicture_urls(String picture_urls) {
-        this.picture_urls = picture_urls;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGetEndDt() {
+        return getEndDt;
+    }
+
+    public void setGetEndDt(String getEndDt) {
+        this.getEndDt = getEndDt;
+    }
+
+    public String getGetAddress() {
+        return getAddress;
+    }
+
+    public void setGetAddress(String getAddress) {
+        this.getAddress = getAddress;
     }
 }

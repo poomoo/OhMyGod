@@ -4,6 +4,7 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
@@ -63,13 +68,28 @@ public class TestActivity extends BaseActivity {
     private boolean isKeyBoardShow = false;
     private int commentPosition;
 
+    private ImageView imageView;
+    private static final String url = "http://zgqg.91jiaoyou.cn/zgqg/upload/active/1449467937354.jpg";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        imageView = (ImageView) findViewById(R.id.img_test);
+        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
 
-        initView();
+        ImageLoader.getInstance().displayImage(url,imageView);
+//        ImageLoader.getInstance().loadImage(url,  new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                LogUtils.i(TAG, "后:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
+//                imageView.setImageBitmap(loadedImage);
+//            }
+//        });
+
+//        initView();
     }
+
 
 //    @Override
 //    protected void initView() {

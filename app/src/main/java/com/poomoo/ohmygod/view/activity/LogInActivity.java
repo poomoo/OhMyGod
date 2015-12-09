@@ -68,6 +68,8 @@ public class LogInActivity extends BaseActivity {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_rememberPassWord), true);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_passWord), passWord);
                 }
+                application.setCurrCity("");
+                application.setLocateCity("");
                 UserBO userBO = (UserBO) data.getObj();
                 Log.i(TAG, "data:" + userBO);
                 setAppInfo(userBO);

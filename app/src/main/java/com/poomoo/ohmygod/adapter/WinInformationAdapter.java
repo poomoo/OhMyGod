@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +42,13 @@ public class WinInformationAdapter extends MyBaseAdapter<WinInformationBO> {
 
         WinInformationBO winInformationBO = itemList.get(i);
         viewHolder.title.setText(winInformationBO.getTitle());
-        viewHolder.winner.setText(winInformationBO.getWinner());
-        viewHolder.win_date.setText(winInformationBO.getWin_date());
-        viewHolder.address.setText(winInformationBO.getAddress());
-        viewHolder.end_date.setText(winInformationBO.getEnd_date());
-        viewHolder.reason.setText(winInformationBO.getReason());
+        viewHolder.winner.setText(TextUtils.isEmpty(winInformationBO.getWinNickName()) ? winInformationBO.getWinTel() : winInformationBO.getWinNickName());
+        viewHolder.win_date.setText(winInformationBO.getPlayDt());
+        viewHolder.address.setText(winInformationBO.getGetAddress());
+        viewHolder.end_date.setText(winInformationBO.getGetEndDt());
+        viewHolder.reason.setText(winInformationBO.getTransferMsg());
 
-        ImageLoader.getInstance().displayImage(winInformationBO.getPicture_urls(), viewHolder.imageView);
+        ImageLoader.getInstance().displayImage(winInformationBO.getPicture(), viewHolder.imageView);
 
         return view;
     }

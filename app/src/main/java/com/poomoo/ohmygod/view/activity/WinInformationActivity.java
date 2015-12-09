@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinInformationBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.WinInformationAdapter;
+import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshableView;
 
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ import java.util.List;
  * 日期: 2015/11/13 10:51.
  */
 public class WinInformationActivity extends BaseActivity {
-    private RefreshableView refreshableView;
+    //    private RefreshableView refreshableView;
     private ListView listView;
 
     private WinInformationAdapter winInformationAdapter;
@@ -30,29 +34,30 @@ public class WinInformationActivity extends BaseActivity {
         setContentView(R.layout.activity_win_information);
 
         initView();
+        getData();
     }
 
     protected void initView() {
         initTitleBar();
 
-        refreshableView = (RefreshableView) findViewById(R.id.activity_win_information_refreshable);
+//        refreshableView = (RefreshableView) findViewById(R.id.activity_win_information_refreshable);
         listView = (ListView) findViewById(R.id.activity_win_information_listView);
 
         winInformationAdapter = new WinInformationAdapter(this);
         listView.setAdapter(winInformationAdapter);
         list = new ArrayList<>();
-        WinInformationBO winInformationBO = new WinInformationBO();
-        winInformationBO.setTitle("测试测试");
-        list.add(winInformationBO);
-        winInformationAdapter.setItems(list);
+//        WinInformationBO winInformationBO = new WinInformationBO();
+//        winInformationBO.setTitle("测试测试");
+//        list.add(winInformationBO);
+//        winInformationAdapter.setItems(list);
 
         //下拉刷新
-        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        }, 0);
+//        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//            }
+//        }, 0);
     }
 
     protected void initTitleBar() {
@@ -61,6 +66,25 @@ public class WinInformationActivity extends BaseActivity {
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void getData() {
+        showProgressDialog("请稍后...");
+        this.appAction.getWinningInfo(application.getCurrCity(), 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                list = data.getObjList();
+                winInformationAdapter.setItems(list);
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
                 finish();
             }
         });

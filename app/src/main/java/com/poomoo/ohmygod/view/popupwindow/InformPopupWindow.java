@@ -1,17 +1,20 @@
 package com.poomoo.ohmygod.view.popupwindow;
 
-import android.animation.ObjectAnimator;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.picUtils.BitmapCache;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,13 +26,21 @@ import java.io.InputStream;
  */
 public class InformPopupWindow extends PopupWindow {
     private View mMenuView;
+    private ImageView moreImg;
+    private ImageView closeImg;
     private WebView webView;
 
-    public InformPopupWindow(Activity context) {
+
+    public InformPopupWindow(Activity context, OnClickListener itemsOnClick) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popupwindow_inform, null);
+        moreImg = (ImageView) mMenuView.findViewById(R.id.img_more);
+        closeImg = (ImageView) mMenuView.findViewById(R.id.img_close);
         webView = (WebView) mMenuView.findViewById(R.id.popup_inform_webView);
+
+        moreImg.setOnClickListener(itemsOnClick);
+        closeImg.setOnClickListener(itemsOnClick);
 
         this.setContentView(mMenuView);
         mMenuView.setPadding(30, 20, 30, 30);

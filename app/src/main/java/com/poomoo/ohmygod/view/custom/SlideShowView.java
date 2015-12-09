@@ -123,14 +123,14 @@ public class SlideShowView extends FrameLayout {
         LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
 
-        LogUtils.i(TAG, "imageUrls.length:" + imageUrls.length);
+//        LogUtils.i(TAG, "imageUrls.length:" + imageUrls.length);
         // 热点个数与图片特殊相等
         for (int i = 0; i < imageUrls.length; i++) {
             ImageView view = new ImageView(context);
-            LogUtils.i(TAG, "imageUrls:" + imageUrls[i]);
+//            LogUtils.i(TAG, "imageUrls:" + imageUrls[i]);
             view.setTag(imageUrls[i]);
 //            if (i == 0)//给一个默认图
-                view.setBackgroundResource(R.mipmap.ic_launcher);
+            view.setBackgroundResource(R.mipmap.ic_launcher);
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);
 

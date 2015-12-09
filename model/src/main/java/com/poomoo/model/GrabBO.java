@@ -66,4 +66,16 @@ public class GrabBO {
     public void setEndCountdown(long endCountdown) {
         this.endCountdown = endCountdown;
     }
+
+    @Override
+    public String toString() {
+        return "GrabBO{" +
+                "activeId='" + activeId + '\'' +
+                ", title='" + title + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", picture='" + picture + '\'' +
+                ", startCountdown=" + startCountdown +
+                ", endCountdown=" + endCountdown +
+                '}';
+    }
 }

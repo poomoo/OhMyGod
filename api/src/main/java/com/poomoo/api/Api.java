@@ -69,4 +69,6 @@ public interface Api {
 
     ResponseBO getCitys();
 
+    ResponseBO getWinningInfo(String cityName, int currPage, int pageSize);
+
 }

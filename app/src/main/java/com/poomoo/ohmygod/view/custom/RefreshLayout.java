@@ -208,7 +208,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements
 			int visibleItemCount, int totalItemCount) {
 		// 滚动时到了最底部也可以加载更多
 		if (canLoad()) {
-			loadData();
+//			loadData();
 		}
 	}
 	
