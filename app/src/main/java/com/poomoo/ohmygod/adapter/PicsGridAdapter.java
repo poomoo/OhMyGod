@@ -12,8 +12,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 
-import java.util.List;
-
 /**
  * 作者: 李苜菲
  * 日期: 2015/11/20 10:51.

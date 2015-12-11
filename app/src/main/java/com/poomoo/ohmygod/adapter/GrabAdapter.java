@@ -7,19 +7,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
@@ -49,7 +48,7 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_grab, null);
             viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
-//            viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_background);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_bg);
             viewHolder.txt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
 
             convertView.setTag(viewHolder);
@@ -58,30 +57,35 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
         grabBO = itemList.get(position);
 
-        viewHolder.rlayout.setTag(grabBO.getPicture());
-//        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-//                .imageScaleType(ImageScaleType.NONE_SAFE)
-//                .bitmapConfig(Bitmap.Config.RGB_565)
-//                .displayer(new FadeInBitmapDisplayer(300))
-//                .build();//
-//        ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
+//        viewHolder.rlayout.setTag(grabBO.getPicture());
+//        viewHolder.image.setTag(grabBO.getPicture());
 
-        ImageLoader.getInstance().loadImage(grabBO.getPicture(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                Drawable drawable = new BitmapDrawable(context.getResources(), loadedImage);
-                // 通过 tag 来防止图片错位
-                LogUtils.i("GrabAdapter", viewHolder.rlayout.getTag() + "");
-                if (viewHolder.rlayout.getTag() != null && viewHolder.rlayout.getTag().equals(imageUri)) {
-                    viewHolder.rlayout.setBackground(drawable);
-                }
-            }
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.bg_snatch_record) //
+                .showImageOnFail(R.drawable.bg_snatch_record) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(false) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
+        ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image,defaultOptions);
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                LogUtils.i("GrabAdapter", "加载失败:" + imageUri + " reason:" + failReason);
-            }
-        });
+//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+//        ImageLoader.getInstance().loadImage(grabBO.getPicture(), new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                Drawable drawable = new BitmapDrawable(context.getResources(), loadedImage);
+//                // 通过 tag 来防止图片错位
+//                if (viewHolder.rlayout.getTag() != null && viewHolder.rlayout.getTag().equals(imageUri)) {
+//                    viewHolder.rlayout.setBackground(drawable);
+//                    viewHolder.rlayout.setLayoutParams(new LinearLayout.LayoutParams(viewHolder.rlayout.getLayoutParams().width, loadedImage.getHeight()));
+//                }
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                LogUtils.i("GrabAdapter", "加载失败:" + imageUri + " reason:" + failReason);
+//            }
+//        });
 
 
         if (viewHolder.txt.getTag() == null) {
@@ -97,7 +101,7 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
     class ViewHolder {
         private RelativeLayout rlayout;
-        //        private ImageView image;
+        private ImageView image;
         private TextView txt;
     }
 

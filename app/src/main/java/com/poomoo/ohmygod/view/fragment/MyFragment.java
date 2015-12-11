@@ -68,27 +68,6 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         nickNameTxt = (TextView) getActivity().findViewById(R.id.txt_personal_nickName);
         balanceTxt = (TextView) getActivity().findViewById(R.id.txt_personal_walletBalance);
 
-        headPic = (String) SPUtils.get(getActivity().getApplicationContext(), "headPic", "");
-        LogUtils.i(TAG, "headPic:" + headPic);
-        if (!TextUtils.isEmpty(headPic))
-            avatarImg.setImageDrawable(MyUtil.loadDrawable(getActivity().getApplicationContext()));
-        else if (!TextUtils.isEmpty(application.getHeadPic())) {
-            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-                    .showImageForEmptyUri(R.drawable.ic_avatar) //
-                    .showImageOnFail(R.drawable.ic_avatar) //
-                    .cacheInMemory(true) //
-                    .cacheOnDisk(false) //
-                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                    .build();//
-            ImageLoader.getInstance().loadImage(application.getHeadPic(), defaultOptions, new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    avatarImg.setImageBitmap(loadedImage);
-                    SPUtils.put(getActivity().getApplicationContext(), "headPic", MyUtil.saveDrawable(loadedImage));
-                }
-            });
-        }
-
         gridView = (GridView) getActivity().findViewById(R.id.grid_personal_center);
         personalCenterAdapter = new PersonalCenterAdapter(getActivity(), gridView);
         gridView.setAdapter(personalCenterAdapter);
@@ -110,14 +89,26 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-                .showImageForEmptyUri(R.drawable.ic_avatar) //
-                .showImageOnFail(R.drawable.ic_avatar) //
-                .cacheInMemory(true) //
-                .cacheOnDisk(false) //
-                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                .build();//
-        ImageLoader.getInstance().displayImage(application.getHeadPic(), avatarImg, defaultOptions);
+        headPic = (String) SPUtils.get(getActivity().getApplicationContext(), "headPic", "");
+        LogUtils.i(TAG, "headPic:" + headPic);
+        if (!TextUtils.isEmpty(headPic))
+            avatarImg.setImageDrawable(MyUtil.loadDrawable(getActivity().getApplicationContext()));
+        else if (!TextUtils.isEmpty(application.getHeadPic())) {
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                    .showImageForEmptyUri(R.drawable.ic_avatar) //
+                    .showImageOnFail(R.drawable.ic_avatar) //
+                    .cacheInMemory(true) //
+                    .cacheOnDisk(false) //
+                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                    .build();//
+            ImageLoader.getInstance().loadImage(application.getHeadPic(), defaultOptions, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    avatarImg.setImageBitmap(loadedImage);
+                    SPUtils.put(getActivity().getApplicationContext(), "headPic", MyUtil.saveDrawable(loadedImage));
+                }
+            });
+        }
         nickNameTxt.setText(application.getNickName());
         if (application.getSex().equals("1"))
             genderImg.setImageResource(R.drawable.ic_gender_man);

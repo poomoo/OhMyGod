@@ -22,11 +22,13 @@ import java.util.List;
  * 日期: 2015/11/13 10:51.
  */
 public class WinInformationActivity extends BaseActivity {
-    //    private RefreshableView refreshableView;
+    private RefreshableView refreshableView;
     private ListView listView;
 
     private WinInformationAdapter winInformationAdapter;
     private List<WinInformationBO> list;
+
+    private int currPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class WinInformationActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-//        refreshableView = (RefreshableView) findViewById(R.id.activity_win_information_refreshable);
+        refreshableView = (RefreshableView) findViewById(R.id.refresh_winInfo);
         listView = (ListView) findViewById(R.id.activity_win_information_listView);
 
         winInformationAdapter = new WinInformationAdapter(this);
@@ -55,7 +57,7 @@ public class WinInformationActivity extends BaseActivity {
 //        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
 //            @Override
 //            public void onRefresh() {
-//
+//                getData();
 //            }
 //        }, 0);
     }
@@ -73,17 +75,20 @@ public class WinInformationActivity extends BaseActivity {
 
     private void getData() {
         showProgressDialog("请稍后...");
-        this.appAction.getWinningInfo(application.getCurrCity(), 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
+        this.appAction.getWinningInfo(application.getCurrCity(), currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+//                refreshableView.finishRefreshing();
                 closeProgressDialog();
                 list = data.getObjList();
                 winInformationAdapter.setItems(list);
+//                currPage = 1;
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+//                refreshableView.finishRefreshing();
                 MyUtil.showToast(getApplicationContext(), message);
                 finish();
             }

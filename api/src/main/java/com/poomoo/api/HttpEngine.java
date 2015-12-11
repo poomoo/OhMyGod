@@ -63,7 +63,7 @@ public class HttpEngine {
     public static final String PICSURL = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间
-    public static final int TIMEOUT = 1 * 3 * 1000;// 网络通讯超时
+    public static final int TIMEOUT = 1 * 30 * 1000;// 网络通讯超时
 
     private static HttpEngine instance = null;
 

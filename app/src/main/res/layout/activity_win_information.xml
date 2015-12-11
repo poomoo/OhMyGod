@@ -7,10 +7,14 @@
 
     <include layout="@layout/pub_layout_title_bar" />
 
-
-    <ListView
-        android:id="@+id/activity_win_information_listView"
+    <com.poomoo.ohmygod.view.custom.RefreshableView
+        android:id="@+id/refresh_winInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/activity_win_information_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.poomoo.ohmygod.view.custom.RefreshableView>
 </LinearLayout>

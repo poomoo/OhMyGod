@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp">
 
-    <RelativeLayout
-        android:id="@+id/rlayout_grab"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/img_grab_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/bg_snatch_record" />
 
         <TextView
             android:id="@+id/txt_placed"
@@ -26,15 +19,21 @@
             android:textSize="20sp"
             android:visibility="gone" />
 
+        <ImageView
+            android:id="@+id/img_grab_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_snatch_record" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/txt_placed"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
-            android:visibility="visible">
+            android:paddingTop="20dp">
 
             <TextView
                 android:id="@+id/txt_label"
@@ -58,5 +57,5 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </RelativeLayout>
+    </FrameLayout>
 </LinearLayout>
