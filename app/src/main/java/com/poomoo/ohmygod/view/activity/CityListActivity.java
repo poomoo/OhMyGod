@@ -564,10 +564,12 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
+
                         currentCity = city_hot.get(position).getCityName();
+                        LogUtils.i(TAG, "热门城市:" + "currentCity" + currentCity + "locateCity:" + locateCity);
                         if (!locateCity.equals(currentCity)) {
-                            String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
-                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            String message = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
+                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);

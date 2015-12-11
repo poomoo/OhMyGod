@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
 
 /**
  * 设置
@@ -125,6 +126,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainFragmentActivity.instance.finish();
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_isLogin), false);
                 finish();
                 openActivity(LogInActivity.class);
             }

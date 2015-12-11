@@ -4,7 +4,9 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +21,9 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
  * 注册
@@ -65,12 +69,22 @@ public class RegisterActivity extends BaseActivity {
      * @param view
      */
     public void toCode(View view) {
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeBtn, new CountDownListener() {
+            @Override
+            public void onFinish(int result) {
+                codeBtn.setText("重新获取");
+                codeBtn.setClickable(true);// 重新获得点击
+                codeBtn.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
+                codeBtn.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
+        timeCountDownUtil.start();
         phoneNum = phoneNumEdt.getText().toString().trim();
 
         this.appAction.getCode(phoneNum, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                MyUtil.showToast(getApplicationContext(), data.getMsg());
+                MyUtil.showToast(getApplicationContext(), "验证码发送成功");
             }
 
             @Override
@@ -94,7 +108,7 @@ public class RegisterActivity extends BaseActivity {
         code = codeEdt.getText().toString().trim();
         age = ageTxt.getText().toString().trim();
         sex = genderTxt.getText().toString().trim();
-        passWord=passWordEdt.getText().toString().trim();
+        passWord = passWordEdt.getText().toString().trim();
         if (sex.equals("男"))
             sex = "1";
         else
@@ -146,7 +160,9 @@ public class RegisterActivity extends BaseActivity {
      * @param view
      */
     public void toProtocol(View view) {
-        MyUtil.showToast(getApplicationContext(), "协议");
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_protocol));
+        openActivity(WebViewActivity.class, bundle);
     }
 
     @Override

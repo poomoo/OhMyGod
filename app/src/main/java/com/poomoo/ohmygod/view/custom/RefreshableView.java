@@ -178,6 +178,8 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
      */
     private boolean ableToPull;
 
+    private int listViewPosition = 1;
+
     /**
      * 下拉刷新控件的构造函数，会在运行时动态添加一个下拉头的布局。
      *
@@ -222,7 +224,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
             hideHeaderHeight = -header.getHeight();
             headerLayoutParams = (MarginLayoutParams) header.getLayoutParams();
             headerLayoutParams.topMargin = hideHeaderHeight;
-            listView = (ListView) getChildAt(1);
+            listView = (ListView) getChildAt(listViewPosition);
             listView.setOnTouchListener(this);
             loadOnce = true;
         }
@@ -571,6 +573,9 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
         void onRefresh();
     }
 
+    public void setListViewPosition(int listViewPosition) {
+        this.listViewPosition = listViewPosition;
+    }
 //    /**
 //     * 上拉加载更多
 //     */

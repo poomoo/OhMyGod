@@ -47,6 +47,7 @@
     <string name="title_userHelp">用户帮助</string>
     <string name="title_about">关于天呐</string>
     <string name="title_feedBack">新反馈</string>
+    <string name="title_protocol">天呐抢购协议</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -66,6 +67,7 @@
     <string name="label_idCardPic">身份证件</string>
     <string name="label_celPhone">手机号码</string>
     <string name="label_bankCardNum">银行卡号</string>
+    <string name="label_address">有效地址</string>
     <string name="label_avatar">头像</string>
     <string name="label_nickName">我的昵称</string>
     <string name="label_gender">性别</string>
@@ -166,7 +168,7 @@
     <string name="label_register"><u>立即注册</u></string>
     <string name="label_forgetPassWord"><u>忘记密码?</u></string>
     <string name="label_agree">"注册即表示同意"</string>
-    <string name="label_protocol">"《众观抢购协议》"</string>
+    <string name="label_protocol">《天呐抢购协议》</string>
     <!--登陆注册-->
 
     <!--城市列表-->
@@ -181,7 +183,9 @@
     <string name="intent_title">title</string>
     <string name="intent_parent">parent</string>
     <string name="intent_phone">phone</string>
-    <string name="intent_passWord">passWord</string>
+    <string name="intent_bankCard">bankCard</string>
+    <string name="intent_forgetPassWord">forgetPassWord</string>
+    <string name="intent_changePassWord">changePassWord</string>
     <string name="intent_age">age</string>
     <string name="intent_gender">gender</string>
     <string name="intent_activeId">activeId</string>
@@ -194,6 +198,9 @@
     <string name="intent_userHelp">userHelp</string>
     <string name="intent_message">message</string>
     <string name="intent_about">about</string>
+    <string name="intent_protocol">protocol</string>
+    <string name="intent_pubMessage">pubMessage</string>
+    <string name="intent_innerMessage">innerMessage</string>
     <!--intent-->
 
     <!--hint-->
@@ -201,12 +208,14 @@
     <string name="hint_idCardNum">请填写本人有效证件号</string>
     <string name="hint_celPhone">请填写本人有效电话号码</string>
     <string name="hint_bankCardNum">请填写本人储蓄卡号</string>
+    <string name="hint_address">请填写本人收货地址</string>
     <string name="hint_show_content">晒单内容</string>
     <string name="hint_input_money">请输入提现金额</string>
     <string name="hint_input_code">"填写验证码"</string>
     <string name="hint_input_nickName">"请输入昵称"</string>
     <string name="hint_input_newPhoneNum">"请输入新手机号"</string>
     <string name="hint_input_cardNum">"请输入卡号"</string>
+    <string name="hint_input_cardName">"请输入持卡人姓名"</string>
     <string name="hint_select_bankCard">"请选择银行卡"</string>
     <string name="hint_input_bank_phoneNum">"请输入银行预留手机号"</string>
     <string name="hint_input_your_phoneNum">"请输入您的手机号"</string>
@@ -265,5 +274,22 @@
     <string name="sp_phoneNum">phoneNum</string>
     <string name="sp_passWord">passWord</string>
     <string name="sp_rememberPassWord">isRemember</string>
+    <string name="sp_isLogin">isLogin</string>
+    <string name="sp_nickName">realName</string>
+    <string name="sp_realName">realName</string>
+    <string name="sp_headPic">headPic</string>
+    <string name="sp_headPicBitmap">headPicBitmap</string>
+    <string name="sp_currentFee">currentFee</string>
+    <string name="sp_realNameAuth">realNameAuth</string>
+    <string name="sp_idCardNum">idCardNum</string>
+    <string name="sp_sex">sex</string>
+    <string name="sp_age">age</string>
+    <string name="sp_idFrontPic">idFrontPic</string>
+    <string name="sp_idOpsitePic">idOpsitePic</string>
+    <string name="sp_bankCardNum">bankCardNum</string>
+    <string name="sp_bankName">bankName</string>
+    <string name="sp_userId">userId</string>
+    <string name="sp_address">address</string>
+
     <!--SharedPreferences-->
 </resources>

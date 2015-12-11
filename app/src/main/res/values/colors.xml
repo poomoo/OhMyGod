@@ -4,7 +4,8 @@
     <color name="themeGray">#828282</color>
     <color name="themeYellow">#FCE023</color>
     <color name="white">#FFFFFF</color>
-    <color name="transparent">#00000000</color>
+    <color name="reply">#f17f0d</color> #ED9C59
+    <color name="transparent">#00000000</color>ED9C59
 
     <color name="grid_divider">#EBEBEB</color>
     <color name="divider">#F8F8F8</color>

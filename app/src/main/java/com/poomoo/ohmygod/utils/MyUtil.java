@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.ohmygod.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -136,8 +137,8 @@ public class MyUtil {
      */
     public static String hiddenTel(String tel) {
         String temp;
-        temp = tel.substring(0, 3) + tel.substring(3, 8).replaceAll("[0123456789]", "*")
-                + tel.substring(8, tel.length());
+        temp = tel.substring(0, 3) + tel.substring(3, 7).replaceAll("[0123456789]", "*")
+                + tel.substring(7, tel.length());
         return temp;
     }
 
@@ -197,7 +198,7 @@ public class MyUtil {
      * @return
      */
     public static Drawable loadDrawable(Context context) {
-        String temp = (String) SPUtils.get(context, "headPic", "");
+        String temp = (String) SPUtils.get(context, context.getString(R.string.sp_headPicBitmap), "");
         LogUtils.i("loadDrawable", "temp:" + temp);
         ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(temp.getBytes(), Base64.DEFAULT));
         return Drawable.createFromStream(bais, "");

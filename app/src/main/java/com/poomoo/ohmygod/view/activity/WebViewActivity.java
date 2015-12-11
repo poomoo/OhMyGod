@@ -43,6 +43,12 @@ public class WebViewActivity extends BaseActivity {
     protected void initTitleBar() {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
 
+        if (PARENT.equals(getString(R.string.intent_protocol))) {
+            type = "1";
+            title = getString(R.string.title_protocol);
+            getData();
+        }
+
         if (PARENT.equals(getString(R.string.intent_rebate))) {
             type = "3";
             title = getString(R.string.title_rebate_explain);

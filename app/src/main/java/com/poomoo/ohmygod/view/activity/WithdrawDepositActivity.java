@@ -18,9 +18,13 @@ import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 提现
@@ -133,27 +137,43 @@ public class WithdrawDepositActivity extends BaseActivity {
      * @param view
      */
     public void toWithdrawDeposit(View view) {
-        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
-        if (TextUtils.isEmpty(application.getRealNameAuth())) {
-            MyUtil.showToast(getApplicationContext(), "请进行实名认证");
-            openActivity(EditPersonalInformationActivity.class);
-        } else
-            queryFee();
+//        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
+//        if (TextUtils.isEmpty(application.getRealNameAuth())) {
+//            MyUtil.showToast(getApplicationContext(), "请进行实名认证");
+//            openActivity(EditPersonalInformationActivity.class);
+//        } else
+//            queryFee();
+        getUserInfoData();
     }
 
-    /**
-     * 提现帮助
-     *
-     * @param view
-     */
-    public void toHelp(View view) {
-        Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_withDrawDeposit));
-        openActivity(WebViewActivity.class, pBundle);
+    private void getUserInfoData() {
+        showProgressDialog("请稍后...");
+        Map<String, String> data = new HashMap<>();
+        data.put("bizName", "10000");
+        data.put("method", "10013");
+        data.put("userId", application.getUserId());
+
+        appAction.getUserInfo(application.getUserId(), new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                UserBO userBO = (UserBO) data.getObj();
+                if (TextUtils.isEmpty(userBO.getRealNameAuth()) || !userBO.getRealNameAuth().equals("1")) {
+                    MyUtil.showToast(getApplicationContext(), "请进行实名认证");
+                    openActivity(EditPersonalInformationActivity.class);
+                } else
+                    queryFee();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
+            }
+        });
     }
+
 
     private void queryFee() {
-        showProgressDialog("请稍后...");
+//        showProgressDialog("请稍后...");
         this.appAction.getWithDrawDepositFee(application.getUserId(), money + "", new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -183,5 +203,16 @@ public class WithdrawDepositActivity extends BaseActivity {
                 MyUtil.showToast(getApplicationContext(), message);
             }
         });
+    }
+
+    /**
+     * 提现帮助
+     *
+     * @param view
+     */
+    public void toHelp(View view) {
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_withDrawDeposit));
+        openActivity(WebViewActivity.class, pBundle);
     }
 }

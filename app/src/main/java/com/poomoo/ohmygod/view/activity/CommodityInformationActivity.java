@@ -1,5 +1,7 @@
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,6 +66,8 @@ public class CommodityInformationActivity extends BaseActivity {
     private boolean isBegin = false;//活动是否开始
     private String activeId;//--活动编号
     private Timer timer;
+
+    private boolean isSuccess = false;//抢单结果
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,14 +279,33 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
+                String message;
+
                 if (grabResultBO.getIsWin().equals("true")) {
-                    MyUtil.showToast(getApplicationContext(), "抢单成功!");
-                    openActivity(EditPersonalInformationActivity.class);
-                } else if (grabResultBO.getIsWin().equals("false"))
-                    MyUtil.showToast(getApplicationContext(), "抢单失败!");
-                else
-                    MyUtil.showToast(getApplicationContext(), data.getMsg());
-                finish();
+                    isSuccess = true;
+                    message = "恭喜中奖";
+//                    MyUtil.showToast(getApplicationContext(), "抢单成功!");
+//                    openActivity(EditPersonalInformationActivity.class);
+                } else if (grabResultBO.getIsWin().equals("false")) {
+                    isSuccess = false;
+                    message = "很遗憾,没有中奖,请再接再厉";
+//                    MyUtil.showToast(getApplicationContext(), "抢单失败!");
+                } else {
+                    message = data.getMsg();
+//                    MyUtil.showToast(getApplicationContext(), data.getMsg());
+                }
+                Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (isSuccess) {
+                            if (!application.getRealNameAuth().equals("1"))
+                                openActivity(EditPersonalInformationActivity.class);
+                        }
+                        finish();
+                    }
+                }).create();
+                dialog.show();
+
             }
 
             @Override

@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
@@ -34,10 +35,12 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
     private GrabBO grabBO = new GrabBO();
     private TimeCountDownUtil timeCountDownUtil;
     private static SparseArray<TimeCountDownUtil> countDownUtils;
+    private static SparseArray<RelativeLayout> layoutSparseArray;
 
     public GrabAdapter(Context context) {
         super(context);
         countDownUtils = new SparseArray<>();
+        layoutSparseArray = new SparseArray<>();
     }
 
 
@@ -54,7 +57,7 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
-
+//        viewHolder.rlayout.setClickable(false);
         grabBO = itemList.get(position);
 
 //        viewHolder.rlayout.setTag(grabBO.getPicture());
@@ -67,34 +70,17 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
-        ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image,defaultOptions);
-
-//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-//        ImageLoader.getInstance().loadImage(grabBO.getPicture(), new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                Drawable drawable = new BitmapDrawable(context.getResources(), loadedImage);
-//                // 通过 tag 来防止图片错位
-//                if (viewHolder.rlayout.getTag() != null && viewHolder.rlayout.getTag().equals(imageUri)) {
-//                    viewHolder.rlayout.setBackground(drawable);
-//                    viewHolder.rlayout.setLayoutParams(new LinearLayout.LayoutParams(viewHolder.rlayout.getLayoutParams().width, loadedImage.getHeight()));
-//                }
-//            }
-//
-//            @Override
-//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                LogUtils.i("GrabAdapter", "加载失败:" + imageUri + " reason:" + failReason);
-//            }
-//        });
+        ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
+//        layoutSparseArray.put(position, viewHolder.rlayout);
 
 
-        if (viewHolder.txt.getTag() == null) {
-            viewHolder.txt.setTag(grabBO.getPicture());
-            timeCountDownUtil = null;
-            timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, null);
-            timeCountDownUtil.start();
-            getCountDownUtils().put(position, timeCountDownUtil);
-        }
+//        if (viewHolder.txt.getTag() == null) {
+        viewHolder.txt.setTag(grabBO.getPicture());
+        timeCountDownUtil = null;
+        timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, viewHolder.rlayout);
+        timeCountDownUtil.start();
+        getCountDownUtils().put(position, timeCountDownUtil);
+//        }
 
         return convertView;
     }
@@ -107,5 +93,9 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
     public SparseArray<TimeCountDownUtil> getCountDownUtils() {
         return countDownUtils;
+    }
+
+    public static SparseArray<RelativeLayout> getLayoutSparseArray() {
+        return layoutSparseArray;
     }
 }

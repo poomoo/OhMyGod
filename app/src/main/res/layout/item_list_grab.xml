@@ -45,7 +45,8 @@
                 android:text="@string/label_grab_countDown"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txt_grab_countDown"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="15dp"
-                android:text="1234561231564"
+                android:text=""
                 android:textColor="@color/themeYellow"
                 android:textSize="18sp"
                 android:textStyle="bold" />

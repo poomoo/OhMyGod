@@ -8,7 +8,9 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.core.AppAction;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
+import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.SPUtils;
 
 import java.util.HashMap;
@@ -17,19 +19,30 @@ import java.util.Map;
 public class Get_UserInfo_Service extends Service {
     private MyApplication application;
     private AppAction appAction;
+    private String TAG = "Get_UserInfo_Service";
 
     public void onCreate() {
         super.onCreate();
+        LogUtils.i(TAG, "onCreate");
     }
 
-    public void onStart(Intent intent, int startId) {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         application = (MyApplication) getApplication();
         appAction = application.getAppAction();
         getUserInfoData();
+        return super.onStartCommand(intent, flags, startId);
     }
 
+//    public void onStart(Intent intent, int startId) {
+//        application = (MyApplication) getApplication();
+//        appAction = application.getAppAction();
+//        getUserInfoData();
+//    }
+
     private void getUserInfoData() {
-        Map<String, String> data = new HashMap<String, String>();
+        LogUtils.i(TAG, "getUserInfoData");
+        Map<String, String> data = new HashMap<>();
         data.put("bizName", "10000");
         data.put("method", "10013");
         data.put("userId", application.getUserId());
@@ -38,6 +51,7 @@ public class Get_UserInfo_Service extends Service {
             @Override
             public void onSuccess(ResponseBO data) {
                 UserBO userBO = (UserBO) data.getObj();
+                LogUtils.i(TAG, "同步成功:" + userBO.toString());
                 application.setTel(userBO.getTel());
                 application.setNickName(userBO.getNickName());
                 application.setRealName(userBO.getRealName());
@@ -50,20 +64,22 @@ public class Get_UserInfo_Service extends Service {
                 application.setIdFrontPic(userBO.getIdFrontPic());
                 application.setBankCardNum(userBO.getBankCardNum());
                 application.setBankName(userBO.getBankName());
-                SPUtils.put(application.getApplicationContext(), "userId", application.getUserId());
-                SPUtils.put(application.getApplicationContext(), "tel", application.getTel());
-                SPUtils.put(application.getApplicationContext(), "nickName", application.getNickName());
-                SPUtils.put(application.getApplicationContext(), "realName", application.getRealName());
-                SPUtils.put(application.getApplicationContext(), "headPic", application.getHeadPic());
-                SPUtils.put(application.getApplicationContext(), "currentFee", application.getCurrentFee());
-                SPUtils.put(application.getApplicationContext(), "realNameAuth", application.getRealNameAuth());
-                SPUtils.put(application.getApplicationContext(), "idCardNum", application.getIdCardNum());
-                SPUtils.put(application.getApplicationContext(), "sex", application.getSex());
-                SPUtils.put(application.getApplicationContext(), "age", application.getAge());
-                SPUtils.put(application.getApplicationContext(), "idFrontPic", application.getIdFrontPic());
-                SPUtils.put(application.getApplicationContext(), "idOpsitePic", application.getIdOpsitePic());
-                SPUtils.put(application.getApplicationContext(), "bankCardNum", application.getBankCardNum());
-                SPUtils.put(application.getApplicationContext(), "bankName", application.getBankName());
+                application.setAddress(userBO.getAddress());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), application.getUserId());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), application.getTel());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_nickName), application.getNickName());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realName), application.getRealName());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_headPic), application.getHeadPic());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_currentFee), application.getCurrentFee());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realNameAuth), application.getRealNameAuth());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idCardNum), application.getIdCardNum());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_sex), application.getSex());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_age), application.getAge());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idFrontPic), application.getIdFrontPic());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idOpsitePic), application.getIdOpsitePic());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankCardNum), application.getBankCardNum());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankName), application.getBankName());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_address), application.getAddress());
                 stopSelf();
             }
 

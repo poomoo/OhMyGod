@@ -4,17 +4,22 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.core.ErrorEvent;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 登陆
@@ -63,14 +68,13 @@ public class LogInActivity extends BaseActivity {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
+                UserBO userBO = (UserBO) data.getObj();
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_isLogin), true);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_phoneNum), phoneNum);
                 if (rememberPassWordChk.isChecked()) {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_rememberPassWord), true);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_passWord), passWord);
                 }
-                application.setCurrCity("");
-                application.setLocateCity("");
-                UserBO userBO = (UserBO) data.getObj();
                 Log.i(TAG, "data:" + userBO);
                 setAppInfo(userBO);
                 openActivity(MainFragmentActivity.class);
@@ -101,7 +105,22 @@ public class LogInActivity extends BaseActivity {
      * @param view
      */
     public void toForgetPassWord(View view) {
-        MyUtil.showToast(getApplicationContext(), "忘记密码");
+        phoneNum = phoneNumEdt.getText().toString().trim();
+        if (TextUtils.isEmpty(phoneNum)) {
+            MyUtil.showToast(getApplicationContext(), "请输入手机号");
+            return;
+        }
+        Pattern pattern = Pattern.compile("1\\d{10}");
+        Matcher matcher = pattern.matcher(phoneNum);
+        if (!matcher.matches()) {
+            MyUtil.showToast(getApplicationContext(), "手机号不正确");
+            return;
+        }
+
+        application.setTel(phoneNum);
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_forgetPassWord));
+        openActivity(VerifyPhoneNum2Activity.class, bundle);
     }
 
     private void setAppInfo(UserBO userBO) {
@@ -120,5 +139,20 @@ public class LogInActivity extends BaseActivity {
         this.application.setBankCardNum(userBO.getBankCardNum());
         this.application.setBankName(userBO.getBankName());
         this.application.setIsActiveWarm(userBO.getIsActiveWarm());
+
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), userBO.getUserId());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), userBO.getTel());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_nickName), userBO.getNickName());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_headPic), userBO.getHeadPic());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_currentFee), userBO.getCurrentFee());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realNameAuth), userBO.getRealNameAuth());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idCardNum), userBO.getIdCardNum());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_sex), userBO.getSex());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_age), userBO.getAge());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idFrontPic), userBO.getIdFrontPic());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idOpsitePic), userBO.getIdOpsitePic());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankCardNum), userBO.getBankCardNum());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
     }
 }

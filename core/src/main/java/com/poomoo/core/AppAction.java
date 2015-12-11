@@ -101,12 +101,9 @@ public interface AppAction {
      * @param userId
      * @param realName
      * @param idCardNum
-     * @param bankCardNum
-     * @param idFrontPic
-     * @param idOpsitePic
      * @param listener
      */
-    void putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic, ActionCallbackListener listener);
+    void putPersonalInfo(String userId, String realName, String idCardNum, String address, ActionCallbackListener listener);
 
     /**
      * 修改用户信息接口（单独修改用户某个字段信息，如昵称）

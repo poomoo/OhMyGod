@@ -28,6 +28,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.popupwindow.SelectPicsPopupWindow;
@@ -49,6 +50,7 @@ import java.util.List;
 public class EditPersonalInformationActivity extends BaseActivity {
     private EditText realNameEdt;
     private EditText idCardNumEdt;
+    private EditText addressEdt;
     private EditText bankCardNumEdt;
     private ImageView frontIdCardImg;
     private ImageView backIdCardImg;
@@ -67,6 +69,7 @@ public class EditPersonalInformationActivity extends BaseActivity {
     private String realName;
     private String idCardNum;
     private String bankCardNum;
+    private String address;
 
 
     private static final int NONE = 0;
@@ -75,6 +78,7 @@ public class EditPersonalInformationActivity extends BaseActivity {
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGod.temp";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,21 +92,23 @@ public class EditPersonalInformationActivity extends BaseActivity {
 
         realNameEdt = (EditText) findViewById(R.id.edt_realName);
         idCardNumEdt = (EditText) findViewById(R.id.edt_idCardNum);
-        bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
-        frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
-        backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
+        addressEdt = (EditText) findViewById(R.id.edt_address);
+//        bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
+//        frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
+//        backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
 
         realNameEdt.setText(application.getRealName());
         idCardNumEdt.setText(application.getIdCardNum());
-        bankCardNumEdt.setText(application.getBankCardNum());
+//        bankCardNumEdt.setText(application.getBankCardNum());
+        addressEdt.setText(application.getAddress());
 
-        if (!TextUtils.isEmpty(application.getIdFrontPic()) && !TextUtils.isEmpty(application.getIdOpsitePic())) {
-            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg);
-            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg);
-        }
+//        if (!TextUtils.isEmpty(application.getIdFrontPic()) && !TextUtils.isEmpty(application.getIdOpsitePic())) {
+//            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg);
+//            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg);
+//        }
 
 
-        MyUtil.fortmatCardNum(bankCardNumEdt);
+//        MyUtil.fortmatCardNum(bankCardNumEdt);
     }
 
     protected void initTitleBar() {
@@ -145,22 +151,23 @@ public class EditPersonalInformationActivity extends BaseActivity {
      * @param view
      */
     public void toDo(View view) {
-        if (checkInput()) {
-            fileBOList = new ArrayList<>();
-            fileBO = new FileBO();
-            fileBO.setType("2");
-            fileBO.setImgFile(file1);
-            fileBOList.add(fileBO);
-
-            fileBO = new FileBO();
-            fileBO.setType("3");
-            fileBO.setImgFile(file2);
-            fileBOList.add(fileBO);
-
-            showProgressDialog("上传中...");
-            upload();
-        }
-
+//        if (checkInput()) {
+//            fileBOList = new ArrayList<>();
+//            fileBO = new FileBO();
+//            fileBO.setType("2");
+//            fileBO.setImgFile(file1);
+//            fileBOList.add(fileBO);
+//
+//            fileBO = new FileBO();
+//            fileBO.setType("3");
+//            fileBO.setImgFile(file2);
+//            fileBOList.add(fileBO);
+//
+//            showProgressDialog("上传中...");
+//            upload();
+//        }
+        if (checkInput())
+            submit();
     }
 
     private boolean checkInput() {
@@ -175,34 +182,37 @@ public class EditPersonalInformationActivity extends BaseActivity {
             MyUtil.showToast(getApplicationContext(), "请填写身份证号");
             return false;
         }
+
         if (idCardNum.length() != 18) {
             idCardNumEdt.setFocusable(true);
             idCardNumEdt.requestFocus();
             MyUtil.showToast(getApplicationContext(), "请输入18位有效号码");
             return false;
         }
+        address = addressEdt.getText().toString().trim();
 
-        if (file1 == null) {
-            MyUtil.showToast(getApplicationContext(), "请选择手持身份证正面照");
-            return false;
-        }
-
-        if (file2 == null) {
-            MyUtil.showToast(getApplicationContext(), "请选择手持身份证反面照");
-            return false;
-        }
-
-        bankCardNum = MyUtil.trimAll(bankCardNumEdt.getText().toString().trim());
-        if (TextUtils.isEmpty(bankCardNum)) {
-            MyUtil.showToast(getApplicationContext(), "请填写银行卡号");
-            return false;
-        }
-        if (bankCardNum.length() != 19) {
-            idCardNumEdt.setFocusable(true);
-            idCardNumEdt.requestFocus();
-            MyUtil.showToast(getApplicationContext(), "请输入19位有效卡号");
-            return false;
-        }
+//
+//        if (file1 == null) {
+//            MyUtil.showToast(getApplicationContext(), "请选择手持身份证正面照");
+//            return false;
+//        }
+//
+//        if (file2 == null) {
+//            MyUtil.showToast(getApplicationContext(), "请选择手持身份证反面照");
+//            return false;
+//        }
+//
+//        bankCardNum = MyUtil.trimAll(bankCardNumEdt.getText().toString().trim());
+//        if (TextUtils.isEmpty(bankCardNum)) {
+//            MyUtil.showToast(getApplicationContext(), "请填写银行卡号");
+//            return false;
+//        }
+//        if (bankCardNum.length() != 19) {
+//            idCardNumEdt.setFocusable(true);
+//            idCardNumEdt.requestFocus();
+//            MyUtil.showToast(getApplicationContext(), "请输入19位有效卡号");
+//            return false;
+//        }
 
         return true;
     }
@@ -247,21 +257,28 @@ public class EditPersonalInformationActivity extends BaseActivity {
     };
 
     public void submit() {
-        this.appAction.putPersonalInfo(this.application.getUserId(), realName, idCardNum, bankCardNum, urlList.get(0), urlList.get(1), new ActionCallbackListener() {
+        showProgressDialog("请稍后...");
+        this.appAction.putPersonalInfo(this.application.getUserId(), realName, idCardNum, address, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "上传成功");
                 application.setRealName(realName);
                 application.setIdCardNum(idCardNum);
-                application.setIdFrontPic(urlList.get(0));
-                application.setIdOpsitePic(urlList.get(1));
-                application.setBankCardNum(bankCardNum);
+//                application.setIdFrontPic(urlList.get(0));
+//                application.setIdOpsitePic(urlList.get(1));
+//                application.setBankCardNum(bankCardNum);
+                application.setAddress(address);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), realName);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), idCardNum);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
                 startService(new Intent(EditPersonalInformationActivity.this, Get_UserInfo_Service.class));
                 finish();
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), message);
             }
         });

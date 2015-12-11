@@ -183,16 +183,16 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO<Void> putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic) {
+    public ResponseBO<Void> putPersonalInfo(String userId, String realName, String idCardNum, String address) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.PERSONALINFO);
         paramMap.put("userId", userId);
         paramMap.put("realName", realName);
         paramMap.put("idCardNum", idCardNum);
-        paramMap.put("bankCardNum", bankCardNum);
-        paramMap.put("idFrontPic", idFrontPic);
-        paramMap.put("idOpsitePic", idOpsitePic);
+        paramMap.put("address", address);
+//        paramMap.put("idFrontPic", idFrontPic);
+//        paramMap.put("idOpsitePic", idOpsitePic);
         try {
             return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {

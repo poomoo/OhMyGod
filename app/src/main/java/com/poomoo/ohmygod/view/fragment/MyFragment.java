@@ -89,7 +89,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        headPic = (String) SPUtils.get(getActivity().getApplicationContext(), "headPic", "");
+        headPic = (String) SPUtils.get(getActivity().getApplicationContext(), getString(R.string.sp_headPicBitmap), "");
         LogUtils.i(TAG, "headPic:" + headPic);
         if (!TextUtils.isEmpty(headPic))
             avatarImg.setImageDrawable(MyUtil.loadDrawable(getActivity().getApplicationContext()));
@@ -105,7 +105,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     avatarImg.setImageBitmap(loadedImage);
-                    SPUtils.put(getActivity().getApplicationContext(), "headPic", MyUtil.saveDrawable(loadedImage));
+                    SPUtils.put(getActivity().getApplicationContext(), getString(R.string.sp_headPic), MyUtil.saveDrawable(loadedImage));
                 }
             });
         }

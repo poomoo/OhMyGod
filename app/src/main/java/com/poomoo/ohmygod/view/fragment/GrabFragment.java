@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,15 +28,20 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
+import com.poomoo.model.MessageBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
+import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CityListActivity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
+import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
+import com.poomoo.ohmygod.view.custom.RefreshableView;
+import com.poomoo.ohmygod.view.custom.RefreshableView.PullToRefreshListener;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 
@@ -49,12 +55,14 @@ import java.util.TimerTask;
  * 日期: 2015/11/11 16:26.
  */
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener {
+    private RefreshableView refreshableView;
     private LinearLayout remindLlayout;
     private LinearLayout currCityLlayout;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
     private ImageView avatarImg;
     private TextView currCityTxt;
+    private TextView countTxt;
     private UpMarqueeTextView marqueeTextView;
     private ListView listView;
     private SlideShowView slideShowView;
@@ -68,6 +76,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private MyLocationListener mMyLocationListener;
 
     private String currCity = "";
+    private int informCount = 0;//通知的数量
+    private List<MessageBO> messageBOList = new ArrayList<>();
+    private boolean isFirst = true;//true第一次进入
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,33 +88,55 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initView();
     }
 
     private void initView() {
+        refreshableView = (RefreshableView) getActivity().findViewById(R.id.refresh_grab);
+        refreshableView.setListViewPosition(4);
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
+        countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (ListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
 
+        //下拉刷新
+        refreshableView.setOnRefreshListener(new PullToRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getGrabList(true);
+            }
+        }, 0);
+
         currCityLlayout.setOnClickListener(this);
         winnerRlayout.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        LogUtils.i(TAG, "定位城市:" + application.getLocateCity());
+        if (TextUtils.isEmpty(application.getLocateCity())) {
+            mLocationClient = new LocationClient(getActivity().getApplicationContext());
+            mMyLocationListener = new MyLocationListener();
+            mLocationClient.registerLocationListener(mMyLocationListener);
+            initLocation();
+            mLocationClient.start();
+        } else {
+            currCityTxt.setText(application.getLocateCity());
+            application.setLocateCity(application.getLocateCity());
+            application.setCurrCity(application.getLocateCity());
+            getAd();
+            getInform();
+            getGrabList(false);
+            getWinnerList();
+        }
 
-        mLocationClient = new LocationClient(getActivity().getApplicationContext());
-        mMyLocationListener = new MyLocationListener();
-        mLocationClient.registerLocationListener(mMyLocationListener);
-        initLocation();
-        mLocationClient.start();
 
-        getAd();
     }
 
     Handler handler = new Handler() {
@@ -153,18 +186,23 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
     }
 
-    private void getGrabList() {
-        Log.i("lmf", "getGrabList");
+    private void getGrabList(final boolean isRefreshable) {
+        Log.i(TAG, "getGrabList:" + application.getCurrCity());
         this.appAction.getGrabList(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                if (isRefreshable) {
+                    refreshableView.finishRefreshing();
+                }
                 grabBOList = data.getObjList();
-                Log.i("lmf", "grabBOList:" + grabBOList);
                 adapter.setItems(grabBOList);
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
+                if (isRefreshable) {
+                    refreshableView.finishRefreshing();
+                }
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });
@@ -195,12 +233,41 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
     }
 
+    private void getInform() {
+        //--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+        this.appAction.getMessages("5", 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                LogUtils.i(TAG, "getInform成功:" + data.getObjList());
+                messageBOList = data.getObjList();
+                informCount = messageBOList.size();
+                if (informCount > 0) {
+                    countTxt.setVisibility(View.VISIBLE);
+                    countTxt.setText(informCount + "");
+
+                }
+                MainFragmentActivity.messageBOList = messageBOList;
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+            }
+        });
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
-        pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
-        openActivity(CommodityInformationActivity.class, pBundle);
+        long time = adapter.getCountDownUtils().get(position).getMillisUntilFinished();
+        LogUtils.i(TAG, "剩余时间:" + time);
+        if (time > 0) {
+            MyUtil.showToast(getActivity().getApplicationContext(), "活动还没开始");
+        } else {
+            Bundle pBundle = new Bundle();
+            pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+            pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
+            openActivity(CommodityInformationActivity.class, pBundle);
+        }
+
     }
 
     @Override
@@ -219,14 +286,17 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getLocateCity());
-        if (!currCity.equals(application.getCurrCity())) {
-            currCityTxt.setText(application.getCurrCity());
-            grabBOList = new ArrayList<>();
-            adapter.setItems(grabBOList);
-            getGrabList();
+        if (!isFirst) {
+            LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getLocateCity());
+            if (!currCity.equals(application.getCurrCity())) {
+                currCityTxt.setText(application.getCurrCity());
+                grabBOList = new ArrayList<>();
+                adapter.setItems(grabBOList);
+                getGrabList(false);
+            }
+            currCity = application.getCurrCity();
         }
-        currCity = application.getCurrCity();
+        isFirst = false;
     }
 
     /**
@@ -236,9 +306,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");// 可选，默认gcj02，设置返回的定位结果坐标系，
-        int span = 1 * 10 * 1000;
-
-        option.setScanSpan(span);// 可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);// 可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);// 可选，默认false,设置是否使用gps
         option.setLocationNotify(true);// 可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
@@ -252,11 +319,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         @Override
         public void onReceiveLocation(BDLocation location) {
             LogUtils.i("location", "location.getCity():" + location.getCity());
-            currCityTxt.setText(location.getCity());
-            application.setLocateCity(location.getCity());
-            application.setCurrCity(location.getCity());
-            getGrabList();
-            getWinnerList();
+            if (!TextUtils.isEmpty(location.getCity())) {
+                currCityTxt.setText(location.getCity());
+                application.setLocateCity(location.getCity());
+                application.setCurrCity(location.getCity());
+                getGrabList(false);
+                getWinnerList();
+            } else
+                MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);
         }
     }

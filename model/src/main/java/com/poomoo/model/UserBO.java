@@ -9,21 +9,22 @@ package com.poomoo.model;
  * 日期: 2015/11/30 17:34.
  */
 public class UserBO {
-    private String userId;
-    private String tel;//--用户手机号码
-    private String nickName;//--用户昵称
-    private String realName;
-    private String headPic;
-    private String currentFee;//--用户余额
-    private String realNameAuth;
-    private String idCardNum;
-    private String sex;
-    private String age;
-    private String idFrontPic;//--正面照
-    private String idOpsitePic;//--反面照
-    private String bankCardNum;//--银行卡号码
-    private String bankName;//--开户行名称
-    private String isActiveWarm;//--活动警告1开启，0未开启
+    private String userId = "";
+    private String tel = "";//--用户手机号码
+    private String nickName = "";//--用户昵称
+    private String realName = "";
+    private String headPic = "";
+    private String currentFee = "";//--用户余额
+    private String realNameAuth = "";
+    private String idCardNum = "";
+    private String sex = "";
+    private String age = "";
+    private String idFrontPic = "";//--正面照
+    private String idOpsitePic = "";//--反面照
+    private String bankCardNum = "";//--银行卡号码
+    private String bankName = "";//--开户行名称
+    private String isActiveWarm = "";//--活动警告1开启，0未开启
+    private String address = "";//收货地址
 
     public String getUserId() {
         return userId;
@@ -145,6 +146,14 @@ public class UserBO {
         this.isActiveWarm = isActiveWarm;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "UserBO{" +
@@ -163,6 +172,7 @@ public class UserBO {
                 ", bankCardNum='" + bankCardNum + '\'' +
                 ", bankName='" + bankName + '\'' +
                 ", isActiveWarm='" + isActiveWarm + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

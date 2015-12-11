@@ -31,7 +31,7 @@ public interface Api {
 
     ResponseBO uploadPics(FileBO fileBO);
 
-    ResponseBO putPersonalInfo(String userId, String realName, String idCardNum, String bankCardNum, String idFrontPic, String idOpsitePic);
+    ResponseBO putPersonalInfo(String userId, String realName, String idCardNum, String address);
 
     ResponseBO changePersonalInfo(String userId, String key, String value);
 

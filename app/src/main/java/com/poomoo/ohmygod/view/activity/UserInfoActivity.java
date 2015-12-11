@@ -111,7 +111,7 @@ public class UserInfoActivity extends BaseActivity {
 
     private void initData() {
         LogUtils.i(TAG, "bitmap:" + bitmap + "url:" + application.getHeadPic());
-        headPic = (String) SPUtils.get(getApplicationContext(), "headPic", "");
+        headPic = (String) SPUtils.get(getApplicationContext(), getString(R.string.sp_headPicBitmap), "");
         if (!TextUtils.isEmpty(headPic))
             headImg.setImageDrawable(MyUtil.loadDrawable(getApplicationContext()));
         else if (!TextUtils.isEmpty(application.getHeadPic())) {
@@ -126,7 +126,7 @@ public class UserInfoActivity extends BaseActivity {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     headImg.setImageBitmap(loadedImage);
-                    SPUtils.put(getApplicationContext(), "headPic", MyUtil.saveDrawable(loadedImage));
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_headPic), MyUtil.saveDrawable(loadedImage));
                 }
             });
         }
@@ -205,7 +205,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toBankCard(View view) {
-        openActivity(EditPersonalInformationActivity.class);
+        openActivity(ChangeBankCardNumActivity.class);
     }
 
     /**
@@ -215,7 +215,7 @@ public class UserInfoActivity extends BaseActivity {
      */
     public void toChangePassWord(View view) {
         Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_passWord));
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_changePassWord));
         openActivity(VerifyPhoneNum2Activity.class, pBundle);
     }
 

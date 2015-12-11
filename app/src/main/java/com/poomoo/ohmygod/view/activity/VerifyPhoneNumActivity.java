@@ -4,6 +4,7 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -70,7 +72,15 @@ public class VerifyPhoneNumActivity extends BaseActivity {
      * @param view
      */
     public void toGetCode(View view) {
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, getCodeBtn, null);
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, getCodeBtn, new CountDownListener() {
+            @Override
+            public void onFinish(int result) {
+                getCodeBtn.setText("重新获取");
+                getCodeBtn.setClickable(true);// 重新获得点击
+                getCodeBtn.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
+                getCodeBtn.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        });
         timeCountDownUtil.start();
         getCode();
     }

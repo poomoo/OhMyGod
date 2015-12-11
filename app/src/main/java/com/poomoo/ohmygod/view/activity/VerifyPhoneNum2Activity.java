@@ -13,6 +13,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
@@ -29,6 +30,8 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
     private String PARENT;//父activity
     private String title;
     private String code;
+    private String key;
+    private String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         if (PARENT.equals(getString(R.string.intent_phone)))
             title = getString(R.string.title_changePhone);
-        if (PARENT.equals(getString(R.string.intent_passWord))) {
+        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
             title = getString(R.string.title_safe);
         }
 
@@ -54,8 +57,9 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         codeEdt = (EditText) findViewById(R.id.edt_verify_code);
 
         telTxt.setText(MyUtil.hiddenTel(application.getTel()));
-        if (PARENT.equals(getString(R.string.intent_passWord)))
+        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
             getCode();
+        }
     }
 
     @Override
@@ -75,13 +79,14 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
      *
      * @param view
      */
+
     public void toGetCode(View view) {
         getCode();
     }
 
     public void getCode() {
         codeTxt.setTag("TextView");
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt, null);
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt);
         timeCountDownUtil.start();
         this.appAction.getCode(application.getTel(), new ActionCallbackListener() {
             @Override
@@ -107,7 +112,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
             finish();
         }
 
-        if (PARENT.equals(getString(R.string.intent_passWord))) {
+        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
             checkCode();
         }
     }
@@ -118,7 +123,40 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         this.appAction.checkCode(application.getTel(), code, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                openActivity(ResetPassWordActivity.class);
+                if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord))) {
+                    closeProgressDialog();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.intent_parent), PARENT);
+                    openActivity(ResetPassWordActivity.class);
+                    finish();
+                } else {
+                    toSubmit();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
+    /**
+     * 提交
+     */
+    private void toSubmit() {
+        key = "bankCardNum";
+        value = getIntent().getStringExtra(getString(R.string.intent_value));
+
+        this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                application.setBankCardNum(value);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_bankCardNum), value);
+                MyUtil.showToast(getApplicationContext(), "修改银行卡成功");
                 finish();
             }
 

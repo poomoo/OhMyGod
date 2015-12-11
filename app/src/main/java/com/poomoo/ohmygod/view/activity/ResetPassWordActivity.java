@@ -23,6 +23,7 @@ public class ResetPassWordActivity extends BaseActivity {
 
     private String passWord;
     private String passWordAgain;
+    private String PARENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class ResetPassWordActivity extends BaseActivity {
 
         passWordEdt = (EditText) findViewById(R.id.edt_newPassWord);
         passWordAgainEdt = (EditText) findViewById(R.id.edt_newPassWordAgain);
+
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
     }
 
     @Override
@@ -69,12 +72,18 @@ public class ResetPassWordActivity extends BaseActivity {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), "密码重置成功,请重新登录");
-                finish();
-                openActivity(LogInActivity.class);
-                UserInfoActivity.instance.finish();
-                SettingActivity.instance.finish();
-                MainFragmentActivity.instance.finish();
+                if (PARENT.equals(getString(R.string.intent_forgetPassWord))) {
+                    MyUtil.showToast(getApplicationContext(), "密码重置成功");
+                    finish();
+                }
+                if (PARENT.equals(getString(R.string.intent_changePassWord))) {
+                    MyUtil.showToast(getApplicationContext(), "密码重置成功,请重新登录");
+                    finish();
+                    openActivity(LogInActivity.class);
+                    UserInfoActivity.instance.finish();
+                    SettingActivity.instance.finish();
+                    MainFragmentActivity.instance.finish();
+                }
             }
 
             @Override

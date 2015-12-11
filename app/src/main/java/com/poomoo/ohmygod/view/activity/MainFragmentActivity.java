@@ -3,15 +3,16 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.MessageBO;
+import com.poomoo.model.MessageInfoBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
@@ -19,6 +20,10 @@ import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
 import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Android_PM on 2015/11/10.
@@ -35,6 +40,10 @@ public class MainFragmentActivity extends
     private MyFragment myFragment;
     private long exitTime = 0;
     public static MainFragmentActivity instance;
+    public static List<MessageBO> messageBOList = new ArrayList<>();
+    private int statementId = 0;
+    private String title;
+    private String content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,7 @@ public class MainFragmentActivity extends
 
     private void show() {
         // 实例化SelectPicPopupWindow
-        informPopupWindow = new InformPopupWindow(this, itemsOnClick);
+        informPopupWindow = new InformPopupWindow(this, title, content, itemsOnClick);
         // 显示窗口
         informPopupWindow.showAtLocation(
                 this.findViewById(R.id.activity_main_frameLayout), Gravity.CENTER, 0, 0); // 设置layout在PopupWindow中显示的位置
@@ -73,7 +82,10 @@ public class MainFragmentActivity extends
             informPopupWindow.dismiss();
             switch (view.getId()) {
                 case R.id.img_more:
-                    MyUtil.showToast(getApplicationContext(), "更多");
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
+                    bundle.putSerializable(getString(R.string.intent_value), (Serializable) messageBOList);
+                    openActivity(InStationMessagesActivity.class,bundle);
                     break;
             }
         }
@@ -144,7 +156,28 @@ public class MainFragmentActivity extends
     }
 
     public void showInform(View view) {
-        show();
+        getInfo();
+    }
+
+    private void getInfo() {
+        statementId = messageBOList.get(0).getStatementId();
+        title = messageBOList.get(0).getTitle();
+        showProgressDialog("请稍后...");
+        this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
+                content = messageInfoBO.getContent();
+                show();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
     }
 
     @Override

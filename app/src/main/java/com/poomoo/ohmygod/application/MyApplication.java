@@ -18,23 +18,24 @@ import com.poomoo.ohmygod.R;
 public class MyApplication extends Application {
     private AppAction appAction;
     // 用户信息
-    private String userId;
-    private String tel;//--用户手机号码
-    private String nickName;//--用户昵称
-    private String realName;
-    private String headPic;
-    private String currentFee;//--用户余额
-    private String realNameAuth;
-    private String idCardNum;
-    private String sex;//1：男，2：女
-    private String age;
-    private String idFrontPic;//--正面照
-    private String idOpsitePic;//--反面照
-    private String bankCardNum;//--银行卡号码
-    private String bankName;//--开户行名称
-    private String isActiveWarm;//--活动警告1开启，0未开启
-    private String currCity;//当前城市
-    private String locateCity;//定位城市
+    private String userId = "";
+    private String tel = "";//--用户手机号码
+    private String nickName = "";//--用户昵称
+    private String realName = "";
+    private String headPic = "";
+    private String currentFee = "";//--用户余额
+    private String realNameAuth = "";
+    private String idCardNum = "";
+    private String sex = "";//1：男，2：女
+    private String age = "";
+    private String idFrontPic = "";//--正面照
+    private String idOpsitePic = "";//--反面照
+    private String bankCardNum = "";//--银行卡号码
+    private String bankName = "";//--开户行名称
+    private String isActiveWarm = "";//--活动警告1开启，0未开启
+    private String currCity = "";//当前城市
+    private String locateCity = "";//定位城市
+    private String address = "";//收货地址
 
     @Override
     public void onCreate() {
@@ -202,5 +203,13 @@ public class MyApplication extends Application {
 
     public void setLocateCity(String locateCity) {
         this.locateCity = locateCity;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

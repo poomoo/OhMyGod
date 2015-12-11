@@ -3,11 +3,13 @@
  */
 package com.poomoo.model;
 
+import java.io.Serializable;
+
 /**
  * 作者: 李苜菲
  * 日期: 2015/12/7 13:51.
  */
-public class MessageBO {
+public class MessageBO implements Serializable {
     private int statementId;//--编号
     private String title;//--列表标题
     private String insertDt;
@@ -46,5 +48,13 @@ public class MessageBO {
         this.insertDt = insertDt;
     }
 
-
+    @Override
+    public String toString() {
+        return "MessageBO{" +
+                "statementId=" + statementId +
+                ", title='" + title + '\'' +
+                ", insertDt='" + insertDt + '\'' +
+                ", isTop=" + isTop +
+                '}';
+    }
 }

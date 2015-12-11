@@ -97,9 +97,9 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         ss.setSpan(new TextClick(false, toName, showBO), replyName.length() + 2,
                 replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置字体颜色
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), 0,
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0,
                 replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeYellow)), replyName.length() + 2,
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), replyName.length() + 2,
                 replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         viewHolder.textView.setText(ss);

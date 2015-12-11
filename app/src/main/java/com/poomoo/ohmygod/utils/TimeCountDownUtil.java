@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
@@ -23,6 +24,7 @@ public class TimeCountDownUtil extends CountDownTimer {
     private String TAG = this.getClass().getSimpleName();
     private View view;
     private List<TextView> textViewList;
+    private RelativeLayout layout;
     private long millisUntilFinished;
     private CountDownListener countDownListener;
     private boolean isList;//是否传入list
@@ -36,6 +38,15 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.isList = true;
     }
 
+
+    public TimeCountDownUtil(long millisInFuture,
+                             long countDownInterval, View view) {
+        super(millisInFuture, countDownInterval);
+        this.view = view;
+        this.isList = false;
+    }
+
+
     public TimeCountDownUtil(long millisInFuture,
                              long countDownInterval, View view, final CountDownListener countDownListener) {
         super(millisInFuture, countDownInterval);
@@ -44,20 +55,28 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.isList = false;
     }
 
+    public TimeCountDownUtil(long millisInFuture,
+                             long countDownInterval, View view, RelativeLayout layout) {
+        super(millisInFuture, countDownInterval);
+        this.view = view;
+        this.isList = false;
+        this.layout = layout;
+    }
+
     @Override
     public void onTick(long millisUntilFinished) {
         this.millisUntilFinished = millisUntilFinished;
         Spanned spanned = dealTime(millisUntilFinished / 1000);
         if (isList)
             for (TextView textView : textViewList)
-                textView.setText(spanned);
+                textView.setText("开抢倒计时：" + spanned);
         else {
             if (view instanceof TextView) {
-                if (view.getTag() != null) {
+                if (view.getTag().equals("TextView")) {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
                 } else
-                    ((TextView) view).setText(spanned);
+                    ((TextView) view).setText("开抢倒计时：" + spanned);
             }
 
             if (view instanceof Button) {
@@ -73,26 +92,35 @@ public class TimeCountDownUtil extends CountDownTimer {
 
     @Override
     public void onFinish() {
+        this.millisUntilFinished = 0;
         if (this.countDownListener != null)
             countDownListener.onFinish(1);
-        if (isList)
+        if (isList) {
             for (TextView textView : textViewList)
                 textView.setText("活动已开始");
-        else {
+        } else {
+            if (this.countDownListener != null) {
+                countDownListener.onFinish(1);
+                return;
+            }
+
             if (view instanceof TextView) {
                 if (view.getTag().equals("TextView")) {
                     view.setClickable(true);// 设置点击
                     ((TextView) view).setText("重新获取");
-                } else
+                } else {
                     ((TextView) view).setText("活动已开始");
+                    ((TextView) view).setTextColor(Color.parseColor("#E81540"));
+                }
+
             }
 
-            if (view instanceof Button) {
-                ((Button) view).setText("重新获取");
-                view.setClickable(true);// 重新获得点击
-                view.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
-                ((Button) view).setTextColor(Color.parseColor("#FFFFFF"));
-            }
+//            if (view instanceof Button) {
+//                ((Button) view).setText("重新获取");
+//                view.setClickable(true);// 重新获得点击
+//                view.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
+//                ((Button) view).setTextColor(Color.parseColor("#FFFFFF"));
+//            }
         }
 
     }
@@ -103,6 +131,7 @@ public class TimeCountDownUtil extends CountDownTimer {
      * @param time
      * @return
      */
+
     public Spanned dealTime(long time) {
         Spanned str;
         StringBuffer returnString = new StringBuffer();

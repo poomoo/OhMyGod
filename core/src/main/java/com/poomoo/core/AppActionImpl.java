@@ -337,12 +337,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void putPersonalInfo(final String userId, final String realName, final String idCardNum, final String bankCardNum, final String idFrontPic, final String idOpsitePic, final ActionCallbackListener listener) {
+    public void putPersonalInfo(final String userId, final String realName, final String idCardNum, final String address, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.putPersonalInfo(userId, realName, idCardNum, bankCardNum, idFrontPic, idOpsitePic);
+                return api.putPersonalInfo(userId, realName, idCardNum, address);
             }
 
             @Override

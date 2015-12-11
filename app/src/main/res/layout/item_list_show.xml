@@ -61,16 +61,15 @@
             android:background="@drawable/dashed_line"
             android:layerType="software" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingLeft="10dp">
@@ -79,7 +78,7 @@
                     android:id="@+id/txt_show_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="货已经收到了，东西不错"
+                    android:text="货已经收到了，东西不错东西不错东西不错东东西不错东西不错"
                     android:textSize="18sp" />
 
                 <TextView
@@ -95,13 +94,25 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_shared" />
-        </RelativeLayout>
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/themeGray" />
+
+                <ImageView
+                    android:id="@+id/img_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_shared" />
+            </LinearLayout>
+        </LinearLayout>
 
         <com.poomoo.ohmygod.view.custom.NoScrollGridView
             android:id="@+id/grid_show"
@@ -127,6 +138,7 @@
             android:id="@+id/img_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_reply" />
 
         <LinearLayout

@@ -20,6 +20,7 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,8 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
     private MessageBO messageBO;
     private boolean isLoad = false;//true 加载 false刷新
     private int currPage = 1;
+    private String PARENT;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
         setContentView(R.layout.activity_in_station_messages);
 
         initView();
-        showProgressDialog("请稍后...");
-        getData();
+
     }
 
     protected void initView() {
@@ -58,6 +60,19 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
 //        initTestData();
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadListener(this);
+
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        if (PARENT.equals(getString(R.string.intent_pubMessage))) {
+            type = "5";
+            currPage = 2;
+            messageBOList = (ArrayList) getIntent().getSerializableExtra(getString(R.string.intent_value));
+            adapter.setItems(messageBOList);
+        }
+        if (PARENT.equals(getString(R.string.intent_innerMessage))) {
+            type = "8";
+            showProgressDialog("请稍后...");
+            getData();
+        }
 
     }
 
@@ -110,7 +125,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
 
     private void getData() {
         //--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
-        this.appAction.getMessages("8", currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
+        this.appAction.getMessages(type, currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
