@@ -17,6 +17,7 @@ public class ResponseBO<T> {
     private int rsCode = 0;    // "rsCode":"1" 1:成功，-1：失败，-2：必要参数为空
     private T obj;
     private List<T> objList = new ArrayList<>();
+    private int totalCount;
 
     public ResponseBO(int rsCode, String msg) {
         this.msg = msg;
@@ -65,5 +66,25 @@ public class ResponseBO<T> {
 
     public void setObjList(List<T> objList) {
         this.objList = objList;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseBO{" +
+                "jsonData='" + jsonData + '\'' +
+                ", msg='" + msg + '\'' +
+                ", rsCode=" + rsCode +
+                ", obj=" + obj +
+                ", objList=" + objList +
+                ", totalCount=" + totalCount +
+                '}';
     }
 }

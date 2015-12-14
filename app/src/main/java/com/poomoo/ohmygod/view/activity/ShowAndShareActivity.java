@@ -34,6 +34,7 @@ import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.AddPicsAdapter;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
@@ -59,16 +60,16 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     private GridView gridView;
     private AddPicsAdapter addPicsAdapter;
 
-    private static final int TAKE_PICTURE = 0x000000;
-    private String path;
+    private static final int TAKE_PICTURE = 1;
     private String title;
-    private String activeId;
+    private int activeId;
     private String content;
     private String pictures;
     private FileBO fileBO;
     private List<FileBO> fileBOList;
     private int index = 0;
     private File file;
+    private String image_capture_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
         gridView = (GridView) findViewById(R.id.grid_add_pics);
 
         title = getIntent().getStringExtra(getString(R.string.intent_title));
-        activeId = getIntent().getStringExtra(getString(R.string.intent_activeId));
+        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
         titleTxt.setText(title);
         gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         addPicsAdapter = new AddPicsAdapter(this);
@@ -167,26 +168,51 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     }
 
     public void photo() {
-        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = new File(Environment.getExternalStorageDirectory() + "/myimage/",
-                String.valueOf(System.currentTimeMillis()) + ".jpg");
-        Bimp.files.add(file);
-        path = file.getPath();
-        Uri imageUri = Uri.fromFile(file);
-        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGod.temp";
+        LogUtils.i(TAG, "image_capture_path:" + image_capture_path);
+//        String image_capture_path = Environment.getExternalStorageDirectory() + "/myimage/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+//        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        file = new File(Environment.getExternalStorageDirectory() + "/myimage/",
+//                String.valueOf(System.currentTimeMillis()) + ".jpg");
+//        Bimp.files.add(file);
+//        path = file.getPath();
+//        Uri imageUri = Uri.fromFile(file);
+//        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(image_capture_path)));
+        startActivityForResult(intent, TAKE_PICTURE);
+
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogUtils.i(TAG, "onActivityResult--" + "requestCode:" + requestCode + "resultCode:" + resultCode);
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (Bimp.drr.size() < 9 && resultCode == -1) {
-                    Bimp.drr.add(path);
+                    file = new File(image_capture_path);
+                    Bimp.files.add(file);
+                    Bimp.drr.add(image_capture_path);
                     Bimp.files.add(file);
                 }
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+    //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode) {
+//            case TAKE_PICTURE:
+//                if (Bimp.drr.size() < 9 && resultCode == -1) {
+//                    Bimp.drr.add(path);
+//                    Bimp.files.add(file);
+//                }
+//                break;
+//        }
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -216,7 +242,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     public void toShow(View view) {
         if (checkInput()) {
             int len = Bimp.drr.size();
-            fileBOList=new ArrayList<>();
+            fileBOList = new ArrayList<>();
             for (int i = 0; i < len; i++) {
                 fileBO = new FileBO();
                 fileBO.setType("4");
@@ -224,21 +250,27 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 fileBOList.add(fileBO);
             }
             showProgressDialog("上传中...");
-            uploadPics();
+            if (len > 0)
+                uploadPics();
+            else
+                putShow();
+
         }
 
     }
 
     public void putShow() {
-        this.appAction.putShow(application.getUserId(), activeId, content, pictures, new ActionCallbackListener() {
+        this.appAction.putShow(application.getUserId(), activeId + "", content, pictures, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
                 finish();
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), message);
             }
         });

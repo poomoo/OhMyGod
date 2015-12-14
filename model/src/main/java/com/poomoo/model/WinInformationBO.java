@@ -10,7 +10,7 @@ public class WinInformationBO {
     private String picture;//
     private String goodsId;//
     private String title;//
-    private String activeId;//
+    private int activeId;//
     private String winTel;//--中奖人昵称
     private String winNickName;//--中奖人昵称
     private String userId; //
@@ -51,11 +51,11 @@ public class WinInformationBO {
         this.title = title;
     }
 
-    public String getActiveId() {
+    public int getActiveId() {
         return activeId;
     }
 
-    public void setActiveId(String activeId) {
+    public void setActiveId(int activeId) {
         this.activeId = activeId;
     }
 
@@ -113,5 +113,23 @@ public class WinInformationBO {
 
     public void setGetAddress(String getAddress) {
         this.getAddress = getAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "WinInformationBO{" +
+                "transferMsg='" + transferMsg + '\'' +
+                ", picture='" + picture + '\'' +
+                ", goodsId='" + goodsId + '\'' +
+                ", title='" + title + '\'' +
+                ", activeId=" + activeId +
+                ", winTel='" + winTel + '\'' +
+                ", winNickName='" + winNickName + '\'' +
+                ", userId='" + userId + '\'' +
+                ", playDt='" + playDt + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", getEndDt='" + getEndDt + '\'' +
+                ", getAddress='" + getAddress + '\'' +
+                '}';
     }
 }

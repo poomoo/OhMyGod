@@ -1,17 +1,22 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinInformationBO;
+import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.WinInformationAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
-import com.poomoo.ohmygod.view.custom.RefreshableView;
+import com.poomoo.ohmygod.view.custom.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +26,15 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/13 10:51.
  */
-public class WinInformationActivity extends BaseActivity {
-    private RefreshableView refreshableView;
+public class WinInformationActivity extends BaseActivity implements RefreshLayout.OnLoadListener, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+    private RefreshLayout refreshLayout;
     private ListView listView;
 
-    private WinInformationAdapter winInformationAdapter;
-    private List<WinInformationBO> list;
+    private WinInformationAdapter adapter;
+    private List<WinInformationBO> list=new ArrayList<>();
 
     private int currPage = 1;
+    private boolean isLoad = false;//true 加载 false刷新
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +42,22 @@ public class WinInformationActivity extends BaseActivity {
         setContentView(R.layout.activity_win_information);
 
         initView();
+        showProgressDialog("请稍后...");
         getData();
     }
 
     protected void initView() {
         initTitleBar();
 
-        refreshableView = (RefreshableView) findViewById(R.id.refresh_winInfo);
+        refreshLayout = (RefreshLayout) findViewById(R.id.refresh_winInfo);
         listView = (ListView) findViewById(R.id.activity_win_information_listView);
 
-        winInformationAdapter = new WinInformationAdapter(this);
-        listView.setAdapter(winInformationAdapter);
-        list = new ArrayList<>();
-//        WinInformationBO winInformationBO = new WinInformationBO();
-//        winInformationBO.setTitle("测试测试");
-//        list.add(winInformationBO);
-//        winInformationAdapter.setItems(list);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadListener(this);
 
-        //下拉刷新
-//        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getData();
-//            }
-//        }, 0);
+        adapter = new WinInformationAdapter(this);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     protected void initTitleBar() {
@@ -74,24 +72,75 @@ public class WinInformationActivity extends BaseActivity {
     }
 
     private void getData() {
-        showProgressDialog("请稍后...");
         this.appAction.getWinningInfo(application.getCurrCity(), currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-//                refreshableView.finishRefreshing();
                 closeProgressDialog();
-                list = data.getObjList();
-                winInformationAdapter.setItems(list);
-//                currPage = 1;
+                // 更新完后调用该方法结束刷新
+                if (isLoad) {
+                    refreshLayout.setLoading(false);
+                    int len = data.getObjList().size();
+                    for (int i = 0; i < len; i++) {
+                        list.add((WinInformationBO) data.getObjList().get(i));
+                    }
+                    if (len > 0) {
+                        currPage++;
+                        adapter.addItems(list);
+                    }
+                } else {
+                    refreshLayout.setRefreshing(false);
+                    currPage++;
+                    list = new ArrayList<>();
+                    list = data.getObjList();
+                    adapter.setItems(list);
+                }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
-//                refreshableView.finishRefreshing();
+                if (isLoad)
+                    refreshLayout.setLoading(false);
+                else
+                    refreshLayout.setRefreshing(false);
                 MyUtil.showToast(getApplicationContext(), message);
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
+        bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
+        openActivity(CommodityInformationActivity.class, bundle);
+    }
+
+    @Override
+    public void onLoad() {
+        isLoad = true;
+        refreshLayout.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // 更新数据
+                getData();
+            }
+        }, 0);
+    }
+
+    @Override
+    public void onRefresh() {
+        isLoad = false;
+        currPage = 1;
+        refreshLayout.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // 更新数据
+                getData();
+            }
+        }, 0);
     }
 }

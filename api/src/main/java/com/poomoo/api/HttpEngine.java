@@ -121,7 +121,7 @@ public class HttpEngine {
             // 打印出结果
             Log.i(TAG, "response: " + result);
             ResponseBO responseBO = gson.fromJson(result, ResponseBO.class);
-
+            Log.i(TAG, "responseBO: " + responseBO);
             if (typeOfT != null) {
                 String jsonData = responseBO.getJsonData().toString();
                 if (!TextUtils.isEmpty(jsonData)) {
@@ -139,6 +139,9 @@ public class HttpEngine {
                                 responseBO.getObjList().add(responseBO.getObj());
                             }
                             responseBO.setObj(gson.fromJson(jsonData, typeOfT));
+                            if (jsonData.contains("totalCount"))
+                                responseBO.setTotalCount(jsonObject.getInt("totalCount"));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.i(TAG, "异常:" + e.getMessage());

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.core.ErrorEvent;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 注册
@@ -69,29 +74,46 @@ public class RegisterActivity extends BaseActivity {
      * @param view
      */
     public void toCode(View view) {
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeBtn, new CountDownListener() {
-            @Override
-            public void onFinish(int result) {
-                codeBtn.setText("重新获取");
-                codeBtn.setClickable(true);// 重新获得点击
-                codeBtn.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
-                codeBtn.setTextColor(Color.parseColor("#FFFFFF"));
-            }
-        });
-        timeCountDownUtil.start();
-        phoneNum = phoneNumEdt.getText().toString().trim();
+        if (checkInput()) {
+            TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeBtn, new CountDownListener() {
+                @Override
+                public void onFinish(int result) {
+                    codeBtn.setText("重新获取");
+                    codeBtn.setClickable(true);// 重新获得点击
+                    codeBtn.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
+                    codeBtn.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+            });
+            timeCountDownUtil.start();
+            phoneNum = phoneNumEdt.getText().toString().trim();
 
-        this.appAction.getCode(phoneNum, new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                MyUtil.showToast(getApplicationContext(), "验证码发送成功");
-            }
+            this.appAction.getCode(phoneNum, new ActionCallbackListener() {
+                @Override
+                public void onSuccess(ResponseBO data) {
+                    MyUtil.showToast(getApplicationContext(), "验证码发送成功");
+                }
 
-            @Override
-            public void onFailure(int errorCode, String message) {
-                MyUtil.showToast(getApplicationContext(), message);
-            }
-        });
+                @Override
+                public void onFailure(int errorCode, String message) {
+                    MyUtil.showToast(getApplicationContext(), message);
+                }
+            });
+        }
+    }
+
+    public boolean checkInput() {
+        // 参数检查
+        if (TextUtils.isEmpty(phoneNum)) {
+            MyUtil.showToast(getApplicationContext(), "手机号为空");
+            return false;
+        }
+        Pattern pattern = Pattern.compile("1\\d{10}");
+        Matcher matcher = pattern.matcher(phoneNum);
+        if (!matcher.matches()) {
+            MyUtil.showToast(getApplicationContext(), "手机号不正确");
+            return false;
+        }
+        return true;
     }
 
     /**

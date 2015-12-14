@@ -201,6 +201,8 @@
     <string name="intent_protocol">protocol</string>
     <string name="intent_pubMessage">pubMessage</string>
     <string name="intent_innerMessage">innerMessage</string>
+    <string name="intent_grab">grab</string>
+    <string name="intent_info">info</string>
     <!--intent-->
 
     <!--hint-->
@@ -292,4 +294,8 @@
     <string name="sp_address">address</string>
 
     <!--SharedPreferences-->
+
+    <!--进度会话框-->
+    <string name="dialog_message">请稍后...</string>
+    <!--进度会话框-->
 </resources>

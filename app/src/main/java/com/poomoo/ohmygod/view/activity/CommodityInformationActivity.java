@@ -14,12 +14,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
-import com.poomoo.core.AppAction;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -51,7 +49,9 @@ public class CommodityInformationActivity extends BaseActivity {
     private WebView activityWeb;//活动声明
     private TextView openActivityTxt;//确认开启活动按钮
     private Button grabBtn;
-    private LinearLayout llayout;//底部倒计时显示layout
+    private LinearLayout llayout_head_timeCountDown;//顶部倒计时layout
+    private LinearLayout llayout_bottom;//底部倒计时layout
+    private LinearLayout llayout_foot_timeCountDown;//底部倒计时显示layout
 
     private ProgressSeekBar seek;
     private TimeCountDownUtil headTimeCountDownUtil;
@@ -64,8 +64,9 @@ public class CommodityInformationActivity extends BaseActivity {
     private long countDownTime;//倒计时时间
     private boolean isOpen = false;//是否开启活动
     private boolean isBegin = false;//活动是否开始
-    private String activeId;//--活动编号
+    private int activeId;//--活动编号
     private Timer timer;
+    private String PARENT;
 
     private boolean isSuccess = false;//抢单结果
 
@@ -78,29 +79,6 @@ public class CommodityInformationActivity extends BaseActivity {
         getData();
     }
 
-    private void getData() {
-        activeId = getIntent().getStringExtra(getString(R.string.intent_activeId));
-        countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
-        initCountDown();
-        showProgressDialog("通讯中...");
-        LogUtils.i(TAG, "activeId:" + activeId);
-
-        this.appAction.getCommodityInformation(application.getUserId(), activeId, new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                closeProgressDialog();
-                commodityBO = (CommodityBO) data.getObj();
-                initData();
-            }
-
-            @Override
-            public void onFailure(int errorEvent, String message) {
-                closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), message);
-                finish();
-            }
-        });
-    }
 
     protected void initView() {
         initTitleBar();
@@ -118,7 +96,9 @@ public class CommodityInformationActivity extends BaseActivity {
         activityWeb = (WebView) findViewById(R.id.web_activity);
         seek = (ProgressSeekBar) findViewById(R.id.seek_grab);
         grabBtn = (Button) findViewById(R.id.btn_grab);
-        llayout = (LinearLayout) findViewById(R.id.llayout_foot_timeCountDown);
+        llayout_head_timeCountDown = (LinearLayout) findViewById(R.id.llayout_head_timeCountDown);
+        llayout_bottom = (LinearLayout) findViewById(R.id.llayout_grab_bottom);
+        llayout_foot_timeCountDown = (LinearLayout) findViewById(R.id.llayout_foot_timeCountDown);
 
         seek.setMyPadding(0, 30, 0, 0);
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -147,6 +127,35 @@ public class CommodityInformationActivity extends BaseActivity {
 //                if(progressDialog.get)
 //            }
 //        });
+    }
+
+    private void getData() {
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        if (PARENT.equals(getString(R.string.intent_grab))) {
+            countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
+            initCountDown();
+        } else
+            hidden();
+
+        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId),0);
+
+        showProgressDialog("通讯中...");
+        LogUtils.i(TAG, "activeId:" + activeId);
+        this.appAction.getCommodityInformation(application.getUserId(), activeId+"", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                commodityBO = (CommodityBO) data.getObj();
+                initData();
+            }
+
+            @Override
+            public void onFailure(int errorEvent, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+                finish();
+            }
+        });
     }
 
     private void initData() {
@@ -198,6 +207,12 @@ public class CommodityInformationActivity extends BaseActivity {
         });
     }
 
+    private void hidden() {
+        openActivityTxt.setVisibility(View.GONE);
+        llayout_head_timeCountDown.setVisibility(View.GONE);
+        llayout_bottom.setVisibility(View.GONE);
+    }
+
     /**
      * 确认开启活动
      *
@@ -207,7 +222,7 @@ public class CommodityInformationActivity extends BaseActivity {
         isOpen = true;
         openActivityTxt.setVisibility(View.GONE);
         middleTimeCountdownTxt.setVisibility(View.VISIBLE);
-        llayout.setVisibility(View.GONE);
+        llayout_foot_timeCountDown.setVisibility(View.GONE);
         if (isBegin) {
             grabBtn.setBackgroundResource(R.drawable.selector_grab_button_grab);
             grabBtn.setClickable(true);
@@ -274,7 +289,7 @@ public class CommodityInformationActivity extends BaseActivity {
 
     private void submit() {
         showProgressDialog("提交申请中...");
-        this.appAction.putGrab(activeId, this.application.getUserId(), new ActionCallbackListener() {
+        this.appAction.putGrab(activeId+"", this.application.getUserId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();

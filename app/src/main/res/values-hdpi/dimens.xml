@@ -1,0 +1,19 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <!-- SP -->
+    <dimen name="sp_8">6sp</dimen>
+    <dimen name="sp_10">8sp</dimen>
+    <dimen name="sp_12">10sp</dimen>
+    <dimen name="sp_14">12sp</dimen>
+    <dimen name="sp_16">14sp</dimen>
+    <dimen name="sp_18">16sp</dimen>
+    <dimen name="sp_20">18sp</dimen>
+
+    <!-- DP -->
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_ad">140dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+
+
+</resources>

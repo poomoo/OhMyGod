@@ -58,7 +58,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         this.itemList.clear();
         this.itemList = itemList;
 //        for(int i=0;i<itemList.size();i++){
-//            LogUtils.i("MyBaseAdapter","i:"+i+"itemList:"+itemList.toString());
+//            LogUtils.i(TAG,"i:"+i+"itemList:"+itemList.toString());
 //        }
         notifyDataSetChanged();
     }

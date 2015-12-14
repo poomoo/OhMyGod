@@ -71,7 +71,13 @@ public class TimeCountDownUtil extends CountDownTimer {
             for (TextView textView : textViewList)
                 textView.setText("开抢倒计时：" + spanned);
         else {
-            if (view instanceof TextView) {
+            if (view instanceof Button) {
+                view.setClickable(false);// 设置不能点击
+                ((Button) view).setText(millisUntilFinished / 1000 + "s");// 设置倒计时时间
+                ((Button) view).setTextColor(Color.parseColor("#E81540"));
+                // 设置按钮为灰色，这时是不能点击的
+                view.setBackgroundResource(R.drawable.bg_get_code_pressed);
+            } else if (view instanceof TextView) {
                 if (view.getTag().equals("TextView")) {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
@@ -79,13 +85,7 @@ public class TimeCountDownUtil extends CountDownTimer {
                     ((TextView) view).setText("开抢倒计时：" + spanned);
             }
 
-            if (view instanceof Button) {
-                view.setClickable(false);// 设置不能点击
-                ((Button) view).setText(millisUntilFinished / 1000 + "s");// 设置倒计时时间
-                ((Button) view).setTextColor(Color.parseColor("#E81540"));
-                // 设置按钮为灰色，这时是不能点击的
-                view.setBackgroundResource(R.drawable.bg_get_code_pressed);
-            }
+
         }
 
     }

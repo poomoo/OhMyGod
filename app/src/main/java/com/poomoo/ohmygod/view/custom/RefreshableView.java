@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 
 /**
@@ -224,7 +225,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
             hideHeaderHeight = -header.getHeight();
             headerLayoutParams = (MarginLayoutParams) header.getLayoutParams();
             headerLayoutParams.topMargin = hideHeaderHeight;
-            listView = (ListView) getChildAt(listViewPosition);
+            listView = (NoScrollListView) getChildAt(0);
             listView.setOnTouchListener(this);
             loadOnce = true;
         }
@@ -235,8 +236,10 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
      */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        LogUtils.i("刷新", "onTouch");
         setIsAbleToPull(event);
         if (ableToPull) {
+            LogUtils.i("刷新", "event.getAction():" + event.getAction());
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     yDown = event.getRawY();
@@ -244,13 +247,17 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
                 case MotionEvent.ACTION_MOVE:
                     float yMove = event.getRawY();
                     int distance = (int) (yMove - yDown);
+                    LogUtils.i("刷新", "ACTION_MOVE  yDown:" + yDown+"yMove:"+yMove+"distance:"+distance);
+                    LogUtils.i("刷新", "ACTION_MOVE  distance:" + distance + "hideHeaderHeight:" + hideHeaderHeight + "headerLayoutParams.topMargin:" + headerLayoutParams.topMargin);
                     // 如果手指是下滑状态，并且下拉头是完全隐藏的，就屏蔽下拉事件
                     if (distance <= 0 && headerLayoutParams.topMargin <= hideHeaderHeight) {
                         return false;
                     }
-                    if (distance < touchSlop) {
+                    LogUtils.i("刷新", "ACTION_MOVE  currentStatus:" + currentStatus+"touchSlop:"+touchSlop);
+                    if (distance < 1) {
                         return false;
                     }
+                    LogUtils.i("刷新", "ACTION_MOVE  currentStatus:" + currentStatus);
                     if (currentStatus != STATUS_REFRESHING) {
                         if (headerLayoutParams.topMargin > 0) {
                             currentStatus = STATUS_RELEASE_TO_REFRESH;
@@ -273,6 +280,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
                     }
                     break;
             }
+            LogUtils.i("刷新", "currentStatus:" + currentStatus);
             // 时刻记得更新下拉头中的信息
             if (currentStatus == STATUS_PULL_TO_REFRESH || currentStatus == STATUS_RELEASE_TO_REFRESH) {
                 updateHeaderView();
@@ -394,6 +402,7 @@ public class RefreshableView extends LinearLayout implements OnTouchListener {
      * 更新下拉头中的信息。
      */
     private void updateHeaderView() {
+        LogUtils.i("刷新", "updateHeaderView");
         if (lastStatus != currentStatus) {
             if (currentStatus == STATUS_PULL_TO_REFRESH) {
                 description.setText(getResources().getString(R.string.pull_to_refresh));

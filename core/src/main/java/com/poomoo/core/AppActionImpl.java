@@ -83,22 +83,6 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void getCode(final String phoneNum, final ActionCallbackListener listener) {
-        // 参数检查
-        if (TextUtils.isEmpty(phoneNum)) {
-            if (listener != null) {
-                listener.onFailure(ErrorEvent.PARAM_NULL, "手机号为空");
-            }
-            return;
-        }
-
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(phoneNum);
-        if (!matcher.matches()) {
-            if (listener != null) {
-                listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
-            }
-            return;
-        }
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override

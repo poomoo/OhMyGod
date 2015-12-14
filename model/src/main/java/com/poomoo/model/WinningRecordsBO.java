@@ -15,7 +15,7 @@ public class WinningRecordsBO implements Serializable {
     private String goodsId;
     private String title;
     private String status;//--活动状态：0未开启，1开启（正在进行），2结束
-    private String activeId;
+    private int activeId;
     private String userId;
     private String getEndDt;
     private String playDt;
@@ -24,7 +24,6 @@ public class WinningRecordsBO implements Serializable {
     private String goodsName;//--奖品名称
     private String getAddress;//--领取地址
     private String getRequire;//--领取要求
-    private String totalCount;
 
     public String getPicture() {
         return picture;
@@ -58,11 +57,11 @@ public class WinningRecordsBO implements Serializable {
         this.status = status;
     }
 
-    public String getActiveId() {
+    public int getActiveId() {
         return activeId;
     }
 
-    public void setActiveId(String activeId) {
+    public void setActiveId(int activeId) {
         this.activeId = activeId;
     }
 
@@ -130,11 +129,22 @@ public class WinningRecordsBO implements Serializable {
         this.getRequire = getRequire;
     }
 
-    public String getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(String totalCount) {
-        this.totalCount = totalCount;
+    @Override
+    public String toString() {
+        return "WinningRecordsBO{" +
+                "picture='" + picture + '\'' +
+                ", goodsId='" + goodsId + '\'' +
+                ", title='" + title + '\'' +
+                ", status='" + status + '\'' +
+                ", activeId=" + activeId +
+                ", userId='" + userId + '\'' +
+                ", getEndDt='" + getEndDt + '\'' +
+                ", playDt='" + playDt + '\'' +
+                ", isGot='" + isGot + '\'' +
+                ", isShare='" + isShare + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", getAddress='" + getAddress + '\'' +
+                ", getRequire='" + getRequire + '\'' +
+                '}';
     }
 }

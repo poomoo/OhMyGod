@@ -4,7 +4,10 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -12,12 +15,11 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.SnatchAdapter;
+import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
-
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +29,13 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/23 09:23.
  */
-public class SnatchRecordActivity extends BaseActivity implements OnLoadListener, OnRefreshListener {
-    //    private Fragment curFragment;
-//    private AllFragment allFragment;
-//    private AlreadyFragment alreadyFragment;
+public class SnatchRecordActivity extends BaseActivity implements OnLoadListener, OnRefreshListener, OnItemClickListener {
     private RefreshLayout refreshLayout;
     private ListView listView;
     private SnatchAdapter adapter;
     private int currPage = 1;
-    private final static int PAGESIZE = 10;
+    private boolean isLoad = false;//true 加载 false刷新
     private List<WinningRecordsBO> recordsBOList = new ArrayList<>();
-    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +43,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
         setContentView(R.layout.activity_snatch_record);
 
         initView();
-//        refreshLayout.post(new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                refreshLayout.setRefreshing(true);
-//            }
-//        }));
+        showProgressDialog(getString(R.string.dialog_message));
         getData();
     }
 
@@ -64,7 +56,9 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
         listView.setAdapter(adapter);
 
         refreshLayout.setOnLoadListener(this);
+        refreshLayout.setOnRefreshListener(this);
         refreshLayout.setRefreshing(false);
+        listView.setOnItemClickListener(this);
 
     }
 
@@ -80,21 +74,37 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
     }
 
     private void getData() {
-        showProgressDialog("加载中...");
-        this.appAction.getWinningList(this.application.getUserId(), "1", currPage++, PAGESIZE, new ActionCallbackListener() {
+        this.appAction.getWinningList(this.application.getUserId(), "1", currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                recordsBOList = data.getObjList();
-                if (isFirst)
+                // 更新完后调用该方法结束刷新
+                if (isLoad) {
+                    refreshLayout.setLoading(false);
+                    int len = data.getObjList().size();
+                    for (int i = 0; i < len; i++) {
+                        recordsBOList.add((WinningRecordsBO) data.getObjList().get(i));
+                    }
+                    if (len > 0) {
+                        currPage++;
+                        adapter.addItems(recordsBOList);
+                    }
+                } else {
+                    refreshLayout.setRefreshing(false);
+                    currPage++;
+                    recordsBOList = new ArrayList<>();
+                    recordsBOList = data.getObjList();
                     adapter.setItems(recordsBOList);
-                else
-                    adapter.addItems(recordsBOList);
+                }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+                if (isLoad)
+                    refreshLayout.setLoading(false);
+                else
+                    refreshLayout.setRefreshing(false);
                 MyUtil.showToast(getApplicationContext(), message);
             }
         });
@@ -102,22 +112,38 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
 
     @Override
     public void onLoad() {
-        LogUtils.i(TAG, "onLoad");
+        isLoad = true;
         refreshLayout.postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                // 更新完后调用该方法结束刷新
-                refreshLayout.setLoading(false);
                 // 更新数据
                 getData();
             }
-        }, 2000);
+        }, 0);
     }
 
     @Override
     public void onRefresh() {
+        isLoad = false;
+        currPage = 1;
+        refreshLayout.postDelayed(new Runnable() {
 
+            @Override
+            public void run() {
+                // 更新数据
+                getData();
+            }
+        }, 0);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LogUtils.i(TAG, "recordsBOList大小:" + recordsBOList.size() + "position:" + position);
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
+        bundle.putInt(getString(R.string.intent_activeId), recordsBOList.get(position).getActiveId());
+        openActivity(CommodityInformationActivity.class, bundle);
     }
 
     //    private void setDefaultFragment() {

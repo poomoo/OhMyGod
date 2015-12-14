@@ -1,0 +1,16 @@
+<resources>
+    <!-- SP -->
+    <!-- SP -->
+    <dimen name="sp_8">10sp</dimen>
+    <dimen name="sp_10">12sp</dimen>
+    <dimen name="sp_12">14sp</dimen>
+    <dimen name="sp_14">16sp</dimen>
+    <dimen name="sp_16">18sp</dimen>
+    <dimen name="sp_18">20sp</dimen>
+    <dimen name="sp_20">22sp</dimen>
+    <!-- DP -->
+    <dimen name="dp_2">4dp</dimen>
+    <dimen name="dp_ad">180dp</dimen>
+    <dimen name="dp_160">180dp</dimen>
+
+</resources>

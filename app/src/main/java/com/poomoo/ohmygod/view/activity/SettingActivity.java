@@ -118,7 +118,7 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toLogOut(View view) {
-        Dialog dialog = new AlertDialog.Builder(this).setTitle("确认退出?").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        Dialog dialog = new AlertDialog.Builder(this).setMessage("确认退出?").setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

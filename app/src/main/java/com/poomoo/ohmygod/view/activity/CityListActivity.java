@@ -120,6 +120,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     }
 
     private void initData() {
+        locateCity = application.getLocateCity();
+
         allCity_lists = new ArrayList<>();
         city_hot = new ArrayList<>();
         city_result = new ArrayList<>();
@@ -178,7 +180,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     currentCity = allCity_lists.get(position).getCityName();
                     if (!locateCity.equals(currentCity)) {
                         String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
-                        Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setMessage(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 application.setCurrCity(currentCity);
@@ -211,7 +213,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 currentCity = city_result.get(position).getCityName();
                 if (!locateCity.equals(currentCity)) {
                     String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
-                    Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setMessage(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             application.setCurrCity(currentCity);
@@ -280,7 +282,21 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 hotCityInit();
                 Collections.sort(city_lists, comparator);
                 allCity_lists.addAll(city_lists);
+//                setAdapter(allCity_lists, city_hot, city_history);
                 adapter.notifyDataSetChanged();
+                sections = new String[allCity_lists.size()];
+                for (int i = 0; i < allCity_lists.size(); i++) {
+                    // 当前汉语拼音首字母
+                    String currentStr = getAlpha(allCity_lists.get(i).getPinyin());
+                    // 上一个汉语拼音首字母，如果不存在为" "
+                    String previewStr = (i - 1) >= 0 ? getAlpha(allCity_lists.get(i - 1)
+                            .getPinyin()) : " ";
+                    if (!previewStr.equals(currentStr)) {
+                        String name = getAlpha(allCity_lists.get(i).getPinyin());
+                        alphaIndexer.put(name, i);
+                        sections[i] = name;
+                    }
+                }
             }
 
             @Override
@@ -431,19 +447,6 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             this.hotList = hotList;
             this.hisCity = hisCity;
             alphaIndexer = new HashMap<>();
-            sections = new String[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                // 当前汉语拼音首字母
-                String currentStr = getAlpha(list.get(i).getPinyin());
-                // 上一个汉语拼音首字母，如果不存在为" "
-                String previewStr = (i - 1) >= 0 ? getAlpha(list.get(i - 1)
-                        .getPinyin()) : " ";
-                if (!previewStr.equals(currentStr)) {
-                    String name = getAlpha(list.get(i).getPinyin());
-                    alphaIndexer.put(name, i);
-                    sections[i] = name;
-                }
-            }
         }
 
         @Override
@@ -533,7 +536,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         currentCity = city_history.get(position);
                         if (!locateCity.equals(currentCity)) {
                             String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
-                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setTitle(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            Dialog dialog = new AlertDialog.Builder(CityListActivity.this).setMessage(title).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);

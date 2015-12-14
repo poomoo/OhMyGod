@@ -83,7 +83,12 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        openActivity(menu[position]);
+        if (position == 4) {
+            Bundle bundle = new Bundle();
+            bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_innerMessage));
+            openActivity(menu[position], bundle);
+        } else
+            openActivity(menu[position]);
     }
 
     @Override

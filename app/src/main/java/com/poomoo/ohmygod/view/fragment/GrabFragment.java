@@ -33,6 +33,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
+import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -40,12 +41,18 @@ import com.poomoo.ohmygod.view.activity.CityListActivity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
+import com.poomoo.ohmygod.view.custom.NoScrollListView;
 import com.poomoo.ohmygod.view.custom.RefreshableView;
 import com.poomoo.ohmygod.view.custom.RefreshableView.PullToRefreshListener;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
+import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownElasticImp;
+import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
+import java.security.PublicKey;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -54,8 +61,8 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/11 16:26.
  */
-public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener {
-    private RefreshableView refreshableView;
+public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener {
+    private PullDownScrollView refreshableView;
     private LinearLayout remindLlayout;
     private LinearLayout currCityLlayout;
     private RelativeLayout avatarRlayout;
@@ -64,7 +71,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private TextView currCityTxt;
     private TextView countTxt;
     private UpMarqueeTextView marqueeTextView;
-    private ListView listView;
+    private NoScrollListView listView;
     private SlideShowView slideShowView;
     private GrabAdapter adapter;
     private String[] urls;
@@ -79,6 +86,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private int informCount = 0;//通知的数量
     private List<MessageBO> messageBOList = new ArrayList<>();
     private boolean isFirst = true;//true第一次进入
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,8 +101,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void initView() {
-        refreshableView = (RefreshableView) getActivity().findViewById(R.id.refresh_grab);
-        refreshableView.setListViewPosition(4);
+        refreshableView = (PullDownScrollView) getActivity().findViewById(R.id.refresh_grab);
+//        refreshableView.setListViewPosition(4);
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
@@ -102,17 +110,21 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
-        listView = (ListView) getActivity().findViewById(R.id.list_grab);
+        listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
 
         //下拉刷新
-        refreshableView.setOnRefreshListener(new PullToRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getGrabList(true);
-            }
-        }, 0);
+//        refreshableView.setOnRefreshListener(new PullToRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                getGrabList(true);
+//            }
+//        }, 0);
+
+        //初始化下拉刷新
+        refreshableView.setRefreshListener(this);
+        refreshableView.setPullDownElastic(new PullDownElasticImp(getActivity()));
 
         currCityLlayout.setOnClickListener(this);
         winnerRlayout.setOnClickListener(this);
@@ -192,7 +204,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onSuccess(ResponseBO data) {
                 if (isRefreshable) {
-                    refreshableView.finishRefreshing();
+//                    refreshableView.finishRefreshing();
+                    refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 grabBOList = data.getObjList();
                 adapter.setItems(grabBOList);
@@ -201,7 +214,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onFailure(int errorCode, String message) {
                 if (isRefreshable) {
-                    refreshableView.finishRefreshing();
+//                    refreshableView.finishRefreshing();
+                    refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
@@ -265,6 +279,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             Bundle pBundle = new Bundle();
             pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
             pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
+            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_grab));
             openActivity(CommodityInformationActivity.class, pBundle);
         }
 
@@ -312,6 +327,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         option.setIgnoreKillProcess(true);// 可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
         option.setPriority(LocationClientOption.GpsFirst);    // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
         mLocationClient.setLocOption(option);
+    }
+
+    @Override
+    public void onRefresh(PullDownScrollView view) {
+        getGrabList(true);
     }
 
     public class MyLocationListener implements BDLocationListener {

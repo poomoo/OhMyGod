@@ -39,6 +39,8 @@ public class SplashActivity extends BaseActivity {
                     openActivity(LogInActivity.class);
                 else {
                     application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
+                    application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
+                    application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), "天呐"));
                     startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
                     openActivity(MainFragmentActivity.class);
                 }
