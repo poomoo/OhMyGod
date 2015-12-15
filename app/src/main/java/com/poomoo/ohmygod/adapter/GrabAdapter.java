@@ -32,8 +32,8 @@ import com.poomoo.ohmygod.utils.TimeCountDownUtil;
  * 日期: 2015/11/30 14:49.
  */
 public class GrabAdapter extends MyBaseAdapter<GrabBO> {
+    private String TAG = "GrabAdapter";
     private GrabBO grabBO = new GrabBO();
-    private TimeCountDownUtil timeCountDownUtil;
     private static SparseArray<TimeCountDownUtil> countDownUtils;
     private static SparseArray<RelativeLayout> layoutSparseArray;
 
@@ -57,11 +57,7 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
-//        viewHolder.rlayout.setClickable(false);
         grabBO = itemList.get(position);
-
-//        viewHolder.rlayout.setTag(grabBO.getPicture());
-//        viewHolder.image.setTag(grabBO.getPicture());
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.bg_snatch_record) //
@@ -71,16 +67,16 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
-//        layoutSparseArray.put(position, viewHolder.rlayout);
+        LogUtils.i(TAG, "position:" + position + "viewHolder.txt:" + viewHolder.txt.getTag());
 
-
-//        if (viewHolder.txt.getTag() == null) {
-        viewHolder.txt.setTag(grabBO.getPicture());
-        timeCountDownUtil = null;
-        timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, viewHolder.rlayout);
-        timeCountDownUtil.start();
-        getCountDownUtils().put(position, timeCountDownUtil);
-//        }
+//        if (viewHolder.txt.getTag() != null && viewHolder.txt.getTag().equals(grabBO.getPicture())) {
+        if (viewHolder.txt.getTag() == null) {
+            viewHolder.txt.setTag(grabBO.getPicture());
+            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
+            TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt);
+            timeCountDownUtil.start();
+            getCountDownUtils().put(position, timeCountDownUtil);
+        }
 
         return convertView;
     }

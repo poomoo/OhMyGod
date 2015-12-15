@@ -18,8 +18,7 @@ import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.ReplyListener;
-import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.listeners.ReplyListener;
 
 import java.util.ArrayList;
 import java.util.List;

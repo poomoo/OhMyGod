@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
-import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -42,14 +40,11 @@ import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
-import com.poomoo.ohmygod.view.custom.RefreshableView;
-import com.poomoo.ohmygod.view.custom.RefreshableView.PullToRefreshListener;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownElasticImp;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
-import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,6 +203,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 grabBOList = data.getObjList();
+//                initTestData(grabBOList);
                 adapter.setItems(grabBOList);
             }
 
@@ -273,11 +269,15 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         long time = adapter.getCountDownUtils().get(position).getMillisUntilFinished();
         LogUtils.i(TAG, "剩余时间:" + time);
+        if (!application.getLocateCity().equals(application.getCurrCity())) {
+            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+            return;
+        }
         if (time > 0) {
             MyUtil.showToast(getActivity().getApplicationContext(), "活动还没开始");
         } else {
             Bundle pBundle = new Bundle();
-            pBundle.putString(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+            pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
             pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
             pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_grab));
             openActivity(CommodityInformationActivity.class, pBundle);
@@ -348,6 +348,15 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);
+        }
+    }
+
+    private void initTestData(List<GrabBO> grabBOList) {
+        for (int i = 0; i < 10; i++) {
+            GrabBO grabBO = new GrabBO();
+            grabBO.setStartCountdown((i + 1) * 60 * 60 * 1000);
+            grabBO.setPicture(i + "");
+            grabBOList.add(grabBO);
         }
     }
 }

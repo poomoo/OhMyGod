@@ -24,7 +24,6 @@ public class TimeCountDownUtil extends CountDownTimer {
     private String TAG = this.getClass().getSimpleName();
     private View view;
     private List<TextView> textViewList;
-    private RelativeLayout layout;
     private long millisUntilFinished;
     private CountDownListener countDownListener;
     private boolean isList;//是否传入list
@@ -55,14 +54,6 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.isList = false;
     }
 
-    public TimeCountDownUtil(long millisInFuture,
-                             long countDownInterval, View view, RelativeLayout layout) {
-        super(millisInFuture, countDownInterval);
-        this.view = view;
-        this.isList = false;
-        this.layout = layout;
-    }
-
     @Override
     public void onTick(long millisUntilFinished) {
         this.millisUntilFinished = millisUntilFinished;
@@ -81,8 +72,10 @@ public class TimeCountDownUtil extends CountDownTimer {
                 if (view.getTag().equals("TextView")) {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
-                } else
+                } else {
                     ((TextView) view).setText("开抢倒计时：" + spanned);
+                }
+
             }
 
 

@@ -115,7 +115,9 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
             });
         }
         nickNameTxt.setText(application.getNickName());
-        if (application.getSex().equals("1"))
+        if (TextUtils.isEmpty(application.getSex()))
+            genderImg.setVisibility(View.GONE);
+        else if (application.getSex().equals("1"))
             genderImg.setImageResource(R.drawable.ic_gender_man);
         else
             genderImg.setImageResource(R.drawable.ic_gender_woman);

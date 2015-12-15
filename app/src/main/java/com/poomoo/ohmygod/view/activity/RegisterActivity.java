@@ -85,7 +85,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             });
             timeCountDownUtil.start();
-            phoneNum = phoneNumEdt.getText().toString().trim();
 
             this.appAction.getCode(phoneNum, new ActionCallbackListener() {
                 @Override
@@ -102,6 +101,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public boolean checkInput() {
+        phoneNum = phoneNumEdt.getText().toString().trim();
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
             MyUtil.showToast(getApplicationContext(), "手机号为空");

@@ -22,9 +22,10 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.ReplyListener;
+import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
@@ -38,7 +39,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:38.
  */
-public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener {
+public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -124,40 +125,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         });
 
-        adapter = new ShowAdapter(this, new ReplyListener() {
-            @Override
-            public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
-                toNickName = name;
-                selectPosition = position;
-                view = v;
-                commentPosition = commentPos;
-                showBO = show;
-                LogUtils.i(TAG, "showBO:" + showBO);
-
-                MyUtil.showToast(getApplication(), "onResult 点击:" + name);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                MainFragmentActivity.instance.invisible();
-                replyRlayout.setVisibility(View.VISIBLE);
-                LogUtils.i(TAG, "replyRlayout可见");
-                replyEdt.setFocusable(true);
-                replyEdt.setFocusableInTouchMode(true);
-                replyEdt.requestFocus();
-                isKeyBoardShow = true;
-                //名字为空则是评论
-                if (TextUtils.isEmpty(toNickName)) {
-                    replyEdt.setHint("");
-                    isComment = true;
-                    isReply = false;
-                }
-                //否则为回复
-                else {
-                    replyEdt.setHint("回复" + name);
-                    isComment = false;
-                    isReply = true;
-                }
-            }
-        });
+        adapter = new ShowAdapter(this, this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -343,5 +311,43 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 getData();
             }
         }, 0);
+    }
+
+    @Override
+    public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
+        toNickName = name;
+        selectPosition = position;
+        view = v;
+        commentPosition = commentPos;
+        showBO = show;
+        LogUtils.i(TAG, "showBO:" + showBO);
+
+        MyUtil.showToast(getApplication(), "onResult 点击:" + name);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        MainFragmentActivity.instance.invisible();
+        replyRlayout.setVisibility(View.VISIBLE);
+        LogUtils.i(TAG, "replyRlayout可见");
+        replyEdt.setFocusable(true);
+        replyEdt.setFocusableInTouchMode(true);
+        replyEdt.requestFocus();
+        isKeyBoardShow = true;
+        //名字为空则是评论
+        if (TextUtils.isEmpty(toNickName)) {
+            replyEdt.setHint("");
+            isComment = true;
+            isReply = false;
+        }
+        //否则为回复
+        else {
+            replyEdt.setHint("回复" + name);
+            isComment = false;
+            isReply = true;
+        }
+    }
+
+    @Override
+    public void onResult(String title, String content, String picUrl) {
+
     }
 }

@@ -4,9 +4,10 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
@@ -16,14 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.ReplyListener;
+import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -32,6 +31,8 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 作者: 李苜菲
@@ -70,15 +71,22 @@ public class TestActivity extends BaseActivity {
 
     private ImageView imageView;
     private static final String url = "http://zgqg.91jiaoyou.cn/zgqg/upload/active/1449467937354.jpg";
+    private static final int[] pics = {R.drawable.anim1, R.drawable.anim2, R.drawable.anim3, R.drawable.anim4, R.drawable.anim5,
+            R.drawable.anim6, R.drawable.anim7, R.drawable.anim8, R.drawable.anim9,
+            R.drawable.anim10, R.drawable.anim11, R.drawable.anim12, R.drawable.anim13,
+            R.drawable.anim14, R.drawable.anim15, R.drawable.anim16, R.drawable.anim17, R.drawable.anim18, R.drawable.anim19,};
+    private int index = 0;
+    private Timer timer;
+    private boolean firstFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         imageView = (ImageView) findViewById(R.id.img_test);
-        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
-
-        ImageLoader.getInstance().displayImage(url,imageView);
+//        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
+//
+//        ImageLoader.getInstance().displayImage(url,imageView);
 //        ImageLoader.getInstance().loadImage(url,  new SimpleImageLoadingListener() {
 //            @Override
 //            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
@@ -129,25 +137,25 @@ public class TestActivity extends BaseActivity {
         });
 
 
-        showAdapter = new ShowAdapter(this, new ReplyListener() {
-            @Override
-            public void onResult(String name, int position, View v, ShowBO showBO, int replyPos) {
-                MyUtil.showToast(getApplication(), "onResult 点击:" + name);
-                selectPosition = position;
-                view = v;
-                commentPosition = replyPos;
-                viewTop = view.getTop();
-                LogUtils.i(TAG, "item-->" + "y:" + viewTop);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                replyLlayout.setVisibility(View.VISIBLE);
-                MyUtil.showToast(getApplication(), "replyRlayout状态:" + replyLlayout.getVisibility());
-                replyEdt.setFocusable(true);
-                replyEdt.setFocusableInTouchMode(true);
-                replyEdt.requestFocus();
-                isKeyBoardShow = true;
-            }
-        });
+//        showAdapter = new ShowAdapter(this, new ReplyListener() {
+//            @Override
+//            public void onResult(String name, int position, View v, ShowBO showBO, int replyPos) {
+//                MyUtil.showToast(getApplication(), "onResult 点击:" + name);
+//                selectPosition = position;
+//                view = v;
+//                commentPosition = replyPos;
+//                viewTop = view.getTop();
+//                LogUtils.i(TAG, "item-->" + "y:" + viewTop);
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                replyLlayout.setVisibility(View.VISIBLE);
+//                MyUtil.showToast(getApplication(), "replyRlayout状态:" + replyLlayout.getVisibility());
+//                replyEdt.setFocusable(true);
+//                replyEdt.setFocusableInTouchMode(true);
+//                replyEdt.requestFocus();
+//                isKeyBoardShow = true;
+//            }
+//        });
         list.setAdapter(showAdapter);
 
         replyLlayout.setOnClickListener(new View.OnClickListener() {
@@ -291,4 +299,37 @@ public class TestActivity extends BaseActivity {
 ////        bezierView.reDraw(start, end);
 //        Log.i("lmf", "start:" + start + "end" + end);
 //    }
+
+    public void toTest(View view) {
+        if (firstFlag) {
+            decrease();
+            firstFlag = false;
+        }
+        if (index == pics.length) {
+            MyUtil.showToast(getApplicationContext(), "抢购完成");
+        } else
+            imageView.setImageResource(pics[index++]);
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (index > 0)
+                        imageView.setImageResource(pics[--index]);
+                    break;
+            }
+        }
+    };
+
+    private void decrease() {
+        TimerTask t = new TimerTask() {
+            public void run() {
+                handler.sendEmptyMessage(1);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(t, 1000, 1000);
+    }
 }

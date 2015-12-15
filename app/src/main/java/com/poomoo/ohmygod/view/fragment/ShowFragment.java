@@ -6,7 +6,6 @@ package com.poomoo.ohmygod.view.fragment;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,21 +23,35 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.ReplyListener;
+import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
-import com.poomoo.ohmygod.view.activity.SettingActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
+import com.umeng.socialize.media.SinaShareContent;
+import com.umeng.socialize.media.SmsShareContent;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.SmsHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 import java.util.ArrayList;
 
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +59,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/20 09:50.
  */
-public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener {
+public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -71,7 +84,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private int itemTop;
     private int y1;//键盘弹出后剩余的界面底部y坐标
     private int y2;//点击的view距离当前item顶端的距离
-    private String content;
+    private String replyContent;
     private int commentPosition;
     private boolean isComment = false;//评论
     private boolean isReply = false;//回复
@@ -80,6 +93,13 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private String toUserId;
     private boolean isLoad = false;//true 加载 false刷新
     private int currPage = 1;
+
+    // 首先在您的Activity中添加如下成员变量
+    public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+    private String content = "天呐" + "\n" + "http://www.baidu.com";
+    private String website = "http://zgqg.91jiaoyou.cn/zgqg";
+    private String title = "天呐";
+    private String picUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +112,56 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         initView();
         showProgressDialog("请稍后...");
         getData();
+
+    }
+
+    @Override
+    public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
+        toNickName = name;
+        selectPosition = position;
+        view = v;
+        commentPosition = commentPos;
+        viewTop = view.getTop();
+        showBO = show;
+        LogUtils.i(TAG, "showBO:" + showBO);
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        MainFragmentActivity.instance.invisible();
+        replyRlayout.setVisibility(View.VISIBLE);
+        LogUtils.i(TAG, "replyRlayout可见");
+        replyEdt.setFocusable(true);
+        replyEdt.setFocusableInTouchMode(true);
+        replyEdt.requestFocus();
+        isKeyBoardShow = true;
+        //名字为空则是评论
+        if (TextUtils.isEmpty(toNickName)) {
+            replyEdt.setHint("");
+            isComment = true;
+            isReply = false;
+        }
+        //否则为回复
+        else {
+            replyEdt.setHint("回复" + name);
+            isComment = false;
+            isReply = true;
+        }
+    }
+
+
+    @Override
+    public void onResult(String title, String content, String picUrl) {
+        this.title = title;
+        this.content = content;
+        this.picUrl = picUrl;
+        // 配置需要分享的相关平台
+        configPlatforms();
+        // 设置分享内容
+        shareContent();
+        // 是否只有已登录用户才能打开分享选择页
+        mController.getConfig().setPlatforms(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN,
+                SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.SMS);
+        mController.openShare(getActivity(), false);
     }
 
     private void initView() {
@@ -109,8 +179,8 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         replyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content = replyEdt.getText().toString().trim();
-                if (TextUtils.isEmpty(content))
+                replyContent = replyEdt.getText().toString().trim();
+                if (TextUtils.isEmpty(replyContent))
                     MyUtil.showToast(application.getApplicationContext(), "请输入内容");
                 else {
                     hiddenReply(v);
@@ -161,40 +231,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             }
         });
 
-        adapter = new ShowAdapter(getActivity(), new ReplyListener() {
-            @Override
-            public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
-                toNickName = name;
-                selectPosition = position;
-                view = v;
-                commentPosition = commentPos;
-                viewTop = view.getTop();
-                showBO = show;
-                LogUtils.i(TAG, "showBO:" + showBO);
-
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                MainFragmentActivity.instance.invisible();
-                replyRlayout.setVisibility(View.VISIBLE);
-                LogUtils.i(TAG, "replyRlayout可见");
-                replyEdt.setFocusable(true);
-                replyEdt.setFocusableInTouchMode(true);
-                replyEdt.requestFocus();
-                isKeyBoardShow = true;
-                //名字为空则是评论
-                if (TextUtils.isEmpty(toNickName)) {
-                    replyEdt.setHint("");
-                    isComment = true;
-                    isReply = false;
-                }
-                //否则为回复
-                else {
-                    replyEdt.setHint("回复" + name);
-                    isComment = false;
-                    isReply = true;
-                }
-            }
-        });
+        adapter = new ShowAdapter(getActivity(), this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -219,90 +256,86 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         isKeyBoardShow = false;
     }
 
-    private void testData() {
-        int len = MyConfig.testUrls.length;
-        for (int i = 0; i < len; i++)
-            picList.add(MyConfig.testUrls[i]);
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("十年九梦你");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("货已经收到了，东西不错");
-        showBO.setTitle("(第123期)电脑疯抢玩命中...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("糊涂图");
-        commentBO.setContent("你运气真好");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("十年九梦你");
-        replyBO.setToNickName("糊涂图");
-        replyBO.setContent("是的");
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("跑马安卓小飞");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("什么玩意儿");
-        showBO.setTitle("(第124期)疯狂搬砖中...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("马云");
-        commentBO.setContent("小伙子好好干");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("跑马安卓小飞");
-        replyBO.setToNickName("马云");
-        replyBO.setContent("好的");
-        replyBOList = new ArrayList<>();
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList = new ArrayList<>();
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("劉強東");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("大愛奶茶妹");
-        showBO.setTitle("(第125期)愛愛愛...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("劉強東");
-        commentBO.setContent("我媳婦是奶茶妹 ");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("奶茶妹");
-        replyBO.setToNickName("劉強東");
-        replyBO.setContent("老公我愛你");
-        replyBOList = new ArrayList<>();
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList = new ArrayList<>();
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-
-//        for(int i=0;i<showBOList.size();i++){
-//            LogUtils.i(TAG,"i:"+i+"itemList:"+showBOList.get(i).getComments());
-//        }
-        adapter.setItems(showBOList);
-    }
+//    private void testData() {
+//        int len = MyConfig.testUrls.length;
+//        for (int i = 0; i < len; i++)
+//            picList.add(MyConfig.testUrls[i]);
+//
+//        showBO = new ShowBO();
+//        showBO.setPicList(picList);
+//        showBO.setNickName("十年九梦你");
+//        showBO.setDynamicDt((new Date()).toString());
+//        showBO.setContent("货已经收到了，东西不错");
+//        showBO.setTitle("(第123期)电脑疯抢玩命中...");
+//
+//        commentBO = new CommentBO();
+//        commentBO.setNickName("糊涂图");
+//        commentBO.setContent("你运气真好");
+//
+//        replyBO = new ReplyBO();
+//        replyBO.setFromNickName("十年九梦你");
+//        replyBO.setToNickName("糊涂图");
+//        replyBO.setContent("是的");
+//        replyBOList.add(replyBO);
+//
+//        commentBO.setReplies(replyBOList);
+//        commentBOList.add(commentBO);
+//        showBO.setComments(commentBOList);
+//
+//        showBOList.add(showBO);
+//
+//
+//        showBO = new ShowBO();
+//        showBO.setPicList(picList);
+//        showBO.setNickName("跑马安卓小飞");
+//        showBO.setDynamicDt((new Date()).toString());
+//        showBO.setContent("什么玩意儿");
+//        showBO.setTitle("(第124期)疯狂搬砖中...");
+//
+//        commentBO = new CommentBO();
+//        commentBO.setNickName("马云");
+//        commentBO.setContent("小伙子好好干");
+//
+//        replyBO = new ReplyBO();
+//        replyBO.setFromNickName("跑马安卓小飞");
+//        replyBO.setToNickName("马云");
+//        replyBO.setContent("好的");
+//        replyBOList = new ArrayList<>();
+//        replyBOList.add(replyBO);
+//
+//        commentBO.setReplies(replyBOList);
+//        commentBOList = new ArrayList<>();
+//        commentBOList.add(commentBO);
+//        showBO.setComments(commentBOList);
+//
+//        showBOList.add(showBO);
+//
+//        showBO = new ShowBO();
+//        showBO.setPicList(picList);
+//        showBO.setNickName("劉強東");
+//        showBO.setDynamicDt((new Date()).toString());
+//        showBO.setContent("大愛奶茶妹");
+//        showBO.setTitle("(第125期)愛愛愛...");
+//
+//        commentBO = new CommentBO();
+//        commentBO.setNickName("劉強東");
+//        commentBO.setContent("我媳婦是奶茶妹 ");
+//
+//        replyBO = new ReplyBO();
+//        replyBO.setFromNickName("奶茶妹");
+//        replyBO.setToNickName("劉強東");
+//        replyBO.setContent("老公我愛你");
+//        replyBOList = new ArrayList<>();
+//        replyBOList.add(replyBO);
+//
+//        commentBO.setReplies(replyBOList);
+//        commentBOList = new ArrayList<>();
+//        commentBOList.add(commentBO);
+//        showBO.setComments(commentBOList);
+//
+//        showBOList.add(showBO);
+//        adapter.setItems(showBOList);
+//    }
 
     private void getData() {
         //1表示晒单分享列表，2表示我的晒单列表
@@ -311,18 +344,21 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getObjList().toString());
                 closeProgressDialog();
-                currPage++;
                 // 更新完后调用该方法结束刷新
                 if (isLoad) {
                     refreshLayout.setLoading(false);
                     int len = data.getObjList().size();
                     for (int i = 0; i < len; i++)
                         showBOList.add((ShowBO) data.getObjList().get(i));
-                    if (len > 0)
+                    if (len > 0) {
+                        currPage++;
                         adapter.addItems(showBOList);
+                    }
+
                 } else {
                     currPage++;
                     refreshLayout.setRefreshing(false);
+                    showBOList = new ArrayList<>();
                     showBOList = data.getObjList();
                     if (showBOList.size() > 0)
                         adapter.setItems(showBOList);
@@ -346,13 +382,13 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      */
     private void putComment() {
         showProgressDialog("提交中...");
-        this.appAction.putComment(application.getUserId(), content, showBO.getDynamicId(), new ActionCallbackListener() {
+        this.appAction.putComment(application.getUserId(), replyContent, showBO.getDynamicId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 commentBO = new CommentBO();
                 commentBO.setNickName(application.getNickName());
-                commentBO.setContent(content);
+                commentBO.setContent(replyContent);
                 commentBO.setDynamicId(showBO.getDynamicId());
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
@@ -386,17 +422,16 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             toUserId = showBO.getComments().get(0).getReplies().get(0).getToUserId();
         }
 
-
         final String commentId = showBO.getComments().get(0).getCommentId();
         LogUtils.i(TAG, "showBO:" + showBO);
-        this.appAction.putReply(fromUserId, toUserId, content, commentId, new ActionCallbackListener() {
+        this.appAction.putReply(fromUserId, toUserId, replyContent, commentId, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 replyBO = new ReplyBO();
                 replyBO.setFromUserId(fromUserId);
                 replyBO.setToUserId(toUserId);
-                replyBO.setContent(content);
+                replyBO.setContent(replyContent);
                 replyBO.setCommentId(commentId);
                 replyBO.setToNickName(toNickName);
                 replyBO.setFromNickName(application.getNickName());
@@ -464,4 +499,140 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             }
         }, 0);
     }
+
+    /**
+     * 配置分享平台参数</br>
+     */
+    private void configPlatforms() {
+        // 添加新浪SSO授权
+        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+
+        // 添加QQ、QZone平台
+        addQQQZonePlatform();
+
+        // 添加微信、微信朋友圈平台
+        addWXPlatform();
+
+        // 添加短信平台
+        addSMS();
+    }
+
+    public void shareContent() {
+        // 本地图片
+        UMImage localImage = new UMImage(getActivity(), picUrl);
+
+        // 配置SSO
+        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+
+        // QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
+        // "100424468", "c7394704798a158208a74ab60104f0ba");
+
+        WeiXinShareContent weixinContent = new WeiXinShareContent();
+        weixinContent.setShareContent(content);
+        weixinContent.setTitle(title);
+        weixinContent.setTargetUrl(website);
+        weixinContent.setShareMedia(localImage);
+        mController.setShareMedia(weixinContent);
+
+        // 设置朋友圈分享的内容
+        CircleShareContent circleMedia = new CircleShareContent();
+        circleMedia.setShareContent(content);
+        circleMedia.setTitle(title);
+        circleMedia.setShareMedia(localImage);
+        circleMedia.setTargetUrl(website);
+        mController.setShareMedia(circleMedia);
+
+        // 设置QQ空间分享内容
+        QZoneShareContent qzone = new QZoneShareContent();
+        qzone.setShareContent(content);
+        qzone.setTargetUrl(website);
+        qzone.setTitle(title);
+        qzone.setShareMedia(localImage);
+        mController.setShareMedia(qzone);
+
+        // 设置QQ分享内容
+        QQShareContent qqShareContent = new QQShareContent();
+        qqShareContent.setShareContent(content);
+        qqShareContent.setTitle(title);
+        qqShareContent.setShareMedia(localImage);
+        qqShareContent.setTargetUrl(website);
+        mController.setShareMedia(qqShareContent);
+
+        // 设置短信分享内容
+        SmsShareContent sms = new SmsShareContent();
+        sms.setShareContent(content);
+        sms.setShareImage(localImage);
+        mController.setShareMedia(sms);
+
+        // 设置新浪微博分享内容
+        SinaShareContent sinaContent = new SinaShareContent();
+        sinaContent.setShareContent(content);
+        sinaContent.setShareImage(localImage);
+        mController.setShareMedia(sinaContent);
+
+    }
+
+    /**
+     * @return
+     * @功能描述 : 添加QQ平台支持 QQ分享的内容， 包含四种类型， 即单纯的文字、图片、音乐、视频. 参数说明 : title, summary,
+     * image url中必须至少设置一个, targetUrl必须设置,网页地址必须以"http://"开头 . title :
+     * 要分享标题 summary : 要分享的文字概述 image url : 图片地址 [以上三个参数至少填写一个] targetUrl
+     * : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
+     */
+    private void addQQQZonePlatform() {
+        String appId = "100424468";
+        String appKey = "c7394704798a158208a74ab60104f0ba";
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(), appId, appKey);
+        qqSsoHandler.setTargetUrl(website);
+        qqSsoHandler.addToSocialSDK();
+
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(getActivity(), appId, appKey);
+        qZoneSsoHandler.addToSocialSDK();
+    }
+
+    /**
+     * @return
+     * @功能描述 : 添加微信平台分享
+     */
+    private void addWXPlatform() {
+        // 注意：在微信授权的时候，必须传递appSecret
+        // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
+        String appId = "wx55e834ca0a0327a6";
+        String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+        // 添加微信平台
+        UMWXHandler wxHandler = new UMWXHandler(getActivity(), appId, appSecret);
+        wxHandler.addToSocialSDK();
+
+        // 支持微信朋友圈
+        UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(), appId, appSecret);
+        wxCircleHandler.setToCircle(true);
+        wxCircleHandler.addToSocialSDK();
+    }
+
+    /**
+     * 添加短信平台
+     */
+    private void addSMS() {
+        // 添加短信
+        SmsHandler smsHandler = new SmsHandler();
+        smsHandler.addToSocialSDK();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mController.getConfig().cleanListeners();
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        /** 使用SSO授权必须添加如下代码 */
+//        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
+//        if (ssoHandler != null) {
+//            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+//        }
+//    }
 }

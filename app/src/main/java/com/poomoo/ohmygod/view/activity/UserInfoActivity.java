@@ -74,6 +74,7 @@ public class UserInfoActivity extends BaseActivity {
     private FileBO fileBO;
     private Bitmap bitmap;
     private String headPic;
+    private String gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,14 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         nickNameTxt.setText(this.application.getNickName());
-        genderTxt.setText(this.application.getSex().equals("1") ? "男" : "女");
+
+        if (TextUtils.isEmpty(this.application.getSex()))
+            gender = "";
+        else if (this.application.getSex().equals("1"))
+            gender = "男";
+        else
+            gender = "女";
+        genderTxt.setText(gender);
         ageTxt.setText(this.application.getAge());
         phoneNumTxt.setText(MyUtil.hiddenTel(this.application.getTel()));
         idCardNumTxt.setText(MyUtil.hiddenIdCardNum(this.application.getIdCardNum()));

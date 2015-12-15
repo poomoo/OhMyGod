@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Selection;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.widget.EditText;
@@ -136,6 +137,8 @@ public class MyUtil {
      * @return
      */
     public static String hiddenTel(String tel) {
+        if (TextUtils.isEmpty(tel))
+            return "";
         String temp;
         temp = tel.substring(0, 3) + tel.substring(3, 7).replaceAll("[0123456789]", "*")
                 + tel.substring(7, tel.length());
@@ -149,6 +152,8 @@ public class MyUtil {
      * @return
      */
     public static String hiddenIdCardNum(String num) {
+        if (TextUtils.isEmpty(num))
+            return "";
         String temp;
         temp = num.substring(0, 3) + num.substring(3, 14).replaceAll("[0123456789]", "*")
                 + num.substring(14, num.length());
@@ -162,6 +167,8 @@ public class MyUtil {
      * @return
      */
     public static String hiddenBankCardNum(String num) {
+        if (TextUtils.isEmpty(num))
+            return "";
         String temp;
         temp = num.substring(0, 4) + num.substring(4, 16).replaceAll("[0123456789]", "*")
                 + num.substring(16, num.length());

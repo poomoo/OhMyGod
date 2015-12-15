@@ -9,7 +9,7 @@ package com.poomoo.model;
  * 日期: 2015/11/30 14:27.
  */
 public class GrabBO {
-    private String activeId;//--活动编号
+    private int activeId;//--活动编号
     private String title;//--活动标题
     private String goodsName;//--商品名称
     //    private long countdown;//--表示剩余时间
@@ -18,11 +18,11 @@ public class GrabBO {
     private long endCountdown;//--结束时间倒计时
 
 
-    public String getActiveId() {
+    public int getActiveId() {
         return activeId;
     }
 
-    public void setActiveId(String activeId) {
+    public void setActiveId(int activeId) {
         this.activeId = activeId;
     }
 

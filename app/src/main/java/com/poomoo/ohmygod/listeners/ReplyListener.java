@@ -1,4 +1,4 @@
-package com.poomoo.ohmygod;
+package com.poomoo.ohmygod.listeners;
 
 import android.view.View;
 
@@ -11,6 +11,6 @@ import com.poomoo.model.ShowBO;
  * 日期: 2015/11/11 11:11.
  */
 public interface ReplyListener {
-    public void onResult(String name, int selectPosition, View view, ShowBO showBO, int replyPosition);
+    void onResult(String name, int selectPosition, View view, ShowBO showBO, int replyPosition);
 
 }

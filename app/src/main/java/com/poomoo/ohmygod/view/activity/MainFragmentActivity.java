@@ -3,6 +3,7 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -20,6 +21,7 @@ import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
 import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -85,7 +87,7 @@ public class MainFragmentActivity extends
                     Bundle bundle = new Bundle();
                     bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
                     bundle.putSerializable(getString(R.string.intent_value), (Serializable) messageBOList);
-                    openActivity(InStationMessagesActivity.class,bundle);
+                    openActivity(InStationMessagesActivity.class, bundle);
                     break;
             }
         }
@@ -205,5 +207,15 @@ public class MainFragmentActivity extends
 
     public void visible() {
         group.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** 使用SSO授权必须添加如下代码 */
+        UMSsoHandler ssoHandler = ShowFragment.mController.getConfig().getSsoHandler(requestCode);
+        if (ssoHandler != null) {
+            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
     }
 }
