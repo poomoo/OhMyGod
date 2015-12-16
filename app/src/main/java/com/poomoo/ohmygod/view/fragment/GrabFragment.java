@@ -203,7 +203,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 grabBOList = data.getObjList();
-                initTestData(grabBOList);
+//                initTestData(grabBOList);
                 adapter.setItems(grabBOList);
             }
 
