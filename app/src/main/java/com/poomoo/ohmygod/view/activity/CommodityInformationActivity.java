@@ -176,8 +176,8 @@ public class CommodityInformationActivity extends BaseActivity {
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
         //活动声明
-        activityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
-        activityWeb.loadData(commodityBO.getStatement(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+//        activityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
+//        activityWeb.loadData(commodityBO.getStatement(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
 
     }

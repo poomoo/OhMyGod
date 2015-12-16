@@ -38,9 +38,10 @@
 
             <TextView
                 android:id="@+id/txt_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|end"
                 android:paddingTop="15dp"
                 android:text="@string/label_grab_countDown"
                 android:textColor="@color/white"
@@ -50,11 +51,12 @@
 
             <TextView
                 android:id="@+id/txt_grab_countDown"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:paddingTop="15dp"
-                android:text=""
+                android:text="12313212311"
                 android:textColor="@color/themeYellow"
                 android:textSize="18sp"
                 android:textStyle="bold" />

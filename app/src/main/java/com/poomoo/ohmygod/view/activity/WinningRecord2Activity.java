@@ -44,7 +44,6 @@ public class WinningRecord2Activity extends BaseActivity {
         showBtn = (Button) findViewById(R.id.btn_show);
 
 
-
         winningRecordsBO = (WinningRecordsBO) getIntent().getSerializableExtra(getString(R.string.intent_value));
 
         titleTxt.setText(winningRecordsBO.getTitle());

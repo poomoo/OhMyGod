@@ -16,12 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.adapter.PersonalCenterAdapter;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
@@ -57,7 +59,7 @@ public class TestActivity extends BaseActivity {
     private List<ShowBO> showBOList = new ArrayList<>();
     private List<ReplyBO> replyBOList = new ArrayList<>();
     private List<CommentBO> commentBOList = new ArrayList<>();
-    private List<String> picList = new ArrayList<>();
+    private ArrayList<String> picList = new ArrayList<>();
     private int selectPosition;
     private int screenHeight;
     private int keyBoardHeight;
@@ -78,12 +80,15 @@ public class TestActivity extends BaseActivity {
     private int index = 0;
     private Timer timer;
     private boolean firstFlag = true;
+    private TextView percentTxt;
+    private int percent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         imageView = (ImageView) findViewById(R.id.img_test);
+        percentTxt = (TextView) findViewById(R.id.txt_percent);
 //        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
 //
 //        ImageLoader.getInstance().displayImage(url,imageView);
@@ -305,10 +310,15 @@ public class TestActivity extends BaseActivity {
             decrease();
             firstFlag = false;
         }
-        if (index == pics.length) {
+        percentTxt.setText(percent + "%");
+        if (percent < 100) {
+            percent++;
+            if (percent % (100 / pics.length) == 0) {
+                imageView.setImageResource(pics[index++]);
+            }
+        } else if (percent == 100) {
             MyUtil.showToast(getApplicationContext(), "抢购完成");
-        } else
-            imageView.setImageResource(pics[index++]);
+        }
     }
 
     Handler handler = new Handler() {
@@ -316,8 +326,15 @@ public class TestActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if (index > 0)
-                        imageView.setImageResource(pics[--index]);
+                    if (percent < 100) {
+                        percentTxt.setText(percent + "%");
+                        percent--;
+                        if (percent % (100 / pics.length) == 0) {
+                            if (index > 0)
+                                imageView.setImageResource(pics[--index]);
+                        }
+                    }
+
                     break;
             }
         }

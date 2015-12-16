@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.TestActivity"
+            android:name=".view.activity.SplashActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +72,9 @@
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />
         <activity android:name=".view.activity.pics.PhotoActivity" />
+
+
+        <activity android:name=".view.bigimage.ImagePagerActivity" />
 
         <service
             android:name=".service.Get_UserInfo_Service"

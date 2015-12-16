@@ -8,8 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/dp_8">
 
         <LinearLayout
             android:id="@+id/llayout_currCity"
@@ -26,7 +27,8 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="@color/themeRed"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
+
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -34,6 +36,15 @@
                 android:padding="5dp"
                 android:src="@drawable/ic_arrow_down" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/sp_20" />
 
         <RelativeLayout
             android:id="@+id/fragment_grab_frameLayout_inform"
@@ -45,15 +56,15 @@
 
             <TextView
                 android:id="@+id/txt_inform_count"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:background="@drawable/shape_round"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:background="@drawable/ic_inform_count"
                 android:gravity="center"
-                android:text="20"
+                android:text="3"
                 android:textColor="@color/white"
-                android:textSize="9sp"
+                android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -61,7 +72,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
-                android:padding="5dp"
+                android:padding="@dimen/dp_inform_padding"
                 android:src="@drawable/ic_inform" />
         </RelativeLayout>
     </RelativeLayout>
@@ -88,81 +99,91 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_ad" />
 
-                <RelativeLayout
-                    android:id="@+id/rlayout_grab_winner"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:visibility="visible">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                    <RelativeLayout
+                        android:id="@+id/rlayout_grab_winner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:visibility="visible">
 
-                        <RelativeLayout
-                            android:id="@+id/rlayout_grab_avatar"
-                            android:layout_width="55dp"
-                            android:layout_height="55dp"
-                            android:visibility="gone">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_60"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                            <com.poomoo.ohmygod.view.custom.RoundImageView
-                                android:id="@+id/img_grab_winner"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/ic_avatar" />
+                            <RelativeLayout
+                                android:id="@+id/rlayout_grab_avatar"
+                                android:layout_width="@dimen/dp_56"
+                                android:layout_height="@dimen/dp_56"
+                                android:visibility="gone">
 
-                            <TextView
-                                android:id="@+id/fragmetn_grab_txt_middle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="3dp"
-                                android:layout_centerInParent="true" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/fragmetn_grab_txt_middle"
-                                android:background="@drawable/ic_head_logo"
-                                android:gravity="center"
-                                android:paddingBottom="5dp">
+                                <com.poomoo.ohmygod.view.custom.RoundImageView
+                                    android:id="@+id/img_grab_winner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_avatar" />
 
                                 <TextView
+                                    android:id="@+id/fragmetn_grab_txt_middle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="3dp"
+                                    android:layout_centerInParent="true" />
+
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_below="@+id/fragmetn_grab_txt_middle"
+                                    android:background="@drawable/ic_head_logo"
                                     android:gravity="center"
-                                    android:text="@string/label_winner"
-                                    android:textColor="@color/white"
-                                    android:textSize="8sp" />
-                            </LinearLayout>
-                        </RelativeLayout>
+                                    android:paddingBottom="5dp">
 
-                        <com.poomoo.ohmygod.view.custom.UpMarqueeTextView
-                            android:id="@+id/txt_winnerInfo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ellipsize="marquee"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:gravity="center_vertical"
-                            android:singleLine="true"
-                            android:text=""
-                            android:textSize="16sp" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="@string/label_winner"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_8" />
+                                </LinearLayout>
+                            </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:text="获奖时间: 2015-11-11"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
-                    </LinearLayout>
+                            <com.poomoo.ohmygod.view.custom.UpMarqueeTextView
+                                android:id="@+id/txt_winnerInfo"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ellipsize="marquee"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textSize="@dimen/sp_16" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:text="获奖时间: 2015-11-11"
+                                android:textSize="@dimen/sp_16"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/llayout_remind"
@@ -171,7 +192,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bg_grab_tip_red"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:paddingBottom="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp">
@@ -187,9 +208,9 @@
                             android:paddingLeft="4dp"
                             android:text="@string/label_grab_tip"
                             android:textColor="@color/white"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/sp_16" />
                     </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
 
                 <com.poomoo.ohmygod.view.custom.NoScrollListView
                     android:id="@+id/list_grab"

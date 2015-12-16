@@ -17,6 +17,7 @@ import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.activity.BaseActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class PhotoActivity extends BaseActivity {
     public List<Bitmap> bmp = new ArrayList<>();
     public List<String> drr = new ArrayList<>();
     public List<String> del = new ArrayList<>();
+    public List<File> files = new ArrayList<>();
     public int max;
 
 
@@ -55,6 +57,7 @@ public class PhotoActivity extends BaseActivity {
                 if (listViews.size() == 1) {
                     Bimp.bmp.clear();
                     Bimp.drr.clear();
+                    Bimp.files.clear();
                     Bimp.max = 0;
                     FileUtils.deleteDir();
                     finish();
@@ -64,6 +67,7 @@ public class PhotoActivity extends BaseActivity {
                             drr.get(count).lastIndexOf("."));
                     bmp.remove(count);
                     drr.remove(count);
+                    files.remove(count);
                     del.add(newStr);
                     max--;
                     pager.removeAllViews();
@@ -73,6 +77,7 @@ public class PhotoActivity extends BaseActivity {
                     Bimp.bmp = bmp;
                     Bimp.drr = drr;
                     Bimp.max = max;
+                    Bimp.files = files;
                     for (int i = 0; i < del.size(); i++) {
                         FileUtils.delFile(del.get(i) + ".JPEG");
                     }

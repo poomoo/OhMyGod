@@ -10,7 +10,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
         android:id="@+id/rlayout_avatar"
@@ -20,10 +20,10 @@
         android:clickable="true"
         android:onClick="toAvatar"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:text="@string/label_avatar"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,12 +43,12 @@
 
             <com.poomoo.ohmygod.view.custom.RoundImageView
                 android:id="@+id/img_userInfo_head"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:src="@drawable/ic_avatar" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -60,7 +60,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="@dimen/dp_2" />
 
     <RelativeLayout
         android:id="@+id/rlayout_nickName"
@@ -70,17 +70,17 @@
         android:clickable="true"
         android:onClick="toNickName"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_nickName"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -92,15 +92,16 @@
 
             <TextView
                 android:id="@+id/txt_userInfo_nickName"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="衣衣"
+                android:singleLine="true"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -112,7 +113,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
         android:id="@+id/rlayout_gender"
@@ -122,17 +123,17 @@
         android:clickable="true"
         android:onClick="toGender"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_gender"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -144,15 +145,15 @@
 
             <TextView
                 android:id="@+id/txt_userInfo_gender"
-                android:layout_width="60dp"
+                android:layout_width="@dimen/dp_60"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="女"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -164,7 +165,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="@dimen/dp_2" />
 
     <RelativeLayout
         android:id="@+id/rlayout_age"
@@ -174,17 +175,17 @@
         android:clickable="true"
         android:onClick="toAge"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_age"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -196,15 +197,15 @@
 
             <TextView
                 android:id="@+id/txt_userInfo_age"
-                android:layout_width="60dp"
+                android:layout_width="@dimen/dp_60"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20岁"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -216,7 +217,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
         android:id="@+id/rlayout_celPhone"
@@ -227,17 +228,17 @@
         android:gravity="center_vertical"
         android:onClick="toCelPhone"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_celPhone"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -252,12 +253,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="14752854127"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -269,7 +270,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="@dimen/dp_2" />
 
     <RelativeLayout
         android:id="@+id/rlayout_idCardNum"
@@ -280,17 +281,17 @@
         android:gravity="center_vertical"
         android:onClick="toIdCardNum"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardNum"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -305,12 +306,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="522************135"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -322,7 +323,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="@dimen/dp_2" />
 
     <RelativeLayout
         android:id="@+id/rlayout_bankCard"
@@ -332,10 +333,10 @@
         android:clickable="true"
         android:onClick="toBankCard"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
@@ -343,7 +344,7 @@
             android:layout_centerVertical="true"
             android:text="@string/label_bankCard"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -358,12 +359,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="123"
+                android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="22sp" />
+                android:textSize="@dimen/sp_22" />
 
             <TextView
-                android:layout_width="20dp"
+                android:layout_width="@dimen/dp_20"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -377,7 +378,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
         android:id="@+id/rlayout_changePassWord"
@@ -387,10 +388,10 @@
         android:clickable="true"
         android:onClick="toChangePassWord"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
 
         <TextView
             android:layout_width="wrap_content"
@@ -398,7 +399,7 @@
             android:layout_centerVertical="true"
             android:text="@string/label_changePassWord"
             android:textColor="@color/themeGray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_22" />
 
         <ImageView
             android:layout_width="wrap_content"

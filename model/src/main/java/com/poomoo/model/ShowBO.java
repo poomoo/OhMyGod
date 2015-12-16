@@ -3,6 +3,7 @@
  */
 package com.poomoo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ShowBO {
     private String dynamicId;//--动态编号
     private String headPic;//--分享人头部图片
     private String nickName;//--分享人昵称
-    private List<String> picList;//--分享的图片集合
+    private ArrayList<String> picList;//--分享的图片集合
     private String title;//--活动标题
     private String userId;//--分享人编号
 
@@ -78,11 +79,11 @@ public class ShowBO {
         this.nickName = nickName;
     }
 
-    public List<String> getPicList() {
+    public ArrayList<String> getPicList() {
         return picList;
     }
 
-    public void setPicList(List<String> picList) {
+    public void setPicList(ArrayList<String> picList) {
         this.picList = picList;
     }
 

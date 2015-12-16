@@ -164,7 +164,6 @@ public class SlideShowView extends FrameLayout {
         @Override
         public Object instantiateItem(View container, int position) {
             ImageView imageView = imageViewsList.get(position);
-            LogUtils.i(TAG, "instantiateItem");
             imageLoader.displayImage(imageView.getTag() + "", imageView);
 
             ((ViewPager) container).addView(imageViewsList.get(position));

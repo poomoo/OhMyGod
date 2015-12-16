@@ -18,13 +18,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/dp_56"
             android:orientation="horizontal">
 
             <com.poomoo.ohmygod.view.custom.RoundImageView
                 android:id="@+id/img_show_avatar"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/dp_56"
+                android:layout_height="@dimen/dp_56"
                 android:src="@drawable/ic_avatar" />
 
             <LinearLayout
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="十年九梦你"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="2015-10-21 12：46：00"
                     android:textColor="@color/themeGray"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="货已经收到了，东西不错东西不错东西不错东东西不错东西不错"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:text="(第123期)电脑疯抢玩命中..."
                     android:textColor="@color/themeRed"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/sp_20" />
             </LinearLayout>
 
             <LinearLayout

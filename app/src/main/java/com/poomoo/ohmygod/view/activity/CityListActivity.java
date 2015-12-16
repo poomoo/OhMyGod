@@ -314,7 +314,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         for (int i = 0; i < len; i++) {
             city = city_lists.get(i);
 
-            if (city.getPinyin().contains(keyword) || city.getPinyin().contains(keyword.toUpperCase()))
+            if (city.getPinyin().contains(keyword) || city.getPinyin().contains(keyword.toUpperCase()) || city.getCityName().contains(keyword))
                 city_result.add(city);
         }
         Collections.sort(city_result, comparator);

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="8dp">
+        android:padding="@dimen/dp_8">
 
         <!--显示标题-->
         <TextView
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/title_signed_and_rebate"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/txt_withDrawDeposit"
@@ -32,7 +32,7 @@
             android:onClick="toDo"
             android:singleLine="true"
             android:text="@string/title_withdraw_deposit"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
     <ScrollView
@@ -68,14 +68,14 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_totalAmount"
                             android:textColor="@color/white"
-                            android:textSize="26sp" />
+                            android:textSize="@dimen/sp_26" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/label_supervision"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/txt_totalAmount"
@@ -83,8 +83,8 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
                             android:text="0"
-                            android:textColor="@color/themeRed"
-                            android:textSize="34sp" />
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_34" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_unRebateSum"
                             android:textColor="@color/themeRed"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/sp_18" />
 
                         <TextView
                             android:id="@+id/txt_useAmount"
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/themeRed"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/sp_18" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -137,7 +137,7 @@
                             android:gravity="center"
                             android:text="@string/label_unSign"
                             android:textColor="@color/white"
-                            android:textSize="22sp" />
+                            android:textSize="@dimen/sp_22" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/label_rebateSum"
                             android:textColor="@color/themeRed"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/sp_18" />
 
                         <TextView
                             android:id="@+id/txt_usedAmount"
@@ -161,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/themeRed"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/sp_18" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="2015年"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -222,7 +222,7 @@
                         android:layout_centerInParent="true"
                         android:paddingLeft="10dp"
                         android:text="12月"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="@string/label_rules"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/sp_18" />
 
                 <LinearLayout
                     android:id="@+id/llayout_signed_explain"
@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:text="@string/label_signRule"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/sp_18" />
 
                 </LinearLayout>
 
@@ -301,7 +301,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:text="@string/label_rebateRule"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/sp_18" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

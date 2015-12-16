@@ -146,6 +146,14 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 finish();
             }
         });
+        headerViewHolder.rightImg.setVisibility(View.VISIBLE);
+        headerViewHolder.rightImg.setImageResource(R.drawable.ic_winning_small);
+        headerViewHolder.rightImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(WinningRecordActivity.class);
+            }
+        });
     }
 
     private void getData() {

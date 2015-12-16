@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="8dp">
+        android:padding="@dimen/dp_8">
         <!--显示标题-->
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/title_show_and_share"
-            android:textSize="22sp" />
+            android:textSize="@dimen/sp_20" />
     </RelativeLayout>
 
     <include layout="@layout/layout_show" />

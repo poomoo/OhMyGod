@@ -93,11 +93,10 @@ public class AddPicsAdapter extends MyBaseAdapter {
                     } else {
                         try {
                             String path = Bimp.drr.get(Bimp.max);
-                            System.out.println(path);
                             Bitmap bm = Bimp.revitionImageSize(path);
                             Bimp.bmp.add(bm);
                             String newStr = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-                            FileUtils.saveBitmap(bm, "" + newStr);
+                            Bimp.files.add(FileUtils.saveBitmap(bm, "" + newStr));
                             Bimp.max += 1;
                             Message message = new Message();
                             message.what = 1;

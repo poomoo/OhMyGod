@@ -64,12 +64,12 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     private String title;
     private int activeId;
     private String content;
-    private String pictures;
+    private String pictures = "";
     private FileBO fileBO;
     private List<FileBO> fileBOList;
     private int index = 0;
     private File file;
-    private String image_capture_path;
+    private final String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "ohMyGod.temp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,18 +168,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     }
 
     public void photo() {
-        image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGod.temp";
         LogUtils.i(TAG, "image_capture_path:" + image_capture_path);
-//        String image_capture_path = Environment.getExternalStorageDirectory() + "/myimage/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
-//        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        file = new File(Environment.getExternalStorageDirectory() + "/myimage/",
-//                String.valueOf(System.currentTimeMillis()) + ".jpg");
-//        Bimp.files.add(file);
-//        path = file.getPath();
-//        Uri imageUri = Uri.fromFile(file);
-//        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//        startActivityForResult(openCameraIntent, TAKE_PICTURE);
-
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(image_capture_path)));
         startActivityForResult(intent, TAKE_PICTURE);
@@ -191,28 +180,13 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
         LogUtils.i(TAG, "onActivityResult--" + "requestCode:" + requestCode + "resultCode:" + resultCode);
         switch (requestCode) {
             case TAKE_PICTURE:
-                if (Bimp.drr.size() < 9 && resultCode == -1) {
-                    file = new File(image_capture_path);
-                    Bimp.files.add(file);
+                if (Bimp.drr.size() < 9 && resultCode == -1)
                     Bimp.drr.add(image_capture_path);
-                    Bimp.files.add(file);
-                }
+
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
-    //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (requestCode) {
-//            case TAKE_PICTURE:
-//                if (Bimp.drr.size() < 9 && resultCode == -1) {
-//                    Bimp.drr.add(path);
-//                    Bimp.files.add(file);
-//                }
-//                break;
-//        }
-//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -247,6 +221,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 fileBO = new FileBO();
                 fileBO.setType("4");
                 fileBO.setImgFile(Bimp.files.get(i));
+                LogUtils.i(TAG, "i:" + i + "file:" + Bimp.files.get(i));
                 fileBOList.add(fileBO);
             }
             showProgressDialog("上传中...");
@@ -254,9 +229,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 uploadPics();
             else
                 putShow();
-
         }
-
     }
 
     public void putShow() {
@@ -272,6 +245,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), message);
+                finish();
             }
         });
     }
@@ -284,7 +258,10 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 try {
                     result = new JSONObject(data.getJsonData().toString());
                     String url = result.getString("picUrl");
-                    pictures += url + ";";
+                    if (TextUtils.isEmpty(pictures))
+                        pictures = url + ";";
+                    else
+                        pictures += url + ";";
                     Message message = new Message();
                     message.what = 1;
                     myHandler.sendMessage(message);

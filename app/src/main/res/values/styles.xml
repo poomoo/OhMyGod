@@ -20,7 +20,7 @@
     <style name="myButton" parent="android:Widget.Button">
         <item name="android:background">@drawable/selector_grab_button_open_activity</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/sp_22</item>
         <item name="android:gravity">center</item>
     </style>
 </resources>

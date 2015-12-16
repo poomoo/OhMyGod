@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.provider.CalendarContract;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -58,9 +60,16 @@ public class TimeCountDownUtil extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
         this.millisUntilFinished = millisUntilFinished;
         Spanned spanned = dealTime(millisUntilFinished / 1000);
+        SpannableString ss;
+        ss = new SpannableString("倒计时：" + spanned);
+        //设置字体颜色
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), 0,
+                4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FCE023")), 4,
+                4 + spanned.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         if (isList)
             for (TextView textView : textViewList)
-                textView.setText("开抢倒计时：" + spanned);
+                textView.setText(ss);
         else {
             if (view instanceof Button) {
                 view.setClickable(false);// 设置不能点击
@@ -73,7 +82,7 @@ public class TimeCountDownUtil extends CountDownTimer {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
                 } else {
-                    ((TextView) view).setText("开抢倒计时：" + spanned);
+                    ((TextView) view).setText(ss);
                 }
 
             }

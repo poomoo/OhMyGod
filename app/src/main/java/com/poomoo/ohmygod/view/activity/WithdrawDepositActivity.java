@@ -143,6 +143,11 @@ public class WithdrawDepositActivity extends BaseActivity {
 //            openActivity(EditPersonalInformationActivity.class);
 //        } else
 //            queryFee();
+        if (TextUtils.isEmpty(application.getBankCardNum())) {
+            MyUtil.showToast(getApplicationContext(), "请绑定银行卡");
+            openActivity(ChangeBankCardNumActivity.class);
+            return;
+        }
         getUserInfoData();
     }
 
@@ -158,6 +163,7 @@ public class WithdrawDepositActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 UserBO userBO = (UserBO) data.getObj();
                 if (TextUtils.isEmpty(userBO.getRealNameAuth()) || !userBO.getRealNameAuth().equals("1")) {
+                    closeProgressDialog();
                     MyUtil.showToast(getApplicationContext(), "请进行实名认证");
                     openActivity(EditPersonalInformationActivity.class);
                 } else

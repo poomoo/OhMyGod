@@ -35,7 +35,7 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
     public Map<String, String> map = new HashMap<>();
     public Map<String, File> files = new HashMap<>();
     private Bitmap bitmap;
-    private File file;
+//    private File file;
     private BitmapCache cache;
     private Handler mHandler;
     private int selectTotal = 0;
@@ -120,8 +120,8 @@ public class ImageGridAdapter extends MyBaseAdapter<ImageItem> {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        file = FileUtils.saveBitmapByPath(bitmap, path);
-                        files.put(path, file);
+//                        file = FileUtils.saveBitmapByPath(bitmap, path);
+//                        files.put(path, file);
 
                     } else if (!item.isSelected) {
                         holder.selected.setImageResource(-1);

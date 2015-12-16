@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
@@ -51,7 +52,13 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         winningRecordsBO = itemList.get(position);
-        viewHolder.countDownTxt.setText("测试数据");
+        if (winningRecordsBO.getStatus().equals("0"))
+            viewHolder.countDownTxt.setText("未开启");
+        else if (winningRecordsBO.getStatus().equals("1"))
+            viewHolder.countDownTxt.setText("正在进行");
+        else if (winningRecordsBO.getStatus().equals("2"))
+            viewHolder.countDownTxt.setText("已结束");
+        viewHolder.countDownTxt.setTextColor(Color.parseColor("#FFFFFF"));
         viewHolder.labelTxt.setVisibility(View.GONE);
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
@@ -61,7 +68,7 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
-        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg,defaultOptions);
+        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg, defaultOptions);
 //        viewHolder.rlayout.setT   ag(winningRecordsBO.getPicture());
 
 //        ImageLoader.getInstance().loadImage(winningRecordsBO.getPicture(), new SimpleImageLoadingListener() {

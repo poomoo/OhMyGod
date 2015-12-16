@@ -23,7 +23,7 @@
     <string name="title_show_and_share">晒单分享</string>
     <string name="title_bucket">相册</string>
     <string name="title_my_withdraw_deposit">我的提现</string>
-    <string name="title_withdraw_deposit">提现</string>
+    <string name="title_withdraw_deposit">立即提现</string>
     <string name="title_withdraw_deposit_help">提现帮助</string>
     <string name="title_verify_phone_num">验证手机号</string>
     <string name="title_withdraw_deposit_details">提现详情</string>
@@ -57,7 +57,7 @@
     <string name="label_grab_onclick">猛戳开抢 让进度条充满能量</string>
     <string name="label_grab_start_date">开抢时间：</string>
     <string name="label_countDown">倒计时：</string>
-    <string name="label_grab_countDown">开抢倒计时：</string>
+    <string name="label_grab_countDown">倒计时：</string>
     <string name="label_grab_value">价值　　　</string>
     <!--抢-->
 
@@ -104,8 +104,8 @@
     <!--年月-->
 
     <!--中奖记录-->
-    <string name="label_winning_dateTime">"获奖时间 : "</string>
-    <string name="label_winning_endTime">"领取截止日期 : "</string>
+    <string name="label_winning_dateTime">"　获奖时间 : 　　"</string>
+    <string name="label_winning_endTime">"　领取截止日期 : "</string>
     <string name="label_winning_address">"领取地点 : "</string>
     <string name="label_winning_requirement">"领取要求 : "</string>
     <!--中奖记录-->
@@ -298,4 +298,6 @@
     <!--进度会话框-->
     <string name="dialog_message">请稍后...</string>
     <!--进度会话框-->
+
+    <string name="viewpager_indicator">%1$d/%2$d</string>
 </resources>

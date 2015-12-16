@@ -4,6 +4,7 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +26,10 @@ import java.util.List;
  * 日期: 2015/11/20 10:51.
  */
 public class PicsGridAdapter extends BaseAdapter {
+    private String TAG = "PicsGridAdapter";
     protected Context context;
     protected LayoutInflater inflater;
-    protected List<String> list = new ArrayList<>();
+    protected ArrayList<String> list = new ArrayList<>();
 
     public PicsGridAdapter(Context context) {
         this.context = context;
@@ -46,7 +51,7 @@ public class PicsGridAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setItems(List<String> itemList) {
+    public void setItems(ArrayList<String> itemList) {
         this.list = itemList;
         notifyDataSetChanged();
     }
@@ -70,11 +75,37 @@ public class PicsGridAdapter extends BaseAdapter {
         if (viewHolder.imageView.getTag() != null && viewHolder.imageView.getTag().equals(url))
             ImageLoader.getInstance().displayImage(url, viewHolder.imageView);
 
+        viewHolder.imageView.setOnClickListener(new imgClickListener(position, list));
+
         return convertView;
     }
 
     class ViewHolder {
         public ImageView imageView;
+    }
+
+    public class imgClickListener implements View.OnClickListener {
+        int position;
+        ArrayList<String> list = new ArrayList<>();
+
+        public imgClickListener(int position, ArrayList<String> list) {
+            this.position = position;
+            this.list = list;
+        }
+
+        @Override
+        public void onClick(View v) {
+            imageBrowse(position, list);
+        }
+    }
+
+    protected void imageBrowse(int position, ArrayList<String> urls2) {
+        LogUtils.i(TAG, "position:" + position + " size:" + urls2.size());
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        context.startActivity(intent);
     }
 
 }

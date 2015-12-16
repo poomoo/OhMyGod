@@ -13,10 +13,11 @@
     <RadioGroup
         android:id="@+id/group_main"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="5dp">
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp">
 
         <RadioButton
             android:id="@+id/activity_main_radioButton_grab"
@@ -31,7 +32,7 @@
             android:singleLine="true"
             android:text="@string/tab_grab"
             android:textColor="@drawable/selector_navigation_text_background"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_navigation" />
 
         <RadioButton
             android:id="@+id/activity_main_radioButton_rebate"
@@ -46,7 +47,7 @@
             android:singleLine="true"
             android:text="@string/tab_rebate"
             android:textColor="@drawable/selector_navigation_text_background"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_navigation" />
 
         <RadioButton
             android:id="@+id/activity_main_radioButton_show"
@@ -61,7 +62,7 @@
             android:singleLine="true"
             android:text="@string/tab_show"
             android:textColor="@drawable/selector_navigation_text_background"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_navigation" />
 
         <RadioButton
             android:id="@+id/activity_main_radioButton_my"
@@ -76,6 +77,6 @@
             android:singleLine="true"
             android:text="@string/tab_my"
             android:textColor="@drawable/selector_navigation_text_background"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_navigation" />
     </RadioGroup>
 </LinearLayout>
