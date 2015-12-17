@@ -153,6 +153,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 case 1:
                     SpannableString spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName());
                     marqueeTextView.setText(spannableString + "");
+                    avatarImg.setImageResource(R.drawable.ic_avatar);
                     LogUtils.i(TAG, "head:" + winnerBOList.get(index).getHeadPic());
                     DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                             .showImageForEmptyUri(R.drawable.ic_avatar) //

@@ -107,7 +107,7 @@
 
     <!--中奖记录-->
     <string name="label_winning_dateTime">"　获奖时间 : 　　"</string>
-    <string name="label_winning_endTime">"　领取截止日期 : "</string>
+    <string name="label_winning_endTime">领取截止日期 : </string>
     <string name="label_winning_address">"领取地点 : "</string>
     <string name="label_winning_requirement">"领取要求 : "</string>
     <!--中奖记录-->

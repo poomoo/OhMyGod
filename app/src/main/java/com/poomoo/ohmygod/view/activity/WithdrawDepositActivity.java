@@ -137,7 +137,6 @@ public class WithdrawDepositActivity extends BaseActivity {
      * @param view
      */
     public void toWithdrawDeposit(View view) {
-        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
         if (TextUtils.isEmpty(application.getRealName()) && TextUtils.isEmpty(application.getIdCardNum())) {
             MyUtil.showToast(getApplicationContext(), "请完善个人资料");
             openActivity(EditPersonalInformationActivity.class);

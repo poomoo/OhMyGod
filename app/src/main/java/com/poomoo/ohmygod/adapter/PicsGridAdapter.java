@@ -56,32 +56,21 @@ public class PicsGridAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    //item_grid_pics  img_grid
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_grid_pics, null);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.img_grid);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+        View view = View.inflate(context, R.layout.item_grid_pics, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.img_grid);
         String url = list.get(position) + "";
         LogUtils.i("position", "gridview url:" + url);
-        viewHolder.imageView.setTag(url);
+//        viewHolder.imageView.setTag(url);
         // 通过 tag 来防止图片错位
-        if (viewHolder.imageView.getTag() != null && viewHolder.imageView.getTag().equals(url))
-            ImageLoader.getInstance().displayImage(url, viewHolder.imageView);
+//        if (viewHolder.imageView.getTag() != null && viewHolder.imageView.getTag().equals(url))
+        ImageLoader.getInstance().displayImage(url, imageView);
 
-        viewHolder.imageView.setOnClickListener(new imgClickListener(position, list));
+        imageView.setOnClickListener(new imgClickListener(position, list));
 
-        return convertView;
-    }
-
-    class ViewHolder {
-        public ImageView imageView;
+        return view;
     }
 
     public class imgClickListener implements View.OnClickListener {

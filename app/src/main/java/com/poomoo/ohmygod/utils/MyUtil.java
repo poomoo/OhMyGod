@@ -26,6 +26,7 @@ import org.litepal.crud.DataSupport;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -264,5 +265,31 @@ public class MyUtil {
     public static ArrayList<CityInfo> getCityList() {
         List<CityInfo> cityList = DataSupport.findAll(CityInfo.class);
         return (ArrayList<CityInfo>) cityList;
+    }
+
+    /**
+     * double相加
+     *
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public static double add(double v1, double v2) {
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        return b1.add(b2).doubleValue();
+    }
+
+    /**
+     * double相减
+     *
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public static double sub(double v1, double v2) {
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        return b1.subtract(b2).doubleValue();
     }
 }

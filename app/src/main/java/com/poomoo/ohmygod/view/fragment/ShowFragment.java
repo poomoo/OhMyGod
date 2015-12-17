@@ -345,6 +345,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                 LogUtils.i(TAG, data.getObjList().toString());
                 closeProgressDialog();
                 // 更新完后调用该方法结束刷新
+                showBOList = new ArrayList<>();
                 if (isLoad) {
                     refreshLayout.setLoading(false);
                     int len = data.getObjList().size();
@@ -354,11 +355,9 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                         currPage++;
                         adapter.addItems(showBOList);
                     }
-
                 } else {
                     currPage++;
                     refreshLayout.setRefreshing(false);
-                    showBOList = new ArrayList<>();
                     showBOList = data.getObjList();
                     if (showBOList.size() > 0)
                         adapter.setItems(showBOList);

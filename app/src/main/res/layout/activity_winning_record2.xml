@@ -9,14 +9,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/dp_10" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/dp_10">
 
         <TextView
             android:id="@+id/txt_getRewardTitle"
@@ -24,66 +24,66 @@
             android:layout_height="wrap_content"
             android:text="悉尼豪华别墅"
             android:textColor="@color/themeRed"
-            android:textSize="20dp" />
+            android:textSize="@dimen/sp_20" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="15dp">
+            android:paddingTop="@dimen/dp_8">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_winning_address"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
 
             <TextView
                 android:id="@+id/txt_getRewardAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="观山湖区世纪城"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="5dp">
+            android:paddingTop="@dimen/dp_8">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_winning_endTime"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
 
             <TextView
                 android:id="@+id/txt_getRewardEndDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015年8月5-2015年8月10日"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="5dp">
+            android:paddingTop="@dimen/dp_8">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_winning_requirement"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
 
             <TextView
                 android:id="@+id/txt_getRewardRequirement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="携带本人身份证至活动领取地点领取已中奖商品"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
     </LinearLayout>
 
@@ -92,7 +92,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="@dimen/dp_10">
 
         <Button
             android:id="@+id/btn_show"
@@ -106,7 +106,7 @@
             android:text="@string/btn_show" />
 
         <TextView
-            android:layout_width="10dp"
+            android:layout_width="@dimen/dp_10"
             android:layout_height="wrap_content" />
 
         <Button

@@ -107,6 +107,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
                 LogUtils.i(TAG, "中奖记录:" + isLoad + "list:" + data.getObjList().toString());
                 closeProgressDialog();
                 // 更新完后调用该方法结束刷新
+                winningBOList = new ArrayList<>();
                 if (isLoad) {
                     refreshLayout.setLoading(false);
                     int len = data.getObjList().size();
@@ -120,7 +121,6 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
                 } else {
                     refreshLayout.setRefreshing(false);
                     currPage++;
-                    winningBOList = new ArrayList<>();
                     winningBOList = data.getObjList();
                     adapter.setItems(winningBOList);
                     LogUtils.i(TAG, "中奖记录:" + winningBOList);

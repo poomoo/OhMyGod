@@ -208,7 +208,7 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toIdCardNum(View view) {
-        openActivity(EditPersonalInformationActivity.class);
+        openActivity(ChangeIdCardInfoActivity.class);
     }
 
     /**

@@ -8,189 +8,242 @@
     <include layout="@layout/pub_layout_title_bar" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.poomoo.ohmygod.view.custom.SlideShowView
-                android:id="@+id/flipper_commodity"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_160" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/txt_commodityName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="悉尼花园景观别墅 Camperdown"
-                    android:textSize="@dimen/sp_18" />
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <com.poomoo.ohmygod.view.custom.SlideShowView
+                        android:id="@+id/flipper_commodity"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_160" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10">
+
+                        <TextView
+                            android:id="@+id/txt_commodityName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="悉尼花园景观别墅 Camperdown"
+                            android:textSize="@dimen/sp_18" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_grab_value"
+                                android:textSize="@dimen/sp_18" />
+
+                            <TextView
+                                android:id="@+id/txt_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥300.00"
+                                android:textSize="@dimen/sp_18" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_grab_start_date"
+                                android:textSize="@dimen/sp_18" />
+
+                            <TextView
+                                android:id="@+id/txt_startDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2015年10月10日15点整"
+                                android:textSize="@dimen/sp_18" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llayout_head_timeCountDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_countDown"
+                                android:textColor="@color/themeRed"
+                                android:textSize="@dimen/sp_18" />
+
+                            <TextView
+                                android:id="@+id/txt_head_timeCountDown"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2天5小时29分30秒"
+                                android:textColor="@color/themeRed"
+                                android:textSize="@dimen/sp_18" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/divider"
+                        android:padding="@dimen/dp_10"
+                        android:text="商品详情"
+                        android:textSize="@dimen/sp_18"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10">
+
+                        <WebView
+                            android:id="@+id/web_commodity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="商品介绍商品介绍商品介绍商品介绍商品介绍"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="开启活动声明"
+                            android:textSize="@dimen/sp_18"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                        <WebView
+                            android:id="@+id/web_activity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_20" />
+
+                    <TextView
+                        android:id="@+id/txt_openActivity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_grab_value"
+                        android:layout_gravity="center"
+                        android:background="@drawable/selector_grab_button_open_activity"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="toOpen"
+                        android:text="@string/btn_grab"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_18" />
 
                     <TextView
-                        android:id="@+id/txt_price"
+                        android:id="@+id/txt_middle_timeCountDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥300.00"
-                        android:textSize="@dimen/sp_18" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_grab_start_date"
-                        android:textSize="@dimen/sp_18" />
-
-                    <TextView
-                        android:id="@+id/txt_startDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2015年10月10日15点整"
-                        android:textSize="@dimen/sp_18" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llayout_head_timeCountDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_countDown"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_open_activity_pressed"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="toOpen"
+                        android:text="@string/btn_grab"
                         android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/sp_18"
+                        android:visibility="gone" />
 
                     <TextView
-                        android:id="@+id/txt_head_timeCountDown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2天5小时29分30秒"
-                        android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_20" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/divider"
-                android:padding="10dp"
-                android:text="商品详情"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <WebView
-                    android:id="@+id/web_commodity"
+                <LinearLayout
+                    android:id="@+id/llayout_anim"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:background="#99000000"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="商品介绍商品介绍商品介绍商品介绍商品介绍"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_30">
 
+                        <ImageView
+                            android:id="@+id/img_anim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/house1" />
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="开启活动声明"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/txt_percent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_20" />
 
-                <WebView
-                    android:id="@+id/web_activity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明活动声明"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <TextView
-                android:id="@+id/txt_openActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/selector_grab_button_open_activity"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="toOpen"
-                android:text="@string/btn_grab"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/txt_middle_timeCountDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_open_activity_pressed"
-                android:clickable="true"
-                android:gravity="center"
-                android:onClick="toOpen"
-                android:text="@string/btn_grab"
-                android:textColor="@color/themeRed"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_20" />
+                </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/llayout_grab_bottom"
@@ -199,13 +252,14 @@
                 android:background="@color/bg_grab"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="30dp"
-                android:paddingTop="30dp">
+                android:paddingBottom="@dimen/dp_30"
+                android:paddingTop="@dimen/dp_30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -227,9 +281,6 @@
                         android:layout_weight="1" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
 
                 <Button
                     android:id="@+id/btn_grab"
@@ -241,18 +292,18 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="@dimen/dp_30" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_grab_onclick"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="@dimen/dp_10" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -264,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_grab_start_date"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/sp_16" />
 
                     <TextView
                         android:id="@+id/txt_foot_startDate"
@@ -272,12 +323,12 @@
                         android:layout_height="wrap_content"
                         android:text="2015年10月25日14点2分4秒"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/sp_16" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="@dimen/dp_10" />
 
                 <LinearLayout
                     android:id="@+id/llayout_foot_timeCountDown"
@@ -290,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/label_countDown"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
                         android:id="@+id/txt_foot_timeCountDown"
@@ -298,7 +349,7 @@
                         android:layout_height="wrap_content"
                         android:text="2天5小时57分21秒"
                         android:textColor="@color/themeRed"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/sp_14" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -9,7 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="5dp" />
+        android:layout_height="@dimen/dp_8" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,28 +19,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/dp_10">
 
             <TextView
                 android:id="@+id/txt_show_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="10dp"
+                android:padding="@dimen/dp_10"
                 android:text="(第123期)活动标题"
                 android:textColor="@color/themeRed"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp_22" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="2dp" />
+                android:layout_height="@dimen/dp_2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/dp_10">
 
                 <EditText
                     android:id="@+id/edt_show_content"
@@ -49,21 +49,22 @@
                     android:background="@null"
                     android:gravity="top"
                     android:hint="@string/hint_show_content"
-                    android:lines="8" />
+                    android:lines="8"
+                    android:textSize="@dimen/sp_20" />
 
                 <com.poomoo.ohmygod.view.custom.NoScrollGridView
                     android:id="@+id/grid_add_pics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:horizontalSpacing="2dp"
+                    android:horizontalSpacing="@dimen/dp_2"
                     android:numColumns="3"
                     android:stretchMode="columnWidth"
-                    android:verticalSpacing="2dp" />
+                    android:verticalSpacing="@dimen/dp_2" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:layout_height="@dimen/dp_8" />
 
             <Button
                 style="@style/myButton"

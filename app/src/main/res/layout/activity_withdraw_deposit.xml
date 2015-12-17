@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="@dimen/dp_30">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="30dp">
+            android:paddingTop="@dimen/dp_30">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_account_balance"
-                android:textSize="22sp" />
+                android:textSize="@dimen/sp_22" />
 
             <TextView
                 android:id="@+id/txt_account_balance"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="￥0"
                 android:textColor="@color/themeRed"
-                android:textSize="22sp" />
+                android:textSize="@dimen/sp_22" />
         </LinearLayout>
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="@dimen/dp_20">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +62,8 @@
                 android:background="@null"
                 android:hint="@string/hint_input_money"
                 android:inputType="numberDecimal"
-                android:padding="10dp" />
+                android:padding="@dimen/dp_10"
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/txt_balanceIsEnough"
@@ -72,13 +73,13 @@
                 android:gravity="center"
                 android:text="余额不足"
                 android:textColor="@color/themeRed"
-                android:textSize="10sp"
+                android:textSize="@dimen/sp_10"
                 android:visibility="gone" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="@dimen/dp_20" />
 
         <Button
             android:id="@+id/btn_withDrawDeposit"
@@ -94,7 +95,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="bottom"
-        android:paddingBottom="10dp">
+        android:paddingBottom="@dimen/dp_10">
 
         <TextView
             android:id="@+id/txt_help"
@@ -104,6 +105,6 @@
             android:gravity="center"
             android:onClick="toHelp"
             android:text="@string/label_help"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 </LinearLayout>

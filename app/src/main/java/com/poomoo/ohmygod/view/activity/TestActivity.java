@@ -73,10 +73,6 @@ public class TestActivity extends BaseActivity {
 
     private ImageView imageView;
     private static final String url = "http://zgqg.91jiaoyou.cn/zgqg/upload/active/1449467937354.jpg";
-    private static final int[] pics = {R.drawable.anim1, R.drawable.anim2, R.drawable.anim3, R.drawable.anim4, R.drawable.anim5,
-            R.drawable.anim6, R.drawable.anim7, R.drawable.anim8, R.drawable.anim9,
-            R.drawable.anim10, R.drawable.anim11, R.drawable.anim12, R.drawable.anim13,
-            R.drawable.anim14, R.drawable.anim15, R.drawable.anim16, R.drawable.anim17, R.drawable.anim18, R.drawable.anim19,};
     private int index = 0;
     private Timer timer;
     private boolean firstFlag = true;
@@ -313,8 +309,8 @@ public class TestActivity extends BaseActivity {
         percentTxt.setText(percent + "%");
         if (percent < 100) {
             percent++;
-            if (percent % (100 / pics.length) == 0) {
-                imageView.setImageResource(pics[index++]);
+            if (percent % (100 / MyConfig.house.length) == 0) {
+                imageView.setImageResource(MyConfig.house[index++]);
             }
         } else if (percent == 100) {
             MyUtil.showToast(getApplicationContext(), "抢购完成");
@@ -329,9 +325,9 @@ public class TestActivity extends BaseActivity {
                     if (percent < 100) {
                         percentTxt.setText(percent + "%");
                         percent--;
-                        if (percent % (100 / pics.length) == 0) {
+                        if (percent % (100 / MyConfig.house.length) == 0) {
                             if (index > 0)
-                                imageView.setImageResource(pics[--index]);
+                                imageView.setImageResource(MyConfig.house[--index]);
                         }
                     }
 

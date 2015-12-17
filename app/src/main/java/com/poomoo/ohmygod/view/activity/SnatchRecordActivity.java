@@ -79,6 +79,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 // 更新完后调用该方法结束刷新
+                recordsBOList = new ArrayList<>();
                 if (isLoad) {
                     refreshLayout.setLoading(false);
                     int len = data.getObjList().size();
@@ -92,7 +93,6 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
                 } else {
                     refreshLayout.setRefreshing(false);
                     currPage++;
-                    recordsBOList = new ArrayList<>();
                     recordsBOList = data.getObjList();
                     adapter.setItems(recordsBOList);
                 }

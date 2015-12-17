@@ -163,8 +163,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getObjList().toString());
                 closeProgressDialog();
-                currPage++;
-                LogUtils.i(TAG, "isLoad:" + isLoad);
+                showBOList = new ArrayList<>();
                 // 更新完后调用该方法结束刷新
                 if (isLoad) {
                     LogUtils.i(TAG, "加载");
@@ -172,8 +171,11 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                     int len = data.getObjList().size();
                     for (int i = 0; i < len; i++)
                         showBOList.add((ShowBO) data.getObjList().get(i));
-                    if (len > 0)
+                    if (len > 0) {
+                        currPage++;
                         adapter.addItems(showBOList);
+                    }
+
                 } else {
                     LogUtils.i(TAG, "刷新");
                     currPage++;
