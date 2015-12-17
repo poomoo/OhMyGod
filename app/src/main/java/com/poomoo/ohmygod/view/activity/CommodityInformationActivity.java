@@ -282,14 +282,14 @@ public class CommodityInformationActivity extends BaseActivity {
             LogUtils.i(TAG, "step:" + step);
             firstFlag = false;
         }
-        LogUtils.i(TAG, "点击:" + percent);
+        LogUtils.i(TAG, "点击:" + percent + " index:" + index);
         if (percent == 0) {
             LogUtils.i(TAG, "点击0:" + percent);
             timer.cancel();
             decrease();
             percentTxt.setText(0 + "%");
         }
-        LogUtils.i(TAG,"MyUtil.sub(percent, 100):"+MyUtil.sub(percent, 100));
+        LogUtils.i(TAG, "MyUtil.sub(percent, 100):" + MyUtil.sub(percent, 100));
         if (MyUtil.sub(percent, 100) < 0) {
             LogUtils.i(TAG, "抢购未完成");
             percent = MyUtil.add(percent, step);
@@ -325,9 +325,9 @@ public class CommodityInformationActivity extends BaseActivity {
                         if (percent > 0.00)
                             percent = MyUtil.sub(percent, step);
 
-                        if (index > 0)
+                        if (index > 0) {
                             animImg.setImageResource(MyConfig.house[index--]);
-                        else
+                        } else
                             animImg.setImageResource(MyConfig.house[index]);
                     } else if (percent >= 100) {
                         percentTxt.setText(100 + "%");
