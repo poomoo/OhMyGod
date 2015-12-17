@@ -16,7 +16,14 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 public class SplashActivity extends BaseActivity {
+    private static String DB_PATH = "/data/data/com.poomoo.ohmygod/databases/";
+    private static String DB_NAME = "area.db";
+
     private final int SPLASH_DISPLAY_LENGHT = 3000;
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
@@ -27,6 +34,8 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // 导入数据库文件
+        importDB();
         mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         initLocation();
@@ -79,6 +88,36 @@ public class SplashActivity extends BaseActivity {
             } else
                 MyUtil.showToast(getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(myListener);
+        }
+    }
+
+    private void importDB() {
+        // TODO 自动生成的方法存根
+        try {
+            // 获得.db文件的绝对路径
+            String databaseFilename = DB_PATH + DB_NAME;
+            File dir = new File(DB_PATH);
+            // 如果目录不存在，创建这个目录
+            if (!dir.exists())
+                dir.mkdir();
+            boolean isExists = (new File(databaseFilename)).exists();
+            // 如果在目录中不存在 .db文件，则从res\assets目录中复制这个文件到该目录
+            if (!isExists) {
+                LogUtils.i(TAG, "文件不存在");
+                // 获得封装.db文件的InputStream对象
+                InputStream is = getAssets().open(DB_NAME);
+                FileOutputStream fos = new FileOutputStream(databaseFilename);
+                byte[] buffer = new byte[7168];
+                int count = 0;
+                // 开始复制.db文件
+                while ((count = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, count);
+                }
+                fos.close();
+                is.close();
+                LogUtils.i(TAG, "导入数据库文件结束");
+            }
+        } catch (Exception e) {
         }
     }
 }

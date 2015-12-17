@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+
+    <dbname value="area" />
+
+    <version value="1" />
+
+    <list>
+
+        <mapping class="com.poomoo.ohmygod.database.ProvinceInfo" />
+
+        <mapping class="com.poomoo.ohmygod.database.CityInfo" />
+
+        <mapping class="com.poomoo.ohmygod.database.AreaInfo" />
+    </list>
+
+</litepal>

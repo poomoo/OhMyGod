@@ -96,29 +96,28 @@
 
         <Button
             android:id="@+id/btn_show"
+            style="@style/myButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/selector_grab_button_open_activity"
             android:gravity="center"
             android:onClick="toShow"
-            android:text="@string/btn_show"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:text="@string/btn_show" />
 
         <TextView
             android:layout_width="10dp"
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btn_completeInfo"
+            style="@style/myButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/selector_grab_button_open_activity"
             android:gravity="center"
             android:onClick="toCompletedUserInfo"
-            android:text="@string/btn_complete_information"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:text="@string/btn_complete_information" />
     </LinearLayout>
 </LinearLayout>

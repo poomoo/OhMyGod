@@ -1,6 +1,5 @@
 package com.poomoo.ohmygod.application;
 
-import android.app.Application;
 import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -10,12 +9,14 @@ import com.poomoo.core.AppAction;
 import com.poomoo.core.AppActionImpl;
 import com.poomoo.ohmygod.R;
 
+import org.litepal.LitePalApplication;
+
 /**
  * 自定义Application
  * 作者: 李苜菲
  * 日期: 2015/11/11 11:26.
  */
-public class MyApplication extends Application {
+public class MyApplication extends LitePalApplication {
     private AppAction appAction;
     // 用户信息
     private String userId = "";

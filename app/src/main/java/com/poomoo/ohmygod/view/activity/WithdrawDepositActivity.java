@@ -137,45 +137,47 @@ public class WithdrawDepositActivity extends BaseActivity {
      * @param view
      */
     public void toWithdrawDeposit(View view) {
-//        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
-//        if (TextUtils.isEmpty(application.getRealNameAuth())) {
-//            MyUtil.showToast(getApplicationContext(), "请进行实名认证");
-//            openActivity(EditPersonalInformationActivity.class);
-//        } else
-//            queryFee();
+        LogUtils.i(TAG, "RealNameAuth:" + application.getRealNameAuth());
+        if (TextUtils.isEmpty(application.getRealName()) && TextUtils.isEmpty(application.getIdCardNum())) {
+            MyUtil.showToast(getApplicationContext(), "请完善个人资料");
+            openActivity(EditPersonalInformationActivity.class);
+            return;
+        }
+
         if (TextUtils.isEmpty(application.getBankCardNum())) {
             MyUtil.showToast(getApplicationContext(), "请绑定银行卡");
             openActivity(ChangeBankCardNumActivity.class);
             return;
         }
-        getUserInfoData();
+
+        queryFee();
     }
 
-    private void getUserInfoData() {
-        showProgressDialog("请稍后...");
-        Map<String, String> data = new HashMap<>();
-        data.put("bizName", "10000");
-        data.put("method", "10013");
-        data.put("userId", application.getUserId());
-
-        appAction.getUserInfo(application.getUserId(), new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                UserBO userBO = (UserBO) data.getObj();
-                if (TextUtils.isEmpty(userBO.getRealNameAuth()) || !userBO.getRealNameAuth().equals("1")) {
-                    closeProgressDialog();
-                    MyUtil.showToast(getApplicationContext(), "请进行实名认证");
-                    openActivity(EditPersonalInformationActivity.class);
-                } else
-                    queryFee();
-            }
-
-            @Override
-            public void onFailure(int errorCode, String message) {
-
-            }
-        });
-    }
+//    private void getUserInfoData() {
+//        showProgressDialog("请稍后...");
+//        Map<String, String> data = new HashMap<>();
+//        data.put("bizName", "10000");
+//        data.put("method", "10013");
+//        data.put("userId", application.getUserId());
+//
+//        appAction.getUserInfo(application.getUserId(), new ActionCallbackListener() {
+//            @Override
+//            public void onSuccess(ResponseBO data) {
+//                UserBO userBO = (UserBO) data.getObj();
+//                if (TextUtils.isEmpty(userBO.getRealNameAuth()) || !userBO.getRealNameAuth().equals("1")) {
+//                    closeProgressDialog();
+//                    MyUtil.showToast(getApplicationContext(), "请进行实名认证");
+//                    openActivity(EditPersonalInformationActivity.class);
+//                } else
+//                    queryFee();
+//            }
+//
+//            @Override
+//            public void onFailure(int errorCode, String message) {
+//
+//            }
+//        });
+//    }
 
 
     private void queryFee() {

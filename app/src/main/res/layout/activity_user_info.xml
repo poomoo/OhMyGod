@@ -62,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlayout_nickName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,25 +76,27 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/label_nickName"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_10">
 
             <TextView
                 android:id="@+id/txt_userInfo_nickName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/themeGray"
@@ -109,13 +111,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlayout_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,25 +131,26 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/label_gender"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_userInfo_gender"
-                android:layout_width="@dimen/dp_60"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_20" />
@@ -161,13 +164,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlayout_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -181,25 +184,26 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/label_age"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_userInfo_age"
-                android:layout_width="@dimen/dp_60"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_20" />
@@ -213,14 +217,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10" />
 
-    <RelativeLayout
-        android:id="@+id/rlayout_celPhone"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -234,25 +237,26 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/label_celPhone"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_userInfo_phoneNum"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_20" />
@@ -266,13 +270,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlayout_idCardNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -287,25 +291,26 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardNum"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_userInfo_idCardNum"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_20" />
@@ -319,14 +324,13 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2" />
 
-    <RelativeLayout
-        android:id="@+id/rlayout_bankCard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -339,26 +343,26 @@
         android:paddingTop="@dimen/dp_8">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:text="@string/label_bankCard"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_weight="3"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txt_userInfo_bankCardNum"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_22" />
@@ -370,11 +374,62 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:onClick="toAddress"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_8">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_address1"
+            android:textColor="@color/themeGray"
+            android:textSize="@dimen/sp_22" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_userInfo_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_22" />
+
+            <TextView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

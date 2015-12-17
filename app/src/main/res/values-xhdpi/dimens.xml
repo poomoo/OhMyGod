@@ -24,10 +24,11 @@
     <dimen name="dp_16">14dp</dimen>
     <dimen name="dp_18">16dp</dimen>
     <dimen name="dp_20">18dp</dimen>
+    <dimen name="dp_30">28dp</dimen>
     <dimen name="dp_56">52dp</dimen>
     <dimen name="dp_60">56dp</dimen>
     <dimen name="dp_navigation_margin">6dp</dimen>
-    <dimen name="dp_avatar">80dp</dimen>
+    <dimen name="dp_avatar">85dp</dimen>
     <dimen name="dp_ad">160dp</dimen>
     <dimen name="dp_160">170dp</dimen>
 

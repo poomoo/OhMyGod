@@ -18,19 +18,27 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.database.AreaInfo;
+import com.poomoo.ohmygod.database.CityInfo;
+
+import org.litepal.crud.DataSupport;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 作者: 李苜菲
  * 日期: 2015/11/17 14:41.
  */
 public class MyUtil {
+    private static String TAG = "MyUtil";
+
     public static void showToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
@@ -209,5 +217,52 @@ public class MyUtil {
         LogUtils.i("loadDrawable", "temp:" + temp);
         ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(temp.getBytes(), Base64.DEFAULT));
         return Drawable.createFromStream(bais, "");
+    }
+
+    /**
+     * @return ArrayList<AreaInfo>
+     * @throws @date 2015-8-17上午10:40:43
+     * @Title: getAreaList
+     * @Description: TODO 获取区域列表
+     * @author 李苜菲
+     */
+    public static List<String> getAreaList(String city_id) {
+        LogUtils.i(TAG, "city_id:" + city_id);
+        List<AreaInfo> areaList = DataSupport.where("cityinfo_id = ?", city_id).find(AreaInfo.class);
+        List<String> list = new ArrayList<>();
+        int len = areaList.size();
+        for (int i = 0; i < len; i++)
+            list.add(areaList.get(i).getArea_name());
+
+        return list;
+    }
+
+    /**
+     * @return int
+     * @throws @date 2015年8月17日下午9:57:59
+     * @Title: getCityPosition
+     * @Description: TODO 查找某城市的ID
+     * @author 李苜菲
+     */
+    public static String getCityId(ArrayList<CityInfo> cityList, String city) {
+        int i = 0;
+        for (CityInfo cityInfo : cityList) {
+            i++;
+            if (cityInfo.getCity_name().equals(city))
+                return cityInfo.getCity_id();
+        }
+        return "";
+    }
+
+    /**
+     * @return ArrayList<CityInfo>
+     * @throws @date 2015-8-17上午10:39:44
+     * @Title: getCityList
+     * @Description: TODO 获取城市列表
+     * @author 李苜菲
+     */
+    public static ArrayList<CityInfo> getCityList() {
+        List<CityInfo> cityList = DataSupport.findAll(CityInfo.class);
+        return (ArrayList<CityInfo>) cityList;
     }
 }

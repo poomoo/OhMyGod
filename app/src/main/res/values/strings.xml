@@ -48,6 +48,7 @@
     <string name="title_about">关于天呐</string>
     <string name="title_feedBack">新反馈</string>
     <string name="title_protocol">天呐抢购协议</string>
+    <string name="title_address">修改地址</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -73,6 +74,7 @@
     <string name="label_gender">性别</string>
     <string name="label_age">年龄</string>
     <string name="label_bankCard">银行卡</string>
+    <string name="label_address1">地址</string>
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
@@ -228,6 +230,7 @@
     <string name="hint_search">"城市名、拼音首字母..."</string>
     <string name="hint_feedBack">"请留下您的宝贵意见和建议，我们将努力改进"</string>
     <string name="hint_connection">联系方式(邮箱/手机)</string>
+    <string name="hint_address1">详细地址</string>
     <!--hint-->
 
     <!--控件-->

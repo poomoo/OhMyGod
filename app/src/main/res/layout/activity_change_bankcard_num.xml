@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="@dimen/dp_20">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_bindingBankCard"
             android:textColor="@color/themeGray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
     </LinearLayout>
 
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="@dimen/dp_10">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,9 +38,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:text="@string/label_cardHolder"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/txt_bankCardName"
@@ -48,16 +48,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="@dimen/dp_2" />
 
 
         <LinearLayout
@@ -69,9 +69,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:text="@string/label_cardNum"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:id="@+id/edt_bankCardNum"
@@ -82,19 +82,19 @@
                 android:hint="@string/hint_input_cardNum"
                 android:inputType="number"
                 android:maxLength="23"
-                android:padding="8dp"
-                android:textSize="20sp" />
+                android:padding="@dimen/dp_8"
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="16dp" />
+        android:layout_height="@dimen/dp_16" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="@dimen/dp_10">
 
         <Button
             style="@style/myButton"

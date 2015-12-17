@@ -5,7 +5,7 @@
     android:background="#77cccccc"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="@dimen/dp_10">
 
     <LinearLayout
         android:id="@+id/popup_gender_layout"
@@ -23,9 +23,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:text="@string/label_gender_man"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
         <TextView
@@ -43,9 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="8dp"
+                android:padding="@dimen/dp_8"
                 android:text="@string/label_gender_woman"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

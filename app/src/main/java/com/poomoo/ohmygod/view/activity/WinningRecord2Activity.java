@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class WinningRecord2Activity extends BaseActivity {
     private TextView dateTxt;
     private TextView requirementTxt;
     private Button showBtn;
+    private Button completeInfoBtn;
     private WinningRecordsBO winningRecordsBO;
 
     @Override
@@ -42,6 +44,7 @@ public class WinningRecord2Activity extends BaseActivity {
         dateTxt = (TextView) findViewById(R.id.txt_getRewardEndDate);
         requirementTxt = (TextView) findViewById(R.id.txt_getRewardRequirement);
         showBtn = (Button) findViewById(R.id.btn_show);
+        completeInfoBtn = (Button) findViewById(R.id.btn_completeInfo);
 
 
         winningRecordsBO = (WinningRecordsBO) getIntent().getSerializableExtra(getString(R.string.intent_value));
@@ -50,11 +53,14 @@ public class WinningRecord2Activity extends BaseActivity {
         addressTxt.setText(winningRecordsBO.getGetAddress());
         dateTxt.setText(winningRecordsBO.getGetEndDt());
         requirementTxt.setText(winningRecordsBO.getGetRequire());
-        if (winningRecordsBO.getIsShare().equals("1")) {
-            showBtn.setText(getString(R.string.btn_showed));
-            showBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
-            showBtn.setClickable(false);
-        }
+//        if (winningRecordsBO.getIsShare().equals("1")) {
+//            showBtn.setText(getString(R.string.btn_showed));
+//            showBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
+//            showBtn.setClickable(false);
+//        }
+        if (!(TextUtils.isEmpty(application.getRealName()) && TextUtils.isEmpty(application.getIdCardNum())))
+            completeInfoBtn.setVisibility(View.GONE);
+
 
     }
 

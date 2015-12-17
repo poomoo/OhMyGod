@@ -6,6 +6,7 @@ package com.poomoo.ohmygod.view.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,6 +54,7 @@ public class UserInfoActivity extends BaseActivity {
     private TextView phoneNumTxt;
     private TextView idCardNumTxt;
     private TextView bankCardNumTxt;
+    private TextView addressTxt;
     private GenderPopupWindow genderWindow;
     private SelectPicsPopupWindow popupWindow;
 
@@ -94,6 +96,7 @@ public class UserInfoActivity extends BaseActivity {
         phoneNumTxt = (TextView) findViewById(R.id.txt_userInfo_phoneNum);
         idCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_idCardNum);
         bankCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_bankCardNum);
+        addressTxt = (TextView) findViewById(R.id.txt_userInfo_address);
 
         initData();
     }
@@ -132,19 +135,20 @@ public class UserInfoActivity extends BaseActivity {
             });
         }
 
-        nickNameTxt.setText(this.application.getNickName());
+        nickNameTxt.setText(application.getNickName());
 
-        if (TextUtils.isEmpty(this.application.getSex()))
+        if (TextUtils.isEmpty(application.getSex()))
             gender = "";
-        else if (this.application.getSex().equals("1"))
+        else if (application.getSex().equals("1"))
             gender = "男";
         else
             gender = "女";
         genderTxt.setText(gender);
-        ageTxt.setText(this.application.getAge());
-        phoneNumTxt.setText(MyUtil.hiddenTel(this.application.getTel()));
-        idCardNumTxt.setText(MyUtil.hiddenIdCardNum(this.application.getIdCardNum()));
-        bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(this.application.getBankCardNum()));
+        ageTxt.setText(application.getAge());
+        phoneNumTxt.setText(MyUtil.hiddenTel(application.getTel()));
+        idCardNumTxt.setText(MyUtil.hiddenIdCardNum(application.getIdCardNum()));
+        bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(application.getBankCardNum()));
+        addressTxt.setText(application.getAddress());
     }
 
     /**
@@ -214,6 +218,15 @@ public class UserInfoActivity extends BaseActivity {
      */
     public void toBankCard(View view) {
         openActivity(ChangeBankCardNumActivity.class);
+    }
+
+    /**
+     * 地址
+     *
+     * @param view
+     */
+    public void toAddress(View view) {
+        openActivity(AddressActivity.class);
     }
 
     /**
