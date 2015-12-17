@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -351,7 +350,7 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void stop() {
-        animImg.setImageResource(R.drawable.successanim);
+        animImg.setImageResource(R.drawable.housesuccess);
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
