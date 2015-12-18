@@ -58,6 +58,7 @@ public class AddressActivity extends BaseActivity {
         areaSpinner = (Spinner) findViewById(R.id.spinner_area);
         addressEdt = (EditText) findViewById(R.id.edt_address1);
 
+        cityTxt.setText(application.getLocateCity());
         cityInfoArrayList = MyUtil.getCityList();
         LogUtils.i(TAG, "cityInfoArrayList:" + cityInfoArrayList);
         city_id = MyUtil.getCityId(cityInfoArrayList, application.getLocateCity());
@@ -65,6 +66,7 @@ public class AddressActivity extends BaseActivity {
         areaInfoArrayList = MyUtil.getAreaList(city_id);
         LogUtils.i(TAG, "areaInfoArrayList:" + areaInfoArrayList);
 
+        area = areaInfoArrayList.get(0);
         adapter = new ArrayAdapter<>(this, R.layout.item_spinner_textview, areaInfoArrayList);
         areaSpinner.setAdapter(adapter);
 
@@ -106,7 +108,7 @@ public class AddressActivity extends BaseActivity {
             return;
         }
         address = application.getLocateCity() + area + address;
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         key = "address";
         this.appAction.changePersonalInfo(this.application.getUserId(), key, address, new ActionCallbackListener() {
             @Override

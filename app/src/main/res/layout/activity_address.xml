@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="贵阳市"
+            android:text=""
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 

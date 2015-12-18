@@ -51,7 +51,7 @@ public class MyApplication extends LitePalApplication {
                 .showImageForEmptyUri(R.mipmap.ic_launcher) //
                 .showImageOnFail(R.mipmap.ic_launcher) //
                 .cacheInMemory(true) //
-                .cacheOnDisk(false) //
+                .cacheOnDisk(true) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
         ImageLoaderConfiguration config = new ImageLoaderConfiguration//

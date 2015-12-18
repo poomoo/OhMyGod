@@ -194,7 +194,7 @@ public class CommodityInformationActivity extends BaseActivity {
             urls[i] = commodityBO.getPicList().get(i);
             LogUtils.i(TAG, "url:" + urls[i]);
         }
-        slideShowView.setPics(urls);
+        slideShowView.setPics(urls, null);
 
         //商品详情
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
@@ -289,18 +289,20 @@ public class CommodityInformationActivity extends BaseActivity {
             percentTxt.setText(0 + "%");
         }
         LogUtils.i(TAG, "MyUtil.sub(percent, 100):" + MyUtil.sub(percent, 100));
+        if (MyUtil.sub(percent, 100) >= 0) {
+            LogUtils.i(TAG, "抢购完成:" + df.format(percent));
+            percentTxt.setText(100 + "%");
+            stop();
+        }
         if (MyUtil.sub(percent, 100) < 0) {
-            LogUtils.i(TAG, "抢购未完成");
-            percent = MyUtil.add(percent, step);
+            LogUtils.i(TAG, "抢购未完成:" + df.format(percent));
+
             percentTxt.setText(df.format(percent) + "%");
+            percent = MyUtil.add(percent, step);
 
             if (index < animLen)
                 animImg.setImageResource(MyConfig.house[index++]);
 
-        } else if (MyUtil.sub(percent, 100) >= 0) {
-            LogUtils.i(TAG, "抢购完成");
-            percentTxt.setText(100 + "%");
-            stop();
         }
 
     }
@@ -325,7 +327,7 @@ public class CommodityInformationActivity extends BaseActivity {
                             percent = MyUtil.sub(percent, step);
 
                         if (index > 0) {
-                            animImg.setImageResource(MyConfig.house[index--]);
+                            animImg.setImageResource(MyConfig.house[--index]);
                         } else
                             animImg.setImageResource(MyConfig.house[index]);
                     } else if (percent >= 100) {
@@ -350,7 +352,7 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void stop() {
-        animImg.setImageResource(R.drawable.housesuccess);
+        animImg.setImageResource(R.drawable.housefailed);
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);

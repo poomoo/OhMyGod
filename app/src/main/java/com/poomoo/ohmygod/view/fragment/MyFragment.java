@@ -103,7 +103,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
                     .showImageForEmptyUri(R.drawable.ic_avatar) //
                     .showImageOnFail(R.drawable.ic_avatar) //
                     .cacheInMemory(true) //
-                    .cacheOnDisk(false) //
+                    .cacheOnDisk(true) //
                     .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                     .build();//
             ImageLoader.getInstance().loadImage(application.getHeadPic(), defaultOptions, new SimpleImageLoadingListener() {

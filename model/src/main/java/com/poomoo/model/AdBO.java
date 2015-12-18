@@ -12,6 +12,7 @@ public class AdBO {
     private String picture;
     private String url;
     private String title;
+    private int activeId;
 
     public String getPicture() {
         return picture;
@@ -37,12 +38,21 @@ public class AdBO {
         this.title = title;
     }
 
+    public int getActiveId() {
+        return activeId;
+    }
+
+    public void setActiveId(int activeId) {
+        this.activeId = activeId;
+    }
+
     @Override
     public String toString() {
         return "AdBO{" +
                 "picture='" + picture + '\'' +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
+                ", activeId=" + activeId +
                 '}';
     }
 }

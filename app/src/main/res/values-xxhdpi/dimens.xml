@@ -8,7 +8,7 @@
     <dimen name="sp_16">16sp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_20">20sp</dimen>
-    <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_22">20sp</dimen>
     <dimen name="sp_24">24sp</dimen>
     <dimen name="sp_26">26sp</dimen>
     <dimen name="sp_28">28sp</dimen>
@@ -29,7 +29,7 @@
     <dimen name="dp_navigation_margin">8dp</dimen>
     <dimen name="dp_avatar">90dp</dimen>
     <dimen name="dp_ad">180dp</dimen>
-    <dimen name="dp_160">180dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
 
 
 </resources>

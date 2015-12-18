@@ -30,7 +30,7 @@
     <dimen name="dp_navigation_margin">6dp</dimen>
     <dimen name="dp_avatar">85dp</dimen>
     <dimen name="dp_ad">160dp</dimen>
-    <dimen name="dp_160">170dp</dimen>
+    <dimen name="dp_200">190dp</dimen>
 
 
 </resources>

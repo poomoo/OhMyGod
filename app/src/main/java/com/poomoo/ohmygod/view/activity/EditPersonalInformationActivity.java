@@ -12,19 +12,23 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.provider.MediaStore.Images.Media;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.database.CityInfo;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -33,7 +37,6 @@ import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.popupwindow.SelectPicsPopupWindow;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +57,8 @@ public class EditPersonalInformationActivity extends BaseActivity {
     private EditText bankCardNumEdt;
     private ImageView frontIdCardImg;
     private ImageView backIdCardImg;
+    private TextView cityTxt;
+    private Spinner areaSpinner;
     private SelectPicsPopupWindow popupWindow;
     private int flag;//1-正面 2-反面
     private String path = "";
@@ -71,6 +76,12 @@ public class EditPersonalInformationActivity extends BaseActivity {
     private String bankCardNum;
     private String address;
 
+    private ArrayList<CityInfo> cityInfoArrayList;
+    private List<String> areaInfoArrayList = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
+
+    private String city_id;
+    private String area;
 
     private static final int NONE = 0;
     private static final int PHOTOHRAPH = 1;// 拍照
@@ -92,7 +103,9 @@ public class EditPersonalInformationActivity extends BaseActivity {
 
         realNameEdt = (EditText) findViewById(R.id.edt_realName);
         idCardNumEdt = (EditText) findViewById(R.id.edt_idCardNum);
-        addressEdt = (EditText) findViewById(R.id.edt_address);
+        addressEdt = (EditText) findViewById(R.id.edt_address1);
+        cityTxt = (TextView) findViewById(R.id.txt_locateCity);
+        areaSpinner = (Spinner) findViewById(R.id.spinner_area);
 //        bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
 //        frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
 //        backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
@@ -100,7 +113,7 @@ public class EditPersonalInformationActivity extends BaseActivity {
         realNameEdt.setText(application.getRealName());
         idCardNumEdt.setText(application.getIdCardNum());
 //        bankCardNumEdt.setText(application.getBankCardNum());
-        addressEdt.setText(application.getAddress());
+//        addressEdt.setText(application.getAddress());
 
 //        if (!TextUtils.isEmpty(application.getIdFrontPic()) && !TextUtils.isEmpty(application.getIdOpsitePic())) {
 //            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg);
@@ -109,6 +122,28 @@ public class EditPersonalInformationActivity extends BaseActivity {
 
 
 //        MyUtil.fortmatCardNum(bankCardNumEdt);
+
+        cityTxt.setText(application.getLocateCity());
+        cityInfoArrayList = MyUtil.getCityList();
+        city_id = MyUtil.getCityId(cityInfoArrayList, application.getLocateCity());
+        areaInfoArrayList = MyUtil.getAreaList(city_id);
+
+        area = areaInfoArrayList.get(0);
+        adapter = new ArrayAdapter<>(this, R.layout.item_spinner_textview, areaInfoArrayList);
+        areaSpinner.setAdapter(adapter);
+
+        //添加事件Spinner事件监听
+        areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                area = areaInfoArrayList.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     protected void initTitleBar() {
@@ -190,6 +225,8 @@ public class EditPersonalInformationActivity extends BaseActivity {
             return false;
         }
         address = addressEdt.getText().toString().trim();
+        if (!TextUtils.isEmpty(address))
+            address = application.getLocateCity() + area + address;
 
 //
 //        if (file1 == null) {

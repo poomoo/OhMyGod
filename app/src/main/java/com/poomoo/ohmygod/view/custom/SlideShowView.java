@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.view.custom;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -17,11 +18,10 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class SlideShowView extends FrameLayout {
+    private final DisplayImageOptions defaultOptions;
     private String TAG = "SlideShowView";
     // 使用universal-image-loader插件读取网络图片，需要工程导入universal-image-loader-1.8.6-with-sources.jar
     private ImageLoader imageLoader = ImageLoader.getInstance();
@@ -63,6 +64,8 @@ public class SlideShowView extends FrameLayout {
 
     private Context context;
 
+    private AdvertisementListener listener;
+
     //Handler
     private Handler handler = new Handler() {
 
@@ -78,11 +81,17 @@ public class SlideShowView extends FrameLayout {
     public SlideShowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
-    public void setPics(String[] urls) {
+    public void setPics(String[] urls, AdvertisementListener listener) {
 //        initImageLoader(context);
         this.imageUrls = urls;
+        this.listener = listener;
         initData();
         if (isAutoPlay) {
             startPlay();
@@ -147,6 +156,12 @@ public class SlideShowView extends FrameLayout {
 
         viewPager.setAdapter(new MyPagerAdapter());
         viewPager.setOnPageChangeListener(new MyPageChangeListener());
+        viewPager.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**
@@ -162,9 +177,18 @@ public class SlideShowView extends FrameLayout {
         }
 
         @Override
-        public Object instantiateItem(View container, int position) {
+        public Object instantiateItem(View container, final int position) {
             ImageView imageView = imageViewsList.get(position);
-            imageLoader.displayImage(imageView.getTag() + "", imageView);
+            imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
+            imageView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LogUtils.i(TAG, "点击viewpager:" + position);
+                    if (listener != null)
+                        listener.onResult(position);
+                }
+            });
+
 
             ((ViewPager) container).addView(imageViewsList.get(position));
             return imageViewsList.get(position);
@@ -326,23 +350,4 @@ public class SlideShowView extends FrameLayout {
         }
     }
 
-    /**
-     * ImageLoader 图片组件初始化
-     *
-     * @param context
-     */
-    public static void initImageLoader(Context context) {
-        // This configuration tuning is custom. You can tune every option, you
-        // may tune some of them,
-        // or you can create default configuration by
-        // ImageLoaderConfiguration.createDefault(this);
-        // method.
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
-                // for
-                // release
-                // app
-                .build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
-    }
 }

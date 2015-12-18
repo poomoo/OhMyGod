@@ -28,11 +28,13 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.MessageBO;
+import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CityListActivity;
@@ -71,6 +73,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private GrabAdapter adapter;
     private String[] urls;
     private AdBO adBO;
+    private List<AdBO> adBOList = new ArrayList<>();
     private List<GrabBO> grabBOList = new ArrayList<>();
     private List<WinnerBO> winnerBOList = new ArrayList<>();
     private int index = 0;
@@ -176,15 +179,24 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onSuccess(ResponseBO data) {
                 Log.i(TAG, "data:" + data.getObjList().toString());
-                int len = data.getObjList().size();
+                adBOList = data.getObjList();
+                int len = adBOList.size();
                 urls = new String[len];
                 for (int i = 0; i < len; i++) {
                     adBO = new AdBO();
-                    adBO = (AdBO) data.getObjList().get(i);
+                    adBO = adBOList.get(i);
                     urls[i] = adBO.getPicture();
                     Log.i(TAG, urls[i]);
                 }
-                slideShowView.setPics(urls);
+                slideShowView.setPics(urls, new AdvertisementListener() {
+                    @Override
+                    public void onResult(int position) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
+                        bundle.putInt(getString(R.string.intent_activeId), adBOList.get(position).getActiveId());
+                        openActivity(CommodityInformationActivity.class, bundle);
+                    }
+                });
             }
 
             @Override
@@ -258,10 +270,26 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
                 }
                 MainFragmentActivity.messageBOList = messageBOList;
+                getInfo(messageBOList.get(0).getStatementId());
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
+            }
+        });
+    }
+
+    private void getInfo(int statementId) {
+        this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
+                MainFragmentActivity.messageInfoBO = messageInfoBO;
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
             }
         });
     }

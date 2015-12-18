@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.CommentBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
@@ -46,6 +47,7 @@ public class MainFragmentActivity extends
     private int statementId = 0;
     private String title;
     private String content;
+    public static MessageInfoBO messageInfoBO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,22 +166,24 @@ public class MainFragmentActivity extends
     private void getInfo() {
         statementId = messageBOList.get(0).getStatementId();
         title = messageBOList.get(0).getTitle();
-        showProgressDialog("请稍后...");
-        this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                closeProgressDialog();
-                MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
-                content = messageInfoBO.getContent();
-                show();
-            }
-
-            @Override
-            public void onFailure(int errorCode, String message) {
-                closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), message);
-            }
-        });
+        content = messageInfoBO.getContent();
+        show();
+//        showProgressDialog("请稍后...");
+//        this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
+//            @Override
+//            public void onSuccess(ResponseBO data) {
+//                closeProgressDialog();
+//                MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
+//                content = messageInfoBO.getContent();
+//                show();
+//            }
+//
+//            @Override
+//            public void onFailure(int errorCode, String message) {
+//                closeProgressDialog();
+//                MyUtil.showToast(getApplicationContext(), message);
+//            }
+//        });
     }
 
     @Override
