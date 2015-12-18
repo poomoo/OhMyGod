@@ -18,6 +18,7 @@ import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 
 import java.util.ArrayList;
@@ -42,10 +43,12 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private CommentBO commentBO;
     private List<CommentBO> commentBOList;
     private List<ReplyBO> replyBOList;
+    private LongClickListener longClickListener;
 
-    public ReplyAdapter(Context context, ReplyListener listener, int selectPosition, String commentId, int commentPostion) {
+    public ReplyAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, int selectPosition, String commentId, int commentPostion) {
         super(context);
         this.listener = listener;
+        this.longClickListener = longClickListener;
         this.selectPosition = selectPosition;
         this.commentPostion = commentPostion;
         this.commentId = commentId;
@@ -104,7 +107,13 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         viewHolder.textView.setText(ss);
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        viewHolder.textView.setOnLongClickListener(new LongClick(content));
         return convertView;
+    }
+
+    class ViewHolder {
+        public TextView textView;
     }
 
     public final class TextClick extends ClickableSpan {
@@ -147,8 +156,19 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         }
     }
 
-    class ViewHolder {
-        public TextView textView;
+
+    private final class LongClick implements View.OnLongClickListener {
+        private String content;
+
+        public LongClick(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            longClickListener.onResult(content);
+            return true;
+        }
     }
 
 }

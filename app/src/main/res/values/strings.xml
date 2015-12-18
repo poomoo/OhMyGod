@@ -78,6 +78,7 @@
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
+    <string name="label_copy">复制</string>
     <!--个人资料-->
 
     <!--个人中心-->

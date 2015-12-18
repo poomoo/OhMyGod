@@ -21,6 +21,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -41,11 +42,13 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     private ShowBO showBO;
     private ReplyListener listener;
     private ShareListener shareListener;
+    private LongClickListener longClickListener;
 
-    public ShowAdapter(Context context, ReplyListener listener, ShareListener shareListener) {
+    public ShowAdapter(Context context, ReplyListener listener, ShareListener shareListener, LongClickListener longClickListener) {
         super(context);
         this.listener = listener;
         this.shareListener = shareListener;
+        this.longClickListener = longClickListener;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.contentTxt.setText(showBO.getContent());
         viewHolder.titleTxt.setText(showBO.getTitle());
 
-        commentAdapter = new CommentAdapter(context, listener, position);
+        commentAdapter = new CommentAdapter(context, listener, longClickListener, position);
         viewHolder.listView.setAdapter(commentAdapter);
         commentAdapter.setItems(showBO.getComments());
 
@@ -125,15 +128,6 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         } else {
             viewHolder.gridView.setVisibility(View.GONE);
         }
-
-//        // 点击回帖九宫格，查看大图
-//        viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // TODO Auto-generated method stub
-//                imageBrowse(position, showBO.getPicList());
-//            }
-//        });
 
 
         return convertView;
@@ -189,11 +183,4 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         }
     }
 
-    protected void imageBrowse(int position, ArrayList<String> urls2) {
-        Intent intent = new Intent(context, ImagePagerActivity.class);
-        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
-        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
-        context.startActivity(intent);
-    }
 }

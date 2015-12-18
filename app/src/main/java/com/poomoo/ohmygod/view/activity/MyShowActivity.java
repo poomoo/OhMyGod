@@ -3,11 +3,13 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +24,7 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
@@ -30,6 +33,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
+import com.poomoo.ohmygod.view.popupwindow.CopyPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +43,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:38.
  */
-public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener {
+public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -68,6 +72,8 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     private String toUserId;
     private boolean isLoad = false;//true 加载 false刷新
     private int currPage = 1;
+    private CopyPopupWindow copyPopupWindow;
+    private String copyContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +131,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         });
 
-        adapter = new ShowAdapter(this, this, this);
+        adapter = new ShowAdapter(this, this, this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -360,4 +366,35 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     public void onResult(String title, String content, String picUrl) {
 
     }
+
+    @Override
+    public void onResult(String content) {
+        copyContent = content;
+        copy();
+    }
+
+    private void copy() {
+        // 实例化
+        copyPopupWindow = new CopyPopupWindow(this, itemsOnClick);
+        // 显示窗口
+        copyPopupWindow.showAtLocation(this.findViewById(R.id.llayout_show),
+                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+    }
+
+    // 为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            copyPopupWindow.dismiss();
+            switch (view.getId()) {
+                case R.id.llayout_copy:
+                    ClipboardManager cmb = (ClipboardManager) MyShowActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cmb.setText(copyContent.trim()); //将内容放入粘贴管理器,在别的地方长按选择"粘贴"即可
+//                    cmb.getText();//获取粘贴信息
+                    MyUtil.showToast(application.getApplicationContext(), "复制 " + copyContent + " 成功");
+                    break;
+            }
+        }
+    };
 }

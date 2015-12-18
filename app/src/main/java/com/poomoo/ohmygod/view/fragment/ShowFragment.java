@@ -3,10 +3,12 @@
  */
 package com.poomoo.ohmygod.view.fragment;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
@@ -32,6 +35,8 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
+import com.poomoo.ohmygod.view.popupwindow.CopyPopupWindow;
+import com.poomoo.ohmygod.view.popupwindow.GenderPopupWindow;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -59,7 +64,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/20 09:50.
  */
-public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener {
+public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -100,6 +105,8 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private String website = "http://zgqg.91jiaoyou.cn/zgqg";
     private String title = "天呐";
     private String picUrl;
+    private CopyPopupWindow copyPopupWindow;
+    private String copyContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,6 +122,15 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
 
     }
 
+    /**
+     * 回复
+     *
+     * @param name
+     * @param position
+     * @param v
+     * @param show
+     * @param commentPos
+     */
     @Override
     public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
         toNickName = name;
@@ -148,7 +164,13 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         }
     }
 
-
+    /**
+     * 分享
+     *
+     * @param title
+     * @param content
+     * @param picUrl
+     */
     @Override
     public void onResult(String title, String content, String picUrl) {
         this.title = title;
@@ -166,7 +188,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
 
     private void initView() {
         refreshLayout = (RefreshLayout) getActivity().findViewById(R.id.refresh_show);
-        fragmentView = (LinearLayout) getActivity().findViewById(R.id.fragment_view);
+        fragmentView = (LinearLayout) getActivity().findViewById(R.id.llayout_show);
         replyRlayout = (LinearLayout) getActivity().findViewById(R.id.rlayout_reply);
         editLlayout = (LinearLayout) getActivity().findViewById(R.id.layout_edittext);
         replyEdt = (EditText) getActivity().findViewById(R.id.edt_reply);
@@ -231,7 +253,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             }
         });
 
-        adapter = new ShowAdapter(getActivity(), this, this);
+        adapter = new ShowAdapter(getActivity(), this, this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -625,13 +647,40 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         mController.getConfig().cleanListeners();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        /** 使用SSO授权必须添加如下代码 */
-//        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-//        if (ssoHandler != null) {
-//            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-//        }
-//    }
+    /**
+     * 长按复制
+     *
+     * @param content
+     */
+    @Override
+    public void onResult(String content) {
+        copyContent = content;
+        copy();
+    }
+
+    private void copy() {
+        // 实例化
+        copyPopupWindow = new CopyPopupWindow(getActivity(), itemsOnClick);
+        // 显示窗口
+        copyPopupWindow.showAtLocation(getActivity().findViewById(R.id.llayout_show),
+                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+    }
+
+    // 为弹出窗口实现监听类
+    private View.OnClickListener itemsOnClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            copyPopupWindow.dismiss();
+            switch (view.getId()) {
+                case R.id.llayout_copy:
+                    ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    cmb.setText(copyContent.trim()); //将内容放入粘贴管理器,在别的地方长按选择"粘贴"即可
+//                    cmb.getText();//获取粘贴信息
+                    MyUtil.showToast(application.getApplicationContext(), "复制 " + copyContent + " 成功");
+                    break;
+            }
+        }
+    };
+
 }

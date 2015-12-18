@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 
 import java.util.ArrayList;
@@ -38,11 +39,13 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
     private int selectPosition;
     private ShowBO showBO;
     private List<CommentBO> list;
+    private LongClickListener longClickListener;
 
-    public CommentAdapter(Context context, ReplyListener listener, int selectPosition) {
+    public CommentAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, int selectPosition) {
         super(context);
         this.listener = listener;
         this.selectPosition = selectPosition;
+        this.longClickListener = longClickListener;
     }
 
     @Override
@@ -75,10 +78,17 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        replyAdapter = new ReplyAdapter(context, listener, selectPosition, commentBO.getCommentId(), position);
+        viewHolder.textView.setOnLongClickListener(new LongClick(content));
+
+        replyAdapter = new ReplyAdapter(context, listener, longClickListener, selectPosition, commentBO.getCommentId(), position);
         viewHolder.listView.setAdapter(replyAdapter);
         replyAdapter.setItems(commentBO.getReplies());
         return convertView;
+    }
+
+    class ViewHolder {
+        public TextView textView;
+        public ListView listView;
     }
 
     public final class TextClick extends ClickableSpan {
@@ -114,8 +124,19 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         }
     }
 
-    class ViewHolder {
-        public TextView textView;
-        public ListView listView;
+    private final class LongClick implements View.OnLongClickListener {
+        private String content;
+
+        public LongClick(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            longClickListener.onResult(content);
+            return true;
+        }
     }
+
+
 }

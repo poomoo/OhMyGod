@@ -8,8 +8,11 @@
         android:id="@+id/txt_reply_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:paddingBottom="6dp"
-        android:textSize="12sp" />
+        android:layout_marginLeft="@dimen/dp_16"
+        android:background="@drawable/selector_reply"
+        android:textSize="@dimen/sp_12" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_8" />
 </LinearLayout>

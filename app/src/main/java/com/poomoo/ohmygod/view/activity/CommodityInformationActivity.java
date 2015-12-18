@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,6 +55,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private TextView openActivityTxt;//确认开启活动按钮
     private Button grabBtn;
     private LinearLayout llayout_head_timeCountDown;//顶部倒计时layout
+    private LinearLayout llayout_openActivity;//开启活动layout
     private LinearLayout llayout_bottom;//底部倒计时layout
     private LinearLayout llayout_foot_timeCountDown;//底部倒计时显示layout
     private LinearLayout llayout_anim;//显示动画
@@ -110,12 +113,17 @@ public class CommodityInformationActivity extends BaseActivity {
 //        seek = (ProgressSeekBar) findViewById(R.id.seek_grab);
         grabBtn = (Button) findViewById(R.id.btn_grab);
         llayout_head_timeCountDown = (LinearLayout) findViewById(R.id.llayout_head_timeCountDown);
+        llayout_openActivity = (LinearLayout) findViewById(R.id.llayout_openActivity);
         llayout_bottom = (LinearLayout) findViewById(R.id.llayout_grab_bottom);
         llayout_foot_timeCountDown = (LinearLayout) findViewById(R.id.llayout_foot_timeCountDown);
         llayout_anim = (LinearLayout) findViewById(R.id.llayout_anim);
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        llayout_openActivity.setVisibility(View.GONE);
+        llayout_bottom.setVisibility(View.GONE);
+
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -202,6 +210,23 @@ public class CommodityInformationActivity extends BaseActivity {
         //活动声明
 //        activityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
 //        activityWeb.loadData(commodityBO.getStatement(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+
+        WebSettings sws = commodityWeb.getSettings();
+        sws.setSupportZoom(true);
+        sws.setBuiltInZoomControls(true);
+
+        commodityWeb.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+// Activity和Webview根据加载程度决定进度条的进度大小
+// 当加载到100%的时候 进度条自动消失
+//WebViewProgressActivity.this.setTitle("Loading...");
+//WebViewProgressActivity.this.setProgress(progress * 100);
+                if (progress == 100) {
+                    llayout_openActivity.setVisibility(View.VISIBLE);
+                    llayout_bottom.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
 
     }
