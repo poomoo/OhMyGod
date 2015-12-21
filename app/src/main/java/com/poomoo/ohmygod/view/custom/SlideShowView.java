@@ -37,8 +37,13 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class SlideShowView extends FrameLayout {
-    private final DisplayImageOptions defaultOptions;
+
     private String TAG = "SlideShowView";
+
+    private final DisplayImageOptions defaultOptions;
+    private final MyPagerAdapter myPagerAdapter;
+    private final MyPageChangeListener myPageChangeListener;
+
     // 使用universal-image-loader插件读取网络图片，需要工程导入universal-image-loader-1.8.6-with-sources.jar
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -66,6 +71,8 @@ public class SlideShowView extends FrameLayout {
 
     private AdvertisementListener listener;
 
+    private final LinearLayout dotLayout;
+
     //Handler
     private Handler handler = new Handler() {
 
@@ -86,10 +93,15 @@ public class SlideShowView extends FrameLayout {
                 .cacheOnDisk(true) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
+        myPagerAdapter = new MyPagerAdapter();
+        myPageChangeListener = new MyPageChangeListener();
+
+        LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
+        dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
     }
 
     public void setPics(String[] urls, AdvertisementListener listener) {
-//        initImageLoader(context);
         this.imageUrls = urls;
         this.listener = listener;
         initData();
@@ -127,18 +139,12 @@ public class SlideShowView extends FrameLayout {
         if (imageUrls == null || imageUrls.length == 0)
             return;
 
-        LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
-
-        LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
 
-//        LogUtils.i(TAG, "imageUrls.length:" + imageUrls.length);
         // 热点个数与图片特殊相等
         for (int i = 0; i < imageUrls.length; i++) {
             ImageView view = new ImageView(context);
-//            LogUtils.i(TAG, "imageUrls:" + imageUrls[i]);
             view.setTag(imageUrls[i]);
-//            if (i == 0)//给一个默认图
             view.setBackgroundResource(R.mipmap.ic_launcher);
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);
@@ -151,33 +157,27 @@ public class SlideShowView extends FrameLayout {
             dotViewsList.add(dotView);
         }
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setFocusable(true);
-
-        viewPager.setAdapter(new MyPagerAdapter());
-        viewPager.setOnPageChangeListener(new MyPageChangeListener());
-        viewPager.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        viewPager.setAdapter(myPagerAdapter);
+        viewPager.setOnPageChangeListener(myPageChangeListener);
     }
 
     /**
      * 填充ViewPager的页面适配器
      */
     private class MyPagerAdapter extends PagerAdapter {
-
         @Override
         public void destroyItem(View container, int position, Object object) {
             // TODO Auto-generated method stub
             //((ViewPag.er)container).removeView((View)object);
+            LogUtils.i(TAG, "destroyItem:" + position);
             ((ViewPager) container).removeView(imageViewsList.get(position));
         }
 
         @Override
         public Object instantiateItem(View container, final int position) {
+            LogUtils.i(TAG, "instantiateItem:" + position);
+
             ImageView imageView = imageViewsList.get(position);
             imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
             imageView.setOnClickListener(new OnClickListener() {
@@ -188,8 +188,6 @@ public class SlideShowView extends FrameLayout {
                         listener.onResult(position);
                 }
             });
-
-
             ((ViewPager) container).addView(imageViewsList.get(position));
             return imageViewsList.get(position);
         }
@@ -197,7 +195,7 @@ public class SlideShowView extends FrameLayout {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-//            LogUtils.i("pic", "imageViewsList.size():"+imageViewsList.size());
+//            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
             return imageViewsList.size();
         }
 
@@ -230,6 +228,11 @@ public class SlideShowView extends FrameLayout {
             // TODO Auto-generated method stub
 
         }
+
+//        @Override
+//        public int getItemPosition(Object object) {
+//            return POSITION_NONE;
+//        }
 
     }
 
@@ -275,6 +278,7 @@ public class SlideShowView extends FrameLayout {
             // TODO Auto-generated method stub
 
             currentItem = pos;
+            LogUtils.i(TAG, "dotViewsList:" + dotViewsList.size());
             for (int i = 0; i < dotViewsList.size(); i++) {
                 if (i == pos) {
                     (dotViewsList.get(pos)).setBackgroundResource(R.drawable.ic_dot_selected);
@@ -348,6 +352,17 @@ public class SlideShowView extends FrameLayout {
                 initUI(context);
             }
         }
+    }
+
+    /**
+     * 清除所有数据
+     */
+    public void clearAll() {
+        imageViewsList.clear();
+        dotViewsList.clear();
+
+        dotLayout.removeAllViews();
+        myPagerAdapter.notifyDataSetChanged();
     }
 
 }

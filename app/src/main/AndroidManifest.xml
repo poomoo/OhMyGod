@@ -63,6 +63,7 @@
         <activity android:name=".view.activity.RegisterActivity" />
         <activity android:name=".view.activity.SelectActivity" />
         <activity android:name=".view.activity.CommodityInformationActivity" />
+        <activity android:name=".view.activity.CommodityInformation2Activity" />
         <activity android:name=".view.activity.EditPersonalInformationActivity" />
         <activity android:name=".view.activity.NickNameActivity" />
         <activity android:name=".view.activity.FeedBackActivity" />

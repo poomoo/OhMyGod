@@ -59,7 +59,7 @@ public class HttpEngine {
     // IP
     public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://zgqg.91jiaoyou.cn/zgqg/app/";// 远程
-    public static final String URL = BaseRemoteUrl + "call.htm";
+    public static final String URL = BaseLocalUrl + "call.htm";
     public static final String PICSURL = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间
@@ -122,32 +122,34 @@ public class HttpEngine {
             Log.i(TAG, "response: " + result);
             ResponseBO responseBO = gson.fromJson(result, ResponseBO.class);
             Log.i(TAG, "responseBO: " + responseBO);
-            if (typeOfT != null) {
-                String jsonData = responseBO.getJsonData().toString();
-                if (!TextUtils.isEmpty(jsonData)) {
-                    if (jsonData.contains("records")) {
-                        try {
-                            responseBO.setObjList(new ArrayList());
-                            JSONObject jsonObject;
-                            Log.i(TAG, "jsonData:" + jsonData);
-                            jsonObject = new JSONObject(jsonData);
-                            JSONArray pager = jsonObject.getJSONArray("records");
-                            int length = pager.length();
-                            Log.i(TAG, "typeOfT: " + typeOfT);
-                            for (int i = 0; i < length; i++) {
-                                responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
-                                responseBO.getObjList().add(responseBO.getObj());
-                            }
-                            responseBO.setObj(gson.fromJson(jsonData, typeOfT));
-                            if (jsonData.contains("totalCount"))
-                                responseBO.setTotalCount(jsonObject.getInt("totalCount"));
+            if (responseBO.getRsCode() == 1) {
+                if (typeOfT != null) {
+                    String jsonData = responseBO.getJsonData().toString();
+                    if (!TextUtils.isEmpty(jsonData)) {
+                        if (jsonData.contains("records")) {
+                            try {
+                                responseBO.setObjList(new ArrayList());
+                                JSONObject jsonObject;
+                                Log.i(TAG, "jsonData:" + jsonData);
+                                jsonObject = new JSONObject(jsonData);
+                                JSONArray pager = jsonObject.getJSONArray("records");
+                                int length = pager.length();
+                                Log.i(TAG, "typeOfT: " + typeOfT);
+                                for (int i = 0; i < length; i++) {
+                                    responseBO.setObj(gson.fromJson(pager.getJSONObject(i).toString(), typeOfT));
+                                    responseBO.getObjList().add(responseBO.getObj());
+                                }
+                                responseBO.setObj(gson.fromJson(jsonData, typeOfT));
+                                if (jsonData.contains("totalCount"))
+                                    responseBO.setTotalCount(jsonObject.getInt("totalCount"));
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.i(TAG, "异常:" + e.getMessage());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.i(TAG, "异常:" + e.getMessage());
+                            }
+                        } else {
+                            responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                         }
-                    } else {
-                        responseBO.setObj(gson.fromJson(jsonData, typeOfT));
                     }
                 }
             }

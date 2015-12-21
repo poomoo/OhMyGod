@@ -141,9 +141,8 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LogUtils.i(TAG, "recordsBOList大小:" + recordsBOList.size() + "position:" + position);
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
         bundle.putInt(getString(R.string.intent_activeId), recordsBOList.get(position).getActiveId());
-        openActivity(CommodityInformationActivity.class, bundle);
+        openActivity(CommodityInformation2Activity.class, bundle);
     }
 
     //    private void setDefaultFragment() {

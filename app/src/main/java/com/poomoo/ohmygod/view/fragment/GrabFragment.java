@@ -85,6 +85,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private List<MessageBO> messageBOList = new ArrayList<>();
     private boolean isFirst = true;//true第一次进入
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
+    private DisplayImageOptions defaultOptions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -137,6 +138,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             initLocation();
             mLocationClient.start();
         } else {
+            currCity = application.getLocateCity();
             currCityTxt.setText(application.getLocateCity());
             application.setLocateCity(application.getLocateCity());
             application.setCurrCity(application.getLocateCity());
@@ -146,7 +148,13 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             getWinnerList();
         }
 
-
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.ic_avatar) //
+                .showImageOnFail(R.drawable.ic_avatar) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(false) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
     Handler handler = new Handler() {
@@ -158,13 +166,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
                     LogUtils.i(TAG, "head:" + winnerBOList.get(index).getHeadPic());
-                    DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-                            .showImageForEmptyUri(R.drawable.ic_avatar) //
-                            .showImageOnFail(R.drawable.ic_avatar) //
-                            .cacheInMemory(true) //
-                            .cacheOnDisk(false) //
-                            .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                            .build();//
                     ImageLoader.getInstance().displayImage(winnerBOList.get(index).getHeadPic(), avatarImg, defaultOptions);
                     index++;
                     if (index == winnerBOList.size())
@@ -175,7 +176,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     };
 
     private void getAd() {
-        this.appAction.getAdvertisement(new ActionCallbackListener() {
+        this.appAction.getAdvertisement(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 Log.i(TAG, "data:" + data.getObjList().toString());
@@ -192,7 +193,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     @Override
                     public void onResult(int position) {
                         Bundle bundle = new Bundle();
-                        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
                         bundle.putInt(getString(R.string.intent_activeId), adBOList.get(position).getActiveId());
                         openActivity(CommodityInformationActivity.class, bundle);
                     }
@@ -215,6 +215,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //                    refreshableView.finishRefreshing();
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
+                slideShowView.setVisibility(View.VISIBLE);
+                remindLlayout.setVisibility(View.VISIBLE);
                 grabBOList = data.getObjList();
 //                initTestData(grabBOList);
                 adapter.setItems(grabBOList);
@@ -226,6 +228,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //                    refreshableView.finishRefreshing();
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
+                slideShowView.setVisibility(View.GONE);
+                remindLlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });
@@ -308,7 +312,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_grab));
         openActivity(CommodityInformationActivity.class, pBundle);
 //        }
 
@@ -337,6 +340,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 grabBOList = new ArrayList<>();
                 adapter.setItems(grabBOList);
                 getGrabList(false);
+                slideShowView.clearAll();
+                getAd();
             }
             currCity = application.getCurrCity();
         }
@@ -369,11 +374,13 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         public void onReceiveLocation(BDLocation location) {
             LogUtils.i("location", "location.getCity():" + location.getCity());
             if (!TextUtils.isEmpty(location.getCity())) {
+                currCity = location.getCity();
                 currCityTxt.setText(location.getCity());
                 application.setLocateCity(location.getCity());
                 application.setCurrCity(location.getCity());
                 getGrabList(false);
                 getWinnerList();
+                getAd();
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);

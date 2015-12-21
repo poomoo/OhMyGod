@@ -112,9 +112,8 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
         bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
-        openActivity(CommodityInformationActivity.class, bundle);
+        openActivity(CommodityInformation2Activity.class, bundle);
     }
 
     @Override

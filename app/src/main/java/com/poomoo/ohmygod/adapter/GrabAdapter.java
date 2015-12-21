@@ -67,12 +67,12 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
-        LogUtils.i(TAG, "position:" + position + "viewHolder.txt:" + viewHolder.txt.getTag());
+//        LogUtils.i(TAG, "position:" + position + "viewHolder.txt:" + viewHolder.txt.getTag());
 
 //        if (viewHolder.txt.getTag() != null && viewHolder.txt.getTag().equals(grabBO.getPicture())) {
         if (viewHolder.txt.getTag() == null) {
             viewHolder.txt.setTag(grabBO.getPicture());
-            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
+//            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
             TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt);
             timeCountDownUtil.start();
             getCountDownUtils().put(position, timeCountDownUtil);

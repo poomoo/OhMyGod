@@ -51,7 +51,7 @@ public interface AppAction {
      *
      * @param listener
      */
-    void getAdvertisement(ActionCallbackListener listener);
+    void getAdvertisement(String cityName, ActionCallbackListener listener);
 
     /**
      * 获取活动列表

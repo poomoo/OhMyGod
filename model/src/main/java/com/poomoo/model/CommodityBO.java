@@ -3,6 +3,7 @@
  */
 package com.poomoo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * 日期: 2015/11/30 17:22.
  */
 public class CommodityBO {
-    private List<String> picList;//--图片集合
+    private ArrayList<String> picList;//--图片集合
     private String goodsName;//--商品名称
     private String price;//--价格
     private String startDt;//	--活动开始时间
@@ -23,11 +24,11 @@ public class CommodityBO {
     private long startCountdown;//--开始时间倒计时
     private long endCountdown;//--结束时间倒计时
 
-    public List<String> getPicList() {
+    public ArrayList<String> getPicList() {
         return picList;
     }
 
-    public void setPicList(List<String> picList) {
+    public void setPicList(ArrayList<String> picList) {
         this.picList = picList;
     }
 

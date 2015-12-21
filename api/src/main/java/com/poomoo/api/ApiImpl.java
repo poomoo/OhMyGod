@@ -103,10 +103,11 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO<AdBO> getAdvertisement() {
+    public ResponseBO<AdBO> getAdvertisement(String cityName) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.PUBACTION);
         paramMap.put("method", Config.AD);
+        paramMap.put("cityName", cityName);
 
         try {
             return httpEngine.postHandle(paramMap, AdBO.class);

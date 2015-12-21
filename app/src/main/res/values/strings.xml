@@ -55,7 +55,7 @@
     <!--抢-->
     <string name="label_winner">获奖者</string>
     <string name="label_grab_tip">开奖提醒</string>
-    <string name="label_grab_onclick">猛戳开抢 让进度条充满能量</string>
+    <string name="label_grab_onclick">猛戳开抢......</string>
     <string name="label_grab_start_date">开抢时间：</string>
     <string name="label_countDown">倒计时：</string>
     <string name="label_grab_countDown">倒计时：</string>
@@ -216,7 +216,7 @@
     <string name="hint_address">请填写本人收货地址</string>
     <string name="hint_show_content">晒单内容</string>
     <string name="hint_input_money">请输入提现金额</string>
-    <string name="hint_input_code">"填写验证码"</string>
+    <string name="hint_input_code">"请输入验证码"</string>
     <string name="hint_input_nickName">"请输入昵称"</string>
     <string name="hint_input_newPhoneNum">"请输入新手机号"</string>
     <string name="hint_input_cardNum">"请输入卡号"</string>
@@ -224,7 +224,7 @@
     <string name="hint_select_bankCard">"请选择银行卡"</string>
     <string name="hint_input_bank_phoneNum">"请输入银行预留手机号"</string>
     <string name="hint_input_your_phoneNum">"请输入您的手机号"</string>
-    <string name="hint_input_your_passWord">"请输入您的密码"</string>
+    <string name="hint_input_your_passWord">"密码"</string>
     <string name="hint_select_age">"请选择您的年龄"</string>
     <string name="hint_input_age">"请输入您的年龄"</string>
     <string name="hint_select_gender">"请选择您的性别"</string>
@@ -260,6 +260,7 @@
     <string name="btn_alter">修改</string>
     <string name="btn_log_in">登　陆</string>
     <string name="btn_register">注　册</string>
+    <string name="btn_winnerList">查看中奖列表</string>
     <!--按钮-->
 
     <!--星期-->

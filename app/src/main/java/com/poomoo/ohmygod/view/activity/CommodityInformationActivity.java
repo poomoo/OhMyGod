@@ -3,6 +3,7 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,10 +24,12 @@ import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
+import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 
 import java.text.DecimalFormat;
@@ -46,10 +49,8 @@ public class CommodityInformationActivity extends BaseActivity {
     private TextView nameTxt;//商品名称
     private TextView priceTxt;//商品价格
     private TextView startDate;//开抢时间
-    private TextView footStartDate;//底部开抢时间
     private TextView headTimeCountdownTxt;//头部倒计时控件
     private TextView middleTimeCountdownTxt;//中部部倒计时控件
-    private TextView footTimeCountdownTxt;//底部倒计时控件
     private WebView commodityWeb;//商品详情
     private WebView activityWeb;//活动声明
     private TextView openActivityTxt;//确认开启活动按钮
@@ -57,7 +58,6 @@ public class CommodityInformationActivity extends BaseActivity {
     private LinearLayout llayout_head_timeCountDown;//顶部倒计时layout
     private LinearLayout llayout_openActivity;//开启活动layout
     private LinearLayout llayout_bottom;//底部倒计时layout
-    private LinearLayout llayout_foot_timeCountDown;//底部倒计时显示layout
     private LinearLayout llayout_anim;//显示动画
     private ImageView animImg;//动画
     private TextView percentTxt;//百分比
@@ -102,20 +102,16 @@ public class CommodityInformationActivity extends BaseActivity {
         nameTxt = (TextView) findViewById(R.id.txt_commodityName);
         priceTxt = (TextView) findViewById(R.id.txt_price);
         startDate = (TextView) findViewById(R.id.txt_startDate);
-        footStartDate = (TextView) findViewById(R.id.txt_foot_startDate);
         slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
         headTimeCountdownTxt = (TextView) findViewById(R.id.txt_head_timeCountDown);
         middleTimeCountdownTxt = (TextView) findViewById(R.id.txt_middle_timeCountDown);
-        footTimeCountdownTxt = (TextView) findViewById(R.id.txt_foot_timeCountDown);
         openActivityTxt = (TextView) findViewById(R.id.txt_openActivity);
         commodityWeb = (WebView) findViewById(R.id.web_commodity);
         activityWeb = (WebView) findViewById(R.id.web_activity);
-//        seek = (ProgressSeekBar) findViewById(R.id.seek_grab);
         grabBtn = (Button) findViewById(R.id.btn_grab);
         llayout_head_timeCountDown = (LinearLayout) findViewById(R.id.llayout_head_timeCountDown);
         llayout_openActivity = (LinearLayout) findViewById(R.id.llayout_openActivity);
         llayout_bottom = (LinearLayout) findViewById(R.id.llayout_grab_bottom);
-        llayout_foot_timeCountDown = (LinearLayout) findViewById(R.id.llayout_foot_timeCountDown);
         llayout_anim = (LinearLayout) findViewById(R.id.llayout_anim);
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
@@ -132,46 +128,19 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         });
 
-//        seek.setMyPadding(0, 30, 0, 0);
-//        seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//
-//            @Override
-//            public void onProgressChanged(SeekBar sb, int progress,
-//                                          boolean fromUser) {
-//                // TODO Auto-generated method stub
-//                seek.setIshide(true);
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//                // TODO Auto-generated method stub
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//                // TODO Auto-generated method stub
-//            }
-//        });
-
-//        this.progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//            @Override
-//            public void onCancel(DialogInterface dialog) {
-//                if(progressDialog.get)
-//            }
-//        });
     }
 
     private void getData() {
-        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
-        if (PARENT.equals(getString(R.string.intent_grab))) {
-            countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
-            initCountDown();
-        } else
-            hidden();
+//        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+//        if (PARENT.equals(getString(R.string.intent_grab))) {
+        countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
+        initCountDown();
+//        } else
+//            hidden();
 
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
 
-        showProgressDialog("通讯中...");
+        showProgressDialog(getString(R.string.dialog_message));
         LogUtils.i(TAG, "activeId:" + activeId);
         this.appAction.getCommodityInformation(application.getUserId(), activeId + "", new ActionCallbackListener() {
             @Override
@@ -194,7 +163,6 @@ public class CommodityInformationActivity extends BaseActivity {
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
         startDate.setText(commodityBO.getStartDt());
-        footStartDate.setText(commodityBO.getStartDt());
 
         int len = commodityBO.getPicList().size();
         String[] urls = new String[len];
@@ -202,7 +170,12 @@ public class CommodityInformationActivity extends BaseActivity {
             urls[i] = commodityBO.getPicList().get(i);
             LogUtils.i(TAG, "url:" + urls[i]);
         }
-        slideShowView.setPics(urls, null);
+        slideShowView.setPics(urls, new AdvertisementListener() {
+            @Override
+            public void onResult(int position) {
+                imageBrowse(position, commodityBO.getPicList());
+            }
+        });
 
         //商品详情
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
@@ -235,7 +208,6 @@ public class CommodityInformationActivity extends BaseActivity {
         textViewList = new ArrayList<>();
         textViewList.add(headTimeCountdownTxt);
         textViewList.add(middleTimeCountdownTxt);
-        textViewList.add(footTimeCountdownTxt);
         headTimeCountDownUtil = new TimeCountDownUtil(countDownTime, 1000, textViewList, new CountDownListener() {
             @Override
             public void onFinish(int result) {
@@ -256,11 +228,11 @@ public class CommodityInformationActivity extends BaseActivity {
         });
     }
 
-    private void hidden() {
-        openActivityTxt.setVisibility(View.GONE);
-        llayout_head_timeCountDown.setVisibility(View.GONE);
-        llayout_bottom.setVisibility(View.GONE);
-    }
+//    private void hidden() {
+//        openActivityTxt.setVisibility(View.GONE);
+//        llayout_head_timeCountDown.setVisibility(View.GONE);
+//        llayout_bottom.setVisibility(View.GONE);
+//    }
 
     /**
      * 确认开启活动
@@ -271,7 +243,6 @@ public class CommodityInformationActivity extends BaseActivity {
         isOpen = true;
         openActivityTxt.setVisibility(View.GONE);
         middleTimeCountdownTxt.setVisibility(View.VISIBLE);
-        llayout_foot_timeCountDown.setVisibility(View.GONE);
         if (isBegin) {
             grabBtn.setBackgroundResource(R.drawable.selector_grab_button_grab);
             grabBtn.setClickable(true);
@@ -426,5 +397,14 @@ public class CommodityInformationActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    protected void imageBrowse(int position, ArrayList<String> urls2) {
+        LogUtils.i(TAG, "position:" + position + " size:" + urls2.size());
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        startActivity(intent);
     }
 }

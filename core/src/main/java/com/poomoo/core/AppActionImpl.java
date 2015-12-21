@@ -187,12 +187,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getAdvertisement(final ActionCallbackListener listener) {
+    public void getAdvertisement(final String cityName,final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<AdBO>>() {
             @Override
             protected ResponseBO<AdBO> doInBackground(Void... params) {
-                return api.getAdvertisement();
+                return api.getAdvertisement(cityName);
             }
 
             @Override

@@ -19,7 +19,7 @@ public interface Api {
 
     ResponseBO register(String phoneNum, String passWord, String code, String age, String sex, String channelId);
 
-    ResponseBO getAdvertisement();
+    ResponseBO getAdvertisement(String cityName);
 
     ResponseBO getGrabList(String cityName);
 

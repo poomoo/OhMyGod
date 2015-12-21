@@ -10,16 +10,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import com.poomoo.core.ActionCallbackListener;
-import com.poomoo.model.CommentBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
-import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
 import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
+import com.poomoo.ohmygod.view.fragment.RebateFragmentOld;
 import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
 import com.umeng.socialize.sso.UMSsoHandler;
