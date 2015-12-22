@@ -6,7 +6,6 @@ package com.poomoo.ohmygod.view.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,18 +41,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 个人资料
+ * 升级会员资料
  * 作者: 李苜菲
  * 日期: 2015/11/24 15:37.
  */
-public class UserInfoActivity extends BaseActivity {
+public class MemberInfoActivity extends BaseActivity {
     private ImageView headImg;
     private TextView nickNameTxt;
     private TextView genderTxt;
     private TextView ageTxt;
     private TextView phoneNumTxt;
     private TextView idCardNumTxt;
-//    private TextView bankCardNumTxt;
+    private TextView bankCardNumTxt;
     private TextView addressTxt;
     private GenderPopupWindow genderWindow;
     private SelectPicsPopupWindow popupWindow;
@@ -61,7 +60,7 @@ public class UserInfoActivity extends BaseActivity {
     private String key;
     private String value;
     private boolean isMan = true;//true男 false女
-    public static UserInfoActivity instance;
+    public static MemberInfoActivity instance;
 
     private static final int NONE = 0;
     private static final int PHOTOHRAPH = 1;// 拍照
@@ -81,7 +80,7 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_info);
+        setContentView(R.layout.activity_member_info);
         instance = this;
         initView();
     }
@@ -89,14 +88,14 @@ public class UserInfoActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-        headImg = (ImageView) findViewById(R.id.img_userInfo_head);
-        nickNameTxt = (TextView) findViewById(R.id.txt_userInfo_nickName);
-        genderTxt = (TextView) findViewById(R.id.txt_userInfo_gender);
-        ageTxt = (TextView) findViewById(R.id.txt_userInfo_age);
-        phoneNumTxt = (TextView) findViewById(R.id.txt_userInfo_phoneNum);
-        idCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_idCardNum);
-//        bankCardNumTxt = (TextView) findViewById(R.id.txt_userInfo_bankCardNum);
-        addressTxt = (TextView) findViewById(R.id.txt_userInfo_address);
+        headImg = (ImageView) findViewById(R.id.img_memberInfo_head);
+        nickNameTxt = (TextView) findViewById(R.id.txt_memberInfo_nickName);
+        genderTxt = (TextView) findViewById(R.id.txt_memberInfo_gender);
+        ageTxt = (TextView) findViewById(R.id.txt_memberInfo_age);
+        phoneNumTxt = (TextView) findViewById(R.id.txt_memberInfo_phoneNum);
+        idCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_idCardNum);
+        bankCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_bankCardNum);
+        addressTxt = (TextView) findViewById(R.id.txt_memberInfo_address);
 
         initData();
     }
@@ -105,7 +104,7 @@ public class UserInfoActivity extends BaseActivity {
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(R.string.title_userInfo);
-        headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
+        headerViewHolder.backImg.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -147,7 +146,7 @@ public class UserInfoActivity extends BaseActivity {
         ageTxt.setText(application.getAge());
         phoneNumTxt.setText(MyUtil.hiddenTel(application.getTel()));
         idCardNumTxt.setText(MyUtil.hiddenIdCardNum(application.getIdCardNum()));
-//        bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(application.getBankCardNum()));
+        bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(application.getBankCardNum()));
         addressTxt.setText(application.getAddress());
     }
 
@@ -245,12 +244,12 @@ public class UserInfoActivity extends BaseActivity {
         // 实例化GenderPopupWindow
         genderWindow = new GenderPopupWindow(this, itemsOnClick);
         // 显示窗口
-        genderWindow.showAtLocation(this.findViewById(R.id.llayout_userInfo),
+        genderWindow.showAtLocation(this.findViewById(R.id.llayout_memberInfo),
                 Gravity.BOTTOM, 0, 0); // 设置layout在genderWindow中显示的位置
     }
 
     // 为弹出窗口实现监听类
-    private OnClickListener itemsOnClick = new View.OnClickListener() {
+    private OnClickListener itemsOnClick = new OnClickListener() {
 
         @Override
         public void onClick(View view) {
@@ -301,9 +300,9 @@ public class UserInfoActivity extends BaseActivity {
 
     private void select_pics() {
         // 实例化SelectPicPopupWindow
-        popupWindow = new SelectPicsPopupWindow(UserInfoActivity.this, itemsOnClick1);
+        popupWindow = new SelectPicsPopupWindow(MemberInfoActivity.this, itemsOnClick1);
         // 显示窗口
-        popupWindow.showAtLocation(UserInfoActivity.this.findViewById(R.id.llayout_userInfo),
+        popupWindow.showAtLocation(MemberInfoActivity.this.findViewById(R.id.llayout_memberInfo),
                 Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
 

@@ -381,7 +381,7 @@ public class CommodityInformationActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if (isSuccess) {
                             if (!application.getRealNameAuth().equals("1"))
-                                openActivity(EditPersonalInformationActivity.class);
+                                openActivity(CompleteUserInformationActivity.class);
                         }
                         finish();
                     }

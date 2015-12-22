@@ -13,7 +13,6 @@
         android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
-        android:id="@+id/rlayout_avatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -63,7 +62,6 @@
         android:layout_height="@dimen/dp_2" />
 
     <LinearLayout
-        android:id="@+id/rlayout_nickName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -77,8 +75,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/label_nickName"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
@@ -118,7 +116,6 @@
         android:layout_height="@dimen/dp_10" />
 
     <LinearLayout
-        android:id="@+id/rlayout_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -132,8 +129,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/label_gender"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
@@ -171,7 +168,6 @@
         android:layout_height="@dimen/dp_2" />
 
     <LinearLayout
-        android:id="@+id/rlayout_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -185,8 +181,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/label_age"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
@@ -238,8 +234,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/label_celPhone"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
@@ -277,7 +273,6 @@
         android:layout_height="@dimen/dp_2" />
 
     <LinearLayout
-        android:id="@+id/rlayout_idCardNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -292,8 +287,8 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/label_idCardNum"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
@@ -328,7 +323,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2" />
+        android:layout_height="@dimen/dp_2"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -340,13 +336,14 @@
         android:paddingBottom="@dimen/dp_8"
         android:paddingLeft="@dimen/dp_16"
         android:paddingRight="@dimen/dp_16"
-        android:paddingTop="@dimen/dp_8">
+        android:paddingTop="@dimen/dp_8"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/label_bankCard"
+            android:layout_weight="1"
+            android:text="@string/label_bankCardAccount"
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_22" />
 
@@ -436,7 +433,6 @@
         android:layout_height="@dimen/dp_10" />
 
     <RelativeLayout
-        android:id="@+id/rlayout_changePassWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

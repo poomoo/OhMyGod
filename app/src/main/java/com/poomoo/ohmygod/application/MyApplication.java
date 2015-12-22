@@ -37,6 +37,7 @@ public class MyApplication extends LitePalApplication {
     private String currCity = "";//当前城市
     private String locateCity = "";//定位城市
     private String address = "";//收货地址
+    private String isAdvancedUser = "";//是否为高级会员 默认值是0，1表示已经成为高级会员
 
     @Override
     public void onCreate() {
@@ -212,5 +213,13 @@ public class MyApplication extends LitePalApplication {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getIsAdvancedUser() {
+        return isAdvancedUser;
+    }
+
+    public void setIsAdvancedUser(String isAdvancedUser) {
+        this.isAdvancedUser = isAdvancedUser;
     }
 }

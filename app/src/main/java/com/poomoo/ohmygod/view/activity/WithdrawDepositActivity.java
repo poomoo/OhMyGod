@@ -18,13 +18,8 @@ import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
-import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 提现
@@ -139,7 +134,7 @@ public class WithdrawDepositActivity extends BaseActivity {
     public void toWithdrawDeposit(View view) {
         if (TextUtils.isEmpty(application.getRealName()) && TextUtils.isEmpty(application.getIdCardNum())) {
             MyUtil.showToast(getApplicationContext(), "请完善个人资料");
-            openActivity(EditPersonalInformationActivity.class);
+            openActivity(CompleteUserInformationActivity.class);
             return;
         }
 

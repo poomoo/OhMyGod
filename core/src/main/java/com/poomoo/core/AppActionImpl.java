@@ -187,7 +187,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getAdvertisement(final String cityName,final ActionCallbackListener listener) {
+    public void getAdvertisement(final String cityName, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<AdBO>>() {
             @Override
@@ -327,6 +327,28 @@ public class AppActionImpl implements AppAction {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
                 return api.putPersonalInfo(userId, realName, idCardNum, address);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void putMemberInfo(final String userId, final String realName, final String bankCardNum, final String idFrontPic, final String idOpsitePic, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.putMemberInfo(userId, realName, bankCardNum, idFrontPic, idOpsitePic);
             }
 
             @Override

@@ -39,6 +39,7 @@
             android:background="@null"
             android:hint="@string/hint_realName"
             android:paddingLeft="@dimen/dp_16"
+            android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_20" />
     </LinearLayout>
 
@@ -71,10 +72,45 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
+
             android:digits="0123456789xyzXYZ"
             android:hint="@string/hint_idCardNum"
             android:maxLength="18"
             android:paddingLeft="@dimen/dp_16"
+            android:textColor="@color/themeGray"
+            android:textSize="@dimen/sp_20" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_celPhone"
+            android:textSize="@dimen/sp_22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="@dimen/sp_22" />
+
+        <TextView
+            android:id="@+id/txt_celPhoneNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/dp_16"
+            android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_20" />
     </LinearLayout>
 
@@ -211,11 +247,11 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:hint="@string/hint_address1"
-
         android:paddingBottom="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10" />
+        android:paddingTop="@dimen/dp_10"
+        android:textColor="@color/themeGray" />
 
     <LinearLayout
         android:layout_width="match_parent"

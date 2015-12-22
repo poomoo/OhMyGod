@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/pub_layout_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:text="@string/label_tipTitle"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_tipContent"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_name"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail1"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_sex"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail2"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberAge"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail3"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberPhone"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail4"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberAddress"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_idCardNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:digits="0123456789xyzXYZ"
+                    android:maxLength="18"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail5"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberIdNum"
+                    android:textSize="@dimen/sp_20" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/themeGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/label_detail6"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <Button
+                    style="@style/myButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="toUpdateMemberInfo"
+                    android:text="@string/btn_submit" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -46,11 +46,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 编辑个人信息
+ * 完善普通用户资料
  * 作者: 李苜菲
  * 日期: 2015/11/17 14:18.
  */
-public class EditPersonalInformationActivity extends BaseActivity {
+public class CompleteUserInformationActivity extends BaseActivity {
     private EditText realNameEdt;
     private EditText idCardNumEdt;
     private EditText addressEdt;
@@ -94,7 +94,7 @@ public class EditPersonalInformationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_personal_information);
+        setContentView(R.layout.activity_complete_user_information);
         initView();
     }
 
@@ -309,7 +309,7 @@ public class EditPersonalInformationActivity extends BaseActivity {
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), realName);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), idCardNum);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
-                startService(new Intent(EditPersonalInformationActivity.this, Get_UserInfo_Service.class));
+                startService(new Intent(CompleteUserInformationActivity.this, Get_UserInfo_Service.class));
                 finish();
             }
 
@@ -323,9 +323,9 @@ public class EditPersonalInformationActivity extends BaseActivity {
 
     private void select_pics() {
         // 实例化SelectPicPopupWindow
-        popupWindow = new SelectPicsPopupWindow(EditPersonalInformationActivity.this, itemsOnClick);
+        popupWindow = new SelectPicsPopupWindow(CompleteUserInformationActivity.this, itemsOnClick);
         // 显示窗口
-        popupWindow.showAtLocation(EditPersonalInformationActivity.this.findViewById(R.id.llayout_editPersonalInformation),
+        popupWindow.showAtLocation(CompleteUserInformationActivity.this.findViewById(R.id.llayout_editPersonalInformation),
                 Gravity.BOTTOM, 0, 0); // 设置layout在PopupWindow中显示的位置
     }
 

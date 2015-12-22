@@ -139,6 +139,7 @@ public class LogInActivity extends BaseActivity {
         this.application.setBankCardNum(userBO.getBankCardNum());
         this.application.setBankName(userBO.getBankName());
         this.application.setIsActiveWarm(userBO.getIsActiveWarm());
+        this.application.setIsAdvancedUser(userBO.getIsAdvancedUser());
 
         SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), userBO.getUserId());
         SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), userBO.getTel());
@@ -154,5 +155,6 @@ public class LogInActivity extends BaseActivity {
         SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idOpsitePic), userBO.getIdOpsitePic());
         SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankCardNum), userBO.getBankCardNum());
         SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
+        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_isAdvancedUser), application.getIsAdvancedUser());
     }
 }

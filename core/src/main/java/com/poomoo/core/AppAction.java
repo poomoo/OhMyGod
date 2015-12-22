@@ -106,6 +106,18 @@ public interface AppAction {
     void putPersonalInfo(String userId, String realName, String idCardNum, String address, ActionCallbackListener listener);
 
     /**
+     * 完善升级会员资料
+     *
+     * @param userId
+     * @param realName
+     * @param bankCardNum
+     * @param idFrontPic
+     * @param idOpsitePic
+     * @param listener
+     */
+    void putMemberInfo(String userId, String realName, String bankCardNum, String idFrontPic, String idOpsitePic, ActionCallbackListener listener);
+
+    /**
      * 修改用户信息接口（单独修改用户某个字段信息，如昵称）
      *
      * @param userId

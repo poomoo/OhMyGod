@@ -4,7 +4,6 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.view.custom.RefreshLayout;
 
 /**
  * 作者: 李苜菲
@@ -84,6 +82,6 @@ public class WinningRecord2Activity extends BaseActivity {
     }
 
     public void toCompletedUserInfo(View view) {
-        openActivity(EditPersonalInformationActivity.class);
+        openActivity(CompleteUserInformationActivity.class);
     }
 }

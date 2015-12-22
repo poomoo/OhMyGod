@@ -25,6 +25,7 @@ public class UserBO {
     private String bankName = "";//--开户行名称
     private String isActiveWarm = "";//--活动警告1开启，0未开启
     private String address = "";//收货地址
+    private String isAdvancedUser = "";//是否为高级会员  默认值是0，1表示已经成为高级会员
 
     public String getUserId() {
         return userId;
@@ -154,6 +155,14 @@ public class UserBO {
         this.address = address;
     }
 
+    public String getIsAdvancedUser() {
+        return isAdvancedUser;
+    }
+
+    public void setIsAdvancedUser(String isAdvancedUser) {
+        this.isAdvancedUser = isAdvancedUser;
+    }
+
     @Override
     public String toString() {
         return "UserBO{" +
@@ -173,6 +182,7 @@ public class UserBO {
                 ", bankName='" + bankName + '\'' +
                 ", isActiveWarm='" + isActiveWarm + '\'' +
                 ", address='" + address + '\'' +
+                ", isAdvancedUser='" + isAdvancedUser + '\'' +
                 '}';
     }
 }

@@ -14,6 +14,7 @@
     <string name="title_win_information">中奖信息</string>
     <string name="title_commodity_information">商品详情</string>
     <string name="title_edit_personal_information">编辑个人资料</string>
+    <string name="title_completeInformation">完善资料</string>
     <string name="title_signed_and_rebate">签到返现</string>
     <string name="title_signed_explain">签到声明</string>
     <string name="title_rebate_explain">返现声明</string>
@@ -49,6 +50,7 @@
     <string name="title_feedBack">新反馈</string>
     <string name="title_protocol">天呐抢购协议</string>
     <string name="title_address">修改地址</string>
+    <string name="title_updateMember">会员升级</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -73,12 +75,32 @@
     <string name="label_nickName">我的昵称</string>
     <string name="label_gender">性别</string>
     <string name="label_age">年龄</string>
-    <string name="label_bankCard">银行卡</string>
+    <string name="label_bankCardAccount">银行账号</string>
+    <string name="label_bankAccountName">账户名</string>
     <string name="label_address1">地址</string>
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
     <string name="label_copy">复制</string>
+    <string name="label_uploadID">上传身份证信息(身份证正反照)</string>
+    <string name="label_click">(点击上方+上传)</string>
+    <string name="label_ensure">(请保证该账号能正常使用,因该账号原因导致款项不能准时到达,天呐平台不予承担任何责任)</string>
+    <string name="label_zhu">　　　　注:</string>
+    <string name="label_mark">"　　注:完善信息后请于3日内前往天呐运营中心办理相关手续(请获奖本人带上身份证明),逾期天呐平台将视为用户主动放弃获奖资格,平台不予承担任何责任"</string>
+    <string name="label_name">"姓　　　名"</string>
+    <string name="label_sex">"性　　　别"</string>
+    <string name="label_memberAge">"年　　　龄"</string>
+    <string name="label_memberPhone">"电　　　话"</string>
+    <string name="label_memberAddress">"地　　　址"</string>
+    <string name="label_memberIdNum">"身份证号码"</string>
+    <string name="label_detail1">(请勿盲目参与抢单)</string>
+    <string name="label_detail2">(抢单成功须先进行商品购买行为,若获奖者本人无力购买可向平台申请转让他人代为行使该行为)</string>
+    <string name="label_detail3">(商品购买行为发生后方可获取返现资格)</string>
+    <string name="label_detail4">(按照获得返现总额分为66期进行计返,该款项由银行监管执行)</string>
+    <string name="label_detail5">(每月　日自动转入用户帐号钱包,钱包内自主提现)</string>
+    <string name="label_detail6">(提现需支付20%%的所得税、10%%的手续费,转账时自动扣除)</string>
+    <string name="label_tipTitle">天呐君温馨提示</string>
+    <string name="label_tipContent">"　　由于大宗商品抢单活动中,涉及大额资金优惠,请准确填写完善下列信息,成为本平台注册会员后方可获得大宗商品抢单活动的参与资格。"</string>
     <!--个人资料-->
 
     <!--个人中心-->
@@ -297,6 +319,7 @@
     <string name="sp_bankName">bankName</string>
     <string name="sp_userId">userId</string>
     <string name="sp_address">address</string>
+    <string name="sp_isAdvancedUser">isAdvancedUser</string>
 
     <!--SharedPreferences-->
 
