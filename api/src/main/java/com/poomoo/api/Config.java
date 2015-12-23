@@ -26,6 +26,7 @@ public class Config {
     public final static String WITHDRAWDEPOSITLIST = "10012";//保存签到接口
     public final static String SYNC = "10013";//同步用户信息统一接口
     public final static String PASSWORD = "10014";//重置帐号登录密码
+    public final static String ADVANCE = "10015";//升级会员
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号

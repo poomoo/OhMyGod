@@ -139,9 +139,9 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        LogUtils.i(TAG, "recordsBOList大小:" + recordsBOList.size() + "position:" + position);
+        LogUtils.i(TAG, "recordsBOList大小:" + adapter.getItemList() + "position:" + position);
         Bundle bundle = new Bundle();
-        bundle.putInt(getString(R.string.intent_activeId), recordsBOList.get(position).getActiveId());
+        bundle.putInt(getString(R.string.intent_activeId), adapter.getItemList().get(position).getActiveId());
         openActivity(CommodityInformation2Activity.class, bundle);
     }
 

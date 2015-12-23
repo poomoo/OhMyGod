@@ -509,4 +509,23 @@ public class ApiImpl implements Api {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
     }
+
+    @Override
+    public ResponseBO putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.ADVANCE);
+        paramMap.put("userId", userId);
+        paramMap.put("realName", realName);
+        paramMap.put("sex", sex);
+        paramMap.put("age", age);
+        paramMap.put("tel", tel);
+        paramMap.put("address", address);
+        paramMap.put("idCardNum", idCardNum);
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
 }

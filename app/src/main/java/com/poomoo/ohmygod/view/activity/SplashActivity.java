@@ -49,7 +49,15 @@ public class SplashActivity extends BaseActivity {
                 else {
                     application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
                     application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
-                    application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), "天呐"));
+                    application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), ""));
+                    application.setRealName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_realName), ""));
+                    application.setAge((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_age), ""));
+                    application.setTel((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
+                    application.setAddress((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_address), ""));
+                    application.setIsAdvancedUser((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_isAdvancedUser), ""));
+                    application.setIdCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idCardNum), ""));
+                    application.setIdFrontPic((String)SPUtils.get(getApplicationContext(), getString(R.string.sp_idFrontPic), ""));
+                    application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
                     startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
                     openActivity(MainFragmentActivity.class);
                 }

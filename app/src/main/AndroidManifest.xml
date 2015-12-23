@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.activity.UpdateMemberInfoActivity"
+            android:name=".view.activity.SplashActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,13 +65,14 @@
         <activity android:name=".view.activity.CommodityInformationActivity" />
         <activity android:name=".view.activity.CommodityInformation2Activity" />
         <activity android:name=".view.activity.CompleteUserInformationActivity" />
-        <activity android:name=".view.activity.SplashActivity" />
+        <activity android:name=".view.activity.UpdateMemberInfoActivity" />
         <activity android:name=".view.activity.NickNameActivity" />
         <activity android:name=".view.activity.FeedBackActivity" />
         <activity android:name=".view.activity.CityListActivity" />
         <activity android:name=".view.activity.WinInformationActivity" />
         <activity android:name=".view.activity.AddressActivity" />
         <activity android:name=".view.activity.CompleteMemberInformationActivity" />
+        <activity android:name=".view.activity.MemberInfoActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

@@ -295,4 +295,18 @@ public interface AppAction {
      */
     void getWinningInfo(String cityName, int currPage, int pageSize, ActionCallbackListener listener);
 
+    /**
+     * 升级会员资料提交
+     *
+     * @param userId
+     * @param realName
+     * @param sex
+     * @param age
+     * @param tel
+     * @param address
+     * @param idCardNum
+     * @param listener
+     */
+    void putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum, ActionCallbackListener listener);
+
 }

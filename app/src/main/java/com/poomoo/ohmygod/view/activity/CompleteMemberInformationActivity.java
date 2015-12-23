@@ -3,6 +3,9 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -342,6 +346,25 @@ public class CompleteMemberInformationActivity extends BaseActivity {
                 file2 = FileUtils.saveBitmapByPath(bitmap, path2);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Dialog dialog = new AlertDialog.Builder(CompleteMemberInformationActivity.this).setMessage("资料没有完善,确定退出?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }
+            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).create();
+            dialog.show();
+        }
+        return true;
     }
 
 }

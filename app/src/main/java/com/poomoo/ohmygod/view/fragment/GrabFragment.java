@@ -265,9 +265,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getMessages("5", 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                LogUtils.i(TAG, "getInform成功:" + data.getObjList());
+
                 messageBOList = data.getObjList();
                 informCount = messageBOList.size();
+                LogUtils.i(TAG, "getInform成功:" + data.getObjList()+"  informCount:"+informCount);
                 if (informCount > 0) {
                     countTxt.setVisibility(View.VISIBLE);
                     countTxt.setText(informCount + "");
@@ -311,6 +312,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //        } else {
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+        pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
         pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
         openActivity(CommodityInformationActivity.class, pBundle);
 //        }

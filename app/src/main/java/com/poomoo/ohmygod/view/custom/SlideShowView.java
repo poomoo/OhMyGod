@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
-import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,20 +169,20 @@ public class SlideShowView extends FrameLayout {
         public void destroyItem(View container, int position, Object object) {
             // TODO Auto-generated method stub
             //((ViewPag.er)container).removeView((View)object);
-            LogUtils.i(TAG, "destroyItem:" + position);
+//            LogUtils.i(TAG, "destroyItem:" + position);
             ((ViewPager) container).removeView(imageViewsList.get(position));
         }
 
         @Override
         public Object instantiateItem(View container, final int position) {
-            LogUtils.i(TAG, "instantiateItem:" + position);
+//            LogUtils.i(TAG, "instantiateItem:" + position);
 
             ImageView imageView = imageViewsList.get(position);
             imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LogUtils.i(TAG, "点击viewpager:" + position);
+//                    LogUtils.i(TAG, "点击viewpager:" + position);
                     if (listener != null)
                         listener.onResult(position);
                 }
@@ -278,7 +277,7 @@ public class SlideShowView extends FrameLayout {
             // TODO Auto-generated method stub
 
             currentItem = pos;
-            LogUtils.i(TAG, "dotViewsList:" + dotViewsList.size());
+//            LogUtils.i(TAG, "dotViewsList:" + dotViewsList.size());
             for (int i = 0; i < dotViewsList.size(); i++) {
                 if (i == pos) {
                     (dotViewsList.get(pos)).setBackgroundResource(R.drawable.ic_dot_selected);

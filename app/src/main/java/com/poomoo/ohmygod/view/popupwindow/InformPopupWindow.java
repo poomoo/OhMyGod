@@ -37,7 +37,7 @@ public class InformPopupWindow extends PopupWindow {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popupwindow_inform, null);
-        titleTxt = (TextView) mMenuView.findViewById(R.id.txt_informTitle);
+//        titleTxt = (TextView) mMenuView.findViewById(R.id.txt_informTitle);
         moreImg = (ImageView) mMenuView.findViewById(R.id.img_more);
         closeImg = (ImageView) mMenuView.findViewById(R.id.img_close);
         webView = (WebView) mMenuView.findViewById(R.id.popup_inform_webView);

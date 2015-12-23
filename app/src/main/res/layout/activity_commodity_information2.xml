@@ -95,7 +95,8 @@
                 <WebView
                     android:id="@+id/web_commodity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,9 +106,9 @@
 
                 <Button
                     style="@style/myButton"
-                    android:onClick="catWinnerList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="catWinnerList"
                     android:text="@string/btn_winnerList" />
             </LinearLayout>
         </LinearLayout>

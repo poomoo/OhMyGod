@@ -95,7 +95,11 @@ public class CommodityInformation2Activity extends BaseActivity {
         });
 
         //商品详情
+        commodityWeb.getSettings().setUseWideViewPort(true);
+        commodityWeb.getSettings().setLoadWithOverviewMode(true);
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
+        commodityWeb.setVerticalScrollBarEnabled(false);
+        commodityWeb.setHorizontalScrollBarEnabled(false);
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
     }
 

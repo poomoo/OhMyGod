@@ -73,4 +73,6 @@ public interface Api {
 
     ResponseBO getWinningInfo(String cityName, int currPage, int pageSize);
 
+    ResponseBO putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum);
+
 }

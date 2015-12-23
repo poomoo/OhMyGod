@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.database.AreaInfo;
 import com.poomoo.ohmygod.database.CityInfo;
 
@@ -291,5 +292,24 @@ public class MyUtil {
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.subtract(b2).doubleValue();
+    }
+
+    /**
+     * 是否需要完善资料
+     *
+     * @return
+     */
+    public static boolean isNeedCompleteInfo(MyApplication application) {
+        if (application.getIsAdvancedUser().equals("1")) { //升级会员
+            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
+                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getRealName())
+                    || TextUtils.isEmpty(application.getIdFrontPic()) || TextUtils.isEmpty(application.getIdOpsitePic()))
+                return true;
+        } else {
+            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getIdCardNum())
+                    || TextUtils.isEmpty(application.getAddress()))
+                return true;
+        }
+        return false;
     }
 }

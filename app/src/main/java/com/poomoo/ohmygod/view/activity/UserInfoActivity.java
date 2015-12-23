@@ -226,7 +226,9 @@ public class UserInfoActivity extends BaseActivity {
      * @param view
      */
     public void toAddress(View view) {
-        openActivity(AddressActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_addressSubmit));
+        openActivity(AddressActivity.class,bundle);
     }
 
     /**

@@ -3,6 +3,7 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -42,12 +43,15 @@ public class AddressActivity extends BaseActivity {
     private String address;
     private String key;
 
+    private String PARENT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
         initView();
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
     }
 
     @Override
@@ -108,24 +112,31 @@ public class AddressActivity extends BaseActivity {
             return;
         }
         address = application.getLocateCity() + area + address;
-        showProgressDialog(getString(R.string.dialog_message));
-        key = "address";
-        this.appAction.changePersonalInfo(this.application.getUserId(), key, address, new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                closeProgressDialog();
-                application.setAddress(address);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
-                MyUtil.showToast(getApplicationContext(), "修改成功");
-                finish();
-            }
+        if (PARENT.equals(getString(R.string.intent_addressAlter))) {
+            Intent intent = getIntent();
+            intent.putExtra(getString(R.string.intent_value), address);
+            setResult(1, intent);
+            finish();
+        } else if (PARENT.equals(getString(R.string.intent_addressSubmit))) {
+            showProgressDialog(getString(R.string.dialog_message));
+            key = "address";
+            this.appAction.changePersonalInfo(this.application.getUserId(), key, address, new ActionCallbackListener() {
+                @Override
+                public void onSuccess(ResponseBO data) {
+                    closeProgressDialog();
+                    application.setAddress(address);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
+                    MyUtil.showToast(getApplicationContext(), "修改成功");
+                    finish();
+                }
 
-            @Override
-            public void onFailure(int errorCode, String message) {
-                closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), message);
-            }
-        });
+                @Override
+                public void onFailure(int errorCode, String message) {
+                    closeProgressDialog();
+                    MyUtil.showToast(getApplicationContext(), message);
+                }
+            });
+        }
     }
 
 

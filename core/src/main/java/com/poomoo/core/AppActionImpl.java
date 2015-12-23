@@ -816,4 +816,26 @@ public class AppActionImpl implements AppAction {
             }
         }.execute();
     }
+
+    @Override
+    public void putAdvanceInfo(final String userId, final String realName, final String sex, final String age, final String tel, final String address, final String idCardNum, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.putAdvanceInfo(userId, realName, sex, age, tel, address, idCardNum);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
 }

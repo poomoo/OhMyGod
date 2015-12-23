@@ -18,7 +18,7 @@ import java.util.List;
  * 日期: 2015/11/13 11:12.
  */
 public abstract class MyBaseAdapter<T> extends BaseAdapter {
-    private String TAG="MyBaseAdapter";
+    private String TAG = "MyBaseAdapter";
     protected Context context;
     protected LayoutInflater inflater;
     protected List<T> itemList = new ArrayList<>();
@@ -89,4 +89,8 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
 
     @Override
     abstract public View getView(int position, View convertView, ViewGroup parent);
+
+    public List<T> getItemList() {
+        return itemList;
+    }
 }

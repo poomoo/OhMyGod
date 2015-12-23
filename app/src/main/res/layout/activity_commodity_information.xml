@@ -179,6 +179,25 @@
                             android:layout_height="@dimen/dp_20" />
 
                         <TextView
+                            android:id="@+id/txt_signIn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/selector_grab_button_open_activity"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:onClick="toSignIn"
+                            android:text="@string/btn_signIn"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_20"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_8"
+                            android:visibility="gone" />
+
+                        <TextView
                             android:id="@+id/txt_openActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -189,7 +208,8 @@
                             android:onClick="toOpen"
                             android:text="@string/btn_grab"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="@dimen/sp_18"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/txt_middle_timeCountDown"
@@ -204,6 +224,7 @@
                             android:textColor="@color/themeRed"
                             android:textSize="@dimen/sp_18"
                             android:visibility="gone" />
+
 
                         <TextView
                             android:layout_width="match_parent"

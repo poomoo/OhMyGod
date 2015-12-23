@@ -62,6 +62,7 @@
     <string name="label_countDown">倒计时：</string>
     <string name="label_grab_countDown">倒计时：</string>
     <string name="label_grab_value">价值　　　</string>
+    <string name="label_signInSuccess">报名成功</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -214,6 +215,7 @@
     <string name="intent_age">age</string>
     <string name="intent_gender">gender</string>
     <string name="intent_activeId">activeId</string>
+    <string name="intent_typeId">typeId</string>
     <string name="intent_countDownTime">countDownTime</string>
     <string name="intent_nickName">nickName</string>
     <string name="intent_rebate">rebate</string>
@@ -228,6 +230,8 @@
     <string name="intent_innerMessage">innerMessage</string>
     <string name="intent_grab">grab</string>
     <string name="intent_info">info</string>
+    <string name="intent_addressAlter">addressAlter</string>
+    <string name="intent_addressSubmit">addressSubmit</string>
     <!--intent-->
 
     <!--hint-->
@@ -283,6 +287,7 @@
     <string name="btn_log_in">登　陆</string>
     <string name="btn_register">注　册</string>
     <string name="btn_winnerList">查看中奖列表</string>
+    <string name="btn_signIn">我要报名</string>
     <!--按钮-->
 
     <!--星期-->

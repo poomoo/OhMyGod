@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llayout_updateMember"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -125,11 +126,12 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_gender"
+                <TextView
+                    android:id="@+id/txt_memberInfo_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:clickable="true"
+                    android:onClick="toSelectGender"
                     android:paddingLeft="@dimen/dp_10"
                     android:textSize="@dimen/sp_20" />
 
@@ -184,6 +186,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:paddingLeft="@dimen/dp_10"
                     android:textSize="@dimen/sp_20" />
 
@@ -233,12 +236,12 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_tel"
+                <TextView
+                    android:id="@+id/txt_memberInfo_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:inputType="number"
+                    android:inputType="phone"
+                    android:maxLength="11"
                     android:paddingLeft="@dimen/dp_10"
                     android:textSize="@dimen/sp_20" />
 
@@ -287,13 +290,12 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_idCardNum"
+                <TextView
+                    android:id="@+id/txt_memberInfo_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:digits="0123456789xyzXYZ"
-                    android:maxLength="18"
+                    android:clickable="true"
+                    android:onClick="toAddress"
                     android:paddingLeft="@dimen/dp_10"
                     android:textSize="@dimen/sp_20" />
 
@@ -343,11 +345,12 @@
                 android:padding="@dimen/dp_10">
 
                 <EditText
-                    android:id="@+id/edt_memberInfo_address"
+                    android:id="@+id/edt_memberInfo_idCardNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:inputType="number"
+                    android:digits="0123456789xyzXYZ"
+                    android:maxLength="18"
                     android:paddingLeft="@dimen/dp_10"
                     android:textSize="@dimen/sp_20" />
 

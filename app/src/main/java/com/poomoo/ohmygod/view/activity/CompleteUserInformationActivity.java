@@ -3,6 +3,9 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -42,6 +46,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -415,4 +420,22 @@ public class CompleteUserInformationActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Dialog dialog = new AlertDialog.Builder(CompleteUserInformationActivity.this).setMessage("资料没有完善,确定退出?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }
+            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).create();
+            dialog.show();
+        }
+        return true;
+    }
 }

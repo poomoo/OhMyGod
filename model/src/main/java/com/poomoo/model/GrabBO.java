@@ -16,6 +16,7 @@ public class GrabBO {
     private String picture;//--活动图片
     private long startCountdown;//--开始时间倒计时
     private long endCountdown;//--结束时间倒计时
+    private int typeId;//活动分类 1-房子 2-车子 3-装修 4-其他
 
 
     public int getActiveId() {
@@ -67,15 +68,24 @@ public class GrabBO {
         this.endCountdown = endCountdown;
     }
 
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
     @Override
     public String toString() {
         return "GrabBO{" +
-                "activeId='" + activeId + '\'' +
+                "activeId=" + activeId +
                 ", title='" + title + '\'' +
                 ", goodsName='" + goodsName + '\'' +
                 ", picture='" + picture + '\'' +
                 ", startCountdown=" + startCountdown +
                 ", endCountdown=" + endCountdown +
+                ", typeId=" + typeId +
                 '}';
     }
 }

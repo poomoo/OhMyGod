@@ -3,47 +3,47 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
     <item
-        android:drawable="@drawable/anim_success1"
+        android:drawable="@drawable/housesuccess1"
         android:duration="300" />
 
     <item
-        android:drawable="@drawable/anim_success2"
+        android:drawable="@drawable/housesuccess2"
         android:duration="300" />
 
     <item
-        android:drawable="@drawable/anim_success3"
+        android:drawable="@drawable/housesuccess3"
         android:duration="300" />
 
     <item
-        android:drawable="@drawable/anim_success4"
+        android:drawable="@drawable/housesuccess4"
         android:duration="300" />
 
     <item
-        android:drawable="@drawable/anim_success5"
+        android:drawable="@drawable/housesuccess5"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success6"
+        android:drawable="@drawable/housesuccess6"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success7"
+        android:drawable="@drawable/housesuccess7"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success8"
+        android:drawable="@drawable/housesuccess8"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success9"
+        android:drawable="@drawable/housesuccess9"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success10"
+        android:drawable="@drawable/housesuccess10"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success11"
+        android:drawable="@drawable/housesuccess11"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success12"
+        android:drawable="@drawable/housesuccess12"
         android:duration="300" />
     <item
-        android:drawable="@drawable/anim_success13"
+        android:drawable="@drawable/housesuccess13"
         android:duration="300" />
 
 </animation-list>
