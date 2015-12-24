@@ -54,6 +54,10 @@ public class MemberInfoActivity extends BaseActivity {
     private TextView idCardNumTxt;
     private TextView bankCardNumTxt;
     private TextView addressTxt;
+    private TextView realNameTxt;
+    private TextView bankNameTxt;
+    private ImageView frontImg;
+    private ImageView backImg;
     private GenderPopupWindow genderWindow;
     private SelectPicsPopupWindow popupWindow;
 
@@ -96,6 +100,10 @@ public class MemberInfoActivity extends BaseActivity {
         idCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_idCardNum);
         bankCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_bankCardNum);
         addressTxt = (TextView) findViewById(R.id.txt_memberInfo_address);
+        realNameTxt = (TextView) findViewById(R.id.txt_memberInfo_bankAccountName);
+        bankNameTxt = (TextView) findViewById(R.id.txt_memberInfo_bankName);
+        frontImg = (ImageView) findViewById(R.id.img_memberInfo_front_idCard);
+        backImg = (ImageView) findViewById(R.id.img_memberInfo_back_idCard);
 
         initData();
     }
@@ -134,6 +142,15 @@ public class MemberInfoActivity extends BaseActivity {
             });
         }
 
+        if (TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic())) {
+            DisplayImageOptions options = new DisplayImageOptions.Builder() //
+                    .cacheInMemory(true) //
+                    .cacheOnDisk(true) //
+                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                    .build();//
+            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontImg, options);
+            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backImg, options);
+        }
         nickNameTxt.setText(application.getNickName());
 
         if (TextUtils.isEmpty(application.getSex()))
@@ -148,6 +165,7 @@ public class MemberInfoActivity extends BaseActivity {
         idCardNumTxt.setText(MyUtil.hiddenIdCardNum(application.getIdCardNum()));
         bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(application.getBankCardNum()));
         addressTxt.setText(application.getAddress());
+        realNameTxt.setText(application.getRealName());
     }
 
     /**

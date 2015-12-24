@@ -73,6 +73,7 @@
         <activity android:name=".view.activity.AddressActivity" />
         <activity android:name=".view.activity.CompleteMemberInformationActivity" />
         <activity android:name=".view.activity.MemberInfoActivity" />
+        <activity android:name=".view.activity.RebateRecordsActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

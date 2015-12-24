@@ -309,4 +309,19 @@ public interface AppAction {
      */
     void putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum, ActionCallbackListener listener);
 
+    /**
+     * 查询返现
+     *
+     * @param userId
+     * @param listener
+     */
+    void getRebate(String userId, ActionCallbackListener listener);
+
+    /**
+     * 返现记录
+     *
+     * @param userId
+     * @param listener
+     */
+    void getRebateInfo(String userId, ActionCallbackListener listener);
 }

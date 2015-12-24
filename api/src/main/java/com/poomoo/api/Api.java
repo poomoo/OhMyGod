@@ -75,4 +75,8 @@ public interface Api {
 
     ResponseBO putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum);
 
+    ResponseBO getRebate(String userId);
+
+    ResponseBO getRebateInfo(String userId);
+
 }

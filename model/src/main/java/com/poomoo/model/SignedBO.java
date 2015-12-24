@@ -16,6 +16,7 @@ public class SignedBO {
     private String countUsed;//--总的已返金额
     private String countUse;//--总的未反金额
     private List<String> mySignRecords;//--签到时间（天）记录集合
+    private int isWin;//--0没有中奖，1中奖
 
     public String getTotalCashFee() {
         return totalCashFee;
@@ -49,4 +50,11 @@ public class SignedBO {
         this.mySignRecords = mySignRecords;
     }
 
+    public int getIsWin() {
+        return isWin;
+    }
+
+    public void setIsWin(int isWin) {
+        this.isWin = isWin;
+    }
 }

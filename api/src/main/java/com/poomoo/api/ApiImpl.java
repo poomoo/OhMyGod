@@ -8,6 +8,7 @@ import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
+import com.poomoo.model.RebateBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.model.SignedBO;
@@ -524,6 +525,34 @@ public class ApiImpl implements Api {
         paramMap.put("idCardNum", idCardNum);
         try {
             return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getRebate(String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.SIGNEDLIST);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, SignedBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getRebateInfo(String userId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.REBATEIINFO);
+        paramMap.put("userId", userId);
+
+        try {
+            return httpEngine.postHandle(paramMap, RebateBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

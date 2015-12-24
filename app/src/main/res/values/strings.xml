@@ -15,7 +15,7 @@
     <string name="title_commodity_information">商品详情</string>
     <string name="title_edit_personal_information">编辑个人资料</string>
     <string name="title_completeInformation">完善资料</string>
-    <string name="title_signed_and_rebate">签到返现</string>
+    <string name="title_rebate">返现</string>
     <string name="title_signed_explain">签到声明</string>
     <string name="title_rebate_explain">返现声明</string>
     <string name="title_personal_center">个人中心</string>
@@ -24,6 +24,7 @@
     <string name="title_show_and_share">晒单分享</string>
     <string name="title_bucket">相册</string>
     <string name="title_my_withdraw_deposit">我的提现</string>
+    <string name="title_my_rebate_records">我的返现</string>
     <string name="title_withdraw_deposit">立即提现</string>
     <string name="title_withdraw_deposit_help">提现帮助</string>
     <string name="title_verify_phone_num">验证手机号</string>
@@ -78,6 +79,7 @@
     <string name="label_age">年龄</string>
     <string name="label_bankCardAccount">银行账号</string>
     <string name="label_bankAccountName">账户名</string>
+    <string name="label_bankName">开户银行</string>
     <string name="label_address1">地址</string>
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
@@ -115,13 +117,18 @@
     <!--签到返现-->
     <string name="label_totalAmount">总金额池</string>
     <string name="label_supervision">本资金池有中国工商银行全程监督</string>
-    <string name="label_unRebateSum">未返金额</string>
-    <string name="label_rebateSum">已返金额</string>
+    <string name="label_unRebateSum">未返金额(元)</string>
+    <string name="label_rebateSum">已返金额(元)</string>
     <string name="label_unSign">签到\n即返</string>
     <string name="label_signed">已返</string>
     <string name="label_rules">规则说明</string>
     <string name="label_signRule">签到说明</string>
-    <string name="label_rebateRule">返现说明</string>
+    <string name="label_rebateRule">返现声明</string>
+    <string name="label_rebateRecords">返现记录</string>
+    <string name="label_withdraw_deposit">我要提现</string>
+    <string name="label_rebate1">返现专用账户(元)</string>
+    <string name="label_rebate2">本账户由中国工商银行全程监督</string>
+    <string name="label_rebate3">天呐君温馨提示:积德行善攒人品</string>
     <!--签到返现-->
 
     <!--年月-->
@@ -175,7 +182,7 @@
     <!--修改身份证信息-->
 
     <!--银行卡-->
-    <string name="label_bankName">"中国工商银行"</string>
+    <string name="label_bankName11">"中国工商银行"</string>
     <string name="label_depositCard">"储蓄卡"</string>
     <string name="label_bindingBankCard">"请绑定持卡人本人的银行卡"</string>
     <string name="label_cardHolder">"持卡人"</string>
@@ -286,7 +293,7 @@
     <string name="btn_alter">修改</string>
     <string name="btn_log_in">登　陆</string>
     <string name="btn_register">注　册</string>
-    <string name="btn_winnerList">查看中奖列表</string>
+    <string name="btn_lucky">看看大家手气</string>
     <string name="btn_signIn">我要报名</string>
     <!--按钮-->
 
