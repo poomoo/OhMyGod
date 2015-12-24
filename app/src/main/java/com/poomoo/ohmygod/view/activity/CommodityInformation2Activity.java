@@ -34,6 +34,7 @@ public class CommodityInformation2Activity extends BaseActivity {
     private CommodityBO commodityBO;
 
     private int activeId;//--活动编号
+    private String activityName;//活动名字
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class CommodityInformation2Activity extends BaseActivity {
 
         initView();
         getData();
+        activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));
     }
 
 
@@ -120,7 +122,9 @@ public class CommodityInformation2Activity extends BaseActivity {
      * @param view
      */
     public void catWinnerList(View view) {
-        MyUtil.showToast(getApplicationContext(), "中奖列表");
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_activityName), activityName);
+        openActivity(WinnerListActivity.class, bundle);
     }
 
     protected void imageBrowse(int position, ArrayList<String> urls2) {

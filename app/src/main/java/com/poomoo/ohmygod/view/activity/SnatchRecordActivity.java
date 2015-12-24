@@ -142,6 +142,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
         LogUtils.i(TAG, "recordsBOList大小:" + adapter.getItemList() + "position:" + position);
         Bundle bundle = new Bundle();
         bundle.putInt(getString(R.string.intent_activeId), adapter.getItemList().get(position).getActiveId());
+        bundle.putString(getString(R.string.intent_activityName), adapter.getItemList().get(position).getTitle());
         openActivity(CommodityInformation2Activity.class, bundle);
     }
 

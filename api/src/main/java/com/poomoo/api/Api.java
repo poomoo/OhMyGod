@@ -79,4 +79,6 @@ public interface Api {
 
     ResponseBO getRebateInfo(String userId);
 
+    ResponseBO getActivityWinnerList(String activeId);
+
 }

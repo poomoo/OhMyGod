@@ -16,6 +16,7 @@ import com.poomoo.model.StatementBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.model.WinInformationBO;
 import com.poomoo.model.WinnerBO;
+import com.poomoo.model.WinnerListBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.model.WithdrawDepositBO;
 
@@ -553,6 +554,20 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, RebateBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getActivityWinnerList(String activeId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.ACTIVITYWINNERLIST);
+        paramMap.put("activeId", activeId);
+
+        try {
+            return httpEngine.postHandle(paramMap, WinnerListBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

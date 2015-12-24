@@ -31,7 +31,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     private ListView listView;
 
     private WinInformationAdapter adapter;
-    private List<WinInformationBO> list=new ArrayList<>();
+    private List<WinInformationBO> list = new ArrayList<>();
 
     private int currPage = 1;
     private boolean isLoad = false;//true 加载 false刷新
@@ -113,6 +113,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
         bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
+        bundle.putString(getString(R.string.intent_activityName), list.get(position).getTitle());
         openActivity(CommodityInformation2Activity.class, bundle);
     }
 

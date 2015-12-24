@@ -21,6 +21,7 @@
     <string name="title_personal_center">个人中心</string>
     <string name="title_snatch_record">夺宝记录</string>
     <string name="title_winning_record">中奖记录</string>
+    <string name="title_winner_list">活动中奖</string>
     <string name="title_show_and_share">晒单分享</string>
     <string name="title_bucket">相册</string>
     <string name="title_my_withdraw_deposit">我的提现</string>
@@ -109,7 +110,7 @@
     <!--个人中心-->
     <string name="label_snatch">夺宝记录</string>
     <string name="label_winning">中奖记录</string>
-    <string name="label_my_withdraw_deposit">我的提现</string>
+    <string name="label_my_withdraw_deposit">提现记录</string>
     <string name="label_withdraw_deposit_now">立即提现</string>
     <string name="label_inner_information">站内信息</string>
     <string name="label_my_show">我的晒单</string>
@@ -228,6 +229,7 @@
     <string name="intent_rebate">rebate</string>
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>
+    <string name="intent_activityName">activityName</string>
     <string name="intent_withDrawDeposit">withDrawDeposit</string>
     <string name="intent_userHelp">userHelp</string>
     <string name="intent_message">message</string>
@@ -340,4 +342,7 @@
     <!--进度会话框-->
 
     <string name="viewpager_indicator">%1$d/%2$d</string>
+    <string name="click_cancel">闹铃通知，点击取消</string>
+    <string name="song_pause">闹铃暂停</string>
+    <string name="dial">4000010300</string>
 </resources>

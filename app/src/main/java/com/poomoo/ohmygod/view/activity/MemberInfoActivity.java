@@ -81,6 +81,12 @@ public class MemberInfoActivity extends BaseActivity {
     private String headPic;
     private String gender;
 
+    private int flag;//1-正面 2-反面
+    private String path1;
+    private String path2;
+    private File file1;
+    private File file2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +180,7 @@ public class MemberInfoActivity extends BaseActivity {
      * @param view
      */
     public void toAvatar(View view) {
+        flag = 3;
         select_pics();
     }
 
@@ -266,6 +273,26 @@ public class MemberInfoActivity extends BaseActivity {
         // 显示窗口
         genderWindow.showAtLocation(this.findViewById(R.id.llayout_memberInfo),
                 Gravity.BOTTOM, 0, 0); // 设置layout在genderWindow中显示的位置
+    }
+
+    /**
+     * 身份证正面
+     *
+     * @param view
+     */
+    public void toSelectFront(View view) {
+        flag = 1;
+        select_pics();
+    }
+
+    /**
+     * 身份证反面
+     *
+     * @param view
+     */
+    public void toSelectBack(View view) {
+        flag = 2;
+        select_pics();
     }
 
     // 为弹出窗口实现监听类
@@ -390,7 +417,7 @@ public class MemberInfoActivity extends BaseActivity {
     }
 
     public void upload() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.uploadPics(fileBOList.get(0), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -398,7 +425,18 @@ public class MemberInfoActivity extends BaseActivity {
                     LogUtils.i(TAG, "onSuccess");
                     JSONObject result = new JSONObject(data.getJsonData().toString());
                     url = result.getString("picUrl");
-                    toSubmitHeadPic();
+                    switch (flag) {
+                        case 1:
+                            toSubmitIdFrontPic();
+                            break;
+                        case 2:
+                            toSubmitIdOpsitePic();
+                            break;
+                        case 3:
+                            toSubmitHeadPic();
+                            break;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -437,6 +475,48 @@ public class MemberInfoActivity extends BaseActivity {
         });
     }
 
+    private void toSubmitIdFrontPic() {
+        key = "idFrontPic";
+        value = url;
+
+        this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                application.setIdFrontPic(url);
+                frontImg.setImageBitmap(bitmap);
+                MyUtil.showToast(getApplicationContext(), "修改身份证正面成功");
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
+    private void toSubmitIdOpsitePic() {
+        key = "idOpsitePic";
+        value = url;
+
+        this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                application.setIdOpsitePic(url);
+                headImg.setImageBitmap(bitmap);
+                MyUtil.showToast(getApplicationContext(), "修改身份证反面成功");
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
+    }
+
 
     private void setImage(String path) {
         try {
@@ -444,13 +524,36 @@ public class MemberInfoActivity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        file = FileUtils.saveBitmapByPath(bitmap, image_capture_path);
-        fileBOList = new ArrayList<>();
-        fileBO = new FileBO();
-        fileBO.setType("1");
-        fileBO.setImgFile(file);
-        fileBOList.add(fileBO);
+        switch (flag) {
+            case 1:
+                path1 = Environment.getExternalStorageDirectory() + "/" + "OhMyGod1.jpg";
+                file1 = FileUtils.saveBitmapByPath(bitmap, path1);
+                fileBOList = new ArrayList<>();
+                fileBO = new FileBO();
+                fileBO.setType("2");
+                fileBO.setImgFile(file1);
+                fileBOList.add(fileBO);
+                break;
+            case 2:
+                path2 = Environment.getExternalStorageDirectory() + "/" + "OhMyGod2.jpg";
+                file2 = FileUtils.saveBitmapByPath(bitmap, path2);
+                fileBOList = new ArrayList<>();
+                fileBO = new FileBO();
+                fileBO.setType("3");
+                fileBO.setImgFile(file2);
+                fileBOList.add(fileBO);
+                break;
+            case 3:
+                file = FileUtils.saveBitmapByPath(bitmap, image_capture_path);
+                fileBOList = new ArrayList<>();
+                fileBO = new FileBO();
+                fileBO.setType("1");
+                fileBO.setImgFile(file);
+                fileBOList.add(fileBO);
+                break;
+        }
         upload();
+
     }
 
     @Override

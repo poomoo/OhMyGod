@@ -23,4 +23,8 @@
         <item name="android:textSize">@dimen/sp_22</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="titlebar" parent="@android:style/Theme.Dialog">
+        <item name="android:layout">@layout/dialog_alarm_alert_title</item>
+    </style>
 </resources>

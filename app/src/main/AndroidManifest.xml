@@ -20,6 +20,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!--闹钟-->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+    <!-- 解锁的权限 -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- 亮屏的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--震动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--拨打电话-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".application.MyApplication"
@@ -74,6 +87,7 @@
         <activity android:name=".view.activity.CompleteMemberInformationActivity" />
         <activity android:name=".view.activity.MemberInfoActivity" />
         <activity android:name=".view.activity.RebateRecordsActivity" />
+        <activity android:name=".view.activity.WinnerListActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />
@@ -131,5 +145,35 @@
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <!--提醒-->
+        <activity
+            android:name=".alarm.AlarmAlertActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=":AlarmAlert"
+            android:theme="@style/titlebar">
+            <intent-filter>
+                <action android:name="com.sprdroid.note.STOP_ALARM" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".alarm.AlarmService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.way.note.STOP_ALARM" />
+            </intent-filter>
+        </service>
+        <receiver android:name=".alarm.CallAlarm">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_CALL" />
+                <action android:name="android.intent.action.SMS" />
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.ANSWER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <!--提醒-->
     </application>
 </manifest>

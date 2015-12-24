@@ -1,5 +1,10 @@
 package com.poomoo.ohmygod.view.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -31,10 +37,13 @@ import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
+import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
+import com.poomoo.ohmygod.listeners.AlarmtListener;
+import com.poomoo.ohmygod.utils.DateTimePickDialogUtil;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CityListActivity;
@@ -49,6 +58,7 @@ import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -60,7 +70,8 @@ import java.util.TimerTask;
  */
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener {
     private PullDownScrollView refreshableView;
-    private LinearLayout remindLlayout;
+    private LinearLayout remindLlayout1;
+    private LinearLayout remindLlayout2;
     private LinearLayout currCityLlayout;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
@@ -86,6 +97,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private boolean isFirst = true;//true第一次进入
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
     private DisplayImageOptions defaultOptions;
+    private Calendar cal = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,15 +123,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
-        remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
-
-        //下拉刷新
-//        refreshableView.setOnRefreshListener(new PullToRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getGrabList(true);
-//            }
-//        }, 0);
+        remindLlayout1 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind1);
+        remindLlayout2 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind2);
 
         //初始化下拉刷新
         refreshableView.setRefreshListener(this);
@@ -127,6 +132,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
         currCityLlayout.setOnClickListener(this);
         winnerRlayout.setOnClickListener(this);
+        remindLlayout1.setOnClickListener(this);
+        remindLlayout2.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -216,7 +223,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 slideShowView.setVisibility(View.VISIBLE);
-                remindLlayout.setVisibility(View.VISIBLE);
+                remindLlayout1.setVisibility(View.VISIBLE);
                 grabBOList = data.getObjList();
 //                initTestData(grabBOList);
                 adapter.setItems(grabBOList);
@@ -229,7 +236,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
                 }
                 slideShowView.setVisibility(View.GONE);
-                remindLlayout.setVisibility(View.GONE);
+                remindLlayout1.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });
@@ -262,17 +269,17 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     private void getInform() {
         //--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+        LogUtils.i(TAG, "getInform");
         this.appAction.getMessages("5", 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
 
                 messageBOList = data.getObjList();
                 informCount = messageBOList.size();
-                LogUtils.i(TAG, "getInform成功:" + data.getObjList()+"  informCount:"+informCount);
+                LogUtils.i(TAG, "getInform成功:" + data.getObjList() + "  informCount:" + informCount);
                 if (informCount > 0) {
                     countTxt.setVisibility(View.VISIBLE);
                     countTxt.setText(informCount + "");
-
                 }
                 MainFragmentActivity.messageBOList = messageBOList;
                 getInfo(messageBOList.get(0).getStatementId());
@@ -288,6 +295,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                LogUtils.i(TAG, "getInfo成功");
                 MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
                 MainFragmentActivity.messageInfoBO = messageInfoBO;
             }
@@ -329,6 +337,16 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             case R.id.rlayout_grab_winner:
                 openActivity(WinInformationActivity.class);
                 break;
+
+            case R.id.llayout_remind1:
+                showFloatingActionButton();
+                break;
+
+            case R.id.llayout_remind2:
+//                hideFloatingActionButton();
+                setDate();
+                break;
+
         }
     }
 
@@ -383,6 +401,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 getGrabList(false);
                 getWinnerList();
                 getAd();
+                getInform();
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);
@@ -396,5 +415,57 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             grabBO.setPicture(i + "");
             grabBOList.add(grabBO);
         }
+    }
+
+    public void hideFloatingActionButton() {
+        remindLlayout1.setVisibility(View.VISIBLE);
+        remindLlayout2.setVisibility(View.GONE);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(remindLlayout2, "scaleX", 1, 0);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(remindLlayout2, "scaleY", 1, 0);
+        AnimatorSet animSetXY = new AnimatorSet();
+        animSetXY.playTogether(scaleX, scaleY);
+        animSetXY.setInterpolator(new OvershootInterpolator());
+        animSetXY.setDuration(500);
+        animSetXY.start();
+    }
+
+    public void showFloatingActionButton() {
+        remindLlayout1.setVisibility(View.GONE);
+        remindLlayout2.setVisibility(View.VISIBLE);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(remindLlayout2, "translationX", 0, 1);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(remindLlayout2, "scaleY", 0, 1);
+        AnimatorSet animSetXY = new AnimatorSet();
+        animSetXY.playTogether(scaleX, scaleY);
+        animSetXY.setInterpolator(new OvershootInterpolator());
+        animSetXY.setDuration(500);
+        animSetXY.start();
+    }
+
+    /**
+     * 设置闹钟时间
+     */
+    private void setDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+                getActivity(), str);
+        dateTimePicKDialog.dateTimePicKDialog(new AlarmtListener() {
+            @Override
+            public void onResult(long time) {
+                /* 建立Intent和PendingIntent，来调用目标组件 */
+                Intent intent = new Intent(getActivity(), CallAlarm.class);
+                intent.putExtra("_id", 0);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                AlarmManager am;
+            /* 获取闹钟管理的实例 */
+                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+            /* 设置闹钟 */
+                am.cancel(pendingIntent);
+                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                LogUtils.i(TAG,"time:"+time);
+                MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
+            }
+        });
     }
 }

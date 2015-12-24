@@ -27,7 +27,7 @@ public class Config {
     public final static String SYNC = "10013";//同步用户信息统一接口
     public final static String PASSWORD = "10014";//重置帐号登录密码
     public final static String ADVANCE = "10015";//升级会员
-    public final static String REBATEIINFO = "10018";//我的返现
+    public final static String REBATEIINFO = "10016";//我的返现
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号
@@ -37,6 +37,7 @@ public class Config {
     public final static String WINNERLIST = "20004";//中奖信息
     public final static String WININFOLIST = "20005";//查询活动中奖列表（分页）
     public final static String RECORDS = "20006";//中奖记录
+    public final static String ACTIVITYWINNERLIST = "20007";//活动中奖人列表
 
     //ACTION 30000
     public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号

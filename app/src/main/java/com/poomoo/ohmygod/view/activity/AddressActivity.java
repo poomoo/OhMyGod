@@ -3,6 +3,7 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;

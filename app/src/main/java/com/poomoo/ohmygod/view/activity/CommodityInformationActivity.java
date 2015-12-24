@@ -199,8 +199,8 @@ public class CommodityInformationActivity extends BaseActivity {
             //车子
             if (typeId == 2) {
                 anim = MyConfig.car;
-                succeedAnim = R.drawable.housesuccess;
-                failedAnim = R.drawable.housefailed;
+                succeedAnim = R.drawable.carsuccess;
+                failedAnim = R.drawable.carfailed;
             }
 
             //装修
@@ -427,7 +427,7 @@ public class CommodityInformationActivity extends BaseActivity {
                             ).create();
                             dialog.show();
                         } else if (grabResultBO.getIsWin().equals("false")) {
-                            LogUtils.i(TAG,"failedAnim:"+failedAnim);
+                            LogUtils.i(TAG, "failedAnim:" + failedAnim);
                             animImg.setImageResource(failedAnim);
                             message = "很遗憾,没有中奖,请再接再厉";
                             MyUtil.showToast(getApplicationContext(), message);

@@ -69,7 +69,7 @@ public class TimeCountDownUtil extends CountDownTimer {
                 4 + spanned.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         if (isList)
             for (TextView textView : textViewList)
-                textView.setText(ss);
+                textView.setText(spanned);
         else {
             if (view instanceof Button) {
                 view.setClickable(false);// 设置不能点击

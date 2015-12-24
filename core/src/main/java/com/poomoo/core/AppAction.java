@@ -324,4 +324,12 @@ public interface AppAction {
      * @param listener
      */
     void getRebateInfo(String userId, ActionCallbackListener listener);
+
+    /**
+     * 获取活动中奖列表
+     *
+     * @param activeId
+     * @param listener
+     */
+    void getActivityWinnerList(String activeId, ActionCallbackListener listener);
 }

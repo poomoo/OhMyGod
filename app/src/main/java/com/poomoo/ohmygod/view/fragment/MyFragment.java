@@ -3,7 +3,9 @@
  */
 package com.poomoo.ohmygod.view.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
  * 日期: 2015/11/20 15:25.
  */
 public class MyFragment extends BaseFragment implements OnItemClickListener {
+    private TextView dialTxt;
     private ImageView settingImg;
     private GridView gridView;
     private ImageView avatarImg;
@@ -62,6 +65,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
 
     private void initView() {
 
+        dialTxt = (TextView) getActivity().findViewById(R.id.txt_dial);
         settingImg = (ImageView) getActivity().findViewById(R.id.img_personal_setting);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_personal_avatar);
         genderImg = (ImageView) getActivity().findViewById(R.id.img_personal_gender);
@@ -72,6 +76,14 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         personalCenterAdapter = new PersonalCenterAdapter(getActivity(), gridView);
         gridView.setAdapter(personalCenterAdapter);
         gridView.setOnItemClickListener(this);
+
+        dialTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_dial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getString(R.string.dial)));
+                startActivity(intent_dial);
+            }
+        });
 
         settingImg.setOnClickListener(new View.OnClickListener() {
             @Override

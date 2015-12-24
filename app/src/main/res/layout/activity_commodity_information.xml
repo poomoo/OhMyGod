@@ -249,7 +249,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="@dimen/dp_30">
+                        android:paddingTop="@dimen/dp_30">
 
                         <ImageView
                             android:id="@+id/img_anim"
@@ -267,9 +267,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_20" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_20" />
                 </LinearLayout>
             </FrameLayout>
 

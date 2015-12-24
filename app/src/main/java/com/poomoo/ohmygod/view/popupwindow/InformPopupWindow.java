@@ -42,7 +42,7 @@ public class InformPopupWindow extends PopupWindow {
         closeImg = (ImageView) mMenuView.findViewById(R.id.img_close);
         webView = (WebView) mMenuView.findViewById(R.id.popup_inform_webView);
 
-        titleTxt.setText(title);
+//        titleTxt.setText(title);
         webView.getSettings().setDefaultTextEncodingName("UTF-8");
         webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 

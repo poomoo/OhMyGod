@@ -31,13 +31,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_uploadID"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,13 +105,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_bankAccountName"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -152,13 +152,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_bankCardAccount"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,7 +175,7 @@
                     android:inputType="number"
                     android:maxLength="23"
                     android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="match_parent"
