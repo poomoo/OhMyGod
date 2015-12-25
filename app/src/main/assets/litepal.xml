@@ -12,6 +12,8 @@
         <mapping class="com.poomoo.ohmygod.database.CityInfo" />
 
         <mapping class="com.poomoo.ohmygod.database.AreaInfo" />
+
+        <mapping class="com.poomoo.ohmygod.database.MessageInfo" />
     </list>
 
 </litepal>

@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -15,6 +16,8 @@ import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+
+import org.litepal.tablemanager.Connector;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,8 +37,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // 导入数据库文件
-        importDB();
+        importDB();        // 导入数据库文件
         mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
         initLocation();
@@ -126,6 +128,7 @@ public class SplashActivity extends BaseActivity {
                 is.close();
                 LogUtils.i(TAG, "导入数据库文件结束");
             }
+
         } catch (Exception e) {
         }
     }

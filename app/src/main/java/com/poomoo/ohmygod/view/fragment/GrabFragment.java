@@ -41,6 +41,7 @@ import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.database.MessageInfo;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.listeners.AlarmtListener;
 import com.poomoo.ohmygod.utils.DateTimePickDialogUtil;
@@ -92,11 +93,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private MyLocationListener mMyLocationListener;
 
     private String currCity = "";
-    private int informCount = 0;//通知的数量
+    public int informCount = 0;//通知的数量
     private List<MessageBO> messageBOList = new ArrayList<>();
     private boolean isFirst = true;//true第一次进入
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
     private DisplayImageOptions defaultOptions;
+    private MessageInfo messageInfo;
+    private List<MessageInfo> infoList = new ArrayList<>();
+    public static GrabFragment instance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,7 +110,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        instance = this;
         initView();
     }
 
@@ -276,11 +280,18 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             public void onSuccess(ResponseBO data) {
 
                 messageBOList = data.getObjList();
-                informCount = messageBOList.size();
+                int len = messageBOList.size();
                 LogUtils.i(TAG, "getInform成功:" + data.getObjList() + "  informCount:" + informCount);
-                if (informCount > 0) {
+                if (len > 0) {
                     countTxt.setVisibility(View.VISIBLE);
-                    countTxt.setText(informCount + "");
+                    for (int i = 0; i < len; i++) {
+                        messageInfo = new MessageInfo();
+                        messageInfo.setStatementId(messageBOList.get(i).getStatementId());
+                        messageInfo.setIsRead(false);
+                        infoList.add(messageInfo);
+                        MyUtil.insertMessageInfo(infoList);
+                    }
+                    updateInfoCount();
                 }
                 MainFragmentActivity.messageBOList = messageBOList;
                 getInfo(messageBOList.get(0).getStatementId());
@@ -290,6 +301,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             public void onFailure(int errorCode, String message) {
             }
         });
+    }
+
+    public void updateInfoCount() {
+        informCount = MyUtil.getUnReadInfoCount();
+        countTxt.setText(informCount + "");
     }
 
     private void getInfo(int statementId) {

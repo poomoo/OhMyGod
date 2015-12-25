@@ -4,6 +4,7 @@
 package com.poomoo.ohmygod.utils;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.database.AreaInfo;
 import com.poomoo.ohmygod.database.CityInfo;
+import com.poomoo.ohmygod.database.MessageInfo;
 import com.poomoo.ohmygod.view.activity.LogInActivity;
 
 import org.litepal.crud.DataSupport;
@@ -365,5 +368,43 @@ public class MyUtil {
             return false;
         } else
             return true;
+    }
+
+    /**
+     * 把消息插入id本地数据库
+     *
+     * @param infoList
+     */
+    public static void insertMessageInfo(List<MessageInfo> infoList) {
+//        DataSupport.saveAll(infoList);
+        for (MessageInfo messageInfo : infoList) {
+            Cursor cursor = DataSupport.findBySQL("select * from messageinfo where statementId = ?", messageInfo.getStatementId() + "");
+            if (cursor.getCount() == 0)
+                messageInfo.save();
+        }
+    }
+
+    /**
+     * 更新消息为已读
+     *
+     * @param statementId
+     */
+    public static void updateMessageInfo(int statementId) {
+        ContentValues values = new ContentValues();
+        values.put("isRead", true);
+        DataSupport.updateAll(MessageInfo.class, values, "statementId = ?", statementId + "");
+    }
+
+    /**
+     * 查询未读的消息数
+     *
+     * @return
+     */
+    public static int getUnReadInfoCount() {
+//        List<MessageInfo> infoList = DataSupport.where("isread = ?", "0").find(MessageInfo.class);
+        Cursor cursor = DataSupport.findBySQL("select * from messageinfo where isRead = ?", "0");
+        int len = cursor.getCount();
+        LogUtils.i("getUnReadInfoCount", "len:" + len);
+        return len;
     }
 }

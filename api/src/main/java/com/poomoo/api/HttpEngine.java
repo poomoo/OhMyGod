@@ -59,7 +59,7 @@ public class HttpEngine {
     // IP
     public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://zgqg.91jiaoyou.cn/zgqg/app/";// 远程
-    public static final String URL = BaseRemoteUrl + "call.htm";
+    public static final String URL = BaseLocalUrl + "call.htm";
     public static final String PICSURL = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间

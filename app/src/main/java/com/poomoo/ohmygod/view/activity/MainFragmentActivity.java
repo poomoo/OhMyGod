@@ -99,7 +99,7 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToGrab(View view) {
-        if(!MyUtil.isLogin(this))
+        if (!MyUtil.isLogin(this))
             return;
         if (grabFrament == null)
             grabFrament = new GrabFragment();
@@ -113,7 +113,7 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToRebate(View view) {
-        if(!MyUtil.isLogin(this))
+        if (!MyUtil.isLogin(this))
             return;
         if (rebateFragment == null)
             rebateFragment = new RebateFragment();
@@ -127,7 +127,7 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToShow(View view) {
-        if(!MyUtil.isLogin(this))
+        if (!MyUtil.isLogin(this))
             return;
         if (showFragment == null)
             showFragment = new ShowFragment();
@@ -141,7 +141,7 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToMy(View view) {
-        if(!MyUtil.isLogin(this))
+        if (!MyUtil.isLogin(this))
             return;
         if (myFragment == null)
             myFragment = new MyFragment();
@@ -173,25 +173,28 @@ public class MainFragmentActivity extends
         if ((messageBOList != null && messageBOList.size() > 0)) {
             statementId = messageBOList.get(0).getStatementId();
             content = messageInfoBO.getContent();
+            MyUtil.updateMessageInfo(statementId);
+            GrabFragment.instance.updateInfoCount();
             show();
-        } else {
-            showProgressDialog(getString(R.string.dialog_message));
-            this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
-                @Override
-                public void onSuccess(ResponseBO data) {
-                    closeProgressDialog();
-                    MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
-                    content = messageInfoBO.getContent();
-                    show();
-                }
-
-                @Override
-                public void onFailure(int errorCode, String message) {
-                    closeProgressDialog();
-                    MyUtil.showToast(getApplicationContext(), message);
-                }
-            });
         }
+//        else {
+//            showProgressDialog(getString(R.string.dialog_message));
+//            this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
+//                @Override
+//                public void onSuccess(ResponseBO data) {
+//                    closeProgressDialog();
+//                    MessageInfoBO messageInfoBO = (MessageInfoBO) data.getObj();
+//                    content = messageInfoBO.getContent();
+//                    show();
+//                }
+//
+//                @Override
+//                public void onFailure(int errorCode, String message) {
+//                    closeProgressDialog();
+//                    MyUtil.showToast(getApplicationContext(), message);
+//                }
+//            });
+//        }
     }
 
     @Override

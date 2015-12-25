@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 个人中心适配
@@ -45,6 +46,8 @@ public class PersonalCenterAdapter extends MyBaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) convertView
                     .findViewById(R.id.img_personal_center_ic);
+            viewHolder.infoCountTxt = (TextView) convertView
+                    .findViewById(R.id.txt_personal_centerinform_count);
             viewHolder.textView = (TextView) convertView
                     .findViewById(R.id.txt_personal_center_name);
             viewHolder.linearLayout = (LinearLayout) convertView
@@ -58,6 +61,14 @@ public class PersonalCenterAdapter extends MyBaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.textView.setText(name[position]);
+        if (position == 4) {
+            int count = MyUtil.getUnReadInfoCount();
+            if (count > 0) {
+                viewHolder.infoCountTxt.setVisibility(View.VISIBLE);
+                viewHolder.infoCountTxt.setText(count + "");
+            }
+
+        }
         viewHolder.imageView.setImageResource(ic[position]);
         // 设置layout大小，以免出现下边框不显示的情况
         viewHolder.linearLayout
@@ -86,6 +97,7 @@ public class PersonalCenterAdapter extends MyBaseAdapter {
     private class ViewHolder {
 
         private TextView textView;
+        private TextView infoCountTxt;
         private ImageView imageView;
         private View rightLineView, bottomLineView;
         private LinearLayout linearLayout;
