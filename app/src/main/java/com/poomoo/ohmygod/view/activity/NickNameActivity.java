@@ -12,6 +12,7 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
 
 /**
  * 修改昵称
@@ -45,6 +46,9 @@ public class NickNameActivity extends BaseActivity {
             contentEdt.setHint(getString(R.string.hint_input_age));
             contentEdt.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
         }
+        if (PARENT.equals(getString(R.string.intent_openBank))) {
+            contentEdt.setHint(getString(R.string.hint_input_openBank));
+        }
 
     }
 
@@ -55,6 +59,8 @@ public class NickNameActivity extends BaseActivity {
             title = getString(R.string.title_nickName);
         if (PARENT.equals(getString(R.string.intent_age)))
             title = getString(R.string.title_age);
+        if (PARENT.equals(getString(R.string.intent_openBank)))
+            title = getString(R.string.title_openBank);
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(title);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
@@ -76,18 +82,33 @@ public class NickNameActivity extends BaseActivity {
             key = "nickName";
         if (PARENT.equals(getString(R.string.intent_age)))
             key = "age";
+        if (PARENT.equals(getString(R.string.intent_openBank)))
+            key = "bankName";
         value = contentEdt.getText().toString().trim();
 
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                if (PARENT.equals(getString(R.string.intent_nickName)))
-                    application.setNickName(value);
-                if (PARENT.equals(getString(R.string.intent_age)))
-                    application.setAge(value);
                 closeProgressDialog();
-                MyUtil.showToast(getApplicationContext(), data.getMsg());
+
+                if (PARENT.equals(getString(R.string.intent_nickName))) {
+                    application.setNickName(value);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), value);
+                    MyUtil.showToast(getApplicationContext(), "修改昵称成功");
+                }
+
+                if (PARENT.equals(getString(R.string.intent_age))) {
+                    application.setAge(value);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_age), value);
+                    MyUtil.showToast(getApplicationContext(), "修改年龄成功");
+                }
+
+                if (PARENT.equals(getString(R.string.intent_openBank))) {
+                    application.setBankName(value);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), value);
+                    MyUtil.showToast(getApplicationContext(), "修改开户银行成功");
+                }
                 finish();
                 getActivityOutToRight();
             }

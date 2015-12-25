@@ -237,6 +237,17 @@ public class MemberInfoActivity extends BaseActivity {
     }
 
     /**
+     * 开户银行
+     *
+     * @param view
+     */
+    public void toBankName(View view) {
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_openBank));
+        openActivity(NickNameActivity.class, pBundle);
+    }
+
+    /**
      * 银行卡
      *
      * @param view
@@ -336,6 +347,7 @@ public class MemberInfoActivity extends BaseActivity {
                 else
                     genderTxt.setText(getString(R.string.label_gender_woman));
                 application.setSex(value);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_sex), value);
             }
 
             @Override
@@ -485,6 +497,7 @@ public class MemberInfoActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 application.setIdFrontPic(url);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), url);
                 frontImg.setImageBitmap(bitmap);
                 MyUtil.showToast(getApplicationContext(), "修改身份证正面成功");
             }
@@ -507,6 +520,7 @@ public class MemberInfoActivity extends BaseActivity {
                 closeProgressDialog();
                 application.setIdOpsitePic(url);
                 headImg.setImageBitmap(bitmap);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), url);
                 MyUtil.showToast(getApplicationContext(), "修改身份证反面成功");
             }
 

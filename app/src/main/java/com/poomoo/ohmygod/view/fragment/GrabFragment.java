@@ -97,7 +97,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private boolean isFirst = true;//true第一次进入
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
     private DisplayImageOptions defaultOptions;
-    private Calendar cal = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -199,6 +198,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 slideShowView.setPics(urls, new AdvertisementListener() {
                     @Override
                     public void onResult(int position) {
+                        if (!MyUtil.isLogin(getActivity()))
+                            return;
                         Bundle bundle = new Bundle();
                         bundle.putInt(getString(R.string.intent_activeId), adBOList.get(position).getActiveId());
                         openActivity(CommodityInformationActivity.class, bundle);
@@ -309,26 +310,18 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (!MyUtil.isLogin(getActivity())) {
-            LogUtils.i(TAG, "没有登录");
+        if (!MyUtil.isLogin(getActivity()))
             return;
-        }
-        LogUtils.i(TAG, "继续了");
 
         if (!application.getLocateCity().equals(application.getCurrCity())) {
             MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
             return;
         }
-//        if (time > 0) {
-//            MyUtil.showToast(getActivity().getApplicationContext(), "活动还没开始");
-//        } else {
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
         pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
         openActivity(CommodityInformationActivity.class, pBundle);
-//        }
-
     }
 
     @Override
@@ -349,7 +342,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 break;
 
             case R.id.llayout_remind2:
-//                hideFloatingActionButton();
                 setDate();
                 break;
 
@@ -366,7 +358,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 grabBOList = new ArrayList<>();
                 adapter.setItems(grabBOList);
                 getGrabList(false);
-                slideShowView.clearAll();
                 getAd();
             }
             currCity = application.getCurrCity();
@@ -471,6 +462,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
                 LogUtils.i(TAG, "time:" + time);
                 MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
+                hideFloatingActionButton();
             }
         });
     }

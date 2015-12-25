@@ -30,12 +30,15 @@
         android:padding="10dp">
 
         <EditText
+            android:id="@+id/edt_newPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="@string/hint_input_newPhoneNum"
             android:paddingBottom="8dp"
+            android:inputType="phone"
+            android:maxLength="11"
             android:paddingLeft="16dp"
             android:paddingTop="8dp" />
     </LinearLayout>

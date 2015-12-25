@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -22,6 +23,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,6 @@ public class SlideShowView extends FrameLayout {
 
     private AdvertisementListener listener;
 
-    private final LinearLayout dotLayout;
 
     //Handler
     private Handler handler = new Handler() {
@@ -95,9 +96,7 @@ public class SlideShowView extends FrameLayout {
         myPagerAdapter = new MyPagerAdapter();
         myPageChangeListener = new MyPageChangeListener();
 
-        LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
-        dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
     }
 
     public void setPics(String[] urls, AdvertisementListener listener) {
@@ -124,8 +123,6 @@ public class SlideShowView extends FrameLayout {
      */
     private void initData() {
         imageViewsList = new ArrayList<>();
-        dotViewsList = new ArrayList<>();
-
         // 一步任务获取图片
 //        new GetListTask().execute("");
         initUI(context);
@@ -137,10 +134,13 @@ public class SlideShowView extends FrameLayout {
     private void initUI(Context context) {
         if (imageUrls == null || imageUrls.length == 0)
             return;
-
+        this.removeAllViews();
+        LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
+        LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
 
         // 热点个数与图片特殊相等
+        dotViewsList = new ArrayList<>();
         for (int i = 0; i < imageUrls.length; i++) {
             ImageView view = new ImageView(context);
             view.setTag(imageUrls[i]);
@@ -156,6 +156,7 @@ public class SlideShowView extends FrameLayout {
             dotViewsList.add(dotView);
         }
 
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setFocusable(true);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setOnPageChangeListener(myPageChangeListener);
@@ -166,35 +167,29 @@ public class SlideShowView extends FrameLayout {
      */
     private class MyPagerAdapter extends PagerAdapter {
         @Override
-        public void destroyItem(View container, int position, Object object) {
-            // TODO Auto-generated method stub
-            //((ViewPag.er)container).removeView((View)object);
-//            LogUtils.i(TAG, "destroyItem:" + position);
-            ((ViewPager) container).removeView(imageViewsList.get(position));
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(imageViewsList.get(position));
         }
 
         @Override
-        public Object instantiateItem(View container, final int position) {
-//            LogUtils.i(TAG, "instantiateItem:" + position);
-
+        public Object instantiateItem(ViewGroup container, final int position) {
             ImageView imageView = imageViewsList.get(position);
             imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    LogUtils.i(TAG, "点击viewpager:" + position);
                     if (listener != null)
                         listener.onResult(position);
                 }
             });
-            ((ViewPager) container).addView(imageViewsList.get(position));
+            container.addView(imageViewsList.get(position));
             return imageViewsList.get(position);
         }
 
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-//            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
+            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
             return imageViewsList.size();
         }
 
@@ -204,34 +199,11 @@ public class SlideShowView extends FrameLayout {
             return arg0 == arg1;
         }
 
-        @Override
-        public void restoreState(Parcelable arg0, ClassLoader arg1) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public Parcelable saveState() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        @Override
-        public void startUpdate(View arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void finishUpdate(View arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
 //        @Override
 //        public int getItemPosition(Object object) {
 //            return POSITION_NONE;
 //        }
+
 
     }
 
@@ -352,16 +324,4 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
-
-    /**
-     * 清除所有数据
-     */
-    public void clearAll() {
-        imageViewsList.clear();
-        dotViewsList.clear();
-
-        dotLayout.removeAllViews();
-        myPagerAdapter.notifyDataSetChanged();
-    }
-
 }

@@ -53,6 +53,7 @@
     <string name="title_protocol">天呐抢购协议</string>
     <string name="title_address">修改地址</string>
     <string name="title_updateMember">会员升级</string>
+    <string name="title_openBank">开户银行</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -175,7 +176,7 @@
     <string name="label_sent">"验证码已发送至当前手机号:"</string>
     <string name="label_question">"无法收到验证码?"</string>
     <string name="label_newPhoneNum">"请输入您需要绑定的新手机号码"</string>
-    <string name="label_newCode">"请输入14752432561收到的短信验证码"</string>
+    <string name="label_newCode">"请输入%1$s收到的短信验证码"</string>
     <!--换绑手机-->
 
     <!--修改身份证信息-->
@@ -241,6 +242,7 @@
     <string name="intent_info">info</string>
     <string name="intent_addressAlter">addressAlter</string>
     <string name="intent_addressSubmit">addressSubmit</string>
+    <string name="intent_openBank">openBank</string>
     <!--intent-->
 
     <!--hint-->
@@ -253,6 +255,7 @@
     <string name="hint_input_money">请输入提现金额</string>
     <string name="hint_input_code">"请输入验证码"</string>
     <string name="hint_input_nickName">"请输入昵称"</string>
+    <string name="hint_input_openBank">"请输入开户银行(银行+支行)"</string>
     <string name="hint_input_newPhoneNum">"请输入新手机号"</string>
     <string name="hint_input_cardNum">"请输入卡号"</string>
     <string name="hint_input_cardName">"请输入持卡人姓名"</string>

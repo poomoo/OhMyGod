@@ -23,8 +23,7 @@ import com.poomoo.ohmygod.utils.TimeCountDownUtil;
  */
 public class VerifyPhoneNum2Activity extends BaseActivity {
     private TextView telTxt;
-    private TextView
-            codeTxt;
+    private TextView codeTxt;
     private EditText codeEdt;
 
     private String PARENT;//父activity
@@ -41,9 +40,9 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         if (PARENT.equals(getString(R.string.intent_phone)))
             title = getString(R.string.title_changePhone);
-        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
+
+        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard)))
             title = getString(R.string.title_safe);
-        }
 
         initView();
     }
@@ -57,9 +56,9 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         codeEdt = (EditText) findViewById(R.id.edt_verify_code);
 
         telTxt.setText(MyUtil.hiddenTel(application.getTel()));
-        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
-            getCode();
-        }
+//        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
+        getCode();
+//        }
     }
 
     @Override
@@ -121,7 +120,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
 
     private void checkCode() {
         code = codeEdt.getText().toString().trim();
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.checkCode(application.getTel(), code, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

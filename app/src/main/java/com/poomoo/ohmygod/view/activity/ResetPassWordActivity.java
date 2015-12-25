@@ -68,7 +68,7 @@ public class ResetPassWordActivity extends BaseActivity {
     private void changePassWord() {
         passWord = passWordEdt.getText().toString().trim();
         passWordAgain = passWordAgainEdt.getText().toString().trim();
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.changePassWord(application.getTel(), passWord, passWordAgain, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
