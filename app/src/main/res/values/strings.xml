@@ -87,6 +87,8 @@
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
     <string name="label_copy">复制</string>
+    <string name="label_code">请输入开抢验证码</string>
+    <string name="label_change">看不清楚,换一张</string>
     <string name="label_uploadID">上传身份证信息(身份证正反照)</string>
     <string name="label_click">(点击上方+上传)</string>
     <string name="label_ensure">(请保证该账号能正常使用,因该账号原因导致款项不能准时到达,天呐平台不予承担任何责任)</string>

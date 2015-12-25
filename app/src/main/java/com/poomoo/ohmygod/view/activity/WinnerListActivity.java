@@ -39,7 +39,7 @@ public class WinnerListActivity extends BaseActivity {
         setContentView(R.layout.activity_winnner_list);
 
         initView();
-        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), -1);
+        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
         activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));
         getData();
     }

@@ -125,6 +125,7 @@ public class CommodityInformation2Activity extends BaseActivity {
     public void catWinnerList(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.intent_activityName), activityName);
+        bundle.putInt(getString(R.string.intent_activeId), activeId);
         openActivity(WinnerListActivity.class, bundle);
     }
 

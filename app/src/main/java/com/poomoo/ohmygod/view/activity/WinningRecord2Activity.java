@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 作者: 李苜菲
@@ -51,15 +52,10 @@ public class WinningRecord2Activity extends BaseActivity {
         addressTxt.setText(winningRecordsBO.getGetAddress());
         dateTxt.setText(winningRecordsBO.getGetEndDt());
         requirementTxt.setText(winningRecordsBO.getGetRequire());
-//        if (winningRecordsBO.getIsShare().equals("1")) {
-//            showBtn.setText(getString(R.string.btn_showed));
-//            showBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
-//            showBtn.setClickable(false);
-//        }
-        if (!(TextUtils.isEmpty(application.getRealName()) && TextUtils.isEmpty(application.getIdCardNum())))
-            completeInfoBtn.setVisibility(View.GONE);
-
-
+        if (!MyUtil.isNeedCompleteInfo(application)) {
+            completeInfoBtn.setClickable(false);
+            completeInfoBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
+        }
     }
 
     protected void initTitleBar() {

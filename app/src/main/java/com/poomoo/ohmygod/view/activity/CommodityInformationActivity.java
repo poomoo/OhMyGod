@@ -7,15 +7,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,11 +35,13 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.other.CountDownListener;
+import com.poomoo.ohmygod.utils.Code;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
+import com.poomoo.ohmygod.view.popupwindow.CodePopupWindow;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -46,6 +56,7 @@ import java.util.TimerTask;
  * 日期: 2015/11/13 16:15.
  */
 public class CommodityInformationActivity extends BaseActivity {
+    private View mMenuView;
     private SlideShowView slideShowView;
     private TextView nameTxt;//商品名称
     private TextView priceTxt;//商品价格
@@ -87,6 +98,15 @@ public class CommodityInformationActivity extends BaseActivity {
     private double step;//切换图片的步长
     private DecimalFormat df = new DecimalFormat("0.00");
 
+    private PopupWindow codePopupWindow;
+    private boolean isCode = false;//是否通过验证码
+
+    private TextView changeTxt;
+    private ImageView codeImg;
+    private EditText codeEdt;
+    //产生的验证码
+    private String realCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +138,50 @@ public class CommodityInformationActivity extends BaseActivity {
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
+        mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
+        changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
+        codeEdt = (EditText) mMenuView.findViewById(R.id.et_phoneCodes);
+        codeImg = (ImageView) mMenuView.findViewById(R.id.img_showCode);
+
+        //将验证码用图片的形式显示出来
+        codeImg.setImageBitmap(Code.getInstance().createBitmap());
+        realCode = Code.getInstance().getCode();
+
+        changeTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                codeImg.setImageBitmap(Code.getInstance().createBitmap());
+                realCode = Code.getInstance().getCode();
+            }
+        });
+
+        codeEdt.addTextChangedListener(new TextWatcher() {
+            int len;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                len = s.length();
+                LogUtils.i("code", "len:" + len + " s:" + s.toString());
+                if (len == 4) {
+                    LogUtils.i("code", "realCode:" + realCode + " s:" + s.toString());
+                    if (s.toString().equals(realCode)) {
+                        codePopupWindow.dismiss();
+                        isCode = true;
+                    } else
+                        MyUtil.showToast(context, "验证码不对");
+                }
+            }
+        });
+
         llayout_openActivity.setVisibility(View.GONE);
         llayout_bottom.setVisibility(View.GONE);
 
@@ -135,6 +199,8 @@ public class CommodityInformationActivity extends BaseActivity {
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
+
+        initPopWindow();
     }
 
     /**
@@ -317,6 +383,10 @@ public class CommodityInformationActivity extends BaseActivity {
      * @param view
      */
     public void toGrab(View view) {
+        if (!isCode) {
+            code();
+            return;
+        }
         if (firstFlag) {
             decrease();
             llayout_anim.setVisibility(View.VISIBLE);
@@ -470,5 +540,35 @@ public class CommodityInformationActivity extends BaseActivity {
         super.onDestroy();
         if (timer != null)
             timer.cancel();
+    }
+
+    private void code() {
+//        codePopupWindow = new CodePopupWindow(this);
+        // 显示窗口
+        codePopupWindow.showAtLocation(this.findViewById(R.id.llayout_commodity),
+                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+    }
+
+    private void initPopWindow() {
+        codePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        codePopupWindow.setFocusable(true);
+        codePopupWindow.setFocusable(true);
+
+        mMenuView.setFocusable(true);
+        mMenuView.setFocusableInTouchMode(true);
+        mMenuView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (codePopupWindow != null) {
+                        codePopupWindow.dismiss();
+                        finish();
+                        codePopupWindow = null;
+                    }
+                }
+                return true;
+            }
+        });
     }
 }
