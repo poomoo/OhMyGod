@@ -204,11 +204,12 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO putMemberInfo(String userId, String realName, String bankCardNum, String idFrontPic, String idOpsitePic) {
+    public ResponseBO putMemberInfo(String userId, String bankName, String realName, String bankCardNum, String idFrontPic, String idOpsitePic) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.PERSONALINFO);
         paramMap.put("userId", userId);
+        paramMap.put("bankName", bankName);
         paramMap.put("realName", realName);
         paramMap.put("bankCardNum", bankCardNum);
         paramMap.put("idFrontPic", idFrontPic);

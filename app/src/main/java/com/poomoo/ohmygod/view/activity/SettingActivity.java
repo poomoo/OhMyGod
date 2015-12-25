@@ -41,6 +41,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -76,6 +77,7 @@ public class BaseActivity extends Activity {
     protected void openActivity(Class<?> pClass) {
         Intent intent = new Intent(this, pClass);
         this.startActivity(intent);
+        getActivityInFromRight();
     }
 
     /**
@@ -88,6 +90,7 @@ public class BaseActivity extends Activity {
             intent.putExtras(pBundle);
         }
         this.startActivity(intent);
+        getActivityInFromRight();
     }
 
     /**
@@ -97,6 +100,7 @@ public class BaseActivity extends Activity {
     protected void openActivityForResult(Class<?> pClass, int requestCode) {
         Intent intent = new Intent(this, pClass);
         startActivityForResult(intent, requestCode);
+        getActivityInFromRight();
     }
 
     /**
@@ -109,6 +113,7 @@ public class BaseActivity extends Activity {
             intent.putExtras(pBundle);
         }
         startActivityForResult(intent, requestCode);
+        getActivityInFromRight();
     }
 
     /**
@@ -149,6 +154,31 @@ public class BaseActivity extends Activity {
             progressDialog.dismiss();
             progressDialog = null;
         }
+    }
 
+    /**
+     * activity切换-> 向左进(覆盖)
+     */
+    protected void getActivityInFromRight() {
+        overridePendingTransition(R.anim.activity_in_from_right,
+                R.anim.activity_center);
+    }
+
+
+    /**
+     * activity切换-> 向右出(抽出)
+     */
+    protected void getActivityOutToRight() {
+        overridePendingTransition(R.anim.activity_center,
+                R.anim.activity_out_to_right);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            getActivityOutToRight();
+        }
+        return true;
     }
 }

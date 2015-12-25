@@ -273,6 +273,7 @@ public class CommodityInformationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

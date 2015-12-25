@@ -79,7 +79,7 @@
     <string name="label_gender">性别</string>
     <string name="label_age">年龄</string>
     <string name="label_bankCardAccount">银行账号</string>
-    <string name="label_bankAccountName">账户名</string>
+    <string name="label_bankAccountName">"账  户  名"</string>
     <string name="label_bankName">开户银行</string>
     <string name="label_address1">地址</string>
     <string name="label_changePassWord">修改密码</string>
@@ -267,6 +267,10 @@
     <string name="hint_feedBack">"请留下您的宝贵意见和建议，我们将努力改进"</string>
     <string name="hint_connection">联系方式(邮箱/手机)</string>
     <string name="hint_address1">详细地址</string>
+    <string name="hint_bankAccount">银行账号</string>
+    <string name="hint_openBank">开户银行(银行+支行)</string>
+    <string name="hint_bankAccountName">账户名</string>
+
     <!--hint-->
 
     <!--控件-->
@@ -318,7 +322,7 @@
     <string name="sp_passWord">passWord</string>
     <string name="sp_rememberPassWord">isRemember</string>
     <string name="sp_isLogin">isLogin</string>
-    <string name="sp_nickName">realName</string>
+    <string name="sp_nickName">nickName</string>
     <string name="sp_realName">realName</string>
     <string name="sp_headPic">headPic</string>
     <string name="sp_headPicBitmap">headPicBitmap</string>

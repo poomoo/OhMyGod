@@ -97,6 +97,7 @@ public class AddressActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

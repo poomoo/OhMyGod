@@ -35,6 +35,7 @@ public class ChangePhone2Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

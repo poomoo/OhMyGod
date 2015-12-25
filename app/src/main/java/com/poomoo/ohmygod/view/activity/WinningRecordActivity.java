@@ -96,6 +96,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

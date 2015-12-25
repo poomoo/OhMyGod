@@ -115,7 +115,7 @@ public interface AppAction {
      * @param idOpsitePic
      * @param listener
      */
-    void putMemberInfo(String userId, String realName, String bankCardNum, String idFrontPic, String idOpsitePic, ActionCallbackListener listener);
+    void putMemberInfo(String userId, String bankName, String realName, String bankCardNum, String idFrontPic, String idOpsitePic, ActionCallbackListener listener);
 
     /**
      * 修改用户信息接口（单独修改用户某个字段信息，如昵称）

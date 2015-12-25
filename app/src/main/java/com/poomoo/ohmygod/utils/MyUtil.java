@@ -3,7 +3,9 @@
  */
 package com.poomoo.ohmygod.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +25,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.database.AreaInfo;
 import com.poomoo.ohmygod.database.CityInfo;
+import com.poomoo.ohmygod.view.activity.LogInActivity;
 
 import org.litepal.crud.DataSupport;
 
@@ -309,8 +312,8 @@ public class MyUtil {
     public static boolean isNeedCompleteInfo(MyApplication application) {
         if (application.getIsAdvancedUser().equals("1")) { //升级会员
             if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
-                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getRealName())
-                    || TextUtils.isEmpty(application.getIdFrontPic()) || TextUtils.isEmpty(application.getIdOpsitePic()))
+                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getIdFrontPic())
+                    || TextUtils.isEmpty(application.getIdOpsitePic()))
                 return true;
         } else {
             if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getIdCardNum())
@@ -343,5 +346,24 @@ public class MyUtil {
         if (c != null)
             c.close();
         return isSongExist;
+    }
+
+    /**
+     * 是否登录
+     *
+     * @param activity
+     * @return
+     */
+    public static boolean isLogin(Activity activity) {
+        if (!(boolean) SPUtils.get(activity, activity.getString(R.string.sp_isLogin), false)) {
+            activity.finish();
+            Intent intent = new Intent(activity, LogInActivity.class);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.activity_in_from_right,
+                    R.anim.activity_center);
+            showToast(activity, "请登录");
+            return false;
+        } else
+            return true;
     }
 }

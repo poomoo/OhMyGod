@@ -158,6 +158,7 @@ public class CompleteUserInformationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
         headerViewHolder.rightTxt.setText(R.string.btn_save);
@@ -316,6 +317,7 @@ public class CompleteUserInformationActivity extends BaseActivity {
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
                 startService(new Intent(CompleteUserInformationActivity.this, Get_UserInfo_Service.class));
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

@@ -69,6 +69,7 @@ public class WinningRecord2Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

@@ -83,6 +83,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

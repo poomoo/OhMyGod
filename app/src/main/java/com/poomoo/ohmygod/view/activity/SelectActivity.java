@@ -74,6 +74,7 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -91,5 +92,6 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
             setResult(MyConfig.GENDER, intent);
         }
         finish();
+        getActivityOutToRight();
     }
 }

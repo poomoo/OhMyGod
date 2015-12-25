@@ -35,6 +35,7 @@ public class ChangeBankCardInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -49,5 +50,6 @@ public class ChangeBankCardInfoActivity extends BaseActivity {
         pBundle.putString(getString(R.string.intent_parent), getClass().getSimpleName());
         openActivity(VerifyPhoneNumActivity.class, pBundle);
         finish();
+        getActivityInFromRight();
     }
 }

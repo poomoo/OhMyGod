@@ -69,6 +69,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

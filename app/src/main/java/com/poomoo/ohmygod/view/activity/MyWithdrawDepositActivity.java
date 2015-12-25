@@ -55,12 +55,13 @@ public class MyWithdrawDepositActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
 
     private void getData() {
-        showProgressDialog("查询中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getMyWithdrawDepositList(application.getUserId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

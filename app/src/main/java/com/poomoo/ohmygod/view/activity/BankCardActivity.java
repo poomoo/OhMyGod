@@ -35,6 +35,7 @@ public class BankCardActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -47,6 +48,7 @@ public class BankCardActivity extends BaseActivity {
     public void toAlter(View view) {
         openActivity(ChangeBankCardNumActivity.class);
         finish();
+        getActivityInFromRight();
     }
 
 

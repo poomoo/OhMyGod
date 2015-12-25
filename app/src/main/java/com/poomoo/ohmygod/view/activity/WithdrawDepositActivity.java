@@ -122,6 +122,7 @@ public class WithdrawDepositActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -189,6 +190,7 @@ public class WithdrawDepositActivity extends BaseActivity {
                         pBundle.putDouble(getString(R.string.intent_value), money);
                         openActivity(VerifyPhoneNumActivity.class, pBundle);
                         finish();
+                        getActivityOutToRight();
 
                     }
                 }).setNegativeButton("取消", new OnClickListener() {

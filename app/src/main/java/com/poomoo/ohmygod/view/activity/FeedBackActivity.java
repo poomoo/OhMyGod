@@ -49,6 +49,7 @@ public class FeedBackActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
         headerViewHolder.rightTxt.setVisibility(View.VISIBLE);
@@ -65,13 +66,14 @@ public class FeedBackActivity extends BaseActivity {
     private void toSubmit() {
         content = contentEdt.getText().toString().trim();
         contact = contactEdt.getText().toString().trim();
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.putFeedBack(application.getUserId(), content, contact, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "提交成功");
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

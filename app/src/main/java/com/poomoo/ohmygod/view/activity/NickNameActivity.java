@@ -61,6 +61,7 @@ public class NickNameActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -88,6 +89,7 @@ public class NickNameActivity extends BaseActivity {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

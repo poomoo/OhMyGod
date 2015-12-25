@@ -44,6 +44,7 @@ public class WithdrawDepositDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -55,5 +56,6 @@ public class WithdrawDepositDetailsActivity extends BaseActivity {
      */
     public void toFinish(View view) {
         finish();
+        getActivityOutToRight();
     }
 }

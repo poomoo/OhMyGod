@@ -35,6 +35,7 @@ public class ChangePhone3Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -46,5 +47,6 @@ public class ChangePhone3Activity extends BaseActivity {
      */
     public void toFinish(View view) {
         finish();
+        getActivityOutToRight();
     }
 }

@@ -115,6 +115,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -185,6 +186,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             public void onClick(DialogInterface dialog, int which) {
                                 application.setCurrCity(currentCity);
                                 finish();
+                                getActivityOutToRight();
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
@@ -196,6 +198,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     } else {
                         application.setCurrCity(currentCity);
                         finish();
+                        getActivityOutToRight();
                     }
                 }
             }
@@ -218,6 +221,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         public void onClick(DialogInterface dialog, int which) {
                             application.setCurrCity(currentCity);
                             finish();
+                            getActivityOutToRight();
                         }
                     }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
@@ -229,6 +233,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 } else {
                     application.setCurrCity(currentCity);
                     finish();
+                    getActivityOutToRight();
                 }
 
             }
@@ -491,6 +496,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         if (locateProcess == 2) {
                             application.setCurrCity(city.getText().toString());
                             finish();
+                            getActivityOutToRight();
                         } else if (locateProcess == 3) {
                             locateProcess = 1;
                             personList.setAdapter(adapter);
@@ -541,6 +547,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);
                                     finish();
+                                    getActivityOutToRight();
                                 }
                             }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
@@ -552,6 +559,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         } else {
                             application.setCurrCity(currentCity);
                             finish();
+                            getActivityOutToRight();
                         }
                     }
                 });
@@ -577,6 +585,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);
                                     finish();
+                                    getActivityOutToRight();
                                 }
                             }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
@@ -588,6 +597,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         } else {
                             application.setCurrCity(currentCity);
                             finish();
+                            getActivityOutToRight();
                         }
                     }
                 });

@@ -68,6 +68,7 @@ public class UpdateMemberInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -145,6 +146,7 @@ public class UpdateMemberInfoActivity extends BaseActivity {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), idCardNum);
 
                     finish();
+                    getActivityOutToRight();
                 }
 
                 @Override

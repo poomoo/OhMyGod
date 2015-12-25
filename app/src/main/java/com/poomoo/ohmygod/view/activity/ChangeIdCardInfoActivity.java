@@ -49,6 +49,7 @@ public class ChangeIdCardInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -74,6 +75,7 @@ public class ChangeIdCardInfoActivity extends BaseActivity {
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), idCardNum);
                 MyUtil.showToast(getApplicationContext(), "修改成功");
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

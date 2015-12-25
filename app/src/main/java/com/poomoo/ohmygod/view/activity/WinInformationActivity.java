@@ -42,7 +42,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
         setContentView(R.layout.activity_win_information);
 
         initView();
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         getData();
     }
 
@@ -67,6 +67,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }

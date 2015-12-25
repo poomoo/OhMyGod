@@ -62,6 +62,7 @@ public class VerifyPhoneNumActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -94,10 +95,12 @@ public class VerifyPhoneNumActivity extends BaseActivity {
         if (PARENT.equals("ChangeIdCardInfoActivity")) {
             openActivity(IdCardInfoActivity.class);
             finish();
+            getActivityOutToRight();
         }
         if (PARENT.equals("ChangeBankCardInfoActivity")) {
             openActivity(BankCardActivity.class);
             finish();
+            getActivityOutToRight();
         }
 
         //提现
@@ -151,6 +154,7 @@ public class VerifyPhoneNumActivity extends BaseActivity {
                 openActivity(WithdrawDepositDetailsActivity.class, pBundle);
                 startService(new Intent(VerifyPhoneNumActivity.this, Get_UserInfo_Service.class));
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

@@ -103,6 +103,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -239,6 +240,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
                 finish();
+                getActivityOutToRight();
             }
 
             @Override
@@ -246,6 +248,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), message);
                 finish();
+                getActivityOutToRight();
             }
         });
     }

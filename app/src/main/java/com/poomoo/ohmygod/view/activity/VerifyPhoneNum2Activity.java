@@ -70,6 +70,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -110,6 +111,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         if (PARENT.equals(getString(R.string.intent_phone))) {
             openActivity(ChangePhone2Activity.class);
             finish();
+            getActivityOutToRight();
         }
 
         if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
@@ -129,6 +131,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
                     bundle.putString(getString(R.string.intent_parent), PARENT);
                     openActivity(ResetPassWordActivity.class);
                     finish();
+                    getActivityOutToRight();
                 } else {
                     toSubmit();
                 }
@@ -158,6 +161,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_bankCardNum), value);
                 MyUtil.showToast(getApplicationContext(), "修改银行卡成功");
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

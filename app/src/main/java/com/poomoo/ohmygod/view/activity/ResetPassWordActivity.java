@@ -51,6 +51,7 @@ public class ResetPassWordActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
     }
@@ -75,6 +76,7 @@ public class ResetPassWordActivity extends BaseActivity {
                 if (PARENT.equals(getString(R.string.intent_forgetPassWord))) {
                     MyUtil.showToast(getApplicationContext(), "密码重置成功");
                     finish();
+                    getActivityOutToRight();
                 }
                 if (PARENT.equals(getString(R.string.intent_changePassWord))) {
                     MyUtil.showToast(getApplicationContext(), "密码重置成功,请重新登录");

@@ -44,26 +44,27 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void run() {
-                if (!(boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isLogin), false))
-                    openActivity(LogInActivity.class);
-                else {
-                    application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
-                    application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
-                    application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), ""));
-                    application.setRealName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_realName), ""));
-                    application.setAge((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_age), ""));
-                    application.setTel((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
-                    application.setAddress((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_address), ""));
-                    application.setIsAdvancedUser((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_isAdvancedUser), ""));
-                    application.setIdCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idCardNum), ""));
-                    application.setIdFrontPic((String)SPUtils.get(getApplicationContext(), getString(R.string.sp_idFrontPic), ""));
-                    application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
-                    startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
-                    openActivity(MainFragmentActivity.class);
-                }
+//                if (!(boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isLogin), false))
+//                    openActivity(LogInActivity.class);
+//                else {
+                application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
+                application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
+                application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), ""));
+                application.setRealName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_realName), ""));
+                application.setAge((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_age), ""));
+                application.setTel((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
+                application.setAddress((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_address), ""));
+                application.setIsAdvancedUser((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_isAdvancedUser), ""));
+                application.setIdCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idCardNum), ""));
+                application.setIdFrontPic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idFrontPic), ""));
+                application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
+                application.setBankCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankCardNum), ""));
+                application.setBankName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankName), ""));
+                startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
+                openActivity(MainFragmentActivity.class);
+//                }
                 finish();
             }
-
         }, SPLASH_DISPLAY_LENGHT);
     }
 

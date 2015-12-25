@@ -309,8 +309,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        long time = adapter.getCountDownUtils().get(position).getMillisUntilFinished();
-//        LogUtils.i(TAG, "剩余时间:" + time);
+        if (!MyUtil.isLogin(getActivity())) {
+            LogUtils.i(TAG, "没有登录");
+            return;
+        }
+        LogUtils.i(TAG, "继续了");
+
         if (!application.getLocateCity().equals(application.getCurrCity())) {
             MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
             return;
@@ -329,6 +333,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     @Override
     public void onClick(View v) {
+        if (!MyUtil.isLogin(getActivity()))
+            return;
         switch (v.getId()) {
             case R.id.llayout_currCity:
                 openActivity(CityListActivity.class);
@@ -463,7 +469,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             /* 设置闹钟 */
                 am.cancel(pendingIntent);
                 am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-                LogUtils.i(TAG,"time:"+time);
+                LogUtils.i(TAG, "time:" + time);
                 MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
             }
         });

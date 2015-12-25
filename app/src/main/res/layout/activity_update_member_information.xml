@@ -32,7 +32,7 @@
                     android:paddingBottom="@dimen/dp_8"
                     android:text="@string/label_tipTitle"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_24"
+                    android:textSize="@dimen/sp_20"
                     android:textStyle="bold" />
 
                 <TextView
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_tipContent"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
             <LinearLayout
@@ -56,13 +56,23 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/hint_realName"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
 
@@ -72,13 +82,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -94,9 +97,6 @@
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,20 +111,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_sex"
-                    android:textSize="@dimen/sp_20" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:id="@+id/txt_memberInfo_gender"
@@ -133,7 +126,17 @@
                     android:clickable="true"
                     android:onClick="toSelectGender"
                     android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -148,10 +151,6 @@
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,13 +164,25 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberAge"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/hint_input_age"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
             <LinearLayout
@@ -180,15 +191,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -202,11 +204,10 @@
                     android:paddingTop="@dimen/dp_8"
                     android:text="@string/label_detail3"
                     android:textSize="@dimen/sp_18" />
+
+
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -221,20 +222,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberPhone"
-                    android:textSize="@dimen/sp_20" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:id="@+id/txt_memberInfo_tel"
@@ -243,7 +237,15 @@
                     android:inputType="phone"
                     android:maxLength="11"
                     android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -258,11 +260,8 @@
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -270,34 +269,41 @@
                 android:padding="@dimen/dp_10">
 
                 <TextView
+                    android:id="@+id/txt_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
+                    android:id="@+id/txt_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_star"
                     android:text="@string/label_memberAddress"
-                    android:textSize="@dimen/sp_20" />
-            </LinearLayout>
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:layout_toRightOf="@+id/txt_address"
+                    android:id="@+id/txt_memberInfo_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:onClick="toAddress"
+                    android:text="贵阳市发动机发动机刷卡费机读卡失联飞机的"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
-
-                <TextView
-                    android:id="@+id/txt_memberInfo_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:onClick="toAddress"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -312,9 +318,6 @@
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -329,13 +332,25 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberIdNum"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
+
+                <EditText
+                    android:id="@+id/edt_memberInfo_idCardNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:digits="0123456789xyzXYZ"
+                    android:hint="@string/hint_idCardNum"
+                    android:maxLength="18"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textColor="@color/themeGray"
+                    android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
             <LinearLayout
@@ -344,15 +359,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <EditText
-                    android:id="@+id/edt_memberInfo_idCardNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:digits="0123456789xyzXYZ"
-                    android:maxLength="18"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:textSize="@dimen/sp_20" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -367,9 +373,6 @@
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -33,7 +33,6 @@ import java.util.List;
  */
 public class MainFragmentActivity extends
         BaseActivity {
-    private String TAG = this.getClass().getSimpleName();
     private RadioGroup group;
     private InformPopupWindow informPopupWindow;
     private Fragment curFragment;
@@ -100,6 +99,8 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToGrab(View view) {
+        if(!MyUtil.isLogin(this))
+            return;
         if (grabFrament == null)
             grabFrament = new GrabFragment();
         switchFragment(grabFrament);
@@ -112,6 +113,8 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToRebate(View view) {
+        if(!MyUtil.isLogin(this))
+            return;
         if (rebateFragment == null)
             rebateFragment = new RebateFragment();
         switchFragment(rebateFragment);
@@ -124,6 +127,8 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToShow(View view) {
+        if(!MyUtil.isLogin(this))
+            return;
         if (showFragment == null)
             showFragment = new ShowFragment();
         switchFragment(showFragment);
@@ -136,6 +141,8 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToMy(View view) {
+        if(!MyUtil.isLogin(this))
+            return;
         if (myFragment == null)
             myFragment = new MyFragment();
         switchFragment(myFragment);

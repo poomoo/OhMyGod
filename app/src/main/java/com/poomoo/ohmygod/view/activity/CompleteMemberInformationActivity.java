@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
@@ -57,6 +59,7 @@ import java.util.List;
 public class CompleteMemberInformationActivity extends BaseActivity {
     private EditText accountNameEdt;
     private EditText bankCardNumEdt;
+    private EditText openBankEdt;
     private ImageView frontIdCardImg;
     private ImageView backIdCardImg;
     private SelectPicsPopupWindow popupWindow;
@@ -72,6 +75,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     private List<String> urlList = new ArrayList<>();
     private String accountName;
     private String bankCardNum;
+    private String bankName;
 
     private static final int NONE = 0;
     private static final int PHOTOHRAPH = 1;// 拍照
@@ -93,11 +97,15 @@ public class CompleteMemberInformationActivity extends BaseActivity {
 
         accountNameEdt = (EditText) findViewById(R.id.edt_memberInfo_accountName);
         bankCardNumEdt = (EditText) findViewById(R.id.edt_memberInfo_bankAccountNum);
+        openBankEdt = (EditText) findViewById(R.id.edt_memberInfo_openBank);
         frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
         backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
 
         MyUtil.fortmatCardNum(bankCardNumEdt);
+
+        initData();
     }
+
 
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
@@ -106,8 +114,25 @@ public class CompleteMemberInformationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
+    }
+
+    private void initData() {
+        if (TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic())) {
+            DisplayImageOptions options = new DisplayImageOptions.Builder() //
+                    .cacheInMemory(true) //
+                    .cacheOnDisk(true) //
+                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                    .build();//
+            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg, options);
+            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg, options);
+        }
+
+        openBankEdt.setText(application.getBankName());
+        accountNameEdt.setText(application.getRealName());
+        bankCardNumEdt.setText(application.getBankCardNum());
     }
 
     /**
@@ -148,7 +173,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
             fileBO.setImgFile(file2);
             fileBOList.add(fileBO);
 
-            showProgressDialog("上传中...");
+            showProgressDialog(getString(R.string.dialog_message));
             upload();
         }
     }
@@ -162,6 +187,11 @@ public class CompleteMemberInformationActivity extends BaseActivity {
 
         if (file2 == null) {
             MyUtil.showToast(getApplicationContext(), "请选择手持身份证反面照");
+            return false;
+        }
+        bankName = openBankEdt.getText().toString().trim();
+        if (TextUtils.isEmpty(bankName)) {
+            MyUtil.showToast(getApplicationContext(), "请填写开户银行");
             return false;
         }
 
@@ -227,17 +257,18 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     };
 
     public void submit() {
-        showProgressDialog("请稍后...");
-        this.appAction.putMemberInfo(this.application.getUserId(), accountName, bankCardNum, urlList.get(0), urlList.get(1), new ActionCallbackListener() {
+        this.appAction.putMemberInfo(this.application.getUserId(), bankName, accountName, bankCardNum, urlList.get(0), urlList.get(1), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "上传成功");
+                application.setBankName(bankName);
                 application.setRealName(accountName);
                 application.setBankCardNum(bankCardNum);
                 application.setIdFrontPic(urlList.get(0));
                 application.setIdOpsitePic(urlList.get(1));
 
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), bankName);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), accountName);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_bankCardNum), bankCardNum);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), urlList.get(0));

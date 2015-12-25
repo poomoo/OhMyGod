@@ -33,7 +33,7 @@ public interface Api {
 
     ResponseBO putPersonalInfo(String userId, String realName, String idCardNum, String address);
 
-    ResponseBO putMemberInfo(String userId, String realName, String bankCardNum, String idFrontPic, String idOpsitePic);
+    ResponseBO putMemberInfo(String userId, String bankName, String realName, String bankCardNum, String idFrontPic, String idOpsitePic);
 
     ResponseBO changePersonalInfo(String userId, String key, String value);
 

@@ -137,13 +137,14 @@ public class RegisterActivity extends BaseActivity {
             sex = "2";
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId();
 
-        showProgressDialog("注册中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.register(phoneNum, passWord, code, age, sex, imei, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "注册成功");
                 finish();
+                getActivityOutToRight();
             }
 
             @Override

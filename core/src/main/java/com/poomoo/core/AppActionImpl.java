@@ -343,12 +343,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void putMemberInfo(final String userId, final String realName, final String bankCardNum, final String idFrontPic, final String idOpsitePic, final ActionCallbackListener listener) {
+    public void putMemberInfo(final String userId, final String bankName, final String realName, final String bankCardNum, final String idFrontPic, final String idOpsitePic, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.putMemberInfo(userId, realName, bankCardNum, idFrontPic, idOpsitePic);
+                return api.putMemberInfo(userId, bankName, realName, bankCardNum, idFrontPic, idOpsitePic);
             }
 
             @Override

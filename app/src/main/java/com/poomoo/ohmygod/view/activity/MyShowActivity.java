@@ -103,7 +103,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
         setContentView(R.layout.activity_my_show);
 
         initView();
-        showProgressDialog("查询中...");
+        showProgressDialog(getString(R.string.dialog_message));
         getData();
     }
 
@@ -172,6 +172,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             @Override
             public void onClick(View v) {
                 finish();
+                getActivityOutToRight();
             }
         });
         headerViewHolder.rightImg.setVisibility(View.VISIBLE);
