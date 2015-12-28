@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.RadioGroup;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -24,6 +26,9 @@ import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
 import com.umeng.socialize.sso.UMSsoHandler;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +58,7 @@ public class MainFragmentActivity extends
         setContentView(R.layout.activity_main);
 
         group = (RadioGroup) findViewById(R.id.group_main);
+
         setDefaultFragment();
         instance = this;
     }
@@ -234,5 +240,16 @@ public class MainFragmentActivity extends
         if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
+    }
+
+    private byte[] InputStreamToByte(InputStream is) throws IOException {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        int ch;
+        while ((ch = is.read()) != -1) {
+            bytestream.write(ch);
+        }
+        byte imgdata[] = bytestream.toByteArray();
+        bytestream.close();
+        return imgdata;
     }
 }

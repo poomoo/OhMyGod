@@ -92,8 +92,6 @@ public class TimeCountDownUtil extends CountDownTimer {
                 }
 
             }
-
-
         }
 
     }

@@ -12,7 +12,10 @@ import android.os.Message;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +42,7 @@ import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
+import com.poomoo.ohmygod.adapter.TimeAdapter;
 import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
@@ -70,6 +76,8 @@ import java.util.TimerTask;
  * 日期: 2015/11/11 16:26.
  */
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener {
+    private View mMenuView;
+    private ListView timeList;
     private PullDownScrollView refreshableView;
     private LinearLayout remindLlayout1;
     private LinearLayout remindLlayout2;
@@ -101,6 +109,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private MessageInfo messageInfo;
     private List<MessageInfo> infoList = new ArrayList<>();
     public static GrabFragment instance;
+    private PopupWindow timePopupWindow;
+    private TimeAdapter timeAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,8 +125,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void initView() {
+        mMenuView = LayoutInflater.from(getActivity()).inflate(R.layout.popupwindow_time, null);
+        timeList = (ListView) mMenuView.findViewById(R.id.list_time);
         refreshableView = (PullDownScrollView) getActivity().findViewById(R.id.refresh_grab);
-//        refreshableView.setListViewPosition(4);
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
@@ -132,6 +143,48 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         //初始化下拉刷新
         refreshableView.setRefreshListener(this);
         refreshableView.setPullDownElastic(new PullDownElasticImp(getActivity()));
+
+        timeAdapter = new TimeAdapter(getActivity());
+        List<Integer> integerList = new ArrayList<>();
+        int len = MyConfig.time.length;
+        for (int i = 0; i < len; i++)
+            integerList.add(MyConfig.time[i]);
+        timeAdapter.setItems(integerList);
+        timeList.setAdapter(timeAdapter);
+        timeList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                long time = 0;
+                // 获得日历实例
+                Calendar calendar = Calendar.getInstance();
+                int nYear = calendar.get(Calendar.YEAR);
+                int nMonth = calendar.get(Calendar.MONTH);
+                int nDayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
+                minute += MyConfig.time[position];
+                calendar.set(nYear, nMonth, nDayofMonth, hour, minute, second);
+                LogUtils.i(TAG, "time:" + calendar.getTime());
+                time = calendar.getTimeInMillis();
+                LogUtils.i(TAG, "time:" + time);
+                /* 建立Intent和PendingIntent，来调用目标组件 */
+                Intent intent = new Intent(getActivity(), CallAlarm.class);
+                intent.putExtra("_id", 0);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                AlarmManager am;
+            /* 获取闹钟管理的实例 */
+                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+            /* 设置闹钟 */
+                am.cancel(pendingIntent);
+                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+
+                MyUtil.showToast(getActivity().getApplicationContext(), MyConfig.time[position] + "分钟后提醒");
+                timePopupWindow.dismiss();
+                hideFloatingActionButton();
+            }
+        });
+        initPopWindow();
 
         currCityLlayout.setOnClickListener(this);
         winnerRlayout.setOnClickListener(this);
@@ -334,7 +387,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //            return;
 //        }
 
-        LogUtils.i("lmf", "首页时间:"+adapter.getCountDownUtils().get(position).getMillisUntilFinished()+"");
+        LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
@@ -461,27 +514,66 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
      * 设置闹钟时间
      */
     private void setDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-                getActivity(), str);
-        dateTimePicKDialog.dateTimePicKDialog(new AlarmtListener() {
+        // 显示窗口
+        timePopupWindow.showAtLocation(getActivity().findViewById(R.id.llayout_main),
+                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+//        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+//        String str = formatter.format(curDate);
+//        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+//                getActivity(), str);
+//        dateTimePicKDialog.dateTimePicKDialog(new AlarmtListener() {
+//            @Override
+//            public void onResult(long time) {
+//                /* 建立Intent和PendingIntent，来调用目标组件 */
+//                Intent intent = new Intent(getActivity(), CallAlarm.class);
+//                intent.putExtra("_id", 0);
+//                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+//                AlarmManager am;
+//            /* 获取闹钟管理的实例 */
+//                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+//            /* 设置闹钟 */
+//                am.cancel(pendingIntent);
+//                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+//                LogUtils.i(TAG, "time:" + time);
+//                MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
+//                hideFloatingActionButton();
+//            }
+//        });
+    }
+
+    private void initPopWindow() {
+        timePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        timePopupWindow.setFocusable(true);
+        timePopupWindow.setFocusable(true);
+
+        mMenuView.setFocusable(true);
+        mMenuView.setFocusableInTouchMode(true);
+        mMenuView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onResult(long time) {
-                /* 建立Intent和PendingIntent，来调用目标组件 */
-                Intent intent = new Intent(getActivity(), CallAlarm.class);
-                intent.putExtra("_id", 0);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-                AlarmManager am;
-            /* 获取闹钟管理的实例 */
-                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-            /* 设置闹钟 */
-                am.cancel(pendingIntent);
-                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-                LogUtils.i(TAG, "time:" + time);
-                MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
-                hideFloatingActionButton();
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // TODO Auto-generated method stub
+                LogUtils.i(TAG, "点击返回键");
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (timePopupWindow != null) {
+                        timePopupWindow.dismiss();
+                        timePopupWindow = null;
+                    }
+                }
+                return true;
+            }
+        });
+        mMenuView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int height_top = mMenuView.findViewById(R.id.popup_time_layout).getTop();
+                int height_bottom = mMenuView.findViewById(R.id.popup_time_layout).getBottom();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < height_top || y > height_bottom) {
+                        timePopupWindow.dismiss();
+                    }
+                }
+                return true;
             }
         });
     }

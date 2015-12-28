@@ -17,6 +17,7 @@ import android.os.PowerManager;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -52,10 +53,7 @@ public class AlarmAlertActivity extends BaseActivity {
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-//        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.dialog_alarm_alert);
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-//                R.layout.dialog_alarm_alert_title);
 
         initViews();
         setWakeLock();
@@ -111,8 +109,11 @@ public class AlarmAlertActivity extends BaseActivity {
             public void onClick(View v) {
                 closeMediaPlayer();
                 cancleNoticafation();
-                openActivity(MainFragmentActivity.class);
-
+                Intent intent = new Intent(AlarmAlertActivity.this, MainFragmentActivity.class);
+                //该标志位表示如果Intent要启动的Activity在栈顶，则无须创建新的实例
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -157,7 +158,7 @@ public class AlarmAlertActivity extends BaseActivity {
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // 设置显示提示信息，该信息也会在状态栏显示
         String tickerText = "抢购时间到了";
-        Notification.Builder builder = new Notification.Builder(this).setTicker(tickerText).setSmallIcon(R.drawable.clock);
+        Notification.Builder builder = new Notification.Builder(this).setTicker(tickerText).setSmallIcon(R.drawable.ic_logo);
         Notification note = new Notification();
         note.flags = Notification.FLAG_ONGOING_EVENT;
 
@@ -257,9 +258,10 @@ public class AlarmAlertActivity extends BaseActivity {
 
         mHandler.post(mDisplayToast);
         // 修改鬧鈴数据库，使得“开启鬧鈴”状态为否
-
-        this.unregisterReceiver(this.receiver);
-        this.unregisterReceiver(stopFromFmReceiver);
+        if (this.receiver != null)
+            this.unregisterReceiver(this.receiver);
+        if (this.stopFromFmReceiver != null)
+            this.unregisterReceiver(this.stopFromFmReceiver);
         this.finish();
     }
 
@@ -287,4 +289,12 @@ public class AlarmAlertActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeMediaPlayer();
+            finish();
+        }
+        return true;
+    }
 }

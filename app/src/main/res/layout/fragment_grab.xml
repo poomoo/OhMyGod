@@ -230,6 +230,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
+
                 <com.poomoo.ohmygod.view.custom.NoScrollListView
                     android:id="@+id/list_grab"
                     android:layout_width="match_parent"

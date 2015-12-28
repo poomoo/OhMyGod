@@ -148,6 +148,14 @@ public class CommodityInformationActivity extends BaseActivity {
         codeEdt = (EditText) mMenuView.findViewById(R.id.et_phoneCodes);
         codeImg = (ImageView) mMenuView.findViewById(R.id.img_showCode);
 
+        //html自适应
+        WebSettings webSettings = commodityWeb.getSettings();
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setDefaultTextEncodingName("UTF-8");
+
         //将验证码用图片的形式显示出来
         codeImg.setImageBitmap(Code.getInstance().createBitmap());
         realCode = Code.getInstance().getCode();
@@ -181,6 +189,11 @@ public class CommodityInformationActivity extends BaseActivity {
                     if (s.toString().equals(realCode)) {
                         codePopupWindow.dismiss();
                         isCode = true;
+                        scrollView.post(new Runnable() {
+                            public void run() {
+                                scrollView.fullScroll(ScrollView.FOCUS_DOWN);          //滚动到底部
+                            }
+                        });
                     } else
                         MyUtil.showToast(context, "验证码不对");
                 }
@@ -199,13 +212,19 @@ public class CommodityInformationActivity extends BaseActivity {
 
         typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
 
-        //自适应
-//        WebSettings webSettings = commodityWeb.getSettings();
-//        webSettings.setUseWideViewPort(true);
-//        webSettings.setLoadWithOverviewMode(true);
-//        webSettings.setDefaultTextEncodingName("UTF-8");
-
         initPopWindow();
+    }
+
+    protected void initTitleBar() {
+        HeaderViewHolder headerViewHolder = getHeaderView();
+        headerViewHolder.titleTxt.setText(R.string.title_commodity_information);
+        headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                getActivityOutToRight();
+            }
+        });
     }
 
     /**
@@ -340,22 +359,18 @@ public class CommodityInformationActivity extends BaseActivity {
         headTimeCountDownUtil.setTextViewList(textViewList, new CountDownListener() {
             @Override
             public void onFinish(int result) {
+                LogUtils.i(TAG, "倒计时结束");
                 begin();
             }
         });
+        if (headTimeCountDownUtil.getMillisUntilFinished() == 0) {
+            begin();
+            for (TextView textView : textViewList)
+                textView.setText("活动已开始");
+        }
+
     }
 
-    protected void initTitleBar() {
-        HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_commodity_information);
-        headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                getActivityOutToRight();
-            }
-        });
-    }
 
     /**
      * 我要报名
@@ -508,7 +523,11 @@ public class CommodityInformationActivity extends BaseActivity {
                                             finish();
                                         }
                                     }
-                            ).create();
+                            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).create();
                             dialog.show();
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);

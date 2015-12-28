@@ -40,7 +40,6 @@ public class CallAlarm extends BroadcastReceiver {
             snooze();
         } else {
             tag = intent.getIntExtra("_id", -1);
-            System.out.println(tag + "");
             if (tag == -1) {
                 return;
             }
