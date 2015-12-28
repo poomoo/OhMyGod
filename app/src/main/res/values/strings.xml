@@ -227,6 +227,7 @@
     <string name="intent_gender">gender</string>
     <string name="intent_activeId">activeId</string>
     <string name="intent_typeId">typeId</string>
+    <string name="intent_position">position</string>
     <string name="intent_countDownTime">countDownTime</string>
     <string name="intent_nickName">nickName</string>
     <string name="intent_rebate">rebate</string>

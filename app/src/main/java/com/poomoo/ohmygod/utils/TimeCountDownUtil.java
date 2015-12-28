@@ -47,6 +47,11 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.isList = false;
     }
 
+    public void setTextViewList(List<TextView> textViewList, final CountDownListener countDownListener) {
+        this.textViewList = textViewList;
+        this.isList = true;
+        this.countDownListener = countDownListener;
+    }
 
     public TimeCountDownUtil(long millisInFuture,
                              long countDownInterval, View view, final CountDownListener countDownListener) {
@@ -55,6 +60,7 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.countDownListener = countDownListener;
         this.isList = false;
     }
+
 
     @Override
     public void onTick(long millisUntilFinished) {

@@ -117,7 +117,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         getData();
 
     }

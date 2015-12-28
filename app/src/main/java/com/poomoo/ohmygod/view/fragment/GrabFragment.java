@@ -82,7 +82,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private UpMarqueeTextView marqueeTextView;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
-    private GrabAdapter adapter;
+    public static GrabAdapter adapter;
     private String[] urls;
     private AdBO adBO;
     private List<AdBO> adBOList = new ArrayList<>();
@@ -329,14 +329,17 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         if (!MyUtil.isLogin(getActivity()))
             return;
 
-        if (!application.getLocateCity().equals(application.getCurrCity())) {
-            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-            return;
-        }
+//        if (!application.getLocateCity().equals(application.getCurrCity())) {
+//            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+//            return;
+//        }
+
+        LogUtils.i("lmf", "首页时间:"+adapter.getCountDownUtils().get(position).getMillisUntilFinished()+"");
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
-        pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
+//        pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
+        pBundle.putInt(getString(R.string.intent_position), position);
         openActivity(CommodityInformationActivity.class, pBundle);
     }
 

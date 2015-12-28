@@ -44,4 +44,6 @@ public class MyConfig {
             R.drawable.decorate32, R.drawable.decorate33, R.drawable.decorate34, R.drawable.decorate35, R.drawable.decorate36, R.drawable.decorate37, R.drawable.decorate38, R.drawable.decorate39, R.drawable.decorate40, R.drawable.decorate41, R.drawable.decorate42, R.drawable.decorate43, R.drawable.decorate44, R.drawable.decorate45, R.drawable.decorate46, R.drawable.decorate47,
             R.drawable.decorate48, R.drawable.decorate49, R.drawable.decorate50, R.drawable.decorate51, R.drawable.decorate52, R.drawable.decorate53, R.drawable.decorate54, R.drawable.decorate55, R.drawable.decorate56, R.drawable.decorate57, R.drawable.decorate58, R.drawable.decorate59, R.drawable.decorate60, R.drawable.decorate61, R.drawable.decorate62, R.drawable.decorate63,
             R.drawable.decorate64, R.drawable.decorate65, R.drawable.decorate66, R.drawable.decorate67, R.drawable.decorate68};
+
+    public static final int[] time = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
 }

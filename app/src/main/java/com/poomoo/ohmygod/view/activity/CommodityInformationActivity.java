@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,7 +42,7 @@ import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
-import com.poomoo.ohmygod.view.popupwindow.CodePopupWindow;
+import com.poomoo.ohmygod.view.fragment.GrabFragment;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -109,6 +108,8 @@ public class CommodityInformationActivity extends BaseActivity {
     //产生的验证码
     private String realCode;
 
+    private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +140,8 @@ public class CommodityInformationActivity extends BaseActivity {
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        initCountDown();
 
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
@@ -197,10 +200,10 @@ public class CommodityInformationActivity extends BaseActivity {
         typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
 
         //自适应
-        WebSettings webSettings = commodityWeb.getSettings();
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setDefaultTextEncodingName("UTF-8");
+//        WebSettings webSettings = commodityWeb.getSettings();
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setDefaultTextEncodingName("UTF-8");
 
         initPopWindow();
     }
@@ -225,8 +228,6 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void getData() {
-        countDownTime = getIntent().getLongExtra(getString(R.string.intent_countDownTime), 0);
-        initCountDown();
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
 
         showProgressDialog(getString(R.string.dialog_message));
@@ -256,6 +257,8 @@ public class CommodityInformationActivity extends BaseActivity {
 
     private void initData() {
         if (isGrab) {
+//            position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
+//            LogUtils.i("lmf","详情页页时间:"+ GrabFragment.adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
             isMember();
             //房子
             if (typeId == 1) {
@@ -305,9 +308,9 @@ public class CommodityInformationActivity extends BaseActivity {
                 imageBrowse(position, commodityBO.getPicList());
             }
         });
-
+        llayout_openActivity.setVisibility(View.VISIBLE);
+        llayout_bottom.setVisibility(View.VISIBLE);
         //商品详情
-        LogUtils.i(TAG, "setUseWideViewPort:" + commodityWeb.getSettings().getUseWideViewPort() + " setLoadWithOverviewMode:" + commodityWeb.getSettings().getLoadWithOverviewMode());
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
         commodityWeb.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
@@ -325,13 +328,21 @@ public class CommodityInformationActivity extends BaseActivity {
         textViewList = new ArrayList<>();
         textViewList.add(headTimeCountdownTxt);
         textViewList.add(middleTimeCountdownTxt);
-        headTimeCountDownUtil = new TimeCountDownUtil(countDownTime, 1000, textViewList, new CountDownListener() {
+        position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
+//        headTimeCountDownUtil = new TimeCountDownUtil(GrabFragment.adapter.getCountDownUtils().get(position).getMillisUntilFinished(), 1000, textViewList, new CountDownListener() {
+//            @Override
+//            public void onFinish(int result) {
+//                begin();
+//            }
+//        });
+//        headTimeCountDownUtil.start();
+        headTimeCountDownUtil = GrabFragment.adapter.getCountDownUtils().get(position);
+        headTimeCountDownUtil.setTextViewList(textViewList, new CountDownListener() {
             @Override
             public void onFinish(int result) {
                 begin();
             }
         });
-        headTimeCountDownUtil.start();
     }
 
     protected void initTitleBar() {

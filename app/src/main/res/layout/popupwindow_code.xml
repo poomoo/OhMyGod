@@ -3,7 +3,7 @@
     android:id="@+id/popup_code_layout_all"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77cccccc"
+    android:background="@color/transparentBlack"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/dp_30">
