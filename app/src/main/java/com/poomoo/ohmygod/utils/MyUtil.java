@@ -391,7 +391,7 @@ public class MyUtil {
      */
     public static void updateMessageInfo(int statementId) {
         ContentValues values = new ContentValues();
-        values.put("isRead", true);
+        values.put("status", true);
         DataSupport.updateAll(MessageInfo.class, values, "statementId = ?", statementId + "");
     }
 
@@ -401,10 +401,27 @@ public class MyUtil {
      * @return
      */
     public static int getUnReadInfoCount() {
-//        List<MessageInfo> infoList = DataSupport.where("isread = ?", "0").find(MessageInfo.class);
-        Cursor cursor = DataSupport.findBySQL("select * from messageinfo where isRead = ?", "0");
-        int len = cursor.getCount();
+        List<MessageInfo> infoList = DataSupport.where("status = ?", "0").find(MessageInfo.class);
+//        Cursor cursor = DataSupport.findBySQL("select * from messageinfo where isRead = ?", "0");
+//        int len = cursor.getCount();
+        int len = infoList.size();
         LogUtils.i("getUnReadInfoCount", "len:" + len);
         return len;
+    }
+
+    /**
+     * 消息状态(已读 未读)
+     *
+     * @return
+     */
+    public static boolean isRead(int statementId) {
+        LogUtils.i(TAG, "statementId:" + statementId);
+        List<MessageInfo> infoList = DataSupport.where("statementId = ?", statementId + "").find(MessageInfo.class);
+        LogUtils.i(TAG, "isRead:" + infoList.get(0).isStatus());
+        if (infoList.size() == 1) {
+            if (infoList.get(0).isStatus())
+                return true;
+        }
+        return false;
     }
 }

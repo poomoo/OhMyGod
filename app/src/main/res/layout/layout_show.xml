@@ -53,7 +53,7 @@
                     android:padding="3dp"
                     android:text="回　复"
                     android:textColor="@color/white"
-                    android:textSize="17sp"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

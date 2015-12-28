@@ -19,6 +19,7 @@ import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
+import com.poomoo.ohmygod.view.fragment.GrabFragment;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -162,10 +163,21 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int statementId = messageBOList.get(position).getStatementId();
+        if (!MyUtil.isRead(statementId)) {
+            MyUtil.updateMessageInfo(statementId);
+            GrabFragment.instance.updateInfoCount();
+        }
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_message));
         bundle.putInt(getString(R.string.intent_value), messageBOList.get(position).getStatementId());
         bundle.putString(getString(R.string.intent_title), messageBOList.get(position).getTitle());
         openActivity(WebViewActivity.class, bundle);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

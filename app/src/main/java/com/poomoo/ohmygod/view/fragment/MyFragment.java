@@ -5,6 +5,8 @@ package com.poomoo.ohmygod.view.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.media.ImageReader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +28,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.view.activity.InStationMessagesActivity;
+import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.MyShowActivity;
 import com.poomoo.ohmygod.view.activity.MyWithdrawDepositActivity;
 import com.poomoo.ohmygod.view.activity.SettingActivity;
@@ -33,13 +36,16 @@ import com.poomoo.ohmygod.view.activity.SnatchRecordActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
 
+import java.io.Serializable;
+
 /**
  * 我
  * 作者: 李苜菲
  * 日期: 2015/11/20 15:25.
  */
 public class MyFragment extends BaseFragment implements OnItemClickListener {
-    private TextView dialTxt;
+//    private TextView dialTxt;
+    private ImageView dialImg;
     private ImageView settingImg;
     private GridView gridView;
     private ImageView avatarImg;
@@ -65,7 +71,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
 
     private void initView() {
 
-        dialTxt = (TextView) getActivity().findViewById(R.id.txt_dial);
+        dialImg = (ImageView) getActivity().findViewById(R.id.img_dial);
         settingImg = (ImageView) getActivity().findViewById(R.id.img_personal_setting);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_personal_avatar);
         genderImg = (ImageView) getActivity().findViewById(R.id.img_personal_gender);
@@ -77,7 +83,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         gridView.setAdapter(personalCenterAdapter);
         gridView.setOnItemClickListener(this);
 
-        dialTxt.setOnClickListener(new View.OnClickListener() {
+        dialImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent_dial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getString(R.string.dial)));
@@ -97,7 +103,8 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 4) {
             Bundle bundle = new Bundle();
-            bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_innerMessage));
+            bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
+            bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
             openActivity(menu[position], bundle);
         } else
             openActivity(menu[position]);
@@ -134,6 +141,6 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         else
             genderImg.setImageResource(R.drawable.ic_gender_woman);
         balanceTxt.setText(application.getCurrentFee());
-
+        personalCenterAdapter.notifyDataSetChanged();
     }
 }

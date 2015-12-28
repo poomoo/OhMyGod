@@ -287,7 +287,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     for (int i = 0; i < len; i++) {
                         messageInfo = new MessageInfo();
                         messageInfo.setStatementId(messageBOList.get(i).getStatementId());
-                        messageInfo.setIsRead(false);
+                        messageInfo.setStatus(false);
                         infoList.add(messageInfo);
                         MyUtil.insertMessageInfo(infoList);
                     }

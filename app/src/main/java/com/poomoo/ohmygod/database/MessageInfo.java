@@ -10,7 +10,7 @@ import org.litepal.crud.DataSupport;
  */
 public class MessageInfo extends DataSupport {
     private int statementId;
-    private boolean isRead = false;
+    private boolean status = false;
 
     public int getStatementId() {
         return statementId;
@@ -20,19 +20,19 @@ public class MessageInfo extends DataSupport {
         this.statementId = statementId;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setIsRead(boolean isRead) {
-        this.isRead = isRead;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "MessageInfo{" +
                 "statementId=" + statementId +
-                ", isRead=" + isRead +
+                ", status=" + status +
                 '}';
     }
 }

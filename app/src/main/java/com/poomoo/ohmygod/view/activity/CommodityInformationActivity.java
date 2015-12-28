@@ -2,6 +2,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -543,10 +545,16 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void code() {
-//        codePopupWindow = new CodePopupWindow(this);
         // 显示窗口
         codePopupWindow.showAtLocation(this.findViewById(R.id.llayout_commodity),
                 Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+        codeEdt.setFocusable(true);
+        codeEdt.setFocusableInTouchMode(true);
+        codeEdt.requestFocus();
+
     }
 
     private void initPopWindow() {
@@ -554,12 +562,13 @@ public class CommodityInformationActivity extends BaseActivity {
         codePopupWindow.setFocusable(true);
         codePopupWindow.setFocusable(true);
 
-        mMenuView.setFocusable(true);
-        mMenuView.setFocusableInTouchMode(true);
-        mMenuView.setOnKeyListener(new View.OnKeyListener() {
+//        mMenuView.setFocusable(true);
+//        mMenuView.setFocusableInTouchMode(true);
+        codeEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // TODO Auto-generated method stub
+                LogUtils.i(TAG, "点击返回键");
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     if (codePopupWindow != null) {
                         codePopupWindow.dismiss();

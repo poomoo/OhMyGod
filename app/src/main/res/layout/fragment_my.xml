@@ -12,16 +12,24 @@
         android:background="@color/white"
         android:padding="@dimen/dp_8">
 
-        <TextView
-            android:id="@+id/txt_dial"
+        <ImageView
+            android:id="@+id/img_dial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/dial"
-            android:textSize="@dimen/sp_16" />
+            android:paddingLeft="@dimen/dp_10"
+            android:src="@drawable/ic_dial" />
+        <!--        <TextView
+                    android:id="@+id/txt_dial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/dial"
+                    android:textSize="@dimen/sp_16" />-->
         <!--显示标题-->
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_setting" />
     </RelativeLayout>
 

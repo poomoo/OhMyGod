@@ -4,15 +4,14 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
-import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.poomoo.model.MessageBO;
-import com.poomoo.model.StatementBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 站内信息适配器
@@ -33,6 +32,7 @@ public class InStationMessagesAdapter extends MyBaseAdapter<MessageBO> {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_in_station_messages, null);
             viewHolder.avatarImg = (ImageView) convertView.findViewById(R.id.img_message_avatar);
+            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.img_inStationMessageStatus);
             viewHolder.titleTxt = (TextView) convertView.findViewById(R.id.txt_message_title);
             viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_message_datetime);
             viewHolder.conentTxt = (TextView) convertView.findViewById(R.id.txt_message_content);
@@ -41,6 +41,11 @@ public class InStationMessagesAdapter extends MyBaseAdapter<MessageBO> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         messageBO = itemList.get(position);
+        if (!MyUtil.isRead(messageBO.getStatementId()))
+            viewHolder.statusImg.setVisibility(View.VISIBLE);
+        else
+            viewHolder.statusImg.setVisibility(View.GONE);
+
         viewHolder.titleTxt.setText(messageBO.getTitle());
 //        viewHolder.conentTxt.setText(statementBO.getContent());
         viewHolder.dateTimeTxt.setText(messageBO.getInsertDt());
@@ -49,6 +54,7 @@ public class InStationMessagesAdapter extends MyBaseAdapter<MessageBO> {
 
     class ViewHolder {
         private ImageView avatarImg;
+        private ImageView statusImg;
         private TextView titleTxt;
         private TextView dateTimeTxt;
         private TextView conentTxt;

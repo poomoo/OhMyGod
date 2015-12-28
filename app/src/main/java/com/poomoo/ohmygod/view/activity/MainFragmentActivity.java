@@ -173,8 +173,10 @@ public class MainFragmentActivity extends
         if ((messageBOList != null && messageBOList.size() > 0)) {
             statementId = messageBOList.get(0).getStatementId();
             content = messageInfoBO.getContent();
-            MyUtil.updateMessageInfo(statementId);
-            GrabFragment.instance.updateInfoCount();
+            if (!MyUtil.isRead(statementId)) {
+                MyUtil.updateMessageInfo(statementId);
+                GrabFragment.instance.updateInfoCount();
+            }
             show();
         }
 //        else {
