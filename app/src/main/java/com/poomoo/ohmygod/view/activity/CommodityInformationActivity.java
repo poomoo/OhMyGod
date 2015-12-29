@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -39,6 +40,7 @@ import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.Code;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SoundUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
@@ -150,8 +152,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
         //html自适应
         WebSettings webSettings = commodityWeb.getSettings();
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        webSettings.setUseWideViewPort(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
@@ -200,8 +200,8 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         });
 
-        llayout_openActivity.setVisibility(View.GONE);
-        llayout_bottom.setVisibility(View.GONE);
+//        llayout_openActivity.setVisibility(View.GONE);
+//        llayout_bottom.setVisibility(View.GONE);
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -256,7 +256,6 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 commodityBO = (CommodityBO) data.getObj();
-                commodityBO.setPlayFlag("0");
                 //已参加
                 if (commodityBO.getPlayFlag().equals("1"))
                     isGrab = false;
@@ -276,8 +275,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
     private void initData() {
         if (isGrab) {
-//            position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
-//            LogUtils.i("lmf","详情页页时间:"+ GrabFragment.adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
             isMember();
             //房子
             if (typeId == 1) {
@@ -302,13 +299,16 @@ public class CommodityInformationActivity extends BaseActivity {
 
             //其他
             if (typeId == 4) {
-                anim = MyConfig.house;
-                succeedAnim = R.drawable.housesuccess;
-                failedAnim = R.drawable.housefailed;
+                anim = MyConfig.box;
+                succeedAnim = R.drawable.boxsuccess;
+                failedAnim = R.drawable.boxfailed;
             }
 
-        } else
+        } else {
+            llayout_openActivity.setVisibility(View.GONE);
+            llayout_bottom.setVisibility(View.GONE);
             MyUtil.showToast(getApplicationContext(), "您已经参与过该活动,不能再次参与");
+        }
 
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
@@ -327,8 +327,6 @@ public class CommodityInformationActivity extends BaseActivity {
                 imageBrowse(position, commodityBO.getPicList());
             }
         });
-        llayout_openActivity.setVisibility(View.VISIBLE);
-        llayout_bottom.setVisibility(View.VISIBLE);
         //商品详情
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
         commodityWeb.setWebChromeClient(new WebChromeClient() {
@@ -415,6 +413,7 @@ public class CommodityInformationActivity extends BaseActivity {
             code();
             return;
         }
+        playSound();
         if (firstFlag) {
             decrease();
             llayout_anim.setVisibility(View.VISIBLE);
@@ -498,6 +497,8 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
+
+        animImg.setImageResource(succeedAnim);
         submit();
     }
 
@@ -511,8 +512,10 @@ public class CommodityInformationActivity extends BaseActivity {
                         String message;
                         if (grabResultBO.getIsWin().equals("true")) {
                             animImg.setImageResource(succeedAnim);
-                            message = "恭喜中奖";
-                            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            String title = "恭喜中奖";
+                            message = "请完善个人资料后领取奖品";
+
+                            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             if (MyUtil.isNeedCompleteInfo(application))
@@ -528,6 +531,8 @@ public class CommodityInformationActivity extends BaseActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             }).create();
+                            Window window = dialog.getWindow();
+                            window.setGravity(Gravity.BOTTOM);
                             dialog.show();
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
@@ -585,15 +590,9 @@ public class CommodityInformationActivity extends BaseActivity {
         codeEdt.setFocusableInTouchMode(true);
         codeEdt.requestFocus();
 
-    }
-
-    private void initPopWindow() {
-        codePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        codePopupWindow.setFocusable(true);
-        codePopupWindow.setFocusable(true);
-
 //        mMenuView.setFocusable(true);
 //        mMenuView.setFocusableInTouchMode(true);
+//        mMenuView.requestFocus();
         codeEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -606,8 +605,22 @@ public class CommodityInformationActivity extends BaseActivity {
                         codePopupWindow = null;
                     }
                 }
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    return false;
+                }
                 return true;
             }
         });
+
+    }
+
+    private void initPopWindow() {
+        codePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        codePopupWindow.setFocusable(true);
+        codePopupWindow.setFocusable(true);
+    }
+
+    private void playSound() {
+        SoundUtil.getMySound(this).playSound(SoundUtil.SOUND_TYPE_SUCCESS);
     }
 }

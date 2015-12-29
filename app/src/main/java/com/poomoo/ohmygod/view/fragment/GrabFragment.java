@@ -79,9 +79,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private View mMenuView;
     private ListView timeList;
     private PullDownScrollView refreshableView;
-    private LinearLayout remindLlayout1;
-    private LinearLayout remindLlayout2;
+    private LinearLayout remindLlayout;
+    //    private LinearLayout remindLlayout2;
+    private LinearLayout middleLlayout;
     private LinearLayout currCityLlayout;
+    private LinearLayout noWinningInfoLlayout;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
     private ImageView avatarImg;
@@ -111,6 +113,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     public static GrabFragment instance;
     private PopupWindow timePopupWindow;
     private TimeAdapter timeAdapter;
+    private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,14 +134,17 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
+        noWinningInfoLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
-        remindLlayout1 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind1);
-        remindLlayout2 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind2);
+        remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
+//        remindLlayout2 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind2);
+        middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
+
 
         //初始化下拉刷新
         refreshableView.setRefreshListener(this);
@@ -188,8 +194,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
         currCityLlayout.setOnClickListener(this);
         winnerRlayout.setOnClickListener(this);
-        remindLlayout1.setOnClickListener(this);
-        remindLlayout2.setOnClickListener(this);
+        remindLlayout.setOnClickListener(this);
+//        remindLlayout2.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -276,25 +282,23 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getGrabList(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                if (isRefreshable) {
-//                    refreshableView.finishRefreshing();
+                if (isRefreshable)
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
-                }
+
                 slideShowView.setVisibility(View.VISIBLE);
-                remindLlayout1.setVisibility(View.VISIBLE);
+                hideFloatingActionButton();
                 grabBOList = data.getObjList();
-//                initTestData(grabBOList);
                 adapter.setItems(grabBOList);
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
-                if (isRefreshable) {
-//                    refreshableView.finishRefreshing();
+                if (isRefreshable)
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
-                }
+
                 slideShowView.setVisibility(View.GONE);
-                remindLlayout1.setVisibility(View.GONE);
+                noWinningInfoLlayout.setVisibility(View.GONE);
+                remindLlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });
@@ -307,6 +311,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onSuccess(ResponseBO data) {
                 winnerRlayout.setClickable(true);
+                noWinningInfoLlayout.setVisibility(View.GONE);
                 avatarRlayout.setVisibility(View.VISIBLE);
                 winnerBOList = data.getObjList();
                 TimerTask t = new TimerTask() {
@@ -382,16 +387,15 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         if (!MyUtil.isLogin(getActivity()))
             return;
 
-        if (!application.getLocateCity().equals(application.getCurrCity())) {
-            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-            return;
-        }
+//        if (!application.getLocateCity().equals(application.getCurrCity())) {
+//            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+//            return;
+//        }
 
         LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
         Bundle pBundle = new Bundle();
         pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
         pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
-//        pBundle.putLong(getString(R.string.intent_countDownTime), adapter.getCountDownUtils().get(position).getMillisUntilFinished());
         pBundle.putInt(getString(R.string.intent_position), position);
         openActivity(CommodityInformationActivity.class, pBundle);
     }
@@ -409,12 +413,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 openActivity(WinInformationActivity.class);
                 break;
 
-            case R.id.llayout_remind1:
-                showFloatingActionButton();
-                break;
-
-            case R.id.llayout_remind2:
-                setDate();
+            case R.id.llayout_remind:
+                if (!isShow) {
+                    showFloatingActionButton();//展开
+                } else {
+                    setDate();
+                }
                 break;
 
         }
@@ -487,27 +491,44 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     public void hideFloatingActionButton() {
-        remindLlayout1.setVisibility(View.VISIBLE);
-        remindLlayout2.setVisibility(View.GONE);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(remindLlayout2, "scaleX", 1, 0);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(remindLlayout2, "scaleY", 1, 0);
-        AnimatorSet animSetXY = new AnimatorSet();
-        animSetXY.playTogether(scaleX, scaleY);
-        animSetXY.setInterpolator(new OvershootInterpolator());
-        animSetXY.setDuration(500);
-        animSetXY.start();
+        isShow = false;
+        float width = remindLlayout.getWidth();
+        float off = middleLlayout.getWidth() - width / 3f;
+        LogUtils.i(TAG, "隐藏:" + width + " " + off);
+        ObjectAnimator translationLeft = ObjectAnimator.ofFloat(remindLlayout, "X", off);
+        AnimatorSet as = new AnimatorSet();
+        as.play(translationLeft);
+        as.setDuration(1000);
+        as.start();
     }
 
     public void showFloatingActionButton() {
-        remindLlayout1.setVisibility(View.GONE);
-        remindLlayout2.setVisibility(View.VISIBLE);
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(remindLlayout2, "translationX", 0, 1);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(remindLlayout2, "scaleY", 0, 1);
-        AnimatorSet animSetXY = new AnimatorSet();
-        animSetXY.playTogether(scaleX, scaleY);
-        animSetXY.setInterpolator(new OvershootInterpolator());
-        animSetXY.setDuration(500);
-        animSetXY.start();
+        isShow = true;
+        float width = remindLlayout.getWidth();
+        float off = middleLlayout.getWidth() - width;
+        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", off);
+        AnimatorSet as = new AnimatorSet();
+        as.play(translationRight);
+        as.setDuration(1000);
+        as.start();
+    }
+
+    private void testAnim() {
+        float width = remindLlayout.getWidth();
+        float height = remindLlayout.getHeight();
+        float off = middleLlayout.getWidth() - width / 3f;
+        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", width);
+        ObjectAnimator translationLeft = ObjectAnimator.ofFloat(remindLlayout, "X", off);
+        ObjectAnimator translationDown = ObjectAnimator.ofFloat(remindLlayout, "Y", height);
+        ObjectAnimator translationUp = ObjectAnimator.ofFloat(remindLlayout, "Y", 0);
+        AnimatorSet as = new AnimatorSet();
+        as.play(translationLeft);
+//        as.play(translationRight).before(translationLeft);
+//        as.play(translationRight).with(translationDown);
+//        as.play(translationLeft).with(translationUp);
+        LogUtils.i(TAG, "按钮动画:" + width);
+        as.setDuration(1000);
+        as.start();
     }
 
     /**

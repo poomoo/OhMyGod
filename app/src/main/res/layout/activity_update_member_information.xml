@@ -289,11 +289,11 @@
                 <TextView
                     android:layout_toRightOf="@+id/txt_address"
                     android:id="@+id/txt_memberInfo_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:onClick="toAddress"
-                    android:text="贵阳市发动机发动机刷卡费机读卡失联飞机的"
+                    android:text=""
                     android:paddingLeft="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />

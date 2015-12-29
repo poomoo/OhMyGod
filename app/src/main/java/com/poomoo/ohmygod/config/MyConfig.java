@@ -45,5 +45,11 @@ public class MyConfig {
             R.drawable.decorate48, R.drawable.decorate49, R.drawable.decorate50, R.drawable.decorate51, R.drawable.decorate52, R.drawable.decorate53, R.drawable.decorate54, R.drawable.decorate55, R.drawable.decorate56, R.drawable.decorate57, R.drawable.decorate58, R.drawable.decorate59, R.drawable.decorate60, R.drawable.decorate61, R.drawable.decorate62, R.drawable.decorate63,
             R.drawable.decorate64, R.drawable.decorate65, R.drawable.decorate66, R.drawable.decorate67, R.drawable.decorate68};
 
+    public static final int[] box = {R.drawable.box1, R.drawable.box2, R.drawable.box3, R.drawable.box4, R.drawable.box5, R.drawable.box6, R.drawable.box7, R.drawable.box8, R.drawable.box9, R.drawable.box10, R.drawable.box11, R.drawable.box12, R.drawable.box13, R.drawable.box14, R.drawable.box15,
+            R.drawable.box16, R.drawable.box17, R.drawable.box18, R.drawable.box19, R.drawable.box20, R.drawable.box21, R.drawable.box22, R.drawable.box23, R.drawable.box24, R.drawable.box25, R.drawable.box26, R.drawable.box27, R.drawable.box28, R.drawable.box29, R.drawable.box30, R.drawable.box31,
+            R.drawable.box32, R.drawable.box33, R.drawable.box34, R.drawable.box35, R.drawable.box36, R.drawable.box37, R.drawable.box38, R.drawable.box39, R.drawable.box40, R.drawable.box41, R.drawable.box42, R.drawable.box43, R.drawable.box44, R.drawable.box45, R.drawable.box46, R.drawable.box47,
+            R.drawable.box48, R.drawable.box49, R.drawable.box50, R.drawable.box51, R.drawable.box52, R.drawable.box53, R.drawable.box54, R.drawable.box55, R.drawable.box56, R.drawable.box57, R.drawable.box58, R.drawable.box59, R.drawable.box60, R.drawable.box61, R.drawable.box62, R.drawable.box63,
+            R.drawable.box64, R.drawable.box65, R.drawable.box66, R.drawable.box67, R.drawable.box68, R.drawable.box69, R.drawable.box70, R.drawable.box71, R.drawable.box72, R.drawable.box73};
+
     public static final int[] time = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
 }

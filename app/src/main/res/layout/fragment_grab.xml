@@ -8,15 +8,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:background="@color/white"
         android:padding="@dimen/dp_8">
 
         <LinearLayout
             android:id="@+id/llayout_currCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dp_10"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -24,7 +25,6 @@
                 android:id="@+id/txt_currCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:text=""
                 android:textColor="@color/themeRed"
                 android:textSize="@dimen/sp_20" />
@@ -33,7 +33,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:src="@drawable/ic_arrow_down" />
         </LinearLayout>
 
@@ -42,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:padding="5dp"
             android:text="@string/app_name"
             android:textSize="@dimen/sp_20" />
 
@@ -71,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="right"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/dp_10"
                 android:padding="@dimen/dp_inform_padding"
                 android:src="@drawable/ic_inform" />
         </RelativeLayout>
@@ -91,6 +89,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
 
@@ -100,6 +100,7 @@
                     android:layout_height="@dimen/dp_ad" />
 
                 <LinearLayout
+                    android:id="@+id/llayout_middle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -111,9 +112,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_2"
                         android:visibility="visible">
 
                         <LinearLayout
@@ -148,7 +149,7 @@
                                     android:layout_below="@+id/fragmetn_grab_txt_middle"
                                     android:background="@drawable/ic_head_logo"
                                     android:gravity="center"
-                                    android:paddingBottom="5dp">
+                                    android:paddingBottom="@dimen/dp_8">
 
                                     <TextView
                                         android:layout_width="match_parent"
@@ -171,22 +172,34 @@
                                 android:gravity="center_vertical"
                                 android:singleLine="true"
                                 android:text=""
-                                android:textSize="@dimen/sp_16" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:text="获奖时间: 2015-11-11"
                                 android:textSize="@dimen/sp_16"
                                 android:visibility="gone" />
+
+                            <LinearLayout
+                                android:id="@+id/llayout_noWinningInfo"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="3dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/themeRed" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/dp_8"
+                                    android:text="今日没有中奖信息"
+                                    android:textSize="@dimen/sp_16"
+                                    android:visibility="visible" />
+                            </LinearLayout>
                         </LinearLayout>
-
-
                     </RelativeLayout>
 
                     <LinearLayout
-                        android:id="@+id/llayout_remind1"
+                        android:id="@+id/llayout_remind123"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -194,7 +207,7 @@
                         android:background="@drawable/shape_round"
                         android:gravity="center"
                         android:padding="@dimen/dp_10"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -203,17 +216,17 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/llayout_remind2"
+                        android:id="@+id/llayout_remind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bg_grab_tip_red"
                         android:gravity="center"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="5dp"
-                        android:visibility="gone">
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_8"
+                        android:visibility="visible">
 
                         <ImageView
                             android:layout_width="wrap_content"

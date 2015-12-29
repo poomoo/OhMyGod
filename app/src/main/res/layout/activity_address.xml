@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/divider"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_8">
+    android:orientation="vertical">
 
     <include layout="@layout/pub_layout_title_bar" />
 
@@ -40,7 +39,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:hint="@string/hint_address1"
-        android:padding="@dimen/dp_16" />
+        android:padding="@dimen/dp_14" />
 
     <TextView
         android:layout_width="match_parent"

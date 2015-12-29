@@ -189,7 +189,7 @@ public class SlideShowView extends FrameLayout {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
+//            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
             return imageViewsList.size();
         }
 
