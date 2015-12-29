@@ -497,13 +497,11 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
-
-        animImg.setImageResource(succeedAnim);
         submit();
     }
 
     private void submit() {
-        showProgressDialog("提交申请中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.putGrab(activeId + "", this.application.getUserId(), new ActionCallbackListener() {
                     @Override
                     public void onSuccess(ResponseBO data) {
@@ -533,6 +531,7 @@ public class CommodityInformationActivity extends BaseActivity {
                             }).create();
                             Window window = dialog.getWindow();
                             window.setGravity(Gravity.BOTTOM);
+                            dialog.setCanceledOnTouchOutside(false);
                             dialog.show();
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);

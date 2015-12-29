@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -24,12 +25,13 @@ public class CallAlarm extends BroadcastReceiver {
     private static final String DEFAULT_SNOOZE = "10";
     int mNoteID;
     int tag;
+    private NotificationManager mNotificationManager;
+    private static final int NOTIFICATION_ID = 100000010;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
-        Log.v(TAG, "onCreate()  intent-->" + intent + "  data-->"
-                + (intent == null ? "" : intent.getExtras()));
+        Log.v(TAG, "onCreate()  intent-->" + intent + "  data-->" + (intent == null ? "" : intent.getExtras()));
         // 接受其他闹钟事件，电话事件，短信事件等，进行交互处理
         String action = intent.getAction();
         if (action != null && action.equals("android.intent.action.PHONE_STATE")) {
@@ -43,10 +45,10 @@ public class CallAlarm extends BroadcastReceiver {
             if (tag == -1) {
                 return;
             }
-
-            Intent i = new Intent(context, AlarmAlertActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
+            setNotication();
+//            Intent i = new Intent(context, AlarmAlertActivity.class);
+//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            context.startActivity(i);
         }
     }
 
@@ -71,7 +73,6 @@ public class CallAlarm extends BroadcastReceiver {
         cancelSnooze.setAction("com.way.note.STOP_ALARM");
         cancelSnooze.putExtra(DBOpenHelper.ID, mNoteID);
         mContext.sendBroadcast(cancelSnooze);
-
 //        PendingIntent broadcast = PendingIntent.getBroadcast(mContext, mNoteID,
 //                cancelSnooze, 0);
 //        Notification n = new Notification(R.drawable.stat_notify_alarm, label,
@@ -84,5 +85,26 @@ public class CallAlarm extends BroadcastReceiver {
 //                        (String) DateFormat.format("kk:mm", c)), broadcast);
 //        n.flags |= Notification.FLAG_AUTO_CANCEL
 //                | Notification.FLAG_ONGOING_EVENT;
+    }
+
+    private void setNotication() {
+        mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        // 设置显示提示信息，该信息也会在状态栏显示
+        String tickerText = "抢购时间到了";
+        Notification.Builder builder = new Notification.Builder(mContext).setTicker(tickerText).setSmallIcon(R.drawable.ic_logo);
+        Notification note = new Notification();
+        note.flags = Notification.FLAG_ONGOING_EVENT;
+        note.defaults = Notification.DEFAULT_SOUND;
+
+        //通过Intent，使得点击Notification之后会启动新的Activity
+        Intent i = new Intent(mContext, MainFragmentActivity.class);
+        //该标志位表示如果Intent要启动的Activity在栈顶，则无须创建新的实例
+        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 100, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        note = builder.setContentIntent(pendingIntent).setContentText("抢购时间到了,点击跳转").build();
+        note.flags |= Notification.FLAG_AUTO_CANCEL
+                | Notification.FLAG_ONGOING_EVENT;
+        mNotificationManager.notify(NOTIFICATION_ID, note);
     }
 }

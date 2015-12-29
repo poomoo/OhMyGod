@@ -83,7 +83,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     //    private LinearLayout remindLlayout2;
     private LinearLayout middleLlayout;
     private LinearLayout currCityLlayout;
-    private LinearLayout noWinningInfoLlayout;
+    //    private LinearLayout noWinningInfoLlayout;
+    private TextView noWinningInfoTxt;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
     private ImageView avatarImg;
@@ -106,6 +107,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     public int informCount = 0;//通知的数量
     private List<MessageBO> messageBOList = new ArrayList<>();
     private boolean isFirst = true;//true第一次进入
+    private boolean isWinListFirst = true;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
     private DisplayImageOptions defaultOptions;
     private MessageInfo messageInfo;
@@ -134,7 +136,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
-        noWinningInfoLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_noWinningInfo);
+//        noWinningInfoLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_noWinningInfo);
+        noWinningInfoTxt = (TextView) getActivity().findViewById(R.id.txt_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
@@ -142,7 +145,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
-//        remindLlayout2 = (LinearLayout) getActivity().findViewById(R.id.llayout_remind2);
         middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
 
 
@@ -193,7 +195,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         initPopWindow();
 
         currCityLlayout.setOnClickListener(this);
-        winnerRlayout.setOnClickListener(this);
         remindLlayout.setOnClickListener(this);
 //        remindLlayout2.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
@@ -234,7 +235,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     SpannableString spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName());
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
-                    LogUtils.i(TAG, "head:" + winnerBOList.get(index).getHeadPic());
+                    LogUtils.i(TAG, "spannableString:" + spannableString);
                     ImageLoader.getInstance().displayImage(winnerBOList.get(index).getHeadPic(), avatarImg, defaultOptions);
                     index++;
                     if (index == winnerBOList.size())
@@ -297,7 +298,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
 
                 slideShowView.setVisibility(View.GONE);
-                noWinningInfoLlayout.setVisibility(View.GONE);
+//                noWinningInfoLlayout.setVisibility(View.GONE);
                 remindLlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
@@ -311,21 +312,25 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onSuccess(ResponseBO data) {
                 winnerRlayout.setClickable(true);
-                noWinningInfoLlayout.setVisibility(View.GONE);
+                noWinningInfoTxt.setVisibility(View.GONE);
                 avatarRlayout.setVisibility(View.VISIBLE);
+                marqueeTextView.setVisibility(View.VISIBLE);
+                winnerRlayout.setOnClickListener(GrabFragment.this);
                 winnerBOList = data.getObjList();
-                TimerTask t = new TimerTask() {
-                    public void run() {
-                        handler.sendEmptyMessage(1);
-                    }
-                };
-                Timer timer = new Timer();
-                timer.schedule(t, 0, 15 * 1000);
+                if (isWinListFirst) {
+                    TimerTask t = new TimerTask() {
+                        public void run() {
+                            handler.sendEmptyMessage(1);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.schedule(t, 0, 15 * 1000);
+                    isWinListFirst = false;
+                }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
-
             }
         });
     }
@@ -435,6 +440,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 adapter.setItems(grabBOList);
                 getGrabList(false);
                 getAd();
+                getWinnerList();
             }
             currCity = application.getCurrCity();
         }
@@ -459,6 +465,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void onRefresh(PullDownScrollView view) {
         getGrabList(true);
+        getWinnerList();
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -481,14 +488,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         }
     }
 
-    private void initTestData(List<GrabBO> grabBOList) {
-        for (int i = 0; i < 10; i++) {
-            GrabBO grabBO = new GrabBO();
-            grabBO.setStartCountdown((i + 1) * 60 * 60 * 1000);
-            grabBO.setPicture(i + "");
-            grabBOList.add(grabBO);
-        }
-    }
 
     public void hideFloatingActionButton() {
         isShow = false;
@@ -513,23 +512,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         as.start();
     }
 
-    private void testAnim() {
-        float width = remindLlayout.getWidth();
-        float height = remindLlayout.getHeight();
-        float off = middleLlayout.getWidth() - width / 3f;
-        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", width);
-        ObjectAnimator translationLeft = ObjectAnimator.ofFloat(remindLlayout, "X", off);
-        ObjectAnimator translationDown = ObjectAnimator.ofFloat(remindLlayout, "Y", height);
-        ObjectAnimator translationUp = ObjectAnimator.ofFloat(remindLlayout, "Y", 0);
-        AnimatorSet as = new AnimatorSet();
-        as.play(translationLeft);
-//        as.play(translationRight).before(translationLeft);
-//        as.play(translationRight).with(translationDown);
-//        as.play(translationLeft).with(translationUp);
-        LogUtils.i(TAG, "按钮动画:" + width);
-        as.setDuration(1000);
-        as.start();
-    }
 
     /**
      * 设置闹钟时间

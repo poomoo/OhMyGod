@@ -89,8 +89,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
 
@@ -98,6 +96,7 @@
                     android:id="@+id/flipper_ad"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_ad" />
+
 
                 <LinearLayout
                     android:id="@+id/llayout_middle"
@@ -161,86 +160,55 @@
                                 </LinearLayout>
                             </RelativeLayout>
 
+
+                            <TextView
+                                android:id="@+id/txt_noWinningInfo"
+                                android:layout_width="3dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/themeRed" />
+
                             <com.poomoo.ohmygod.view.custom.UpMarqueeTextView
                                 android:id="@+id/txt_winnerInfo"
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:ellipsize="marquee"
                                 android:focusable="true"
                                 android:focusableInTouchMode="true"
                                 android:gravity="center_vertical"
                                 android:singleLine="true"
-                                android:text=""
+                                android:text="今日没有中奖信息"
                                 android:textSize="@dimen/sp_16"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
-                            <LinearLayout
-                                android:id="@+id/llayout_noWinningInfo"
-                                android:layout_width="0dp"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llayout_remind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_grab_tip_red"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/dp_8"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingTop="@dimen/dp_8"
+                            android:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
+                                android:src="@drawable/ic_grab_tip" />
 
-                                <TextView
-                                    android:layout_width="3dp"
-                                    android:layout_height="wrap_content"
-                                    android:background="@color/themeRed" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:padding="@dimen/dp_8"
-                                    android:text="今日没有中奖信息"
-                                    android:textSize="@dimen/sp_16"
-                                    android:visibility="visible" />
-                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="4dp"
+                                android:text="@string/label_grab_tip"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_16" />
                         </LinearLayout>
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llayout_remind123"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/shape_round"
-                        android:gravity="center"
-                        android:padding="@dimen/dp_10"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_grab_tip" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llayout_remind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_grab_tip_red"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/dp_8"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_8"
-                        android:visibility="visible">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_grab_tip" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="4dp"
-                            android:text="@string/label_grab_tip"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_16" />
-                    </LinearLayout>
                 </LinearLayout>
 
 

@@ -66,7 +66,7 @@ public class RebateRecordsActivity extends BaseActivity {
                 closeProgressDialog();
                 rebateBOList = new ArrayList<>();
                 rebateBOList = data.getObjList();
-                if (rebateBOList.size() > 0 && rebateBOList != null)
+                if (rebateBOList != null && rebateBOList.size() > 0)
                     adapter.setItems(rebateBOList);
             }
 

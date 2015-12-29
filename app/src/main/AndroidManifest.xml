@@ -131,7 +131,7 @@
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!-- meta-data需要写在application中 -->
         <meta-data
             android:name="UMENG_APPKEY"
