@@ -11,8 +11,14 @@ import com.poomoo.ohmygod.R;
 
 public class SoundUtil {
     private SoundPool soundpool = null;
-    private int successsoundid;
-    public final static int SOUND_TYPE_SUCCESS = 0;
+    private int housesoundid;
+    private int carsoundid;
+    private int drawsoundid;
+    private int othersoundid;
+    public final static int HOUSE = 1;
+    public final static int CAR = 2;
+    public final static int DRAW = 3;
+    public final static int OTHER = 4;
     private static SoundUtil mySound = null;
     private Context context;
 
@@ -27,17 +33,27 @@ public class SoundUtil {
         this.context = context;
         if (soundpool == null) {
             soundpool = new SoundPool(1, AudioManager.STREAM_NOTIFICATION, 100);
-            successsoundid = soundpool.load(context, R.raw.click, 1);
+            housesoundid = soundpool.load(context, R.raw.house, 1);
+            carsoundid = soundpool.load(context, R.raw.click, 1);
+            drawsoundid = soundpool.load(context, R.raw.click, 1);
+            othersoundid = soundpool.load(context, R.raw.click, 1);
         }
     }
 
     public void playSound(int soundType) {
         float streamVolume = 0.8f;
-        int soundResId = successsoundid;
         switch (soundType) {
-            case SOUND_TYPE_SUCCESS:
-                soundpool.play(soundResId, streamVolume, streamVolume, 1, 0, 1f);
-                LogUtils.i("SoundUtil", "播放声音");
+            case HOUSE:
+                soundpool.play(housesoundid, streamVolume, streamVolume, 1, 0, 1f);
+                break;
+            case CAR:
+                soundpool.play(carsoundid, streamVolume, streamVolume, 1, 0, 1f);
+                break;
+            case DRAW:
+                soundpool.play(drawsoundid, streamVolume, streamVolume, 1, 0, 1f);
+                break;
+            case OTHER:
+                soundpool.play(othersoundid, streamVolume, streamVolume, 1, 0, 1f);
                 break;
             default:
                 break;

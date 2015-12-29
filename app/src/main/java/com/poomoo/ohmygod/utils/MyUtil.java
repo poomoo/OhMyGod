@@ -4,6 +4,7 @@
 package com.poomoo.ohmygod.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -314,6 +315,9 @@ public class MyUtil {
      */
     public static boolean isNeedCompleteInfo(MyApplication application) {
         if (application.getIsAdvancedUser().equals("1")) { //升级会员
+            LogUtils.i(TAG, "bankName:" + application.getBankName());
+            LogUtils.i(TAG, "getIdFrontPic:" + application.getIdFrontPic());
+            LogUtils.i(TAG, "getIdOpsitePic:" + application.getIdOpsitePic());
             if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
                     || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getIdFrontPic())
                     || TextUtils.isEmpty(application.getIdOpsitePic()))
@@ -421,6 +425,48 @@ public class MyUtil {
         if (infoList.size() == 1) {
             if (infoList.get(0).isStatus())
                 return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断app是否正在运行
+     *
+     * @param ctx
+     * @param packageName
+     * @return
+     */
+    public static boolean appIsRunning(Context ctx, String packageName) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(ctx.ACTIVITY_SERVICE);
+
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+        if (runningAppProcesses != null) {
+            for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
+                if (runningAppProcessInfo.processName.startsWith(packageName)) {
+                    LogUtils.i("CallAlarm", "processName:" + runningAppProcessInfo.processName + " packageName:" + packageName);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * app 是否在后台运行
+     *
+     * @param ctx
+     * @param packageName
+     * @return
+     */
+    public static boolean appIsBackgroundRunning(Context ctx, String packageName) {
+        ActivityManager am = (ActivityManager) ctx.getSystemService(ctx.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = am.getRunningAppProcesses();
+        if (runningAppProcesses != null) {
+            for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
+                if (runningAppProcessInfo.processName.startsWith(packageName)) {
+                    return runningAppProcessInfo.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && runningAppProcessInfo.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE; //排除无界面的app
+                }
+            }
         }
         return false;
     }

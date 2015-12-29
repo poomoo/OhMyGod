@@ -23,6 +23,7 @@ public class CommodityBO {
     //    private long countdown;//--表示剩余时间
     private long startCountdown;//--开始时间倒计时
     private long endCountdown;//--结束时间倒计时
+    private int typeId;
 
     public ArrayList<String> getPicList() {
         return picList;
@@ -104,18 +105,28 @@ public class CommodityBO {
         this.endCountdown = endCountdown;
     }
 
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
     @Override
     public String toString() {
         return "CommodityBO{" +
                 "picList=" + picList +
                 ", goodsName='" + goodsName + '\'' +
                 ", price='" + price + '\'' +
+                ", startDt='" + startDt + '\'' +
                 ", endDt='" + endDt + '\'' +
                 ", content='" + content + '\'' +
                 ", statement='" + statement + '\'' +
                 ", playFlag='" + playFlag + '\'' +
                 ", startCountdown=" + startCountdown +
                 ", endCountdown=" + endCountdown +
+                ", typeId=" + typeId +
                 '}';
     }
 }

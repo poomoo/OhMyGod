@@ -147,7 +147,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle pBundle = new Bundle();
-        pBundle.putSerializable(getString(R.string.intent_value), winningBOList.get(position));
+        pBundle.putSerializable(getString(R.string.intent_value), (WinningRecordsBO) adapter.getItem(position));
         openActivity(WinningRecord2Activity.class, pBundle);
     }
 

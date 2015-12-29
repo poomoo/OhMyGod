@@ -17,6 +17,7 @@ import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
 import com.poomoo.ohmygod.view.fragment.MyFragment;

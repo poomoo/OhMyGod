@@ -41,6 +41,9 @@ public class NickNameActivity extends BaseActivity {
         if (PARENT.equals(getString(R.string.intent_nickName))) {
             contentEdt.setHint(getString(R.string.hint_input_nickName));
         }
+        if (PARENT.equals(getString(R.string.intent_realName))) {
+            contentEdt.setHint(getString(R.string.hint_input_realName));
+        }
 
         if (PARENT.equals(getString(R.string.intent_age))) {
             contentEdt.setHint(getString(R.string.hint_input_age));
@@ -57,6 +60,8 @@ public class NickNameActivity extends BaseActivity {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         if (PARENT.equals(getString(R.string.intent_nickName)))
             title = getString(R.string.title_nickName);
+        if (PARENT.equals(getString(R.string.intent_realName)))
+            title = getString(R.string.title_realName);
         if (PARENT.equals(getString(R.string.intent_age)))
             title = getString(R.string.title_age);
         if (PARENT.equals(getString(R.string.intent_openBank)))
@@ -80,6 +85,8 @@ public class NickNameActivity extends BaseActivity {
     public void toSubmit(View view) {
         if (PARENT.equals(getString(R.string.intent_nickName)))
             key = "nickName";
+        if (PARENT.equals(getString(R.string.intent_realName)))
+            key = "realName";
         if (PARENT.equals(getString(R.string.intent_age)))
             key = "age";
         if (PARENT.equals(getString(R.string.intent_openBank)))
@@ -96,6 +103,12 @@ public class NickNameActivity extends BaseActivity {
                     application.setNickName(value);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), value);
                     MyUtil.showToast(getApplicationContext(), "修改昵称成功");
+                }
+
+                if (PARENT.equals(getString(R.string.intent_realName))) {
+                    application.setRealName(value);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), value);
+                    MyUtil.showToast(getApplicationContext(), "修改账户名成功");
                 }
 
                 if (PARENT.equals(getString(R.string.intent_age))) {

@@ -63,6 +63,7 @@ public class CompleteUserInformationActivity extends BaseActivity {
     private ImageView frontIdCardImg;
     private ImageView backIdCardImg;
     private TextView cityTxt;
+    private TextView telTxt;
     private Spinner areaSpinner;
     private SelectPicsPopupWindow popupWindow;
     private int flag;//1-正面 2-反面
@@ -110,23 +111,12 @@ public class CompleteUserInformationActivity extends BaseActivity {
         idCardNumEdt = (EditText) findViewById(R.id.edt_idCardNum);
         addressEdt = (EditText) findViewById(R.id.edt_address1);
         cityTxt = (TextView) findViewById(R.id.txt_locateCity);
+        telTxt = (TextView) findViewById(R.id.txt_celPhoneNum);
         areaSpinner = (Spinner) findViewById(R.id.spinner_area);
-//        bankCardNumEdt = (EditText) findViewById(R.id.edt_bankCardNum);
-//        frontIdCardImg = (ImageView) findViewById(R.id.img_front_idCard);
-//        backIdCardImg = (ImageView) findViewById(R.id.img_back_idCard);
 
         realNameEdt.setText(application.getRealName());
         idCardNumEdt.setText(application.getIdCardNum());
-//        bankCardNumEdt.setText(application.getBankCardNum());
-//        addressEdt.setText(application.getAddress());
-
-//        if (!TextUtils.isEmpty(application.getIdFrontPic()) && !TextUtils.isEmpty(application.getIdOpsitePic())) {
-//            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg);
-//            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg);
-//        }
-
-
-//        MyUtil.fortmatCardNum(bankCardNumEdt);
+        telTxt.setText(application.getTel());
 
         cityTxt.setText(application.getLocateCity());
         cityInfoArrayList = MyUtil.getCityList();

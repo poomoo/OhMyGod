@@ -138,23 +138,27 @@ public class LogInActivity extends BaseActivity {
         this.application.setIdOpsitePic(userBO.getIdOpsitePic());
         this.application.setBankCardNum(userBO.getBankCardNum());
         this.application.setBankName(userBO.getBankName());
-        this.application.setIsActiveWarm(userBO.getIsActiveWarm());
+        this.application.setAddress(userBO.getAddress());
         this.application.setIsAdvancedUser(userBO.getIsAdvancedUser());
 
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), userBO.getUserId());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), userBO.getTel());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_nickName), userBO.getNickName());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_headPic), userBO.getHeadPic());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_currentFee), userBO.getCurrentFee());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_realNameAuth), userBO.getRealNameAuth());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idCardNum), userBO.getIdCardNum());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_sex), userBO.getSex());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_age), userBO.getAge());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idFrontPic), userBO.getIdFrontPic());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_idOpsitePic), userBO.getIdOpsitePic());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankCardNum), userBO.getBankCardNum());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
-        SPUtils.put(application.getApplicationContext(), getString(R.string.sp_isAdvancedUser), application.getIsAdvancedUser());
+//        if (!userBO.getTel().equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""))) {
+//
+//        }
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_userId), userBO.getUserId());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_phoneNum), userBO.getTel());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), userBO.getNickName());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_headPic), userBO.getHeadPic());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_currentFee), userBO.getCurrentFee());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_realNameAuth), userBO.getRealNameAuth());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), userBO.getIdCardNum());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_sex), userBO.getSex());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_age), userBO.getAge());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), userBO.getIdFrontPic());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_idOpsitePic), userBO.getIdOpsitePic());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_bankCardNum), userBO.getBankCardNum());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_address), userBO.getAddress());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_isAdvancedUser), userBO.getIsAdvancedUser());
     }
 }

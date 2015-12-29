@@ -35,6 +35,7 @@
     <string name="title_setting">"设置"</string>
     <string name="title_userInfo">"个人资料"</string>
     <string name="title_nickName">"修改昵称"</string>
+    <string name="title_realName">"修改账户名"</string>
     <string name="title_changePhone">"换绑手机"</string>
     <string name="title_changeIdCardInfo">"修改身份证信息"</string>
     <string name="title_idCardInfo">"身份证信息"</string>
@@ -141,8 +142,8 @@
     <!--年月-->
 
     <!--中奖记录-->
-    <string name="label_winning_dateTime">"　获奖时间 : 　　"</string>
-    <string name="label_winning_endTime">领取截止日期 : </string>
+    <string name="label_winning_dateTime">"　　获奖时间 :"</string>
+    <string name="label_winning_endTime">领取截止日期 :</string>
     <string name="label_winning_address">"领取地点 : "</string>
     <string name="label_winning_requirement">"领取要求 : "</string>
     <!--中奖记录-->
@@ -230,6 +231,7 @@
     <string name="intent_position">position</string>
     <string name="intent_countDownTime">countDownTime</string>
     <string name="intent_nickName">nickName</string>
+    <string name="intent_realName">realName</string>
     <string name="intent_rebate">rebate</string>
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>
@@ -246,6 +248,7 @@
     <string name="intent_addressAlter">addressAlter</string>
     <string name="intent_addressSubmit">addressSubmit</string>
     <string name="intent_openBank">openBank</string>
+    <string name="intent_ad">ad</string>
     <!--intent-->
 
     <!--hint-->
@@ -258,6 +261,7 @@
     <string name="hint_input_money">请输入提现金额</string>
     <string name="hint_input_code">"请输入验证码"</string>
     <string name="hint_input_nickName">"请输入昵称"</string>
+    <string name="hint_input_realName">"请输入真实姓名"</string>
     <string name="hint_input_openBank">"请输入开户银行(银行+支行)"</string>
     <string name="hint_input_newPhoneNum">"请输入新手机号"</string>
     <string name="hint_input_cardNum">"请输入卡号"</string>

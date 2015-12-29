@@ -100,6 +100,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private boolean isScroll = false;
     private double step;//切换图片的步长
     private DecimalFormat df = new DecimalFormat("0.00");
+    private int animSound;
 
     private PopupWindow codePopupWindow;
     private boolean isCode = false;//是否通过验证码
@@ -111,14 +112,22 @@ public class CommodityInformationActivity extends BaseActivity {
     private String realCode;
 
     private int position;
+    private String PARENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_information);
 
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        LogUtils.i(TAG, "PARENT:" + PARENT);
+        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
+        if (PARENT.equals(getString(R.string.intent_info)))
+            position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
+
         initView();
         getData();
+
     }
 
 
@@ -200,18 +209,12 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         });
 
-//        llayout_openActivity.setVisibility(View.GONE);
-//        llayout_bottom.setVisibility(View.GONE);
-
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return isScroll;
             }
         });
-
-        typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
-
         initPopWindow();
     }
 
@@ -247,8 +250,6 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void getData() {
-        activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
-
         showProgressDialog(getString(R.string.dialog_message));
         LogUtils.i(TAG, "activeId:" + activeId);
         this.appAction.getCommodityInformation(application.getUserId(), activeId + "", new ActionCallbackListener() {
@@ -256,6 +257,7 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 commodityBO = (CommodityBO) data.getObj();
+                typeId = commodityBO.getTypeId();
                 //已参加
                 if (commodityBO.getPlayFlag().equals("1"))
                     isGrab = false;
@@ -281,6 +283,7 @@ public class CommodityInformationActivity extends BaseActivity {
                 anim = MyConfig.house;
                 succeedAnim = R.drawable.housesuccess;
                 failedAnim = R.drawable.housefailed;
+                animSound = SoundUtil.HOUSE;
             }
 
             //车子
@@ -288,6 +291,7 @@ public class CommodityInformationActivity extends BaseActivity {
                 anim = MyConfig.car;
                 succeedAnim = R.drawable.carsuccess;
                 failedAnim = R.drawable.carfailed;
+                animSound = SoundUtil.CAR;
             }
 
             //装修
@@ -295,6 +299,7 @@ public class CommodityInformationActivity extends BaseActivity {
                 anim = MyConfig.decorate;
                 succeedAnim = R.drawable.decoratesuccess;
                 failedAnim = R.drawable.decoratefailed;
+                animSound = SoundUtil.DRAW;
             }
 
             //其他
@@ -302,6 +307,7 @@ public class CommodityInformationActivity extends BaseActivity {
                 anim = MyConfig.box;
                 succeedAnim = R.drawable.boxsuccess;
                 failedAnim = R.drawable.boxfailed;
+                animSound = SoundUtil.OTHER;
             }
 
         } else {
@@ -345,28 +351,26 @@ public class CommodityInformationActivity extends BaseActivity {
         textViewList = new ArrayList<>();
         textViewList.add(headTimeCountdownTxt);
         textViewList.add(middleTimeCountdownTxt);
-        position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
-//        headTimeCountDownUtil = new TimeCountDownUtil(GrabFragment.adapter.getCountDownUtils().get(position).getMillisUntilFinished(), 1000, textViewList, new CountDownListener() {
-//            @Override
-//            public void onFinish(int result) {
-//                begin();
-//            }
-//        });
-//        headTimeCountDownUtil.start();
-        headTimeCountDownUtil = GrabFragment.adapter.getCountDownUtils().get(position);
-        headTimeCountDownUtil.setTextViewList(textViewList, new CountDownListener() {
-            @Override
-            public void onFinish(int result) {
+        if (PARENT.equals(getString(R.string.intent_info))) {
+            headTimeCountDownUtil = GrabFragment.adapter.getCountDownUtils().get(position);
+            headTimeCountDownUtil.setTextViewList(textViewList, new CountDownListener() {
+                @Override
+                public void onFinish(int result) {
+                    LogUtils.i(TAG, "倒计时结束");
+                    begin();
+                }
+            });
+            if (headTimeCountDownUtil.getMillisUntilFinished() == 0) {
                 LogUtils.i(TAG, "倒计时结束");
                 begin();
+                for (TextView textView : textViewList)
+                    textView.setText("活动已开始");
             }
-        });
-        if (headTimeCountDownUtil.getMillisUntilFinished() == 0) {
-            begin();
+
+        } else {
             for (TextView textView : textViewList)
                 textView.setText("活动已开始");
         }
-
     }
 
 
@@ -420,24 +424,24 @@ public class CommodityInformationActivity extends BaseActivity {
             isScroll = true;//禁止scrollview滚动
             animLen = anim.length;
             step = Double.parseDouble(df.format(100 / animLen));
-            LogUtils.i(TAG, "step:" + step);
+//            LogUtils.i(TAG, "step:" + step);
             firstFlag = false;
         }
-        LogUtils.i(TAG, "点击:" + percent + " index:" + index);
+//        LogUtils.i(TAG, "点击:" + percent + " index:" + index);
         if (percent == 0) {
-            LogUtils.i(TAG, "点击0:" + percent);
+//            LogUtils.i(TAG, "点击0:" + percent);
             timer.cancel();
             decrease();
             percentTxt.setText(0 + "%");
         }
-        LogUtils.i(TAG, "MyUtil.sub(percent, 100):" + MyUtil.sub(percent, 100));
+//        LogUtils.i(TAG, "MyUtil.sub(percent, 100):" + MyUtil.sub(percent, 100));
         if (MyUtil.sub(percent, 100) >= 0) {
-            LogUtils.i(TAG, "抢购完成:" + df.format(percent));
+//            LogUtils.i(TAG, "抢购完成:" + df.format(percent));
             percentTxt.setText(100 + "%");
             stop();
         }
         if (MyUtil.sub(percent, 100) < 0) {
-            LogUtils.i(TAG, "抢购未完成:" + df.format(percent));
+//            LogUtils.i(TAG, "抢购未完成:" + df.format(percent));
 
             percentTxt.setText(df.format(percent) + "%");
             percent = MyUtil.add(percent, step);
@@ -456,12 +460,12 @@ public class CommodityInformationActivity extends BaseActivity {
                 case 1:
                     if (percent >= 0 && percent < 100) {
                         if (percent == 0.00) {
-                            LogUtils.i(TAG, "时间归0:" + percent);
+//                            LogUtils.i(TAG, "时间归0:" + percent);
                             percent = 0;
                             percentTxt.setText(0 + "%");
                             timer.cancel();
                         } else {
-                            LogUtils.i(TAG, "percent:" + percent);
+//                            LogUtils.i(TAG, "percent:" + percent);
                             percentTxt.setText(df.format(percent) + "%");
                         }
 
@@ -497,6 +501,34 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
+//
+//
+//        String title = "恭喜中奖";
+//        String message = "请完善个人资料后领取奖品";
+//        LogUtils.i(TAG, "高级会员标志:" + application.getIsAdvancedUser());
+//        Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        if (application.getIsAdvancedUser().equals("1")) {
+//                            openActivity(CompleteUserInformationActivity.class);
+//                        } else {
+//                            openActivity(CompleteMemberInformationActivity.class);
+//                        }
+//
+//                        finish();
+//                    }
+//                }
+//        ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        }).create();
+//        Window window = dialog.getWindow();
+//        window.setGravity(Gravity.BOTTOM);
+//        dialog.setCanceledOnTouchOutside(false);
+//        if (!MyUtil.isNeedCompleteInfo(application))
+//            dialog.show();
         submit();
     }
 
@@ -516,11 +548,10 @@ public class CommodityInformationActivity extends BaseActivity {
                             Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            if (MyUtil.isNeedCompleteInfo(application))
-                                                if (application.getIsAdvancedUser().equals("1"))
-                                                    openActivity(CompleteUserInformationActivity.class);
-                                                else
-                                                    openActivity(CompleteMemberInformationActivity.class);
+                                            if (application.getIsAdvancedUser().equals("1"))
+                                                openActivity(CompleteUserInformationActivity.class);
+                                            else
+                                                openActivity(CompleteMemberInformationActivity.class);
                                             finish();
                                         }
                                     }
@@ -532,7 +563,8 @@ public class CommodityInformationActivity extends BaseActivity {
                             Window window = dialog.getWindow();
                             window.setGravity(Gravity.BOTTOM);
                             dialog.setCanceledOnTouchOutside(false);
-                            dialog.show();
+                            if (MyUtil.isNeedCompleteInfo(application))
+                                dialog.show();
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
                             animImg.setImageResource(failedAnim);
@@ -620,6 +652,6 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void playSound() {
-        SoundUtil.getMySound(this).playSound(SoundUtil.SOUND_TYPE_SUCCESS);
+        SoundUtil.getMySound(this).playSound(animSound);
     }
 }

@@ -11,6 +11,8 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -78,13 +80,25 @@ public class TestActivity extends BaseActivity {
     private boolean firstFlag = true;
     private TextView percentTxt;
     private int percent = 0;
+    private WebView webView;
+    //    private static final String content = "<p>\n" + "<img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg\" >\n" + "</p>\n";
+    private static final String content = "<p style=\\\"text-align: center; \\\">&nbsp; &nbsp; &nbsp; 风机房：456方法发 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 方法：发的说法 地方 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;放假： 1268方法 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 简介：15发的说法 &nbsp; &nbsp; 发的说法：455 &nbsp;发发斯蒂芬：59发的 &nbsp; &nbsp;</p>";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        imageView = (ImageView) findViewById(R.id.img_test);
-        percentTxt = (TextView) findViewById(R.id.txt_percent);
+        webView = (WebView) findViewById(R.id.web_test);
+        //html自适应
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setDefaultTextEncodingName("UTF-8");
+        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
+//        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+
+//        imageView = (ImageView) findViewById(R.id.img_test);
+//        percentTxt = (TextView) findViewById(R.id.txt_percent);
 //        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
 //
 //        ImageLoader.getInstance().displayImage(url,imageView);

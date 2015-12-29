@@ -149,15 +149,23 @@ public class MemberInfoActivity extends BaseActivity {
             });
         }
 
-        if (TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic())) {
+        if (!TextUtils.isEmpty(application.getIdFrontPic())) {
             DisplayImageOptions options = new DisplayImageOptions.Builder() //
                     .cacheInMemory(true) //
                     .cacheOnDisk(true) //
                     .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                     .build();//
             ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontImg, options);
+        }
+        if (!TextUtils.isEmpty(application.getIdFrontPic())) {
+            DisplayImageOptions options = new DisplayImageOptions.Builder() //
+                    .cacheInMemory(true) //
+                    .cacheOnDisk(true) //
+                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                    .build();//
             ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backImg, options);
         }
+
         nickNameTxt.setText(application.getNickName());
 
         if (TextUtils.isEmpty(application.getSex()))
@@ -173,6 +181,7 @@ public class MemberInfoActivity extends BaseActivity {
         bankCardNumTxt.setText(MyUtil.hiddenBankCardNum(application.getBankCardNum()));
         addressTxt.setText(application.getAddress());
         realNameTxt.setText(application.getRealName());
+        bankNameTxt.setText(application.getBankName());
     }
 
     /**
@@ -254,6 +263,15 @@ public class MemberInfoActivity extends BaseActivity {
      */
     public void toBankCard(View view) {
         openActivity(ChangeBankCardNumActivity.class);
+    }
+
+    /**
+     * @param view
+     */
+    public void toBankCardAccount(View view) {
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_realName));
+        openActivity(NickNameActivity.class, pBundle);
     }
 
     /**
@@ -519,8 +537,8 @@ public class MemberInfoActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 application.setIdOpsitePic(url);
-                headImg.setImageBitmap(bitmap);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), url);
+                backImg.setImageBitmap(bitmap);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_idOpsitePic), url);
                 MyUtil.showToast(getApplicationContext(), "修改身份证反面成功");
             }
 

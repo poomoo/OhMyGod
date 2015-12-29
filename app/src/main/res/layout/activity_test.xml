@@ -5,6 +5,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <WebView
+            android:id="@+id/web_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
     <!--    <include layout="@layout/pub_layout_title_bar" />-->
 
     <!--<include layout="@layout/layout_show" />-->
@@ -12,7 +22,8 @@
         android:id="@+id/img_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/bg_snatch_record" />
+        android:src="@drawable/bg_snatch_record"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/txt_percent"
@@ -20,13 +31,15 @@
         android:layout_height="wrap_content"
         android:text="0%"
         android:textColor="@color/themeRed"
-        android:textSize="@dimen/sp_20" />
+        android:textSize="@dimen/sp_20"
+        android:visibility="gone" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="toTest"
         android:text="抢"
-        android:textSize="@dimen/sp_20" />
+        android:textSize="@dimen/sp_20"
+        android:visibility="gone" />
 
 </LinearLayout>

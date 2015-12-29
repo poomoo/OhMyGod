@@ -13,6 +13,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 
 /**
@@ -27,28 +29,29 @@ public class CallAlarm extends BroadcastReceiver {
     int tag;
     private NotificationManager mNotificationManager;
     private static final int NOTIFICATION_ID = 100000010;
+    private static final String CLEAR_NOTI_ACTION = "com.sec.android.app.simrecord.CLEAR_NOTI_ACTION";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
-        Log.v(TAG, "onCreate()  intent-->" + intent + "  data-->" + (intent == null ? "" : intent.getExtras()));
+        LogUtils.i(TAG, "onCreate()  intent-->" + intent + "  data-->" + (intent == null ? "" : intent.getExtras()));
         // 接受其他闹钟事件，电话事件，短信事件等，进行交互处理
         String action = intent.getAction();
         if (action != null && action.equals("android.intent.action.PHONE_STATE")) {
-            Log.v(TAG, "onReceive:action.PHONE_STATE");
+            LogUtils.i(TAG, "onReceive:action.PHONE_STATE");
             snooze();
         } else if (action != null && action.equals("android.provider.Telephony.SMS_RECEIVED")) {
-            Log.v(TAG, "onReceive:Telephony.SMS_RECEIVED");
+            LogUtils.i(TAG, "onReceive:Telephony.SMS_RECEIVED");
             snooze();
+        } else if (action != null && action.equals(CLEAR_NOTI_ACTION)) {
+            NotificationManager mNotifiManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotifiManager.cancel(NOTIFICATION_ID);
         } else {
             tag = intent.getIntExtra("_id", -1);
             if (tag == -1) {
                 return;
             }
-            setNotication();
-//            Intent i = new Intent(context, AlarmAlertActivity.class);
-//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(i);
+            setNotification();
         }
     }
 
@@ -87,24 +90,27 @@ public class CallAlarm extends BroadcastReceiver {
 //                | Notification.FLAG_ONGOING_EVENT;
     }
 
-    private void setNotication() {
+    private void setNotification() {
+        LogUtils.i(TAG, "setNotification:" + MyUtil.appIsRunning(mContext, mContext.getPackageName()));
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         // 设置显示提示信息，该信息也会在状态栏显示
         String tickerText = "抢购时间到了";
-        Notification.Builder builder = new Notification.Builder(mContext).setTicker(tickerText).setSmallIcon(R.drawable.ic_logo);
-        Notification note = new Notification();
-        note.flags = Notification.FLAG_ONGOING_EVENT;
-        note.defaults = Notification.DEFAULT_SOUND;
-
-        //通过Intent，使得点击Notification之后会启动新的Activity
-        Intent i = new Intent(mContext, MainFragmentActivity.class);
-        //该标志位表示如果Intent要启动的Activity在栈顶，则无须创建新的实例
-        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 100, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        note = builder.setContentIntent(pendingIntent).setContentText("抢购时间到了,点击跳转").build();
-        note.flags |= Notification.FLAG_AUTO_CANCEL
-                | Notification.FLAG_ONGOING_EVENT;
+        Notification.Builder builder = new Notification.Builder(mContext).setTicker(tickerText).setSmallIcon(R.drawable.ic_logo).setDefaults(Notification.DEFAULT_SOUND).setContentText("抢购时间到了").setAutoCancel(true);
+        Notification note;
+        if (!MyUtil.appIsRunning(mContext, mContext.getPackageName())) {
+            //通过Intent，使得点击Notification之后会启动新的Activity
+            Intent i = new Intent(mContext, MainFragmentActivity.class);
+            //该标志位表示如果Intent要启动的Activity在栈顶，则无须创建新的实例
+            i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 100, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+        } else {
+            Intent resultIntent = new Intent();
+            resultIntent.setAction(CLEAR_NOTI_ACTION);
+            PendingIntent resultPendingIntent = PendingIntent.getBroadcast(mContext, 0, resultIntent, 0);
+            builder.setContentIntent(resultPendingIntent);
+        }
+        note = builder.build();
         mNotificationManager.notify(NOTIFICATION_ID, note);
     }
 }
