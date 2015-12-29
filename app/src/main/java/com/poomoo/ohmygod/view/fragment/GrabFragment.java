@@ -232,7 +232,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    SpannableString spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName());
+                    SpannableString spannableString;
+                    if (!TextUtils.isEmpty(winnerBOList.get(index).getWinNickName()))
+                        spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
+                    else
+                        spannableString = new SpannableString("  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
+
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
                     LogUtils.i(TAG, "spannableString:" + spannableString);
@@ -374,7 +379,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     public void updateInfoCount() {
         informCount = MyUtil.getUnReadInfoCount();
-        countTxt.setText(informCount + "");
+        if (informCount == 0)
+            countTxt.setVisibility(View.GONE);
+        else
+            countTxt.setText(informCount + "");
     }
 
     private void getInfo(int statementId) {
