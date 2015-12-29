@@ -34,7 +34,7 @@ public class SoundUtil {
         if (soundpool == null) {
             soundpool = new SoundPool(1, AudioManager.STREAM_NOTIFICATION, 100);
             housesoundid = soundpool.load(context, R.raw.house, 1);
-            carsoundid = soundpool.load(context, R.raw.click, 1);
+            carsoundid = soundpool.load(context, R.raw.car, 1);
             drawsoundid = soundpool.load(context, R.raw.click, 1);
             othersoundid = soundpool.load(context, R.raw.click, 1);
         }
