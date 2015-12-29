@@ -152,8 +152,6 @@ public class CommodityInformationActivity extends BaseActivity {
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
-        initCountDown();
-
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
         codeEdt = (EditText) mMenuView.findViewById(R.id.et_phoneCodes);
@@ -309,7 +307,7 @@ public class CommodityInformationActivity extends BaseActivity {
                 failedAnim = R.drawable.boxfailed;
                 animSound = SoundUtil.OTHER;
             }
-
+            initCountDown();
         } else {
             llayout_openActivity.setVisibility(View.GONE);
             llayout_bottom.setVisibility(View.GONE);
@@ -368,8 +366,15 @@ public class CommodityInformationActivity extends BaseActivity {
             }
 
         } else {
-            for (TextView textView : textViewList)
-                textView.setText("活动已开始");
+//            for (TextView textView : textViewList)
+//                textView.setText("活动已开始");
+            headTimeCountDownUtil = new TimeCountDownUtil(commodityBO.getStartCountdown(), MyConfig.COUNTDOWNTIBTERVAL, textViewList, new CountDownListener() {
+                @Override
+                public void onFinish(int result) {
+                    begin();
+                }
+            });
+            headTimeCountDownUtil.start();
         }
     }
 
