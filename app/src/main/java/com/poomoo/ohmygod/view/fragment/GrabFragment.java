@@ -54,6 +54,7 @@ import com.poomoo.ohmygod.utils.DateTimePickDialogUtil;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CityListActivity;
+import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
@@ -411,12 +412,20 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             return;
         }
 
-        LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
-        Bundle pBundle = new Bundle();
-        pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
-        pBundle.putInt(getString(R.string.intent_position), position);
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
-        openActivity(CommodityInformationActivity.class, pBundle);
+        if (grabBOList.get(position).getStatus() == 1) {
+            LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
+            Bundle pBundle = new Bundle();
+            pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+            pBundle.putInt(getString(R.string.intent_position), position);
+            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
+            openActivity(CommodityInformationActivity.class, pBundle);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+            bundle.putString(getString(R.string.intent_activityName), grabBOList.get(position).getTitle());
+            openActivity(CommodityInformation2Activity.class, bundle);
+        }
+
     }
 
     @Override

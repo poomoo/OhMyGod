@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
@@ -72,10 +73,16 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 //        if (viewHolder.txt.getTag() != null && viewHolder.txt.getTag().equals(grabBO.getPicture())) {
         if (viewHolder.txt.getTag() == null) {
             viewHolder.txt.setTag(grabBO.getPicture());
-//            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
-            TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt);
-            timeCountDownUtil.start();
-            getCountDownUtils().put(position, timeCountDownUtil);
+            if (grabBO.getStatus() == 1) {
+                //            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
+                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt);
+                timeCountDownUtil.start();
+                getCountDownUtils().put(position, timeCountDownUtil);
+            } else {
+                viewHolder.txt.setText("活动已结束");
+                viewHolder.txt.setTextColor(Color.parseColor("#E81540"));
+            }
+
         }
 
         return convertView;

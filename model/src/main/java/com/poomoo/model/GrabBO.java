@@ -17,6 +17,7 @@ public class GrabBO {
     private long startCountdown;//--开始时间倒计时
     private long endCountdown;//--结束时间倒计时
     private int typeId;//活动分类 1-房子 2-车子 3-装修 4-其他
+    private int status;//--活动状态：0未开启，1开启（正在进行），2结束
 
 
     public int getActiveId() {
@@ -76,6 +77,14 @@ public class GrabBO {
         this.typeId = typeId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "GrabBO{" +
@@ -86,6 +95,7 @@ public class GrabBO {
                 ", startCountdown=" + startCountdown +
                 ", endCountdown=" + endCountdown +
                 ", typeId=" + typeId +
+                ", status=" + status +
                 '}';
     }
 }

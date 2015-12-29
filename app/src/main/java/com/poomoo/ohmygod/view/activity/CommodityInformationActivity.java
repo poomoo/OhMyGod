@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.audiofx.LoudnessEnhancer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -307,13 +308,12 @@ public class CommodityInformationActivity extends BaseActivity {
                 failedAnim = R.drawable.boxfailed;
                 animSound = SoundUtil.OTHER;
             }
-            initCountDown();
         } else {
-            llayout_openActivity.setVisibility(View.GONE);
-            llayout_bottom.setVisibility(View.GONE);
-            MyUtil.showToast(getApplicationContext(), "您已经参与过该活动,不能再次参与");
+            llayout_openActivity.setVisibility(View.VISIBLE);
+            llayout_bottom.setVisibility(View.VISIBLE);
+//            MyUtil.showToast(getApplicationContext(), "您已经参与过该活动,不能再次参与");
         }
-
+        initCountDown();
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
         startDate.setText(commodityBO.getStartDt());
@@ -350,6 +350,8 @@ public class CommodityInformationActivity extends BaseActivity {
         textViewList.add(headTimeCountdownTxt);
         textViewList.add(middleTimeCountdownTxt);
         if (PARENT.equals(getString(R.string.intent_info))) {
+            LogUtils.i(TAG, "详情页进入");
+
             headTimeCountDownUtil = GrabFragment.adapter.getCountDownUtils().get(position);
             headTimeCountDownUtil.setTextViewList(textViewList, new CountDownListener() {
                 @Override
@@ -359,10 +361,10 @@ public class CommodityInformationActivity extends BaseActivity {
                 }
             });
             if (headTimeCountDownUtil.getMillisUntilFinished() == 0) {
-                LogUtils.i(TAG, "倒计时结束");
-                begin();
+                LogUtils.i(TAG, "倒计时结束2");
                 for (TextView textView : textViewList)
                     textView.setText("活动已开始");
+                begin();
             }
 
         } else {
@@ -420,6 +422,16 @@ public class CommodityInformationActivity extends BaseActivity {
     public void toGrab(View view) {
         if (!isCode) {
             code();
+            return;
+        }
+        if (!isGrab) {
+            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage("不能重复参加活动").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }
+            ).create();
+            dialog.show();
             return;
         }
         playSound();
