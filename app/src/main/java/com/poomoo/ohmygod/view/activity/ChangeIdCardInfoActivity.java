@@ -65,7 +65,11 @@ public class ChangeIdCardInfoActivity extends BaseActivity {
             MyUtil.showToast(getApplicationContext(), "请输入身份证号");
             return;
         }
-        showProgressDialog("提交中...");
+        if (idCardNum.length() != 18) {
+            MyUtil.showToast(getApplicationContext(), "请输入18位有效的身份证号");
+            return;
+        }
+        showProgressDialog(getString(R.string.dialog_message));
         key = "idCardNum";
         this.appAction.changePersonalInfo(this.application.getUserId(), key, idCardNum, new ActionCallbackListener() {
             @Override

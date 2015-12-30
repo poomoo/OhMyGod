@@ -12,7 +12,7 @@ public class WinInformationBO {
     private String title;//
     private int activeId;//
     private String winTel;//--中奖人昵称
-    private String winNickName;//--中奖人昵称
+    private String winRealName;//--中奖人昵称
     private String userId; //
     private String playDt;//
     private String goodsName;//
@@ -67,12 +67,12 @@ public class WinInformationBO {
         this.winTel = winTel;
     }
 
-    public String getWinNickName() {
-        return winNickName;
+    public String getWinRealName() {
+        return winRealName;
     }
 
-    public void setWinNickName(String winNickName) {
-        this.winNickName = winNickName;
+    public void setWinRealName(String winRealName) {
+        this.winRealName = winRealName;
     }
 
     public String getUserId() {
@@ -124,7 +124,7 @@ public class WinInformationBO {
                 ", title='" + title + '\'' +
                 ", activeId=" + activeId +
                 ", winTel='" + winTel + '\'' +
-                ", winNickName='" + winNickName + '\'' +
+                ", winRealName='" + winRealName + '\'' +
                 ", userId='" + userId + '\'' +
                 ", playDt='" + playDt + '\'' +
                 ", goodsName='" + goodsName + '\'' +

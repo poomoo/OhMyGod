@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.WinnerListBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 活动中奖者适配器
@@ -54,7 +55,7 @@ public class ActivityWinnerListAdapter extends MyBaseAdapter<WinnerListBO> {
         winnerListBO = itemList.get(position);
         ImageLoader.getInstance().displayImage(winnerListBO.getHeadPic(), viewHolder.avatarImg, defaultOptions);
         viewHolder.nameTxt.setText(winnerListBO.getNickName());
-        viewHolder.telTxt.setText(winnerListBO.getTel());
+        viewHolder.telTxt.setText(MyUtil.hiddenTel(winnerListBO.getTel()));
         viewHolder.goodNameTxt.setText(winnerListBO.getGoodsName());
         viewHolder.dateTimeTxt.setText(winnerListBO.getPlayDt());
 

@@ -178,6 +178,8 @@ public class MyUtil {
     public static String hiddenIdCardNum(String num) {
         if (TextUtils.isEmpty(num))
             return "";
+        if (num.length() != 18)
+            return num;
         String temp;
         temp = num.substring(0, 3) + num.substring(3, 14).replaceAll("[0123456789]", "*")
                 + num.substring(14, num.length());

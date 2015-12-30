@@ -61,7 +61,7 @@
                             android:paddingLeft="@dimen/dp_8"
                             android:text="@string/label_rebate1"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="@dimen/sp_16" />
 
                         <TextView
                             android:id="@+id/txt_rebateTotalBalance"
@@ -72,7 +72,7 @@
                             android:paddingLeft="@dimen/dp_8"
                             android:text="@string/label_rebate3"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_22" />
+                            android:textSize="@dimen/sp_24" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                             android:paddingLeft="@dimen/dp_8"
                             android:text="@string/label_rebate2"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -105,7 +105,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_unRebateSum"
                                 android:textColor="@color/rebate"
-                                android:textSize="@dimen/sp_16" />
+                                android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_rebateSum"
                                 android:textColor="@color/rebate"
-                                android:textSize="@dimen/sp_16" />
+                                android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:layout_width="match_parent"

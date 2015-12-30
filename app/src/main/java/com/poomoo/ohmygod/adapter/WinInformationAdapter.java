@@ -42,7 +42,7 @@ public class WinInformationAdapter extends MyBaseAdapter<WinInformationBO> {
 
         WinInformationBO winInformationBO = itemList.get(i);
         viewHolder.title.setText(winInformationBO.getTitle());
-        viewHolder.winner.setText(TextUtils.isEmpty(winInformationBO.getWinNickName()) ? winInformationBO.getWinTel() : winInformationBO.getWinNickName());
+        viewHolder.winner.setText(TextUtils.isEmpty(winInformationBO.getWinRealName()) ? winInformationBO.getWinTel() : winInformationBO.getWinRealName());
         viewHolder.win_date.setText(winInformationBO.getPlayDt());
         viewHolder.address.setText(winInformationBO.getGetAddress());
         viewHolder.end_date.setText(winInformationBO.getGetEndDt());

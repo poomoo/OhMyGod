@@ -4,6 +4,8 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Movie;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,17 +86,23 @@ public class TestActivity extends BaseActivity {
     //    private static final String content = "<p>\n" + "<img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg\" >\n" + "</p>\n";
     private static final String content = "<p style=\\\"text-align: center; \\\">&nbsp; &nbsp; &nbsp; 风机房：456方法发 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 方法：发的说法 地方 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;放假： 1268方法 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 简介：15发的说法 &nbsp; &nbsp; 发的说法：455 &nbsp;发发斯蒂芬：59发的 &nbsp; &nbsp;</p>";
 
+    private MyCustomView mView;
+    private Movie mMovie;
+    private long mMovieStart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        webView = (WebView) findViewById(R.id.web_test);
+
+        mView = new MyCustomView(this);
+//        webView = (WebView) findViewById(R.id.web_test);
         //html自适应
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setDefaultTextEncodingName("UTF-8");
-        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
+//        WebSettings webSettings = webView.getSettings();
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setDefaultTextEncodingName("UTF-8");
+//        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
 //        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
 //        imageView = (ImageView) findViewById(R.id.img_test);
@@ -114,12 +122,45 @@ public class TestActivity extends BaseActivity {
     }
 
 
-//    @Override
+    //    @Override
 //    protected void initView() {
 //        startTxt = (TextView) findViewById(R.id.txt_start);
 //        endTxt = (TextView) findViewById(R.id.txt_end);
 //        bezierView = (BezierView) findViewById(R.id.BezierView);
 //    }
+
+    //自定义一个类，继承View
+    class MyCustomView extends View {
+
+        public MyCustomView(Context context) {
+            super(context);
+            //以文件流的方式读取文件
+            mMovie = Movie.decodeStream(getResources().openRawResource(R.drawable.gif1));
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+
+            long curTime = android.os.SystemClock.uptimeMillis();
+            //第一次播放
+            if (mMovieStart == 0) {
+                mMovieStart = curTime;
+            }
+
+            if (mMovie != null) {
+                int duration = mMovie.duration();
+
+                int relTime = (int) ((curTime - mMovieStart) % duration);
+                mMovie.setTime(relTime);
+                mMovie.draw(canvas, 0, 0);
+
+                //强制重绘
+                invalidate();
+
+            }
+            super.onDraw(canvas);
+        }
+    }
 
     protected void initView() {
 //        rootView = (LinearLayout) findViewById(R.id.rootView);
