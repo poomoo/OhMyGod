@@ -110,12 +110,12 @@ public class ImageGridActivity extends BaseActivity {
             finish();
             Bimp.act_bool = false;
         }
-//        for (int i = 0; i < list.size(); i++) {
-//            if (Bimp.drr.size() < 9) {
-//                Bimp.drr.add(list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            if (Bimp.drr.size() < 9) {
+                Bimp.drr.add(list.get(i));
 //                Bimp.files.add(list1.get(i));
-//            }
-//        }
+            }
+        }
         finish();
     }
 }

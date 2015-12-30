@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 
@@ -85,6 +86,7 @@ public class AddPicsAdapter extends MyBaseAdapter {
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
+                    LogUtils.i("lmf", "Bimp.max:" + Bimp.max + " Bimp.drr:" + Bimp.drr.size());
                     if (Bimp.max == Bimp.drr.size()) {
                         Message message = new Message();
                         message.what = 1;

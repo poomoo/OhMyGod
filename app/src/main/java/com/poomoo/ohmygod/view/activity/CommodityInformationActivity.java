@@ -565,7 +565,7 @@ public class CommodityInformationActivity extends BaseActivity {
                             Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            if (application.getIsAdvancedUser().equals("1"))
+                                            if (application.getIsAdvancedUser().equals("0"))
                                                 openActivity(CompleteUserInformationActivity.class);
                                             else
                                                 openActivity(CompleteMemberInformationActivity.class);

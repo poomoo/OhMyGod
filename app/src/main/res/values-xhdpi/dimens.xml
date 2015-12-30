@@ -29,6 +29,8 @@
     <dimen name="dp_60">56dp</dimen>
     <dimen name="dp_navigation_margin">6dp</dimen>
     <dimen name="dp_avatar">85dp</dimen>
+    <dimen name="dp_126">126dp</dimen>
+    <dimen name="dp_162">162dp</dimen>
     <dimen name="dp_ad">160dp</dimen>
     <dimen name="dp_200">190dp</dimen>
 

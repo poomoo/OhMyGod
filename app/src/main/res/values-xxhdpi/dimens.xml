@@ -30,6 +30,8 @@
     <dimen name="dp_avatar">90dp</dimen>
     <dimen name="dp_ad">180dp</dimen>
     <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_126">189dp</dimen>
+    <dimen name="dp_162">243dp</dimen>
 
 
 </resources>

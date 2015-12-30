@@ -320,7 +320,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         winnerRlayout.setClickable(false);
         avatarRlayout.setVisibility(View.GONE);
         noWinningInfoTxt.setVisibility(View.VISIBLE);
-        marqueeTextView.setText("今日没有中奖信息");
         this.appAction.getWinnerList(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -343,6 +342,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
             @Override
             public void onFailure(int errorCode, String message) {
+                marqueeTextView.setText("今日没有中奖信息");
             }
         });
     }
