@@ -12,10 +12,10 @@
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
 
-        <ImageView
+        <com.poomoo.ohmygod.view.custom.RoundImageView
             android:id="@+id/img_activityWinnerAvatar"
-            android:layout_width="@dimen/dp_avatar"
-            android:layout_height="@dimen/dp_avatar"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
             android:padding="@dimen/dp_10"
             android:src="@drawable/ic_avatar" />
 

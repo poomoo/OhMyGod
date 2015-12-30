@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.poomoo.core.AppAction;
 import com.poomoo.core.AppActionImpl;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.crashhandler.CrashHandler;
 
 import org.litepal.LitePalApplication;
 
@@ -45,6 +46,9 @@ public class MyApplication extends LitePalApplication {
         appAction = new AppActionImpl(this);
 
         initImageLoader();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        // 注册crashHandler
+        crashHandler.init(getApplicationContext());
     }
 
     private void initImageLoader() {

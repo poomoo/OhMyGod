@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Selection;
@@ -35,6 +36,10 @@ import org.litepal.crud.DataSupport;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -471,5 +476,21 @@ public class MyUtil {
             }
         }
         return false;
+    }
+
+    public static void saveBitmap(Context context, Bitmap bitmap) {
+        String path = Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".jpg";
+        File my2code = new File(path);
+        try {
+            FileOutputStream out = new FileOutputStream(my2code);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            showToast(context, "图片已保存到:" + path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

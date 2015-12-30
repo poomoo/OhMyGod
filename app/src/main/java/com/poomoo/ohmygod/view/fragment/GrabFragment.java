@@ -296,7 +296,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             public void onSuccess(ResponseBO data) {
                 if (isRefreshable)
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
-
+                remindLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
                 hideFloatingActionButton();
                 grabBOList = data.getObjList();

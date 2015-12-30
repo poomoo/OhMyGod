@@ -420,10 +420,33 @@ public class CommodityInformationActivity extends BaseActivity {
      * @param view
      */
     public void toGrab(View view) {
-        if (!isCode) {
-            code();
-            return;
-        }
+//        if (1 == 1) {
+//            animImg.setImageResource(succeedAnim);
+//            String title = "恭喜中奖";
+//            String message = "请完善个人资料后领取奖品";
+//
+//            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            if (application.getIsAdvancedUser().equals("0"))
+//                                openActivity(CompleteUserInformationActivity.class);
+//                            else
+//                                openActivity(CompleteMemberInformationActivity.class);
+//                            finish();
+//                        }
+//                    }
+//            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                }
+//            }).create();
+//            Window window = dialog.getWindow();
+//            window.setGravity(Gravity.BOTTOM);
+//            dialog.setCanceledOnTouchOutside(false);
+//            dialog.show();
+//
+//            return;
+//        }
         if (!isGrab) {
             Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage("不能重复参加活动").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
@@ -434,7 +457,13 @@ public class CommodityInformationActivity extends BaseActivity {
             dialog.show();
             return;
         }
-        playSound();
+
+        if (!isCode) {
+            code();
+            return;
+        }
+
+//        playSound();
         if (firstFlag) {
             decrease();
             llayout_anim.setVisibility(View.VISIBLE);
@@ -518,34 +547,6 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
-//
-//
-//        String title = "恭喜中奖";
-//        String message = "请完善个人资料后领取奖品";
-//        LogUtils.i(TAG, "高级会员标志:" + application.getIsAdvancedUser());
-//        Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        if (application.getIsAdvancedUser().equals("1")) {
-//                            openActivity(CompleteUserInformationActivity.class);
-//                        } else {
-//                            openActivity(CompleteMemberInformationActivity.class);
-//                        }
-//
-//                        finish();
-//                    }
-//                }
-//        ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//            }
-//        }).create();
-//        Window window = dialog.getWindow();
-//        window.setGravity(Gravity.BOTTOM);
-//        dialog.setCanceledOnTouchOutside(false);
-//        if (!MyUtil.isNeedCompleteInfo(application))
-//            dialog.show();
         submit();
     }
 
@@ -558,6 +559,11 @@ public class CommodityInformationActivity extends BaseActivity {
                         GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
                         String message;
                         if (grabResultBO.getIsWin().equals("true")) {
+//                            if(1==1){
+//                                openActivity(CompleteMemberInformationActivity.class);
+//                                return;
+//                            }
+
                             animImg.setImageResource(succeedAnim);
                             String title = "恭喜中奖";
                             message = "请完善个人资料后领取奖品";

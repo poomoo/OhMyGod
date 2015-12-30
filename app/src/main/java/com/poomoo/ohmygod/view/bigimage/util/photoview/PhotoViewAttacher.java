@@ -34,6 +34,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.view.bigimage.util.photoview.gestures.OnGestureListener;
 import com.poomoo.ohmygod.view.bigimage.util.photoview.gestures.VersionedGestureDetector;
 import com.poomoo.ohmygod.view.bigimage.util.photoview.log.LogManager;
@@ -174,6 +175,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
                     @Override
                     public void onLongPress(MotionEvent e) {
                         if (null != mLongClickListener) {
+                            LogUtils.i("lmf","长按123");
                             mLongClickListener.onLongClick(getImageView());
                         }
                     }

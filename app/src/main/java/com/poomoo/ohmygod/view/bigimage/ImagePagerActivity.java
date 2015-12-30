@@ -8,10 +8,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 /**
  * 图片查看器
@@ -67,6 +69,19 @@ public class ImagePagerActivity extends FragmentActivity {
         }
 
         mPager.setCurrentItem(pagerPosition);
+        mPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtils.i("lmf", "点击viewpager");
+            }
+        });
+        mPager.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                LogUtils.i("lmf", "长按viewpager");
+                return false;
+            }
+        });
     }
 
     @Override

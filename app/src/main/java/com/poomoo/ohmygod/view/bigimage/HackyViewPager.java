@@ -21,7 +21,7 @@ import android.view.MotionEvent;
  */
 public class HackyViewPager extends ViewPager {
 
-	private static final String TAG = "HackyViewPager";
+	private static final String TAG = "lmf";
 
 	public HackyViewPager(Context context) {
 		super(context);

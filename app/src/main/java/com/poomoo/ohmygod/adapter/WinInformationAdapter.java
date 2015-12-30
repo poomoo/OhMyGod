@@ -1,6 +1,7 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.WinInformationBO;
 import com.poomoo.ohmygod.R;
@@ -18,8 +20,17 @@ import com.poomoo.ohmygod.R;
  * 日期: 2015/11/13 11:18.
  */
 public class WinInformationAdapter extends MyBaseAdapter<WinInformationBO> {
+    private final DisplayImageOptions defaultOptions;
+
     public WinInformationAdapter(Context context) {
         super(context);
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.mipmap.ic_launcher) //
+                .showImageOnFail(R.mipmap.ic_launcher) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
     @Override
@@ -48,7 +59,7 @@ public class WinInformationAdapter extends MyBaseAdapter<WinInformationBO> {
         viewHolder.end_date.setText(winInformationBO.getGetEndDt());
         viewHolder.reason.setText(winInformationBO.getTransferMsg());
 
-        ImageLoader.getInstance().displayImage(winInformationBO.getPicture(), viewHolder.imageView);
+        ImageLoader.getInstance().displayImage(winInformationBO.getPicture(), viewHolder.imageView, defaultOptions);
 
         return view;
     }

@@ -88,6 +88,7 @@
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
     <string name="label_copy">复制</string>
+    <string name="label_save">保存到本地</string>
     <string name="label_code">请输入开抢验证码</string>
     <string name="label_change">看不清楚,换一张</string>
     <string name="label_uploadID">上传身份证信息(身份证正反照)</string>
