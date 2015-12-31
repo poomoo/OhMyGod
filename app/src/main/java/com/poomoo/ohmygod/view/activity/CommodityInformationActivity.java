@@ -535,9 +535,6 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
-
-        animImg.setImageResource(succeedAnim);
-//        showToast();
         submit();
     }
 
