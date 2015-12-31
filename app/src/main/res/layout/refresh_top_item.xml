@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="下拉刷新"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sp_16" />
 
             <!-- 最近更新 -->
 
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="上次更新"
                 android:textColor="#b89766"
-                android:textSize="10sp" />
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
     </LinearLayout>
 

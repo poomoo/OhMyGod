@@ -13,6 +13,7 @@
     <dimen name="sp_24">20sp</dimen>
     <dimen name="sp_26">22sp</dimen>
     <dimen name="sp_28">24sp</dimen>
+    <dimen name="sp_30">26sp</dimen>
     <dimen name="sp_34">30sp</dimen>
     <dimen name="sp_navigation">10sp</dimen>
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_input_idCardNum"
             android:textColor="@color/themeGray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
     </LinearLayout>
 
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_realName"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:layout_width="0dp"
@@ -51,7 +51,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_idCardNum"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:layout_width="0dp"
@@ -83,7 +83,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 

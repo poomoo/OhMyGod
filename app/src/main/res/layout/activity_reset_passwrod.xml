@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_newPassWord"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:id="@+id/edt_newPassWord"
@@ -41,7 +41,7 @@
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_confirmPassWord"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:id="@+id/edt_newPassWordAgain"
@@ -71,7 +71,7 @@
                 android:background="@null"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 

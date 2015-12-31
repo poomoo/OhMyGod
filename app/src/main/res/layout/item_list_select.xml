@@ -11,5 +11,5 @@
         android:gravity="clip_vertical"
         android:padding="10dp"
         android:text="选择属性"
-        android:textSize="20sp" />
+        android:textSize="@dimen/sp_20" />
 </LinearLayout>

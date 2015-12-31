@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_realName"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/edt_realName"
@@ -58,13 +58,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardNum"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/edt_idCardNum"
@@ -96,13 +96,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_celPhone"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/txt_celPhoneNum"
@@ -131,13 +131,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_idCardPic"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -181,13 +181,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_bankCardNum"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/edt_bankCardNum"
@@ -213,13 +213,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_address"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/txt_locateCity"
@@ -230,7 +230,7 @@
             android:paddingLeft="@dimen/dp_16"
             android:text=""
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
 
         <Spinner
@@ -264,13 +264,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_address"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="@dimen/sp_22" />
+            android:textSize="@dimen/sp_20" />
 
         <EditText
             android:id="@+id/edt_address"

@@ -12,7 +12,7 @@
         android:layout_marginTop="7dp"
         android:text="@string/label_history"
         android:textColor="@color/themeGray"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_16" />
 
     <com.poomoo.ohmygod.view.custom.NoScrollGridView
         android:id="@+id/recent_city"

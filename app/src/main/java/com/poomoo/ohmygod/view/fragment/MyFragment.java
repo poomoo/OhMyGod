@@ -44,7 +44,7 @@ import java.io.Serializable;
  * 日期: 2015/11/20 15:25.
  */
 public class MyFragment extends BaseFragment implements OnItemClickListener {
-//    private TextView dialTxt;
+    //    private TextView dialTxt;
     private ImageView dialImg;
     private ImageView settingImg;
     private GridView gridView;
@@ -140,7 +140,7 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
             genderImg.setImageResource(R.drawable.ic_gender_man);
         else
             genderImg.setImageResource(R.drawable.ic_gender_woman);
-        balanceTxt.setText(application.getCurrentFee());
+        balanceTxt.setText(TextUtils.isEmpty(application.getCurrentFee()) ? "0" : application.getCurrentFee());
         personalCenterAdapter.notifyDataSetChanged();
     }
 }

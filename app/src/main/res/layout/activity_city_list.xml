@@ -29,7 +29,7 @@
             android:hint="@string/hint_search"
             android:padding="10dip"
             android:textColor="#515151"
-            android:textSize="16dp" />
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
     <ListView
@@ -67,7 +67,7 @@
         android:padding="10dp"
         android:text="抱歉,暂时没有找到相关城市"
         android:textColor="#000000"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:visibility="gone" />
 
     <com.poomoo.ohmygod.view.custom.MyLetterListView

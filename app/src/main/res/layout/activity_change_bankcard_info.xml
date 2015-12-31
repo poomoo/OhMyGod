@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_selectBankCardType"
             android:textColor="@color/themeGray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
     </LinearLayout>
 
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_bankCardType"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:layout_width="0dp"
@@ -50,7 +50,7 @@
                 android:hint="@string/hint_select_bankCard"
                 android:padding="8dp"
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_celPhone"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <EditText
                 android:id="@+id/edt_bankPhoneNum"
@@ -82,7 +82,7 @@
                 android:inputType="phone"
                 android:maxLength="23"
                 android:padding="8dp"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 

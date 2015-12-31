@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_realName"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/txt_realName"
@@ -41,7 +41,7 @@
                 android:padding="8dp"
                 android:text="某某"
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
 
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/label_idCardNum"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/txt_idCardNum"
@@ -73,7 +73,7 @@
                 android:padding="8dp"
                 android:text="1*********6"
                 android:textColor="@color/themeGray"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_20" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

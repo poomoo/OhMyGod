@@ -13,7 +13,7 @@
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:textColor="@color/themeGray"
-        android:textSize="30sp"
+        android:textSize="@dimen/sp_30"
         android:visibility="gone" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dip"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"

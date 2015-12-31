@@ -15,20 +15,20 @@
         android:layout_alignParentBottom="true"
         android:gravity="right|center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingRight="30dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_8">
 
         <View
             android:id="@+id/v_dot1"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
             android:background="@drawable/ic_dot_selected" />
 
         <View
             android:id="@+id/v_dot2"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_8"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_dot_normal" />

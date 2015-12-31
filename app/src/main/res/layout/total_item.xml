@@ -13,6 +13,6 @@
         android:gravity="center_vertical"
         android:text="@string/label_all"
         android:textColor="@color/themeGray"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_16" />
 
 </RelativeLayout>

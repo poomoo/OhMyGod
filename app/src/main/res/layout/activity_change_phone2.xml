@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_newPhoneNum"
             android:textColor="@color/themeGray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_20" />
 
     </LinearLayout>
 

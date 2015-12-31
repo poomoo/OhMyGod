@@ -21,7 +21,7 @@
             android:gravity="top"
             android:hint="@string/hint_feedBack"
             android:inputType="textMultiLine"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,6 +35,6 @@
             android:hint="@string/hint_connection"
             android:inputType="textEmailAddress"
             android:padding="10dp"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 </LinearLayout>
