@@ -53,7 +53,10 @@ public class WithdrawDepositActivity extends BaseActivity {
 
         button.setBackgroundResource(R.drawable.bg_open_activity_pressed);
         balanceTxt.setText("￥" + application.getCurrentFee());
-        balance = Double.parseDouble(application.getCurrentFee());
+        if (TextUtils.isEmpty(application.getCurrentFee()))
+            balance = 0;
+        else
+            balance = Double.parseDouble(application.getCurrentFee());
 
         moneyEdt.addTextChangedListener(new TextWatcher() {
 
