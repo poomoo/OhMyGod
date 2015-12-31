@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingLeft="80dp"
-                android:paddingTop="@dimen/dp_30"
+                android:paddingTop="46dp"
                 android:text="12313212311"
                 android:textColor="@color/themeYellow"
                 android:textSize="@dimen/sp_20"

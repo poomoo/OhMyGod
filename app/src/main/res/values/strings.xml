@@ -350,6 +350,7 @@
     <string name="sp_userId">userId</string>
     <string name="sp_address">address</string>
     <string name="sp_isAdvancedUser">isAdvancedUser</string>
+    <string name="sp_isIndex">isIndex</string>
 
     <!--SharedPreferences-->
 

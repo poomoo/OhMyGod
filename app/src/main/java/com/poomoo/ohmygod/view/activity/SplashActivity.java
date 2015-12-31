@@ -30,6 +30,7 @@ public class SplashActivity extends BaseActivity {
     private final int SPLASH_DISPLAY_LENGHT = 3000;
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
+    private boolean isIndex = false;//是否需要引导
 
 
     @Override
@@ -42,6 +43,7 @@ public class SplashActivity extends BaseActivity {
         mLocationClient.registerLocationListener(myListener);
         initLocation();
         mLocationClient.start();
+        isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -49,23 +51,31 @@ public class SplashActivity extends BaseActivity {
 //                if (!(boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isLogin), false))
 //                    openActivity(LogInActivity.class);
 //                else {
-                application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
-                application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
-                application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), ""));
-                application.setRealName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_realName), ""));
-                application.setAge((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_age), ""));
-                application.setTel((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
-                application.setAddress((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_address), ""));
-                application.setIsAdvancedUser((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_isAdvancedUser), ""));
-                application.setIdCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idCardNum), ""));
-                application.setIdFrontPic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idFrontPic), ""));
-                application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
-                application.setBankCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankCardNum), ""));
-                application.setBankName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankName), ""));
-                startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
-                openActivity(MainFragmentActivity.class);
-//                }
-                finish();
+                if (isIndex) {
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_isIndex), false);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(getString(R.string.intent_parent), "index");
+                    openActivity(IndexViewPagerActivity.class, bundle);
+                    finish();
+                } else {
+                    application.setUserId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_userId), ""));
+                    application.setSex((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_sex), "1"));
+                    application.setNickName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_nickName), ""));
+                    application.setRealName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_realName), ""));
+                    application.setAge((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_age), ""));
+                    application.setTel((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
+                    application.setAddress((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_address), ""));
+                    application.setIsAdvancedUser((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_isAdvancedUser), ""));
+                    application.setIdCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idCardNum), ""));
+                    application.setIdFrontPic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idFrontPic), ""));
+                    application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
+                    application.setBankCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankCardNum), ""));
+                    application.setBankName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankName), ""));
+                    startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
+                    openActivity(MainFragmentActivity.class);
+                    finish();
+                }
+
             }
         }, SPLASH_DISPLAY_LENGHT);
     }

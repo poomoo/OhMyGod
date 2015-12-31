@@ -133,7 +133,9 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toGuidePage(View view) {
-        openActivity(IndexViewPagerActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_parent), "guide");
+        openActivity(IndexViewPagerActivity.class, bundle);
     }
 
     /**

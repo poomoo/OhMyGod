@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ViewPagerAdapter;
@@ -36,6 +37,9 @@ public class IndexViewPagerActivity extends BaseActivity implements
     // 记录当前选中位置
     private int currentIndex;
 
+    private TextView clickInTxt;
+    private String PARENT;
+
     /**
      * Called when the activity is first created.
      */
@@ -43,6 +47,10 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
+
+
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
+        clickInTxt = (TextView) findViewById(R.id.txt_clickIn);
 
         views = new ArrayList<>();
 
@@ -72,7 +80,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
 
 //        button = (Button) findViewById(R.id.index_button);
 
-//        button.setOnClickListener(this);
+        clickInTxt.setOnClickListener(this);
 //        button.setTag("button");
 
     }
@@ -136,23 +144,25 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
 //        setCurDot(arg0);
-        if (arg0 == 3)
-            finish();
-//            button.setVisibility(View.VISIBLE);
-//        else
-//            button.setVisibility(View.INVISIBLE);
+        if (PARENT.equals("index"))
+            if (arg0 == pics.length)
+                clickInTxt.setVisibility(View.VISIBLE);
+            else
+                clickInTxt.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getTag().equals("button")) {
-            Intent i = new Intent(IndexViewPagerActivity.this, MainFragmentActivity.class);
-            startActivity(i);
-            finish();
-        } else {
-            int position = (Integer) v.getTag();
-            setCurView(position);
-            setCurDot(position);
-        }
+        openActivity(MainFragmentActivity.class);
+        finish();
+//        if (v.getTag().equals("button")) {
+//            Intent i = new Intent(IndexViewPagerActivity.this, MainFragmentActivity.class);
+//            startActivity(i);
+//            finish();
+//        } else {
+//            int position = (Integer) v.getTag();
+//            setCurView(position);
+//            setCurDot(position);
+//        }
     }
 }
