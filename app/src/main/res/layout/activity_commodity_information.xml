@@ -15,9 +15,9 @@
         android:scrollbars="none">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <FrameLayout
@@ -278,6 +278,33 @@
 
                 </LinearLayout>
             </FrameLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlayout_clickTocomplete"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_clickToCompleteInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_centerInParent="true"
+                    android:background="@color/transparentBlack"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_14"
+                    android:text="点击完善你的资料后兑奖"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18" />
+
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@+id/txt_clickToCompleteInfo"
+                    android:src="@drawable/ic_close2" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/llayout_grab_bottom"

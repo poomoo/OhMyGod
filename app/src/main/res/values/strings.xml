@@ -124,8 +124,8 @@
     <!--签到返现-->
     <string name="label_totalAmount">总金额池</string>
     <string name="label_supervision">本资金池有中国工商银行全程监督</string>
-    <string name="label_unRebateSum">未返金额(元)</string>
-    <string name="label_rebateSum">已返金额(元)</string>
+    <string name="label_unRebateSum">个人未返金额(元)</string>
+    <string name="label_rebateSum">个人已返金额(元)</string>
     <string name="label_unSign">签到\n即返</string>
     <string name="label_signed">已返</string>
     <string name="label_rules">规则说明</string>
@@ -133,7 +133,7 @@
     <string name="label_rebateRule">返现声明</string>
     <string name="label_rebateRecords">返现记录</string>
     <string name="label_withdraw_deposit">我要提现</string>
-    <string name="label_rebate1">返现专用账户(元)</string>
+    <string name="label_rebate1">平台返现专用账户(元)</string>
     <string name="label_rebate2">本账户由中国工商银行全程监督</string>
     <string name="label_rebate3">天呐君温馨提示:积德行善攒人品</string>
     <!--签到返现-->
@@ -296,7 +296,7 @@
     <!--控件-->
 
     <!--按钮-->
-    <string name="btn_grab">确定开启活动</string>
+    <string name="btn_grab">阅读开抢须知启动活动</string>
     <string name="btn_save">保存</string>
     <string name="btn_show">晒单</string>
     <string name="btn_complete_information">完善资料</string>

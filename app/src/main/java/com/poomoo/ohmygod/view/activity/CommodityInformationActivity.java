@@ -27,8 +27,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommodityBO;
@@ -37,6 +39,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
+import com.poomoo.ohmygod.listeners.DialogResultListener;
 import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.Code;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -45,8 +48,11 @@ import com.poomoo.ohmygod.utils.SoundUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
+import com.poomoo.ohmygod.view.custom.customDialog;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +81,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private LinearLayout llayout_openActivity;//开启活动layout
     private LinearLayout llayout_bottom;//底部倒计时layout
     private LinearLayout llayout_anim;//显示动画
+    private RelativeLayout rlayout_clickToComplete;//完善资料
     private ImageView animImg;//动画
     private TextView percentTxt;//百分比
     private ScrollView scrollView;//
@@ -114,6 +121,7 @@ public class CommodityInformationActivity extends BaseActivity {
 
     private int position;
     private String PARENT;
+    private Object obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +160,7 @@ public class CommodityInformationActivity extends BaseActivity {
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        rlayout_clickToComplete = (RelativeLayout) findViewById(R.id.rlayout_clickTocomplete);
 
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
@@ -311,7 +320,6 @@ public class CommodityInformationActivity extends BaseActivity {
         } else {
             llayout_openActivity.setVisibility(View.VISIBLE);
             llayout_bottom.setVisibility(View.VISIBLE);
-//            MyUtil.showToast(getApplicationContext(), "您已经参与过该活动,不能再次参与");
         }
         initCountDown();
         nameTxt.setText(commodityBO.getGoodsName());
@@ -421,31 +429,18 @@ public class CommodityInformationActivity extends BaseActivity {
      */
     public void toGrab(View view) {
 //        if (1 == 1) {
-//            animImg.setImageResource(succeedAnim);
-//            String title = "恭喜中奖";
-//            String message = "请完善个人资料后领取奖品";
-//
-//            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            if (application.getIsAdvancedUser().equals("0"))
-//                                openActivity(CompleteUserInformationActivity.class);
-//                            else
-//                                openActivity(CompleteMemberInformationActivity.class);
-//                            finish();
-//                        }
-//                    }
-//            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                }
-//            }).create();
-//            Window window = dialog.getWindow();
-//            window.setGravity(Gravity.BOTTOM);
-//            dialog.setCanceledOnTouchOutside(false);
-//            dialog.show();
-//
+//            showToast();
 //            return;
+//        }
+//            customDialog customDialog = new customDialog(this);
+//            customDialog.showDialog(new DialogResultListener() {
+//                @Override
+//                public void onFinishDialogResult(int result) {
+//                    if (result == 1)
+//                        MyUtil.showToast(getApplicationContext(), "点击确定");
+//                }
+//            });
+
 //        }
         if (!isGrab) {
             Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage("不能重复参加活动").setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -547,6 +542,9 @@ public class CommodityInformationActivity extends BaseActivity {
         timer.cancel();
         grabBtn.setBackgroundResource(R.drawable.bg_btn_grab_normal);
         grabBtn.setClickable(false);
+
+        animImg.setImageResource(succeedAnim);
+//        showToast();
         submit();
     }
 
@@ -565,29 +563,29 @@ public class CommodityInformationActivity extends BaseActivity {
 //                            }
 
                             animImg.setImageResource(succeedAnim);
-                            String title = "恭喜中奖";
-                            message = "请完善个人资料后领取奖品";
-
-                            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (application.getIsAdvancedUser().equals("0"))
-                                                openActivity(CompleteUserInformationActivity.class);
-                                            else
-                                                openActivity(CompleteMemberInformationActivity.class);
-                                            finish();
-                                        }
-                                    }
-                            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            }).create();
-                            Window window = dialog.getWindow();
-                            window.setGravity(Gravity.BOTTOM);
-                            dialog.setCanceledOnTouchOutside(false);
+//                            String title = "恭喜中奖";
+//                            message = "请完善个人资料后领取奖品";
+//
+//                            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            if (application.getIsAdvancedUser().equals("0"))
+//                                                openActivity(CompleteUserInformationActivity.class);
+//                                            else
+//                                                openActivity(CompleteMemberInformationActivity.class);
+//                                            finish();
+//                                        }
+//                                    }
+//                            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                }
+//                            }).create();
+//                            Window window = dialog.getWindow();
+//                            window.setGravity(Gravity.BOTTOM);
+//                            dialog.setCanceledOnTouchOutside(false);
                             if (MyUtil.isNeedCompleteInfo(application))
-                                dialog.show();
+                                showToast();
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
                             animImg.setImageResource(failedAnim);
@@ -674,7 +672,25 @@ public class CommodityInformationActivity extends BaseActivity {
         codePopupWindow.setFocusable(true);
     }
 
-    private void playSound() {
-        SoundUtil.getMySound(this).playSound(animSound);
+    private void showToast() {
+        rlayout_clickToComplete.setVisibility(View.VISIBLE);
+        TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
+        ImageView imageView = (ImageView) findViewById(R.id.img_close);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (application.getIsAdvancedUser().equals("0"))
+                    openActivity(CompleteUserInformationActivity.class);
+                else
+                    openActivity(CompleteMemberInformationActivity.class);
+                finish();
+            }
+        });
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlayout_clickToComplete.setVisibility(View.GONE);
+            }
+        });
     }
 }
