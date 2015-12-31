@@ -27,8 +27,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     private Button button;
 
     // 引导图片资源
-    private static final int[] pics = {R.drawable.index1, R.drawable.index2,
-            R.drawable.index3, R.drawable.index4};
+    private static final int[] pics = {R.drawable.index1, R.drawable.index2, R.drawable.index3};
     private static final int lenth = pics.length;
 
     // 底部小店图片
@@ -69,7 +68,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
         vp.setOnPageChangeListener(this);
 
         // 初始化底部小点
-        initDots();
+//        initDots();
 
 //        button = (Button) findViewById(R.id.index_button);
 
@@ -136,7 +135,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     @Override
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
-        setCurDot(arg0);
+//        setCurDot(arg0);
         if (arg0 == 3)
             finish();
 //            button.setVisibility(View.VISIBLE);

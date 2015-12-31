@@ -44,11 +44,11 @@
 
             <TextView
                 android:id="@+id/txt_grab_countDown"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="@dimen/dp_16"
+                android:paddingLeft="80dp"
+                android:paddingTop="@dimen/dp_30"
                 android:text="12313212311"
                 android:textColor="@color/themeYellow"
                 android:textSize="@dimen/sp_20"

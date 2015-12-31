@@ -88,6 +88,7 @@
         <activity android:name=".view.activity.MemberInfoActivity" />
         <activity android:name=".view.activity.RebateRecordsActivity" />
         <activity android:name=".view.activity.WinnerListActivity" />
+        <activity android:name=".view.activity.IndexViewPagerActivity" />
 
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />

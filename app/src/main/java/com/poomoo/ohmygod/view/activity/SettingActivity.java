@@ -133,7 +133,7 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toGuidePage(View view) {
-        MyUtil.showToast(getApplicationContext(), "引导页");
+        openActivity(IndexViewPagerActivity.class);
     }
 
     /**

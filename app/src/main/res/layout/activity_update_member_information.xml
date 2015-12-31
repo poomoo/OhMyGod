@@ -48,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,9 +69,9 @@
                     android:id="@+id/edt_memberInfo_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_realName"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
@@ -80,13 +81,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:paddingBottom="@dimen/dp_8">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -103,7 +105,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,9 +126,10 @@
                     android:id="@+id/txt_memberInfo_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext"
                     android:clickable="true"
                     android:onClick="toSelectGender"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
 
@@ -134,14 +138,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_sex"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -156,7 +179,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,11 +200,11 @@
                     android:id="@+id/edt_memberInfo_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_input_age"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
@@ -188,14 +212,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberAge"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -214,7 +257,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -234,9 +278,10 @@
                     android:id="@+id/txt_memberInfo_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext"
                     android:inputType="phone"
                     android:maxLength="11"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
@@ -244,13 +289,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberPhone"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -261,54 +325,71 @@
             </LinearLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
-                    android:id="@+id/txt_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
                     android:textSize="@dimen/sp_18" />
 
                 <TextView
-                    android:id="@+id/txt_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/txt_star"
                     android:text="@string/label_memberAddress"
                     android:textSize="@dimen/sp_18" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/txt_address"
                     android:id="@+id/txt_memberInfo_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_address"
+                    android:background="@drawable/bg_edittext"
                     android:clickable="true"
                     android:onClick="toAddress"
+                    android:padding="@dimen/dp_10"
                     android:text=""
-                    android:paddingLeft="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberAddress"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -324,7 +405,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -344,11 +426,11 @@
                     android:id="@+id/edt_memberInfo_idCardNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/bg_edittext"
                     android:digits="0123456789xyzXYZ"
                     android:hint="@string/hint_idCardNum"
                     android:maxLength="18"
-                    android:paddingLeft="@dimen/dp_10"
+                    android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
                     android:textSize="@dimen/sp_18" />
             </LinearLayout>
@@ -356,14 +438,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_10">
-
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_10"      android:paddingBottom="@dimen/dp_8"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/themeGray" />
+                    android:background="@color/themeGray"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp_8"
+                    android:text="*"
+                    android:textColor="@color/themeRed"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_memberIdNum"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="match_parent"

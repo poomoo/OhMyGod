@@ -66,13 +66,13 @@ public class TimeCountDownUtil extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
         this.millisUntilFinished = millisUntilFinished;
         Spanned spanned = dealTime(millisUntilFinished / 1000);
-        SpannableString ss;
-        ss = new SpannableString("倒计时：" + spanned);
-        //设置字体颜色
-        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), 0,
-                4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FCE023")), 4,
-                4 + spanned.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        SpannableString ss;
+//        ss = new SpannableString("倒计时：" + spanned);
+//        //设置字体颜色
+//        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFFFF")), 0,
+//                4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#FCE023")), 4,
+//                4 + spanned.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         if (isList)
             for (TextView textView : textViewList)
                 textView.setText(spanned);
@@ -88,7 +88,7 @@ public class TimeCountDownUtil extends CountDownTimer {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
                 } else {
-                    ((TextView) view).setText(ss);
+                    ((TextView) view).setText(spanned);
                 }
 
             }
