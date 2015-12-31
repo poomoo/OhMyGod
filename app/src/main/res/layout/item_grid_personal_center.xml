@@ -17,6 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/img_personal_center_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_inner_information" />
+
             <TextView
                 android:id="@+id/txt_personal_centerinform_count"
                 android:layout_width="@dimen/dp_16"
@@ -24,18 +31,13 @@
                 android:layout_toRightOf="@+id/img_personal_center_ic"
                 android:background="@drawable/ic_inform_count"
                 android:gravity="center"
-                android:text=""
+                android:text="55"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/img_personal_center_ic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_snatch" />
+
         </RelativeLayout>
 
         <TextView
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/label_snatch"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
     <View
