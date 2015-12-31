@@ -33,6 +33,7 @@ import com.poomoo.ohmygod.utils.TimeCountDownUtil;
  * 日期: 2015/11/30 14:49.
  */
 public class GrabAdapter extends MyBaseAdapter<GrabBO> {
+    private final DisplayImageOptions defaultOptions;
     private String TAG = "GrabAdapter";
     private GrabBO grabBO = new GrabBO();
     private static SparseArray<TimeCountDownUtil> countDownUtils;
@@ -42,6 +43,13 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         super(context);
         countDownUtils = new SparseArray<>();
         layoutSparseArray = new SparseArray<>();
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.bg_snatch_record) //
+                .showImageOnFail(R.drawable.bg_snatch_record) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(false) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
 
@@ -60,15 +68,8 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             viewHolder = (ViewHolder) convertView.getTag();
         grabBO = itemList.get(position);
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-                .showImageForEmptyUri(R.drawable.bg_snatch_record) //
-                .showImageOnFail(R.drawable.bg_snatch_record) //
-                .cacheInMemory(true) //
-                .cacheOnDisk(false) //
-                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                .build();//
+
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
-//        LogUtils.i(TAG, "position:" + position + "viewHolder.txt:" + viewHolder.txt.getTag());
 
 //        if (viewHolder.txt.getTag() != null && viewHolder.txt.getTag().equals(grabBO.getPicture())) {
         if (viewHolder.txt.getTag() == null) {
