@@ -28,17 +28,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
             android:paddingTop="5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:src="@drawable/ic_user" />
 
             <TextView
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -55,19 +55,19 @@
                 android:background="@null"
                 android:hint="@string/hint_input_your_phoneNum"
                 android:inputType="phone"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,17 +80,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
             android:paddingTop="5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:src="@drawable/ic_code" />
 
             <TextView
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -107,12 +107,12 @@
                 android:background="@null"
                 android:hint="@string/hint_input_code"
                 android:inputType="phone"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_18" />
 
 
             <Button
@@ -120,19 +120,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:background="@drawable/selector_get_code_button"
+                android:onClick="toCode"
                 android:padding="6dp"
                 android:text="@string/btn_get_code"
                 android:textColor="@color/white"
-                android:onClick="toCode"
-                android:textSize="16sp" />
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
 
             <TextView
                 android:layout_width="match_parent"
@@ -145,17 +145,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
             android:paddingTop="5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:src="@drawable/ic_age" />
 
             <TextView
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -179,12 +179,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_select_age"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/sp_18" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -203,8 +203,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
 
             <TextView
                 android:layout_width="match_parent"
@@ -217,17 +217,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
             android:paddingTop="5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:src="@drawable/ic_gender" />
 
             <TextView
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -251,12 +251,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_select_gender"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/sp_18" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -275,8 +275,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
 
             <TextView
                 android:layout_width="match_parent"
@@ -289,17 +289,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
             android:paddingTop="5dp">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:src="@drawable/ic_password" />
 
             <TextView
-                android:layout_width="8dp"
+                android:layout_width="@dimen/dp_8"
                 android:layout_height="wrap_content" />
 
             <TextView
@@ -316,19 +316,19 @@
                 android:background="@null"
                 android:hint="@string/hint_input_your_passWord"
                 android:inputType="textPassword"
-                android:paddingBottom="8dp"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingLeft="@dimen/dp_8"
+                android:paddingTop="@dimen/dp_8"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/sp_18" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
 
             <TextView
                 android:layout_width="match_parent"
@@ -344,24 +344,6 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp">
 
-            <CheckBox
-                android:id="@+id/chk_agree"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:background="@drawable/selector_check_box"
-                android:button="@null"
-                android:padding="4dp" />
-
-            <TextView
-                android:layout_width="8dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_agree"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -371,14 +353,34 @@
                 android:text="@string/label_protocol"
                 android:textColor="@color/themeRed"
                 android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_agree"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:id="@+id/chk_agree"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:background="@drawable/selector_check_box"
+                android:button="@null"
+                android:padding="4dp" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingTop="8dp">
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
+            android:paddingTop="@dimen/dp_8">
 
             <Button
                 style="@style/myButton"

@@ -67,6 +67,7 @@
     <string name="label_grab_countDown">倒计时：</string>
     <string name="label_grab_value">价值　　　</string>
     <string name="label_signInSuccess">报名成功</string>
+    <string name="label_timeBeforeGrab">请选择开抢前提醒时间</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -206,8 +207,8 @@
     <string name="label_rememberPassWord">"记住登陆密码"</string>
     <string name="label_register"><u>立即注册</u></string>
     <string name="label_forgetPassWord"><u>忘记密码?</u></string>
-    <string name="label_agree">"注册即表示同意"</string>
-    <string name="label_protocol">《天呐抢购协议》</string>
+    <string name="label_agree">请阅读同意后注册</string>
+    <string name="label_protocol">《天呐用户协议》</string>
     <!--登陆注册-->
 
     <!--城市列表-->

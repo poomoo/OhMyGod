@@ -95,7 +95,7 @@ public class TestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        mView = new MyCustomView(this);
+//        mView = new MyCustomView(this);
 //        webView = (WebView) findViewById(R.id.web_test);
         //html自适应
 //        WebSettings webSettings = webView.getSettings();
@@ -105,7 +105,7 @@ public class TestActivity extends BaseActivity {
 //        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
 //        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
-//        imageView = (ImageView) findViewById(R.id.img_test);
+        imageView = (ImageView) findViewById(R.id.img_test);
 //        percentTxt = (TextView) findViewById(R.id.txt_percent);
 //        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
 //
@@ -135,7 +135,7 @@ public class TestActivity extends BaseActivity {
         public MyCustomView(Context context) {
             super(context);
             //以文件流的方式读取文件
-            mMovie = Movie.decodeStream(getResources().openRawResource(R.drawable.gif1));
+            mMovie = Movie.decodeStream(getResources().openRawResource(R.raw.gif1));
         }
 
         @Override
