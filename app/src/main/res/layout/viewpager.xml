@@ -14,12 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@drawable/bg_edittext"
+        android:background="@color/transparentBlack"
         android:padding="@dimen/dp_10"
         android:text="点击进入"
-        android:textColor="@color/themeRed"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_20"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/viewpager_ll"

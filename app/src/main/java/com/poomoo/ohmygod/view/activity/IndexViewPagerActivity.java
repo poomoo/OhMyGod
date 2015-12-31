@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ViewPagerAdapter;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 
 public class IndexViewPagerActivity extends BaseActivity implements
@@ -144,8 +145,9 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
 //        setCurDot(arg0);
+        LogUtils.i(TAG, "PARENT:" + PARENT + " arg0:" + arg0 + " length:" + pics.length);
         if (PARENT.equals("index"))
-            if (arg0 == pics.length)
+            if (arg0 == pics.length - 1)
                 clickInTxt.setVisibility(View.VISIBLE);
             else
                 clickInTxt.setVisibility(View.INVISIBLE);
@@ -155,14 +157,5 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onClick(View v) {
         openActivity(MainFragmentActivity.class);
         finish();
-//        if (v.getTag().equals("button")) {
-//            Intent i = new Intent(IndexViewPagerActivity.this, MainFragmentActivity.class);
-//            startActivity(i);
-//            finish();
-//        } else {
-//            int position = (Integer) v.getTag();
-//            setCurView(position);
-//            setCurDot(position);
-//        }
     }
 }
