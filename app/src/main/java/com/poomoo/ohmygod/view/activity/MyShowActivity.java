@@ -24,10 +24,10 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.listeners.LongClickListener;
-import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.LongClickListener;
+import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -75,7 +75,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     private List<String> picList = new ArrayList<>();
     private int screenHeight;
     private int keyBoardHeight;
-    private int selectPosition;
+    private int itemPosition;
     private boolean isKeyBoardShow = false;
     private View view;
     private String replyContent;
@@ -147,7 +147,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 boolean visible = keyBoardHeight > screenHeight / 3;
 //                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible)
-                    moveList(selectPosition);
+                    moveList(itemPosition);
 //                LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
 
             }
@@ -253,7 +253,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 commentBO.setDynamicId(showBO.getDynamicId());
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
-                showBOList.get(selectPosition).getComments().add(commentBO);
+                showBOList.get(itemPosition).getComments().add(commentBO);
                 adapter.notifyDataSetChanged();
             }
 
@@ -299,9 +299,9 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 if (isReplyComment) {
                     replyBOList = new ArrayList<>();
                     replyBOList.add(replyBO);
-                    showBOList.get(selectPosition).getComments().get(commentPosition).setReplies(replyBOList);
+                    showBOList.get(itemPosition).getComments().get(commentPosition).setReplies(replyBOList);
                 } else {
-                    showBOList.get(selectPosition).getComments().get(commentPosition).getReplies().add(replyBO);
+                    showBOList.get(itemPosition).getComments().get(commentPosition).getReplies().add(replyBO);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -314,13 +314,13 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
         });
     }
 
-    private void moveList(int selectPosition) {
+    private void moveList(int itemPosition) {
         if (adapter == null)
             return;
 
-        LogUtils.i(TAG, "selectPosition:" + selectPosition);
+        LogUtils.i(TAG, "itemPosition:" + itemPosition);
         if (isKeyBoardShow) {
-            list.setSelectionFromTop(selectPosition, 0);
+            list.setSelectionFromTop(itemPosition, 0);
         }
         isKeyBoardShow = false;
     }
@@ -353,11 +353,11 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     }
 
     @Override
-    public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
+    public void onResult(String name, View v, ShowBO show, int itemPosition, int commentPosition) {
         toNickName = name;
-        selectPosition = position;
+        this.itemPosition = itemPosition;
         view = v;
-        commentPosition = commentPos;
+        this.commentPosition = commentPosition;
         showBO = show;
         LogUtils.i(TAG, "showBO:" + showBO);
 

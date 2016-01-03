@@ -38,6 +38,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+//        SQLiteDatabase db = Connector.getDatabase();
         importDB();        // 导入数据库文件
         mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
         mLocationClient.registerLocationListener(myListener);

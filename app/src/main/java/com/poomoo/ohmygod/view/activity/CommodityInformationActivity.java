@@ -74,6 +74,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private LinearLayout llayout_openActivity;//开启活动layout
     private LinearLayout llayout_bottom;//底部倒计时layout
     private LinearLayout llayout_anim;//显示动画
+    private LinearLayout llayout_cat;//查看手气
     private RelativeLayout rlayout_clickToComplete;//完善资料
     private ImageView animImg;//动画
     private TextView percentTxt;//百分比
@@ -88,6 +89,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private boolean isOpen = false;//是否开启活动
     private boolean isBegin = false;//活动是否开始
     private int activeId;//--活动编号
+    private String activityName;//活动名字
     private int typeId;//活动分类 1-房子 2-车子 3-装修 4-其他
     private Timer timer;
     private boolean isGrab = false;//是否已经参与了该活动
@@ -114,7 +116,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
     private int position;
     private String PARENT;
-    private Object obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +151,7 @@ public class CommodityInformationActivity extends BaseActivity {
         llayout_openActivity = (LinearLayout) findViewById(R.id.llayout_openActivity);
         llayout_bottom = (LinearLayout) findViewById(R.id.llayout_grab_bottom);
         llayout_anim = (LinearLayout) findViewById(R.id.llayout_anim);
+        llayout_cat = (LinearLayout) findViewById(R.id.llayout_catWinnerList);
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -259,11 +261,18 @@ public class CommodityInformationActivity extends BaseActivity {
                 closeProgressDialog();
                 commodityBO = (CommodityBO) data.getObj();
                 typeId = commodityBO.getTypeId();
-                //已参加
-                if (commodityBO.getPlayFlag().equals("1"))
+                if (commodityBO.getStatus() == 2) {              //活动已结束
                     isGrab = false;
-                else
-                    isGrab = true;
+                    llayout_cat.setVisibility(View.VISIBLE);
+                    GrabFragment.grabBOList.get(position).setStatus(2);
+                    GrabFragment.adapter.notifyDataSetChanged();
+                } else if (commodityBO.getStatus() == 1) {//活动已开始
+                    //已参加
+                    if (commodityBO.getPlayFlag().equals("1"))
+                        isGrab = false;
+                    else
+                        isGrab = true;
+                }
                 initData();
             }
 
@@ -682,5 +691,18 @@ public class CommodityInformationActivity extends BaseActivity {
                 rlayout_clickToComplete.setVisibility(View.GONE);
             }
         });
+    }
+
+    /**
+     * 查看中奖列表
+     *
+     * @param view
+     */
+    public void catWinnerList(View view) {
+        activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.intent_activityName), activityName);
+        bundle.putInt(getString(R.string.intent_activeId), activeId);
+        openActivity(WinnerListActivity.class, bundle);
     }
 }

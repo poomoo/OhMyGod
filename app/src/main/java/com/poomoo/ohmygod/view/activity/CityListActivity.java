@@ -35,10 +35,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.poomoo.api.Config;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CityBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.database.CityInfo;
+import com.poomoo.ohmygod.database.HistoryCityInfo;
 import com.poomoo.ohmygod.utils.DatabaseHelper;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -46,11 +49,14 @@ import com.poomoo.ohmygod.utils.PingYinUtil;
 import com.poomoo.ohmygod.view.custom.MyLetterListView;
 import com.poomoo.ohmygod.view.custom.MyLetterListView.OnTouchingLetterChangedListener;
 
+import org.litepal.util.LogUtil;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -128,6 +134,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
         city_result = new ArrayList<>();
         city_history = new ArrayList<>();
 
+        city_history = MyUtil.getHistoryCitys();
+
         helper = new DatabaseHelper(this);
         sh.addTextChangedListener(new TextWatcher() {
 
@@ -166,8 +174,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             }
         });
 
-        letterListView
-                .setOnTouchingLetterChangedListener(new LetterListViewListener());
+        letterListView.setOnTouchingLetterChangedListener(new LetterListViewListener());
         alphaIndexer = new HashMap<>();
         handler = new Handler();
         overlayThread = new OverlayThread();
@@ -176,8 +183,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                if (position >= 4) {
+                                    final int position, long id) {
+                if (position >= 5) {
                     currentCity = allCity_lists.get(position).getCityName();
                     if (!locateCity.equals(currentCity)) {
                         String title = "定位的城市是" + locateCity + ",是否跳转到" + currentCity + "?";
@@ -185,6 +192,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 application.setCurrCity(currentCity);
+                                HistoryCityInfo cityInfo = new HistoryCityInfo();
+                                cityInfo.setCityName(currentCity);
+                                MyUtil.saveHistoryCity(cityInfo);
                                 finish();
                                 getActivityOutToRight();
                             }
@@ -197,6 +207,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         dialog.show();
                     } else {
                         application.setCurrCity(currentCity);
+                        HistoryCityInfo cityInfo = new HistoryCityInfo();
+                        cityInfo.setCityName(currentCity);
+                        MyUtil.saveHistoryCity(cityInfo);
                         finish();
                         getActivityOutToRight();
                     }
@@ -220,6 +233,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             application.setCurrCity(currentCity);
+                            HistoryCityInfo cityInfo = new HistoryCityInfo();
+                            cityInfo.setCityName(currentCity);
+                            MyUtil.saveHistoryCity(cityInfo);
                             finish();
                             getActivityOutToRight();
                         }
@@ -232,6 +248,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                     dialog.show();
                 } else {
                     application.setCurrCity(currentCity);
+                    HistoryCityInfo cityInfo = new HistoryCityInfo();
+                    cityInfo.setCityName(currentCity);
+                    MyUtil.saveHistoryCity(cityInfo);
                     finish();
                     getActivityOutToRight();
                 }
@@ -278,7 +297,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     }
 
     private void getCityList() {
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getCitys(new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -287,15 +306,14 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 hotCityInit();
                 Collections.sort(city_lists, comparator);
                 allCity_lists.addAll(city_lists);
-//                setAdapter(allCity_lists, city_hot, city_history);
+                LogUtils.i("lmf", "allCity_lists:" + allCity_lists.toString());
                 adapter.notifyDataSetChanged();
                 sections = new String[allCity_lists.size()];
                 for (int i = 0; i < allCity_lists.size(); i++) {
                     // 当前汉语拼音首字母
                     String currentStr = getAlpha(allCity_lists.get(i).getPinyin());
                     // 上一个汉语拼音首字母，如果不存在为" "
-                    String previewStr = (i - 1) >= 0 ? getAlpha(allCity_lists.get(i - 1)
-                            .getPinyin()) : " ";
+                    String previewStr = (i - 1) >= 0 ? getAlpha(allCity_lists.get(i - 1).getPinyin()) : " ";
                     if (!previewStr.equals(currentStr)) {
                         String name = getAlpha(allCity_lists.get(i).getPinyin());
                         alphaIndexer.put(name, i);
@@ -487,14 +505,16 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             int viewType = getItemViewType(position);
             if (viewType == 0) { // 定位
                 convertView = inflater.inflate(R.layout.frist_list_item, null);
-                TextView locateHint = (TextView) convertView
-                        .findViewById(R.id.locateHint);
+                TextView locateHint = (TextView) convertView.findViewById(R.id.locateHint);
                 city = (TextView) convertView.findViewById(R.id.lng_city);
                 city.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (locateProcess == 2) {
                             application.setCurrCity(city.getText().toString());
+                            HistoryCityInfo cityInfo = new HistoryCityInfo();
+                            cityInfo.setCityName(currentCity);
+                            MyUtil.saveHistoryCity(cityInfo);
                             finish();
                             getActivityOutToRight();
                         } else if (locateProcess == 3) {
@@ -530,10 +550,8 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 }
             } else if (viewType == 1) { // 最近访问城市
                 convertView = inflater.inflate(R.layout.recent_city, null);
-                GridView recentCity = (GridView) convertView
-                        .findViewById(R.id.recent_city);
-                recentCity
-                        .setAdapter(new HitCityAdapter(context, this.hisCity));
+                GridView recentCity = (GridView) convertView.findViewById(R.id.recent_city);
+                recentCity.setAdapter(new HitCityAdapter(context, this.hisCity));
                 recentCity.setOnItemClickListener(new OnItemClickListener() {
 
                     @Override
@@ -546,6 +564,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);
+                                    HistoryCityInfo cityInfo = new HistoryCityInfo();
+                                    cityInfo.setCityName(currentCity);
+                                    MyUtil.saveHistoryCity(cityInfo);
                                     finish();
                                     getActivityOutToRight();
                                 }
@@ -558,13 +579,15 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             dialog.show();
                         } else {
                             application.setCurrCity(currentCity);
+                            HistoryCityInfo cityInfo = new HistoryCityInfo();
+                            cityInfo.setCityName(currentCity);
+                            MyUtil.saveHistoryCity(cityInfo);
                             finish();
                             getActivityOutToRight();
                         }
                     }
                 });
-                TextView recentHint = (TextView) convertView
-                        .findViewById(R.id.recentHint);
+                TextView recentHint = (TextView) convertView.findViewById(R.id.recentHint);
                 recentHint.setText(getString(R.string.label_history));
             } else if (viewType == 2) {
                 convertView = inflater.inflate(R.layout.recent_city, null);
@@ -584,6 +607,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     application.setCurrCity(currentCity);
+                                    HistoryCityInfo cityInfo = new HistoryCityInfo();
+                                    cityInfo.setCityName(currentCity);
+                                    MyUtil.saveHistoryCity(cityInfo);
                                     finish();
                                     getActivityOutToRight();
                                 }
@@ -596,6 +622,9 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                             dialog.show();
                         } else {
                             application.setCurrCity(currentCity);
+                            HistoryCityInfo cityInfo = new HistoryCityInfo();
+                            cityInfo.setCityName(currentCity);
+                            MyUtil.saveHistoryCity(cityInfo);
                             finish();
                             getActivityOutToRight();
                         }
@@ -611,19 +640,18 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.list_item, null);
                     holder = new ViewHolder();
-                    holder.alpha = (TextView) convertView
-                            .findViewById(R.id.alpha);
-                    holder.name = (TextView) convertView
-                            .findViewById(R.id.name);
+                    holder.alpha = (TextView) convertView.findViewById(R.id.alpha);
+                    holder.name = (TextView) convertView.findViewById(R.id.name);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
-                if (position >= 1) {
+                if (position >= 5) {
+                    LogUtils.i("lmf", "position:" + position + "cityName:" + list.get(position).getCityName());
                     holder.name.setText(list.get(position).getCityName());
                     String currentStr = getAlpha(list.get(position).getPinyin());
-                    String previewStr = (position - 1) >= 0 ? getAlpha(list
-                            .get(position - 1).getPinyin()) : " ";
+                    String previewStr = (position - 1) >= 0 ? getAlpha(list.get(position - 1).getPinyin()) : " ";
+                    LogUtils.i("lmf", "currentStr:" + currentStr + " previewStr:" + previewStr);
                     if (!previewStr.equals(currentStr)) {
                         holder.alpha.setVisibility(View.VISIBLE);
                         holder.alpha.setText(currentStr);
@@ -809,12 +837,14 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
             String text;
             String name = allCity_lists.get(firstVisibleItem).getCityName();
             String pinyin = allCity_lists.get(firstVisibleItem).getPinyin();
+
             if (firstVisibleItem < 4) {
                 text = name;
             } else {
                 text = PingYinUtil.converterToFirstSpell(pinyin)
                         .substring(0, 1).toUpperCase();
             }
+            LogUtils.i("lmf", "firstVisibleItem:" + firstVisibleItem + " text:" + text);
             overlay.setText(text);
             overlay.setVisibility(View.VISIBLE);
             handler.removeCallbacks(overlayThread);

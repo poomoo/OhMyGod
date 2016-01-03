@@ -9,7 +9,7 @@ package com.poomoo.model;
  * 日期: 2015/11/25 15:55.
  */
 public class CityBO {
-    private  String cityName;//--城市名称
+    private String cityName;//--城市名称
     private String pinyin;//--拼音
     private String isHot;//--是否为热门城市，0否，1是
 
@@ -41,5 +41,14 @@ public class CityBO {
 
     public void setIsHot(String isHot) {
         this.isHot = isHot;
+    }
+
+    @Override
+    public String toString() {
+        return "CityBO{" +
+                "cityName='" + cityName + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", isHot='" + isHot + '\'' +
+                '}';
     }
 }

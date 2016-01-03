@@ -24,6 +24,7 @@ public class CommodityBO {
     private long startCountdown;//--开始时间倒计时
     private long endCountdown;//--结束时间倒计时
     private int typeId;
+    private int status;//--活动状态：0未开启，1开启（正在进行），2结束
 
     public ArrayList<String> getPicList() {
         return picList;
@@ -113,6 +114,14 @@ public class CommodityBO {
         this.typeId = typeId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "CommodityBO{" +
@@ -127,6 +136,7 @@ public class CommodityBO {
                 ", startCountdown=" + startCountdown +
                 ", endCountdown=" + endCountdown +
                 ", typeId=" + typeId +
+                ", status=" + status +
                 '}';
     }
 }

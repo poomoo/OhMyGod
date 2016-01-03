@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.view.fragment;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,6 +50,7 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.SmsHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
@@ -82,7 +84,9 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private List<String> picList = new ArrayList<>();
     private int screenHeight;
     private int keyBoardHeight;
-    private int selectPosition;
+    private int itemPosition;//item的位置
+    private int commentPosition;//评论的位置
+    private int replyPosition;//回复评论的位置
     private boolean isKeyBoardShow = false;
     private View view;
     private int viewTop;
@@ -90,7 +94,6 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private int y1;//键盘弹出后剩余的界面底部y坐标
     private int y2;//点击的view距离当前item顶端的距离
     private String replyContent;
-    private int commentPosition;
     private boolean isComment = false;//评论
     private boolean isReply = false;//回复
     private boolean isReplyComment = false;//true-回复评论 false-回复回复列表里面的评论
@@ -126,26 +129,29 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      * 回复
      *
      * @param name
-     * @param position
+     * @param itemPosition
      * @param v
      * @param show
-     * @param commentPos
+     * @param commentPosition
      */
     @Override
-    public void onResult(String name, int position, View v, ShowBO show, int commentPos) {
+    public void onResult(String name, View v, ShowBO show, int itemPosition, int commentPosition) {
+        if (!MyUtil.isLogin(getActivity()))
+            return;
         toNickName = name;
-        selectPosition = position;
         view = v;
-        commentPosition = commentPos;
+        this.itemPosition = itemPosition;
+        this.commentPosition = commentPosition;
+//        replyPosition = replyPosition;
         viewTop = view.getTop();
         showBO = show;
-        LogUtils.i(TAG, "showBO:" + showBO);
-
+//        LogUtils.i(TAG, "showBO:" + showBO);
+        LogUtils.i(TAG, "回复评论:" + "评论的位置:" + commentPosition + " 回复评论的位置:" + replyPosition);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         MainFragmentActivity.instance.invisible();
         replyRlayout.setVisibility(View.VISIBLE);
-        LogUtils.i(TAG, "replyRlayout可见");
+//        LogUtils.i(TAG, "replyRlayout可见");
         replyEdt.setFocusable(true);
         replyEdt.setFocusableInTouchMode(true);
         replyEdt.requestFocus();
@@ -173,6 +179,8 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      */
     @Override
     public void onResult(String title, String content, String picUrl) {
+        if (!MyUtil.isLogin(getActivity()))
+            return;
         this.title = title;
         this.content = content;
         this.picUrl = picUrl;
@@ -225,7 +233,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                 boolean visible = keyBoardHeight > screenHeight / 3;
 //                LogUtils.i(TAG, "键盘不可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
                 if (visible)
-                    moveList(selectPosition);
+                    moveList(itemPosition);
 //                LogUtils.i(TAG, "键盘可见:" + "screenHeight:" + screenHeight + "r.bottom:" + r.bottom + "r.top:" + r.top + "keyBoardHeight" + keyBoardHeight);
 
 //                    Rect fragmentWindowRect = new Rect();
@@ -402,7 +410,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      * 评论
      */
     private void putComment() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.putComment(application.getUserId(), replyContent, showBO.getDynamicId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -413,7 +421,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                 commentBO.setDynamicId(showBO.getDynamicId());
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
-                showBOList.get(selectPosition).getComments().add(commentBO);
+                showBOList.get(itemPosition).getComments().add(commentBO);
                 adapter.notifyDataSetChanged();
             }
 
@@ -429,7 +437,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      * 回复
      */
     private void putReply() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         final String fromUserId = application.getUserId();
         //回复评论
         if (!TextUtils.isEmpty(showBO.getComments().get(0).getUserId())) {
@@ -437,11 +445,16 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             toUserId = showBO.getComments().get(0).getUserId();
         }
         LogUtils.i(TAG, "replyList:" + showBO.getComments().get(0).getReplies());
-        //回复回复
+        //回复回复列表里面的评论
         if (showBO.getComments().get(0).getReplies() != null && showBO.getComments().get(0).getReplies().size() > 0) {
             isReplyComment = false;
             toUserId = showBO.getComments().get(0).getReplies().get(0).getToUserId();
         }
+
+        if (isReplyComment)
+            LogUtils.i(TAG, "回复评论");
+        else
+            LogUtils.i(TAG, "回复回复列表里面的评论");
 
         final String commentId = showBO.getComments().get(0).getCommentId();
         LogUtils.i(TAG, "showBO:" + showBO);
@@ -459,9 +472,9 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                 if (isReplyComment) {
                     replyBOList = new ArrayList<>();
                     replyBOList.add(replyBO);
-                    showBOList.get(selectPosition).getComments().get(commentPosition).setReplies(replyBOList);
+                    showBOList.get(itemPosition).getComments().get(commentPosition).setReplies(replyBOList);
                 } else {
-                    showBOList.get(selectPosition).getComments().get(commentPosition).getReplies().add(replyBO);
+                    showBOList.get(itemPosition).getComments().get(commentPosition).getReplies().add(replyBO);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -474,22 +487,22 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         });
     }
 
-    private void moveList(int selectPosition) {
+    private void moveList(int itemPosition) {
         if (adapter == null)
             return;
 
-        LogUtils.i(TAG, "selectPosition:" + selectPosition);
+        LogUtils.i(TAG, "itemPosition:" + itemPosition);
         if (isKeyBoardShow) {
-//            LogUtils.i(TAG, "moveList:" + selectPosition + "count:" + showAdapter.getCount());
+//            LogUtils.i(TAG, "moveList:" + itemPosition + "count:" + showAdapter.getCount());
 //            LogUtils.i(TAG, "screenHeight:" + screenHeight + "keyBoardHeight:" + keyBoardHeight);
 //
 //            y1 = screenHeight - keyBoardHeight;
-//            itemTop = list.getChildAt(selectPosition).getTop();
-//            LogUtils.i(TAG, "viewTop:" + viewTop + "list.getChildAt(selectPosition).getTop():" + itemTop);
-//            y2 = viewTop - list.getChildAt(selectPosition).getTop();
+//            itemTop = list.getChildAt(itemPosition).getTop();
+//            LogUtils.i(TAG, "viewTop:" + viewTop + "list.getChildAt(itemPosition).getTop():" + itemTop);
+//            y2 = viewTop - list.getChildAt(itemPosition).getTop();
 //            int off = y1 - y2;
 //            LogUtils.i(TAG, "off:" + off + "y1:" + y1 + "y2:" + y2);
-            list.setSelectionFromTop(selectPosition, 0);
+            list.setSelectionFromTop(itemPosition, 0);
         }
         isKeyBoardShow = false;
     }
@@ -682,5 +695,15 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** 使用SSO授权必须添加如下代码 */
+        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
+        if (ssoHandler != null) {
+            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+    }
 
 }

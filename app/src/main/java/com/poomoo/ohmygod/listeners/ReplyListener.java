@@ -11,6 +11,6 @@ import com.poomoo.model.ShowBO;
  * 日期: 2015/11/11 11:11.
  */
 public interface ReplyListener {
-    void onResult(String name, int selectPosition, View view, ShowBO showBO, int replyPosition);
+    void onResult(String name, View view, ShowBO showBO, int itemPosition, int commentPosition);
 
 }

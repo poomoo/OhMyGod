@@ -36,6 +36,7 @@ import java.util.ArrayList;
  * 日期: 2015/11/20 10:39.
  */
 public class ShowAdapter extends MyBaseAdapter<ShowBO> {
+    private final DisplayImageOptions defaultOptions;
     private String TAG = "ShowAdapter";
     private PicsGridAdapter picsGridAdapter;
     private CommentAdapter commentAdapter;
@@ -49,6 +50,13 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         this.listener = listener;
         this.shareListener = shareListener;
         this.longClickListener = longClickListener;
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageForEmptyUri(R.drawable.ic_avatar) //
+                .showImageOnFail(R.drawable.ic_avatar) //
+                .cacheInMemory(true) //
+                .cacheOnDisk(false) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
     @Override
@@ -97,13 +105,6 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.replyImg.setOnClickListener(new imgClickListener(position, showBO));
         viewHolder.shareImg.setOnClickListener(new shareClickListener(showBO.getTitle(), showBO.getContent(), showBO.getPicList().size() > 0 ? showBO.getPicList().get(0) : ""));
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
-                .showImageForEmptyUri(R.drawable.ic_avatar) //
-                .showImageOnFail(R.drawable.ic_avatar) //
-                .cacheInMemory(true) //
-                .cacheOnDisk(false) //
-                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                .build();//
 
         // 给 ImageView 设置一个 tag
         viewHolder.avatarImg.setTag(showBO.getHeadPic());
@@ -162,7 +163,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 
         @Override
         public void onClick(View v) {
-            listener.onResult("", position, v, showBO, 0);
+            listener.onResult("", v, showBO, position, 0);
         }
     }
 

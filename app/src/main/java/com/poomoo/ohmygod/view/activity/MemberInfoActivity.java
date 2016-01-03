@@ -354,7 +354,7 @@ public class MemberInfoActivity extends BaseActivity {
             value = "1";
         else
             value = "2";
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -493,7 +493,9 @@ public class MemberInfoActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 application.setHeadPic(url);
-                MyUtil.saveDrawable(bitmap);
+                application.setHeadPic(url);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_headPic), url);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_headPicBitmap), MyUtil.saveDrawable(bitmap));
                 headImg.setImageBitmap(bitmap);
                 MyUtil.showToast(getApplicationContext(), "修改头像成功");
             }

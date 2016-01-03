@@ -45,7 +45,7 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
             viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
             viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.img_grab_bg);
             viewHolder.countDownTxt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
-            viewHolder.labelTxt = (TextView) convertView.findViewById(R.id.txt_label);
+//            viewHolder.labelTxt = (TextView) convertView.findViewById(R.id.txt_label);
 
             convertView.setTag(viewHolder);
         } else
@@ -59,7 +59,7 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
         else if (winningRecordsBO.getStatus().equals("2"))
             viewHolder.countDownTxt.setText("已结束");
         viewHolder.countDownTxt.setTextColor(Color.parseColor("#FFFFFF"));
-        viewHolder.labelTxt.setVisibility(View.GONE);
+//        viewHolder.labelTxt.setVisibility(View.GONE);
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.bg_snatch_record) //
@@ -89,6 +89,6 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
         private RelativeLayout rlayout;
         private ImageView bgImg;
         private TextView countDownTxt;
-        private TextView labelTxt;
+//        private TextView labelTxt;
     }
 }

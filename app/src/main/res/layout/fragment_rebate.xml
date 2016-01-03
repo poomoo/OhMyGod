@@ -46,8 +46,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
                         android:background="@color/rebate"
                         android:orientation="vertical"
                         android:padding="@dimen/dp_10">
@@ -57,7 +56,10 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
+
+                            android:paddingBottom="@dimen/dp_10"
                             android:paddingLeft="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_10"
                             android:text="@string/label_rebate1"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_18" />
@@ -74,10 +76,11 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
+                            android:paddingBottom="@dimen/dp_10"
                             android:paddingLeft="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_10"
                             android:text="@string/label_rebate2"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_16" />

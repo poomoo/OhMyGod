@@ -87,21 +87,21 @@ public class PullDownScrollView extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.d(TAG, "onInterceptTouchEvent");
+//        Log.d(TAG, "onInterceptTouchEvent");
         printMotionEvent(ev);
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             preY = (int) ev.getY();
         }
         if (ev.getAction() == MotionEvent.ACTION_MOVE) {
 
-            Log.d(TAG, "isElastic:" + isElastic + " canScroll:" + canScroll() + " ev.getY() - preY:" + (ev.getY() - preY));
+//            Log.d(TAG, "isElastic:" + isElastic + " canScroll:" + canScroll() + " ev.getY() - preY:" + (ev.getY() - preY));
             if (!isElastic && canScroll()
                     && (int) ev.getY() - preY >= headContentHeight / (3*RATIO)
                     && refreshListener != null && mElastic != null) {
 
                 isElastic = true;
                 startY = (int) ev.getY();
-                Log.i(TAG, "��moveʱ���¼��λ��startY:" + startY);
+//                Log.i(TAG, "��moveʱ���¼��λ��startY:" + startY);
                 return true;
             }
 
@@ -111,7 +111,7 @@ public class PullDownScrollView extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent");
+//        Log.d(TAG, "onTouchEvent");
         printMotionEvent(event);
         handleHeadElastic(event);
         return super.onTouchEvent(event);
@@ -121,11 +121,11 @@ public class PullDownScrollView extends LinearLayout {
         if (refreshListener != null && mElastic != null) {
             switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.i(TAG, "down");
+//                Log.i(TAG, "down");
                 break;
             case MotionEvent.ACTION_UP:
 
-                Log.i(TAG, "up");
+//                Log.i(TAG, "up");
                 if (state != IPullDownElastic.REFRESHING && isElastic) {
                     
                     if (state == IPullDownElastic.DONE) {
@@ -136,21 +136,21 @@ public class PullDownScrollView extends LinearLayout {
                         state = IPullDownElastic.DONE;
                         setMargin(refreshTargetTop);
                         changeHeaderViewByState(state, false);
-                        Log.i(TAG, "������ˢ��״̬����done״̬");
+//                        Log.i(TAG, "������ˢ��״̬����done״̬");
                     }
                     if (state == IPullDownElastic.RELEASE_To_REFRESH) {
                         state = IPullDownElastic.REFRESHING;
                         setMargin(0);
                         changeHeaderViewByState(state, false);
                         onRefresh();
-                        Log.i(TAG, "���ɿ�ˢ��״̬����done״̬");
+//                        Log.i(TAG, "���ɿ�ˢ��״̬����done״̬");
                     }
 
                 }
                 isElastic = false;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.i(TAG, "move");
+//                Log.i(TAG, "move");
                 int tempY = (int) event.getY();
                 
                 if (state != IPullDownElastic.REFRESHING && isElastic) {
@@ -160,11 +160,11 @@ public class PullDownScrollView extends LinearLayout {
                                 && (tempY - startY) > 0) {
                             state = IPullDownElastic.PULL_To_REFRESH;
                             changeHeaderViewByState(state, true);
-                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽����ˢ��״̬");
+//                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽����ˢ��״̬");
                         } else if (tempY - startY <= 0) {
                             state = IPullDownElastic.DONE;
                             changeHeaderViewByState(state, false);
-                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽done״̬");
+//                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽done״̬");
                         }
                     }
                     if (state == IPullDownElastic.DONE) {
@@ -178,11 +178,11 @@ public class PullDownScrollView extends LinearLayout {
                         if ((tempY - startY) / RATIO >= headContentHeight) {
                             state = IPullDownElastic.RELEASE_To_REFRESH;
                             changeHeaderViewByState(state, false);
-                            Log.i(TAG, "��done��������ˢ��״̬ת�䵽�ɿ�ˢ��");
+//                            Log.i(TAG, "��done��������ˢ��״̬ת�䵽�ɿ�ˢ��");
                         } else if (tempY - startY <= 0) {
                             state = IPullDownElastic.DONE;
                             changeHeaderViewByState(state, false);
-                            Log.i(TAG, "��DOne��������ˢ��״̬ת�䵽done״̬");
+//                            Log.i(TAG, "��DOne��������ˢ��״̬ת�䵽done״̬");
                         }
                     }
                     if (tempY - startY > 0) {
@@ -201,7 +201,6 @@ public class PullDownScrollView extends LinearLayout {
         LayoutParams lp = (LayoutParams) mElastic.getElasticLayout()
                 .getLayoutParams();
         lp.topMargin = top;
-        // �޸ĺ�ˢ��
         mElastic.getElasticLayout().setLayoutParams(lp);
         mElastic.getElasticLayout().invalidate();
     }
@@ -218,7 +217,7 @@ public class PullDownScrollView extends LinearLayout {
 
             mElastic.clearAnimation();
             mElastic.startAnimation(animation);
-            Log.i(TAG, "��ǰ״̬���ɿ�ˢ��");
+//            Log.i(TAG, "��ǰ״̬���ɿ�ˢ��");
             break;
         case IPullDownElastic.PULL_To_REFRESH:
             mElastic.showArrow(View.VISIBLE);
@@ -232,7 +231,7 @@ public class PullDownScrollView extends LinearLayout {
             if (isBack) {
                 mElastic.startAnimation(reverseAnimation);
             }
-            Log.i(TAG, "��ǰ״̬������ˢ��");
+//            Log.i(TAG, "��ǰ״̬������ˢ��");
             break;
         case IPullDownElastic.REFRESHING:
             mElastic.showArrow(View.GONE);
@@ -241,7 +240,7 @@ public class PullDownScrollView extends LinearLayout {
             mElastic.setTips(note_refreshing);
 
             mElastic.clearAnimation();
-            Log.i(TAG, "��ǰ״̬,����ˢ��...");
+//            Log.i(TAG, "��ǰ״̬,����ˢ��...");
             break;
         case IPullDownElastic.DONE:
             mElastic.showProgressBar(View.GONE);
@@ -249,7 +248,7 @@ public class PullDownScrollView extends LinearLayout {
 //            arrowImageView.setImageResource(R.drawable.goicon);
             // tipsTextview.setText("����ˢ��");
             // lastUpdatedTextView.setVisibility(View.VISIBLE);
-            Log.i(TAG, "��ǰ״̬��done");
+//            Log.i(TAG, "��ǰ״̬��done");
             break;
         }
     }
@@ -286,18 +285,18 @@ public class PullDownScrollView extends LinearLayout {
      */
     public void finishRefresh(String text) {
         if (mElastic == null) {
-            Log.e(TAG, "finishRefresh mElastic:" + mElastic);
+//            Log.e(TAG, "finishRefresh mElastic:" + mElastic);
             return;
         }
         if (state == IPullDownElastic.DONE) {
-            Log.e(TAG, "==> finishRefresh state has already done");
+//            Log.e(TAG, "==> finishRefresh state has already done");
         }
         state = IPullDownElastic.DONE;
         if (text != null) {
             mElastic.setLastUpdateText(text);
         }
         changeHeaderViewByState(state,false);
-        Log.i(TAG, "==>ִ����=====finishRefresh " + text);
+//        Log.i(TAG, "==>ִ����=====finishRefresh " + text);
 
         mElastic.showArrow(View.VISIBLE);
         mElastic.showLastUpdate(View.VISIBLE);
@@ -343,13 +342,13 @@ public class PullDownScrollView extends LinearLayout {
     private void printMotionEvent(MotionEvent event) {
         switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
-            Log.d(TAG, "down");
+//            Log.d(TAG, "down");
             break;
         case MotionEvent.ACTION_MOVE:
-            Log.d(TAG, "move");
+//            Log.d(TAG, "move");
             break;
         case MotionEvent.ACTION_UP:
-            Log.d(TAG, "up");
+//            Log.d(TAG, "up");
         default:
             break;
         }

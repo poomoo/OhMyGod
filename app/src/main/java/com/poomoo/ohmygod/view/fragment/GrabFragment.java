@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -98,7 +99,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private String[] urls;
     private AdBO adBO;
     private List<AdBO> adBOList = new ArrayList<>();
-    private List<GrabBO> grabBOList = new ArrayList<>();
+    public static List<GrabBO> grabBOList = new ArrayList<>();
     private List<WinnerBO> winnerBOList = new ArrayList<>();
     private int index = 0;
     private LocationClient mLocationClient;
@@ -117,6 +118,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private PopupWindow timePopupWindow;
     private TimeAdapter timeAdapter;
     private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
+    private boolean existCountDown = false;//true-有倒计时
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -172,23 +174,41 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minute = calendar.get(Calendar.MINUTE);
                 int second = calendar.get(Calendar.SECOND);
-                minute += MyConfig.time[position];
                 calendar.set(nYear, nMonth, nDayofMonth, hour, minute, second);
-                LogUtils.i(TAG, "time:" + calendar.getTime());
-                time = calendar.getTimeInMillis();
-                LogUtils.i(TAG, "time:" + time);
-                /* 建立Intent和PendingIntent，来调用目标组件 */
-                Intent intent = new Intent(getActivity(), CallAlarm.class);
-                intent.putExtra("_id", 0);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-                AlarmManager am;
-            /* 获取闹钟管理的实例 */
-                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-            /* 设置闹钟 */
-                am.cancel(pendingIntent);
-                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
 
-                MyUtil.showToast(getActivity().getApplicationContext(), MyConfig.time[position] + "分钟后提醒");
+                int len = GrabFragment.adapter.getCountDownUtils().size();
+                if (len > 0) {
+                    for (int i = 0; i < len; i++) {
+                        long leftTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
+                        if (leftTime > 0) {
+                            existCountDown = true;
+                            time = calendar.getTimeInMillis() + leftTime - MyConfig.time[position] * 60 * 1000;
+                            LogUtils.i(TAG, "i:" + i + " time:" + time);
+                            calendar.setTimeInMillis(time);
+                            LogUtils.i(TAG, "calendar:" + calendar.getTime());
+                            /* 建立Intent和PendingIntent，来调用目标组件 */
+                            Intent intent = new Intent(getActivity(), CallAlarm.class);
+                            intent.setAction(i + "");
+                            intent.setType(i + "");
+                            intent.setData(Uri.EMPTY);
+                            intent.addCategory(i + "");
+                            intent.setClass(getActivity(), CallAlarm.class);
+                            intent.putExtra("_id", 0);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                            AlarmManager am;
+                            /* 获取闹钟管理的实例 */
+                            am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+                            /* 设置闹钟 */
+//                            am.cancel(pendingIntent);
+                            am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                        }
+                    }
+                    if (existCountDown)
+                        MyUtil.showToast(getActivity().getApplicationContext(), MyConfig.time[position] + "分钟后提醒");
+
+                } else
+                    MyUtil.showToast(getActivity().getApplicationContext(), "当前城市没有开启活动");
+
                 timePopupWindow.dismiss();
                 hideFloatingActionButton();
             }
@@ -234,6 +254,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             switch (msg.what) {
                 case 1:
                     SpannableString spannableString;
+                    if (index > winnerBOList.size())
+                        index = 0;
                     if (!TextUtils.isEmpty(winnerBOList.get(index).getWinNickName()))
                         spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
                     else
@@ -241,7 +263,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
-                    LogUtils.i(TAG, "spannableString:" + spannableString);
                     ImageLoader.getInstance().displayImage(winnerBOList.get(index).getHeadPic(), avatarImg, defaultOptions);
                     index++;
                     if (index == winnerBOList.size())
@@ -418,6 +439,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
             pBundle.putInt(getString(R.string.intent_position), position);
             pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
+            pBundle.putString(getString(R.string.intent_activityName), grabBOList.get(position).getTitle());
             openActivity(CommodityInformationActivity.class, pBundle);
         } else {
             Bundle bundle = new Bundle();
@@ -583,7 +605,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     if (timePopupWindow != null) {
                         timePopupWindow.dismiss();
-                        timePopupWindow = null;
                     }
                 }
                 return true;

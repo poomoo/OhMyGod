@@ -37,20 +37,20 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
     private String content;//内容
     private String commentId;//评论的ID
     private ReplyListener listener;
-    private int selectPosition;
-    private int commentPostion;
+    private int itemPosition;
+    public int commentPosition;
     private ShowBO showBO;
     private CommentBO commentBO;
     private List<CommentBO> commentBOList;
     private List<ReplyBO> replyBOList;
     private LongClickListener longClickListener;
 
-    public ReplyAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, int selectPosition, String commentId, int commentPostion) {
+    public ReplyAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, String commentId, int itemPosition, int commentPosition) {
         super(context);
         this.listener = listener;
         this.longClickListener = longClickListener;
-        this.selectPosition = selectPosition;
-        this.commentPostion = commentPostion;
+        this.itemPosition = itemPosition;
+        this.commentPosition = commentPosition;
         this.commentId = commentId;
     }
 
@@ -89,20 +89,15 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         //Spanned.SPAN_EXCLUSIVE_INCLUSIVE(前面不包括，后面包括)
         //Spanned.SPAN_INCLUSIVE_INCLUSIVE(前后都包括)
 
-        ss = new SpannableString(replyName + "回复" + toName
-                + "：" + content);
+        ss = new SpannableString(replyName + "回复" + toName + "：" + content);
 
         //为回复的人昵称添加点击事件
-        ss.setSpan(new TextClick(true, replyName, showBO), 0,
-                replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new TextClick(true, replyName, showBO), 0, replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //为评论的人的添加点击事件
-        ss.setSpan(new TextClick(false, toName, showBO), replyName.length() + 2,
-                replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new TextClick(false, toName, showBO), replyName.length() + 2, replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置字体颜色
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0,
-                replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), replyName.length() + 2,
-                replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0, replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), replyName.length() + 2, replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         viewHolder.textView.setText(ss);
         //添加点击事件时，必须设置
@@ -138,21 +133,11 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         @Override
         public void onClick(View v) {
             if (status) {
-//                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name, selectPosition, v, showBO, commentPostion);
+                listener.onResult(name, v, showBO, itemPosition, commentPosition);
             } else {
-//                MyUtil.showToast(context, "点击" + name);
-                listener.onResult(name, selectPosition, v, showBO, commentPostion);
+                listener.onResult(name, v, showBO, itemPosition, commentPosition);
             }
 
-//            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);
-//            viewHolder.replyEdt.setHint("@" + this.name);
-//            viewHolder.replyEdt.setHintTextColor(Color.GRAY);
-//            viewHolder.replyEdt.setFocusable(true);
-//            viewHolder.replyEdt.requestFocus();
-//            InputMethodManager inputManager =
-//                    (InputMethodManager) viewHolder.replyEdt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//            inputManager.showSoftInput(viewHolder.replyEdt, 0);
         }
     }
 

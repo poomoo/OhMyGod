@@ -76,14 +76,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
         // 绑定回调
         vp.setOnPageChangeListener(this);
 
-        // 初始化底部小点
-//        initDots();
-
-//        button = (Button) findViewById(R.id.index_button);
-
-        clickInTxt.setOnClickListener(this);
-//        button.setTag("button");
-
+        views.get(pics.length - 1).setOnClickListener(this);
     }
 
     private void initDots() {
@@ -145,17 +138,19 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
 //        setCurDot(arg0);
-        LogUtils.i(TAG, "PARENT:" + PARENT + " arg0:" + arg0 + " length:" + pics.length);
-        if (PARENT.equals("index"))
-            if (arg0 == pics.length - 1)
-                clickInTxt.setVisibility(View.VISIBLE);
-            else
-                clickInTxt.setVisibility(View.INVISIBLE);
+//        LogUtils.i(TAG, "PARENT:" + PARENT + " arg0:" + arg0 + " length:" + pics.length);
+//        if (PARENT.equals("index"))
+//            if (arg0 == pics.length - 1)
+//                clickInTxt.setVisibility(View.VISIBLE);
+//            else
+//                clickInTxt.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-        openActivity(MainFragmentActivity.class);
-        finish();
+        if (PARENT.equals("index")) {
+            openActivity(MainFragmentActivity.class);
+            finish();
+        }
     }
 }

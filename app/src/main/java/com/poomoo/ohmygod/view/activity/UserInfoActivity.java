@@ -53,7 +53,7 @@ public class UserInfoActivity extends BaseActivity {
     private TextView ageTxt;
     private TextView phoneNumTxt;
     private TextView idCardNumTxt;
-//    private TextView bankCardNumTxt;
+    //    private TextView bankCardNumTxt;
     private TextView addressTxt;
     private GenderPopupWindow genderWindow;
     private SelectPicsPopupWindow popupWindow;
@@ -229,7 +229,7 @@ public class UserInfoActivity extends BaseActivity {
     public void toAddress(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_addressSubmit));
-        openActivity(AddressActivity.class,bundle);
+        openActivity(AddressActivity.class, bundle);
     }
 
     /**
@@ -342,23 +342,22 @@ public class UserInfoActivity extends BaseActivity {
             return;
         // 拍照
         if (requestCode == PHOTOHRAPH) {
-            System.out.println("拍照返回");
+            LogUtils.i(TAG, "拍照返回");
             setImage(image_capture_path);
         }
         if (data == null) {
-            System.out.println("返回为空");
+            LogUtils.i(TAG, "返回为空");
             return;
         }
         // 处理结果
         if (requestCode == PHOTORESOULT) {
             // 取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
             Uri mImageCaptureUri = data.getData();
-            System.out.println("mImageCaptureUri:" + mImageCaptureUri);
+            LogUtils.i("mImageCaptureUri:" + mImageCaptureUri);
             // 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
             if (mImageCaptureUri != null) {
                 try {
-                    Cursor cursor = getContentResolver().query(mImageCaptureUri, new String[]{MediaStore.Images.Media.DATA}, null,
-                            null, null);
+                    Cursor cursor = getContentResolver().query(mImageCaptureUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
                     String imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
@@ -374,7 +373,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     public void upload() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.uploadPics(fileBOList.get(0), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -408,7 +407,8 @@ public class UserInfoActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 application.setHeadPic(url);
-                MyUtil.saveDrawable(bitmap);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_headPic), url);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_headPicBitmap), MyUtil.saveDrawable(bitmap));
                 headImg.setImageBitmap(bitmap);
                 MyUtil.showToast(getApplicationContext(), "修改头像成功");
             }

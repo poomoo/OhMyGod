@@ -134,8 +134,8 @@ public class MainFragmentActivity extends
      * @param view
      */
     public void switchToShow(View view) {
-        if (!MyUtil.isLogin(this))
-            return;
+//        if (!MyUtil.isLogin(this))
+//            return;
         if (showFragment == null)
             showFragment = new ShowFragment();
         switchFragment(showFragment);
@@ -236,21 +236,8 @@ public class MainFragmentActivity extends
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /** 使用SSO授权必须添加如下代码 */
-        UMSsoHandler ssoHandler = ShowFragment.mController.getConfig().getSsoHandler(requestCode);
-        if (ssoHandler != null) {
-            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-        }
+        /*然后在碎片中调用重写的onActivityResult方法*/
+        curFragment.onActivityResult(requestCode, resultCode, data);
     }
 
-    private byte[] InputStreamToByte(InputStream is) throws IOException {
-        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
-        int ch;
-        while ((ch = is.read()) != -1) {
-            bytestream.write(ch);
-        }
-        byte imgdata[] = bytestream.toByteArray();
-        bytestream.close();
-        return imgdata;
-    }
 }

@@ -23,15 +23,21 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.poomoo.model.CityBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
 import com.poomoo.ohmygod.database.AreaInfo;
 import com.poomoo.ohmygod.database.CityInfo;
+import com.poomoo.ohmygod.database.HistoryCityInfo;
 import com.poomoo.ohmygod.database.MessageInfo;
 import com.poomoo.ohmygod.view.activity.LogInActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.io.ByteArrayInputStream;
@@ -46,7 +52,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者: 李苜菲
@@ -392,6 +400,7 @@ public class MyUtil {
             Cursor cursor = DataSupport.findBySQL("select * from messageinfo where statementId = ?", messageInfo.getStatementId() + "");
             if (cursor.getCount() == 0)
                 messageInfo.save();
+            cursor.close();
         }
     }
 
@@ -493,4 +502,31 @@ public class MyUtil {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 保存历史城市
+     *
+     * @param cityInfo
+     */
+    public static void saveHistoryCity(HistoryCityInfo cityInfo) {
+        Cursor cursor = DataSupport.findBySQL("select * from historycityinfo where cityname = ?", cityInfo.getCityName());
+        if (cursor.getCount() == 0)
+            cityInfo.save();
+        cursor.close();
+    }
+
+    /**
+     * 查询历史城市信息
+     *
+     * @return
+     */
+    public static List<String> getHistoryCitys() {
+        List<String> cityBOList = new ArrayList<>();
+        List<HistoryCityInfo> historyCityInfoList = DataSupport.findAll(HistoryCityInfo.class);
+        int len = historyCityInfoList.size();
+        for (int i = 0; i < len; i++)
+            cityBOList.add(historyCityInfoList.get(i).getCityName());
+        return cityBOList;
+    }
+
 }

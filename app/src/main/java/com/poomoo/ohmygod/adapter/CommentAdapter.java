@@ -36,15 +36,15 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
     private String content;//内容
     private SpannableString ss;
     private ReplyListener listener;
-    private int selectPosition;
+    private int itemPosition;
     private ShowBO showBO;
     private List<CommentBO> list;
     private LongClickListener longClickListener;
 
-    public CommentAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, int selectPosition) {
+    public CommentAdapter(Context context, ReplyListener listener, LongClickListener longClickListener, int itemPosition) {
         super(context);
         this.listener = listener;
-        this.selectPosition = selectPosition;
+        this.itemPosition = itemPosition;
         this.longClickListener = longClickListener;
     }
 
@@ -70,8 +70,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         list = new ArrayList<>();
         list.add(commentBO);
         showBO.setComments(list);
-        ss.setSpan(new TextClick(commentName, showBO), 0,
-                commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new TextClick(commentName, showBO, position), 0, commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0,
                 commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.textView.setText(ss);
@@ -80,7 +79,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
 
         viewHolder.textView.setOnLongClickListener(new LongClick(content));
 
-        replyAdapter = new ReplyAdapter(context, listener, longClickListener, selectPosition, commentBO.getCommentId(), position);
+        replyAdapter = new ReplyAdapter(context, listener, longClickListener, commentBO.getCommentId(), itemPosition, position);
         viewHolder.listView.setAdapter(replyAdapter);
         replyAdapter.setItems(commentBO.getReplies());
         return convertView;
@@ -94,11 +93,13 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
     public final class TextClick extends ClickableSpan {
         private String name;
         private ShowBO showBO;
+        private int commentPosition;
 
-        public TextClick(String name, ShowBO showBO) {
+        public TextClick(String name, ShowBO showBO, int commentPosition) {
             super();
             this.name = name;
             this.showBO = showBO;
+            this.commentPosition = commentPosition;
         }
 
         @Override
@@ -109,18 +110,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
 
         @Override
         public void onClick(View v) {
-//            MyUtil.showToast(context, "点击" + name);
-            listener.onResult(name, selectPosition, v, showBO, 0);
-
-
-//            viewHolder.commentLlayout.setVisibility(View.INVISIBLE);
-//            viewHolder.replyEdt.setHint("@" + this.name);
-//            viewHolder.replyEdt.setHintTextColor(Color.GRAY);
-//            viewHolder.replyEdt.setFocusable(true);
-//            viewHolder.replyEdt.requestFocus();
-//            InputMethodManager inputManager =
-//                    (InputMethodManager) viewHolder.replyEdt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//            inputManager.showSoftInput(viewHolder.replyEdt, 0);
+            listener.onResult(name, v, showBO, itemPosition, commentPosition);
         }
     }
 

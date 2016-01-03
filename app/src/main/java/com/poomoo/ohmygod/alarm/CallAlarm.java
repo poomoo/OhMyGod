@@ -60,8 +60,7 @@ public class CallAlarm extends BroadcastReceiver {
         // Do not snooze if the snooze button is disabled.
         final String snooze = DEFAULT_SNOOZE;
         int snoozeMinutes = Integer.parseInt(snooze);
-        final long snoozeTime = System.currentTimeMillis()
-                + (1000 * 60 * snoozeMinutes);
+        final long snoozeTime = System.currentTimeMillis() + (1000 * 60 * snoozeMinutes);
 
         // Get the display time for the snooze and update the notification.
         final Calendar c = Calendar.getInstance();
