@@ -1,11 +1,15 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.ResponseBO;
@@ -30,6 +34,7 @@ public class CommodityInformation2Activity extends BaseActivity {
     private TextView priceTxt;//商品价格
     private TextView startDate;//开抢时间
     private WebView commodityWeb;//商品详情
+    private ImageView detailsImg;
 
     private CommodityBO commodityBO;
 
@@ -50,11 +55,13 @@ public class CommodityInformation2Activity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-        nameTxt = (TextView) findViewById(R.id.txt_commodityName);
+        nameTxt = (TextView) findViewById(R.id.txt_commodityStatement);
         priceTxt = (TextView) findViewById(R.id.txt_price);
         startDate = (TextView) findViewById(R.id.txt_startDate);
         slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
         commodityWeb = (WebView) findViewById(R.id.web_commodity);
+        detailsImg = (ImageView) findViewById(R.id.img_commodityDetail);
+
     }
 
     private void getData() {
@@ -95,6 +102,13 @@ public class CommodityInformation2Activity extends BaseActivity {
                 imageBrowse(position, commodityBO.getPicList());
             }
         });
+
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
+        ImageLoader.getInstance().displayImage(commodityBO.getSmallPic(), detailsImg, defaultOptions);
 
         //商品详情
         commodityWeb.getSettings().setUseWideViewPort(true);

@@ -61,6 +61,7 @@
     <!--抢-->
     <string name="label_winner">获奖者</string>
     <string name="label_grab_tip">开奖提醒</string>
+    <string name="label_grab_cancelTip">取消提醒</string>
     <string name="label_grab_onclick">猛戳开抢......</string>
     <string name="label_grab_start_date">开抢时间：</string>
     <string name="label_countDown">倒计时：</string>
@@ -68,6 +69,8 @@
     <string name="label_grab_value">价值　　　</string>
     <string name="label_signInSuccess">报名成功</string>
     <string name="label_timeBeforeGrab">请选择开抢前提醒时间</string>
+    <string name="label_clickToCompleteInfo">点击完善你的资料后兑奖</string>
+    <string name="label_clickToReturn">点击返回</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -352,6 +355,7 @@
     <string name="sp_isAdvancedUser">isAdvancedUser</string>
     <string name="sp_isIndex">isIndex</string>
     <string name="sp_historyCity">historyCity</string>
+    <string name="sp_tipFlag">tipFlag</string>
 
     <!--SharedPreferences-->
 

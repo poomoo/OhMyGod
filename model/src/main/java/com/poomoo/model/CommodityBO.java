@@ -25,6 +25,7 @@ public class CommodityBO {
     private long endCountdown;//--结束时间倒计时
     private int typeId;
     private int status;//--活动状态：0未开启，1开启（正在进行），2结束
+    private String smallPic = "";//
 
     public ArrayList<String> getPicList() {
         return picList;
@@ -122,6 +123,14 @@ public class CommodityBO {
         this.status = status;
     }
 
+    public String getSmallPic() {
+        return smallPic;
+    }
+
+    public void setSmallPic(String smallPic) {
+        this.smallPic = smallPic;
+    }
+
     @Override
     public String toString() {
         return "CommodityBO{" +
@@ -137,6 +146,7 @@ public class CommodityBO {
                 ", endCountdown=" + endCountdown +
                 ", typeId=" + typeId +
                 ", status=" + status +
+                ", smallPic='" + smallPic + '\'' +
                 '}';
     }
 }

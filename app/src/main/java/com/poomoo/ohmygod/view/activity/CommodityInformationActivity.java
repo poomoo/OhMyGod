@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +31,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.GrabResultBO;
@@ -79,6 +83,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private ImageView animImg;//动画
     private TextView percentTxt;//百分比
     private ScrollView scrollView;//
+    private ImageView detailsImg;
 
     private TimeCountDownUtil headTimeCountDownUtil;
     private List<TextView> textViewList;
@@ -137,7 +142,7 @@ public class CommodityInformationActivity extends BaseActivity {
     protected void initView() {
         initTitleBar();
 
-        nameTxt = (TextView) findViewById(R.id.txt_commodityName);
+        nameTxt = (TextView) findViewById(R.id.txt_commodityStatement);
         priceTxt = (TextView) findViewById(R.id.txt_price);
         startDate = (TextView) findViewById(R.id.txt_startDate);
         slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
@@ -155,7 +160,9 @@ public class CommodityInformationActivity extends BaseActivity {
         animImg = (ImageView) findViewById(R.id.img_anim);
         percentTxt = (TextView) findViewById(R.id.txt_percent);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
-        rlayout_clickToComplete = (RelativeLayout) findViewById(R.id.rlayout_clickTocomplete);
+        rlayout_clickToComplete = (RelativeLayout) findViewById(R.id.rlayout_clickToComplete);
+        detailsImg = (ImageView) findViewById(R.id.img_commodityDetail);
+
 
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
@@ -211,7 +218,6 @@ public class CommodityInformationActivity extends BaseActivity {
                 }
             }
         });
-
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -327,7 +333,12 @@ public class CommodityInformationActivity extends BaseActivity {
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
         startDate.setText(commodityBO.getStartDt());
-
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
+        ImageLoader.getInstance().displayImage(commodityBO.getSmallPic(), detailsImg, defaultOptions);
 
         int len = commodityBO.getPicList().size();
         String[] urls = new String[len];
@@ -584,8 +595,9 @@ public class CommodityInformationActivity extends BaseActivity {
 //                            window.setGravity(Gravity.BOTTOM);
 //                            dialog.setCanceledOnTouchOutside(false);
                             if (MyUtil.isNeedCompleteInfo(application))
-                                showToast();
+                                showToast(true);
                         } else if (grabResultBO.getIsWin().equals("false")) {
+                            showToast(false);
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
                             animImg.setImageResource(failedAnim);
                             message = "很遗憾,没有中奖,请再接再厉";
@@ -671,26 +683,45 @@ public class CommodityInformationActivity extends BaseActivity {
         codePopupWindow.setFocusable(true);
     }
 
-    private void showToast() {
-        rlayout_clickToComplete.setVisibility(View.VISIBLE);
-        TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
-        ImageView imageView = (ImageView) findViewById(R.id.img_close);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (application.getIsAdvancedUser().equals("0"))
-                    openActivity(CompleteUserInformationActivity.class);
-                else
-                    openActivity(CompleteMemberInformationActivity.class);
-                finish();
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rlayout_clickToComplete.setVisibility(View.GONE);
-            }
-        });
+    private void showToast(boolean flag) {
+        if (flag) {//成功
+            rlayout_clickToComplete.setVisibility(View.VISIBLE);
+            TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
+            ImageView imageView = (ImageView) findViewById(R.id.img_close);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (application.getIsAdvancedUser().equals("0"))
+                        openActivity(CompleteUserInformationActivity.class);
+                    else
+                        openActivity(CompleteMemberInformationActivity.class);
+                    finish();
+                }
+            });
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rlayout_clickToComplete.setVisibility(View.GONE);
+                }
+            });
+        } else {//失败
+            rlayout_clickToComplete.setVisibility(View.VISIBLE);
+            TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
+            textView.setText(getString(R.string.label_clickToReturn));
+            ImageView imageView = (ImageView) findViewById(R.id.img_close);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rlayout_clickToComplete.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 
     /**
