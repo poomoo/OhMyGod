@@ -3,9 +3,11 @@
  */
 package com.poomoo.ohmygod.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollGridView;
 
@@ -37,6 +40,7 @@ import java.util.ArrayList;
  */
 public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     private final DisplayImageOptions defaultOptions;
+    private final DisplayImageOptions defaultOptions1;
     private String TAG = "ShowAdapter";
     private PicsGridAdapter picsGridAdapter;
     private CommentAdapter commentAdapter;
@@ -57,6 +61,11 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
+        defaultOptions1 = new DisplayImageOptions.Builder() //
+                .cacheInMemory(true) //
+                .cacheOnDisk(false) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
     }
 
     @Override
@@ -68,6 +77,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
             convertView = inflater.inflate(R.layout.item_list_show, null);
             viewHolder.avatarImg = (ImageView) convertView.findViewById(R.id.img_show_avatar);
             viewHolder.shareImg = (ImageView) convertView.findViewById(R.id.img_share);
+            viewHolder.smallImg = (ImageView) convertView.findViewById(R.id.img_small);
             viewHolder.nameTxt = (TextView) convertView.findViewById(R.id.txt_show_userName);
             viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_show_dateTime);
             viewHolder.contentTxt = (TextView) convertView.findViewById(R.id.txt_show_content);
@@ -79,6 +89,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
             viewHolder.commentBtn = (Button) convertView.findViewById(R.id.btn_comment);
             viewHolder.replyBtn = (Button) convertView.findViewById(R.id.btn_reply);
             viewHolder.commentLlayout = (LinearLayout) convertView.findViewById(R.id.llayout_comment);
+            viewHolder.activeInfoLlayout = (LinearLayout) convertView.findViewById(R.id.llayout_activeInfo);
             viewHolder.replyImg = (ImageView) convertView.findViewById(R.id.img_reply);
             viewHolder.picsGridAdapter = new PicsGridAdapter(context);
             viewHolder.gridView.setAdapter(viewHolder.picsGridAdapter);
@@ -97,10 +108,27 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.dateTimeTxt.setText(showBO.getDynamicDt());
         viewHolder.contentTxt.setText(showBO.getContent());
         viewHolder.titleTxt.setText(showBO.getTitle());
+        viewHolder.activeInfoLlayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(context.getString(R.string.intent_activeId), Integer.parseInt(showBO.getActiveId()));
+                bundle.putString(context.getString(R.string.intent_activityName), showBO.getTitle());
+                Intent intent = new Intent(context, CommodityInformation2Activity.class);
+                context.startActivity(intent);
+            }
+        });
 
-        commentAdapter = new CommentAdapter(context, listener, longClickListener, position);
-        viewHolder.listView.setAdapter(commentAdapter);
-        commentAdapter.setItems(showBO.getComments());
+        ImageLoader.getInstance().displayImage(showBO.getShowPic(), viewHolder.smallImg, defaultOptions1);
+
+        if (showBO.getComments() != null && showBO.getComments().size() > 0) {
+            viewHolder.listView.setVisibility(View.VISIBLE);
+            commentAdapter = new CommentAdapter(context, listener, longClickListener, position);
+            viewHolder.listView.setAdapter(commentAdapter);
+            commentAdapter.setItems(showBO.getComments());
+        } else
+            viewHolder.listView.setVisibility(View.GONE);
+
 
         viewHolder.replyImg.setOnClickListener(new imgClickListener(position, showBO));
         viewHolder.shareImg.setOnClickListener(new shareClickListener(showBO.getTitle(), showBO.getContent(), showBO.getPicList().size() > 0 ? showBO.getPicList().get(0) : ""));
@@ -137,6 +165,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     class ViewHolder {
         public ImageView avatarImg;
         public ImageView shareImg;
+        public ImageView smallImg;
         public TextView nameTxt;
         public TextView dateTimeTxt;
         public TextView contentTxt;
@@ -148,6 +177,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         public Button commentBtn;
         public Button replyBtn;
         public LinearLayout commentLlayout;
+        public LinearLayout activeInfoLlayout;
         public ImageView replyImg;
         public PicsGridAdapter picsGridAdapter;
     }

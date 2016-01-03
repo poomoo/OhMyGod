@@ -9,7 +9,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
+        android:layout_height="6dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_user_info"
@@ -41,7 +41,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2" />
+        android:layout_height="2dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_user_help"
@@ -73,7 +73,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
+        android:layout_height="6dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_about"
@@ -105,7 +105,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2" />
+        android:layout_height="2dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_share_soft"
@@ -137,7 +137,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2" />
+        android:layout_height="2dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_feed_back"
@@ -170,7 +170,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
+        android:layout_height="6dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_guide_page"
@@ -203,7 +203,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2" />
+        android:layout_height="2dp" />
 
     <RelativeLayout
         android:id="@+id/rlayout_check_update"
@@ -236,12 +236,12 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
+        android:layout_height="6dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10">
+        android:padding="6dp">
 
         <Button
             style="@style/myButton"

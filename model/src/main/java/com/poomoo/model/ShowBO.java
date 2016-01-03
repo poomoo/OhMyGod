@@ -22,6 +22,7 @@ public class ShowBO {
     private ArrayList<String> picList;//--分享的图片集合
     private String title;//--活动标题
     private String userId;//--分享人编号
+    private String showPic = "";//--小图
 
     public String getActiveId() {
         return activeId;
@@ -103,6 +104,14 @@ public class ShowBO {
         this.userId = userId;
     }
 
+    public String getShowPic() {
+        return showPic;
+    }
+
+    public void setShowPic(String showPic) {
+        this.showPic = showPic;
+    }
+
     @Override
     public String toString() {
         return "ShowBO{" +
@@ -116,6 +125,7 @@ public class ShowBO {
                 ", picList=" + picList +
                 ", title='" + title + '\'' +
                 ", userId='" + userId + '\'' +
+                ", showPic='" + showPic + '\'' +
                 '}';
     }
 }

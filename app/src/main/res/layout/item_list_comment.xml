@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_16"
         android:background="@drawable/selector_reply"
-        android:textSize="@dimen/sp_12" />
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="match_parent"

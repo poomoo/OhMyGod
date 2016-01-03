@@ -27,8 +27,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
             android:paddingLeft="40dp"
+            android:paddingTop="14dp"
             android:visibility="visible">
 
             <TextView

@@ -69,7 +69,7 @@ public class MyUtil {
             MediaStore.Audio.Media.TRACK};
 
     public static void showToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     //把字符串转为日期

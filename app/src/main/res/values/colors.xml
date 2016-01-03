@@ -11,6 +11,7 @@
 
     <color name="grid_divider">#EBEBEB</color>
     <color name="divider">#F8F8F8</color>
+    <color name="bg_reply1">#F3F3F3</color>
     <color name="bg_grab">#212842</color>
     <color name="bg_calender_unsigned">#F2F2F2</color>
     <color name="bg_calender_signed">#FFF2D5</color>

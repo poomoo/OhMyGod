@@ -96,8 +96,8 @@ public class ReplyAdapter extends MyBaseAdapter<ReplyBO> {
         //为评论的人的添加点击事件
         ss.setSpan(new TextClick(false, toName, showBO), replyName.length() + 2, replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置字体颜色
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0, replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), replyName.length() + 2, replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), 0, replyName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), replyName.length() + 2, replyName.length() + toName.length() + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         viewHolder.textView.setText(ss);
         //添加点击事件时，必须设置

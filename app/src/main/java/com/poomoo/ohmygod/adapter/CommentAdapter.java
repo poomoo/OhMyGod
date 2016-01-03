@@ -71,8 +71,7 @@ public class CommentAdapter extends MyBaseAdapter<CommentBO> {
         list.add(commentBO);
         showBO.setComments(list);
         ss.setSpan(new TextClick(commentName, showBO, position), 0, commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply)), 0,
-                commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), 0, commentName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.textView.setText(ss);
         //添加点击事件时，必须设置
         viewHolder.textView.setMovementMethod(LinkMovementMethod.getInstance());
