@@ -204,7 +204,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         }
                     }
                     if (existCountDown)
-                        MyUtil.showToast(getActivity().getApplicationContext(), MyConfig.time[position] + "分钟后提醒");
+                        MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
 
                 } else
                     MyUtil.showToast(getActivity().getApplicationContext(), "当前城市没有开启活动");
