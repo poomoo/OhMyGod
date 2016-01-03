@@ -61,6 +61,7 @@ public class CommodityInformation2Activity extends BaseActivity {
         slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
         commodityWeb = (WebView) findViewById(R.id.web_commodity);
         detailsImg = (ImageView) findViewById(R.id.img_commodityDetail);
+
     }
 
     private void getData() {
