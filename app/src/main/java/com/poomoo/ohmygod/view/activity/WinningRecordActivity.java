@@ -126,8 +126,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
                     adapter.setItems(winningBOList);
                     LogUtils.i(TAG, "中奖记录:" + winningBOList);
                     spannableString = new SpannableString("恭喜您已获得" + data.getTotalCount() + "个宝物");
-                    spannableString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), 6,
-                            7 + String.valueOf(data.getTotalCount()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), 6, 7 + String.valueOf(data.getTotalCount()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textView.setText(spannableString);
                 }
             }

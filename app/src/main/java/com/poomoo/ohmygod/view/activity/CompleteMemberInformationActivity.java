@@ -33,6 +33,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.database.CityInfo;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
@@ -83,7 +84,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGod.temp";
-
+    private WinningRecordsBO winningRecordsBO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +275,10 @@ public class CompleteMemberInformationActivity extends BaseActivity {
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), urlList.get(0));
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idOpsitePic), urlList.get(1));
                 startService(new Intent(CompleteMemberInformationActivity.this, Get_UserInfo_Service.class));
+                winningRecordsBO = (WinningRecordsBO) getIntent().getSerializableExtra(getString(R.string.intent_value));
+                Bundle pBundle = new Bundle();
+                pBundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
+                openActivity(WinningRecord2Activity.class, pBundle);
                 finish();
             }
 

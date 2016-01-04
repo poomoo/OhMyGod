@@ -253,6 +253,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 .build();//
 
         tipFlag = (boolean) SPUtils.get(getActivity().getApplicationContext(), getString(R.string.sp_tipFlag), true);
+        setTipText(tipFlag);
     }
 
     Handler handler = new Handler() {
@@ -324,7 +325,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 if (isRefreshable)
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
 
-                setTipText(tipFlag);
                 remindLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
 //                hideFloatingActionButton();

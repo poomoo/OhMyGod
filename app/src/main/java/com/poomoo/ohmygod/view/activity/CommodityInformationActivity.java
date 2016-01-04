@@ -1,12 +1,12 @@
 package com.poomoo.ohmygod.view.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
@@ -171,9 +173,10 @@ public class CommodityInformationActivity extends BaseActivity {
 
         //html自适应
         WebSettings webSettings = commodityWeb.getSettings();
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
         webSettings.setDefaultTextEncodingName("UTF-8");
+        webSettings.setJavaScriptEnabled(true);
 
         //将验证码用图片的形式显示出来
         codeImg.setImageBitmap(Code.getInstance().createBitmap());
@@ -354,6 +357,9 @@ public class CommodityInformationActivity extends BaseActivity {
         });
         //商品详情
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+        // 添加js交互接口类，并起别名 imagelistner
+        commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");
+        commodityWeb.setWebViewClient(new MyWebViewClient());
         commodityWeb.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100) {
@@ -606,7 +612,6 @@ public class CommodityInformationActivity extends BaseActivity {
                             message = data.getMsg();
                             MyUtil.showToast(getApplicationContext(), message);
                         }
-
                     }
 
                     @Override
@@ -691,10 +696,17 @@ public class CommodityInformationActivity extends BaseActivity {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    WinningRecordsBO winningRecordsBO = new WinningRecordsBO();
+                    winningRecordsBO.setTitle(commodityBO.getGoodsName());
+                    winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
+                    winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
+                    winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
                     if (application.getIsAdvancedUser().equals("0"))
-                        openActivity(CompleteUserInformationActivity.class);
+                        openActivity(CompleteUserInformationActivity.class, bundle);
                     else
-                        openActivity(CompleteMemberInformationActivity.class);
+                        openActivity(CompleteMemberInformationActivity.class, bundle);
                     finish();
                 }
             });
@@ -735,5 +747,76 @@ public class CommodityInformationActivity extends BaseActivity {
         bundle.putString(getString(R.string.intent_activityName), activityName);
         bundle.putInt(getString(R.string.intent_activeId), activeId);
         openActivity(WinnerListActivity.class, bundle);
+    }
+
+    // 注入js函数监听
+    private void addImageClickListner() {
+        // 这段js函数的功能就是，遍历所有的img几点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+        commodityWeb.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName(\"img\"); " +
+                "var temp='';" +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{" + "temp+=objs[i].src+';'" + "}" +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "    objs[i].onclick=function()  " +
+                "    {  "
+                + "        window.imagelistner.openImage(temp,this.src);  " +
+                "    }  " +
+                "}" +
+                "})()");
+    }
+
+    // js通信接口
+    class JavascriptInterface {
+
+        @android.webkit.JavascriptInterface
+        public void openImage(String imgList, String src) {
+            LogUtils.i(TAG, "imgList" + imgList);
+            int position=0;
+            String img = src;
+            String[] temp = imgList.split(";");
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (int i = 0; i < temp.length; i++) {
+                if (img.equals(temp[i]))
+                    position = i;
+                arrayList.add(temp[i]);
+            }
+            imageBrowse(position, arrayList);
+        }
+    }
+
+    // 监听
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+            view.getSettings().setJavaScriptEnabled(true);
+
+            super.onPageFinished(view, url);
+            // html加载完成之后，添加监听图片的点击js函数
+            addImageClickListner();
+
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            view.getSettings().setJavaScriptEnabled(true);
+
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+
+            super.onReceivedError(view, errorCode, description, failingUrl);
+
+        }
     }
 }

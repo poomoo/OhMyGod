@@ -299,7 +299,7 @@
     <!--控件-->
 
     <!--按钮-->
-    <string name="btn_grab">阅读开抢须知启动活动</string>
+    <string name="btn_grab">阅读须知开启活动</string>
     <string name="btn_save">保存</string>
     <string name="btn_show">晒单</string>
     <string name="btn_complete_information">完善资料</string>

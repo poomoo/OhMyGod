@@ -26,6 +26,9 @@ public class CommodityBO {
     private int typeId;
     private int status;//--活动状态：0未开启，1开启（正在进行），2结束
     private String smallPic = "";//
+    private String getRequire = "";//
+    private String getEndDt = "";//
+    private String getAddress = "";//
 
     public ArrayList<String> getPicList() {
         return picList;
@@ -131,6 +134,30 @@ public class CommodityBO {
         this.smallPic = smallPic;
     }
 
+    public String getGetRequire() {
+        return getRequire;
+    }
+
+    public void setGetRequire(String getRequire) {
+        this.getRequire = getRequire;
+    }
+
+    public String getGetEndDt() {
+        return getEndDt;
+    }
+
+    public void setGetEndDt(String getEndDt) {
+        this.getEndDt = getEndDt;
+    }
+
+    public String getGetAddress() {
+        return getAddress;
+    }
+
+    public void setGetAddress(String getAddress) {
+        this.getAddress = getAddress;
+    }
+
     @Override
     public String toString() {
         return "CommodityBO{" +
@@ -147,6 +174,9 @@ public class CommodityBO {
                 ", typeId=" + typeId +
                 ", status=" + status +
                 ", smallPic='" + smallPic + '\'' +
+                ", getRequire='" + getRequire + '\'' +
+                ", getEndDt='" + getEndDt + '\'' +
+                ", getAddress='" + getAddress + '\'' +
                 '}';
     }
 }

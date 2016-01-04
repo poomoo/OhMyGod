@@ -65,6 +65,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
             iv.setLayoutParams(mParams);
             // 防止图片不能填满屏幕
             iv.setScaleType(ScaleType.FIT_XY);
+            iv.setAdjustViewBounds(true);
 
             iv.setImageResource(pics[i]);
             views.add(iv);

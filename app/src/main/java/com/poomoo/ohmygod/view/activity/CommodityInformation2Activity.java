@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -114,9 +115,12 @@ public class CommodityInformation2Activity extends BaseActivity {
         commodityWeb.getSettings().setUseWideViewPort(true);
         commodityWeb.getSettings().setLoadWithOverviewMode(true);
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
-        commodityWeb.setVerticalScrollBarEnabled(false);
-        commodityWeb.setHorizontalScrollBarEnabled(false);
+//        commodityWeb.setVerticalScrollBarEnabled(false);
+//        commodityWeb.setHorizontalScrollBarEnabled(false);
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+        // 添加js交互接口类，并起别名 imagelistner
+        commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");
+        commodityWeb.setWebViewClient(new MyWebViewClient());
     }
 
     protected void initTitleBar() {
@@ -143,6 +147,77 @@ public class CommodityInformation2Activity extends BaseActivity {
         openActivity(WinnerListActivity.class, bundle);
     }
 
+    // 注入js函数监听
+    private void addImageClickListner() {
+        // 这段js函数的功能就是，遍历所有的img几点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+        commodityWeb.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName(\"img\"); " +
+                "var temp='';" +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{" + "temp+=objs[i].src+';'" + "}" +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "    objs[i].onclick=function()  " +
+                "    {  "
+                + "        window.imagelistner.openImage(temp,this.src);  " +
+                "    }  " +
+                "}" +
+                "})()");
+    }
+
+    // js通信接口
+    class JavascriptInterface {
+
+        @android.webkit.JavascriptInterface
+        public void openImage(String imgList, String src) {
+            LogUtils.i(TAG, "imgList" + imgList);
+            int position = 0;
+            String img = src;
+            String[] temp = imgList.split(";");
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (int i = 0; i < temp.length; i++) {
+                if (img.equals(temp[i]))
+                    position = i;
+                arrayList.add(temp[i]);
+            }
+            imageBrowse(position, arrayList);
+        }
+    }
+
+    // 监听
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+            view.getSettings().setJavaScriptEnabled(true);
+
+            super.onPageFinished(view, url);
+            // html加载完成之后，添加监听图片的点击js函数
+            addImageClickListner();
+
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            view.getSettings().setJavaScriptEnabled(true);
+
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+
+            super.onReceivedError(view, errorCode, description, failingUrl);
+
+        }
+    }
+
     protected void imageBrowse(int position, ArrayList<String> urls2) {
         LogUtils.i(TAG, "position:" + position + " size:" + urls2.size());
         Intent intent = new Intent(context, ImagePagerActivity.class);
@@ -151,5 +226,6 @@ public class CommodityInformation2Activity extends BaseActivity {
         intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
         startActivity(intent);
     }
+
 
 }
