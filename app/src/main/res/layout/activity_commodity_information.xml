@@ -321,8 +321,11 @@
 
             <RelativeLayout
                 android:id="@+id/rlayout_clickToComplete"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/themeGray"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:visibility="gone">
 
                 <TextView

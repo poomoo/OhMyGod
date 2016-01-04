@@ -513,7 +513,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
                         if (locateProcess == 2) {
                             application.setCurrCity(city.getText().toString());
                             HistoryCityInfo cityInfo = new HistoryCityInfo();
-                            cityInfo.setCityName(currentCity);
+                            cityInfo.setCityName(locateCity);
                             MyUtil.saveHistoryCity(cityInfo);
                             finish();
                             getActivityOutToRight();

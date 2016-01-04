@@ -509,6 +509,7 @@ public class MyUtil {
      * @param cityInfo
      */
     public static void saveHistoryCity(HistoryCityInfo cityInfo) {
+        LogUtils.i(TAG, "cityname:" + cityInfo.getCityName());
         Cursor cursor = DataSupport.findBySQL("select * from historycityinfo where cityname = ?", cityInfo.getCityName());
         if (cursor.getCount() == 0)
             cityInfo.save();
