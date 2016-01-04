@@ -2,6 +2,7 @@ package com.poomoo.api;
 
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CityBO;
+import com.poomoo.model.CommentBO;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
@@ -356,7 +357,7 @@ public class ApiImpl implements Api {
         paramMap.put("dynamicId", dynamicId);
 
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, CommentBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

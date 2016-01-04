@@ -676,6 +676,8 @@ public class CommodityInformationActivity extends BaseActivity {
                 if (keyCode == KeyEvent.KEYCODE_DEL) {
                     return false;
                 }
+                if (keyCode == KeyEvent.KEYCODE_0 || keyCode == KeyEvent.KEYCODE_1 || keyCode == KeyEvent.KEYCODE_2 || keyCode == KeyEvent.KEYCODE_3 || keyCode == KeyEvent.KEYCODE_4 || keyCode == KeyEvent.KEYCODE_5 || keyCode == KeyEvent.KEYCODE_6 || keyCode == KeyEvent.KEYCODE_7 || keyCode == KeyEvent.KEYCODE_8 || keyCode == KeyEvent.KEYCODE_9)
+                    return false;
                 return true;
             }
         });
@@ -773,7 +775,7 @@ public class CommodityInformationActivity extends BaseActivity {
         @android.webkit.JavascriptInterface
         public void openImage(String imgList, String src) {
             LogUtils.i(TAG, "imgList" + imgList);
-            int position=0;
+            int position = 0;
             String img = src;
             String[] temp = imgList.split(";");
             ArrayList<String> arrayList = new ArrayList<>();

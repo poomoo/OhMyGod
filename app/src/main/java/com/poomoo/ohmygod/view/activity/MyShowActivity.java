@@ -26,6 +26,7 @@ import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.listeners.ActivityListener;
 import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
@@ -58,7 +59,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:38.
  */
-public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener {
+public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener,ActivityListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -153,7 +154,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         });
 
-        adapter = new ShowAdapter(this, this, this, this);
+        adapter = new ShowAdapter(this, this, this, this,this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -555,4 +556,12 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         }
     };
+
+    @Override
+    public void onClick(String activeName, int activeId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(getString(R.string.intent_activeId), activeId);
+        bundle.putString(getString(R.string.intent_activityName), activeName);
+        openActivity(CommodityInformation2Activity.class, bundle);
+    }
 }

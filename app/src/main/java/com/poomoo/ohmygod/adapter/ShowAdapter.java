@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,15 +22,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.ActivityListener;
 import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
-import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollGridView;
-
-import java.util.ArrayList;
 
 /**
  * 晒适配器
@@ -48,12 +45,14 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
     private ReplyListener listener;
     private ShareListener shareListener;
     private LongClickListener longClickListener;
+    private ActivityListener activityListener;
 
-    public ShowAdapter(Context context, ReplyListener listener, ShareListener shareListener, LongClickListener longClickListener) {
+    public ShowAdapter(Context context, ReplyListener listener, ShareListener shareListener, LongClickListener longClickListener, ActivityListener activityListener) {
         super(context);
         this.listener = listener;
         this.shareListener = shareListener;
         this.longClickListener = longClickListener;
+        this.activityListener = activityListener;
         defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.ic_avatar) //
                 .showImageOnFail(R.drawable.ic_avatar) //
@@ -108,14 +107,12 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.dateTimeTxt.setText(showBO.getDynamicDt());
         viewHolder.contentTxt.setText(showBO.getContent());
         viewHolder.titleTxt.setText(showBO.getTitle());
+        LogUtils.i(TAG, "activeId:" + showBO.getActiveId());
         viewHolder.activeInfoLlayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(context.getString(R.string.intent_activeId), Integer.parseInt(showBO.getActiveId()));
-                bundle.putString(context.getString(R.string.intent_activityName), showBO.getTitle());
-                Intent intent = new Intent(context, CommodityInformation2Activity.class);
-                context.startActivity(intent);
+                LogUtils.i(TAG, "onClick activeId:" + Integer.parseInt(showBO.getActiveId()));
+                activityListener.onClick(showBO.getTitle(), Integer.parseInt(showBO.getActiveId()));
             }
         });
 

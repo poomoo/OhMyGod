@@ -145,8 +145,8 @@ public class SlideShowView extends FrameLayout {
             ImageView view = new ImageView(context);
             view.setTag(imageUrls[i]);
             view.setImageResource(R.mipmap.ic_launcher);
-            view.setScaleType(ScaleType.FIT_XY);
-//            view.setAdjustViewBounds(true);
+            view.setAdjustViewBounds(true);
+            view.setScaleType(ScaleType.CENTER_CROP);
             imageViewsList.add(view);
 
             ImageView dotView = new ImageView(context);

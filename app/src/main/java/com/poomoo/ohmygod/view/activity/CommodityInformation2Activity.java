@@ -67,6 +67,8 @@ public class CommodityInformation2Activity extends BaseActivity {
 
     private void getData() {
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
+        activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));
+        LogUtils.i(TAG, "activeId:" + activeId + "activityName:" + activityName);
 
         showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getCommodityInformation(application.getUserId(), activeId + "", new ActionCallbackListener() {

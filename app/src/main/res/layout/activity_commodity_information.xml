@@ -29,14 +29,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <com.poomoo.ohmygod.view.custom.SlideShowView
                             android:id="@+id/flipper_commodity"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_200" />
+                            android:layout_height="@dimen/dp_ad" />
 
                         <TextView
                             android:id="@+id/txt_commodityStatement"
@@ -47,8 +48,9 @@
                             android:padding="@dimen/dp_8"
                             android:text=""
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18" />
-                    </FrameLayout>
+                            android:textSize="@dimen/sp_18"
+                            android:visibility="gone"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

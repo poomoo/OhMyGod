@@ -26,6 +26,7 @@ import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.ActivityListener;
 import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
@@ -33,6 +34,7 @@ import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
@@ -66,7 +68,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/20 09:50.
  */
-public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener {
+public class ShowFragment extends BaseFragment implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener, ActivityListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -261,7 +263,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             }
         });
 
-        adapter = new ShowAdapter(getActivity(), this, this, this);
+        adapter = new ShowAdapter(getActivity(), this, this, this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -286,86 +288,86 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         isKeyBoardShow = false;
     }
 
-//    private void testData() {
-//        int len = MyConfig.testUrls.length;
-//        for (int i = 0; i < len; i++)
-//            picList.add(MyConfig.testUrls[i]);
-//
-//        showBO = new ShowBO();
-//        showBO.setPicList(picList);
-//        showBO.setNickName("十年九梦你");
-//        showBO.setDynamicDt((new Date()).toString());
-//        showBO.setContent("货已经收到了，东西不错");
-//        showBO.setTitle("(第123期)电脑疯抢玩命中...");
-//
-//        commentBO = new CommentBO();
-//        commentBO.setNickName("糊涂图");
-//        commentBO.setContent("你运气真好");
-//
-//        replyBO = new ReplyBO();
-//        replyBO.setFromNickName("十年九梦你");
-//        replyBO.setToNickName("糊涂图");
-//        replyBO.setContent("是的");
-//        replyBOList.add(replyBO);
-//
-//        commentBO.setReplies(replyBOList);
-//        commentBOList.add(commentBO);
-//        showBO.setComments(commentBOList);
-//
-//        showBOList.add(showBO);
-//
-//
-//        showBO = new ShowBO();
-//        showBO.setPicList(picList);
-//        showBO.setNickName("跑马安卓小飞");
-//        showBO.setDynamicDt((new Date()).toString());
-//        showBO.setContent("什么玩意儿");
-//        showBO.setTitle("(第124期)疯狂搬砖中...");
-//
-//        commentBO = new CommentBO();
-//        commentBO.setNickName("马云");
-//        commentBO.setContent("小伙子好好干");
-//
-//        replyBO = new ReplyBO();
-//        replyBO.setFromNickName("跑马安卓小飞");
-//        replyBO.setToNickName("马云");
-//        replyBO.setContent("好的");
-//        replyBOList = new ArrayList<>();
-//        replyBOList.add(replyBO);
-//
-//        commentBO.setReplies(replyBOList);
-//        commentBOList = new ArrayList<>();
-//        commentBOList.add(commentBO);
-//        showBO.setComments(commentBOList);
-//
-//        showBOList.add(showBO);
-//
-//        showBO = new ShowBO();
-//        showBO.setPicList(picList);
-//        showBO.setNickName("劉強東");
-//        showBO.setDynamicDt((new Date()).toString());
-//        showBO.setContent("大愛奶茶妹");
-//        showBO.setTitle("(第125期)愛愛愛...");
-//
-//        commentBO = new CommentBO();
-//        commentBO.setNickName("劉強東");
-//        commentBO.setContent("我媳婦是奶茶妹 ");
-//
-//        replyBO = new ReplyBO();
-//        replyBO.setFromNickName("奶茶妹");
-//        replyBO.setToNickName("劉強東");
-//        replyBO.setContent("老公我愛你");
-//        replyBOList = new ArrayList<>();
-//        replyBOList.add(replyBO);
-//
-//        commentBO.setReplies(replyBOList);
-//        commentBOList = new ArrayList<>();
-//        commentBOList.add(commentBO);
-//        showBO.setComments(commentBOList);
-//
-//        showBOList.add(showBO);
-//        adapter.setItems(showBOList);
-//    }
+/*    private void testData() {
+        int len = MyConfig.testUrls.length;
+        for (int i = 0; i < len; i++)
+            picList.add(MyConfig.testUrls[i]);
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("十年九梦你");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("货已经收到了，东西不错");
+        showBO.setTitle("(第123期)电脑疯抢玩命中...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("糊涂图");
+        commentBO.setContent("你运气真好");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("十年九梦你");
+        replyBO.setToNickName("糊涂图");
+        replyBO.setContent("是的");
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("跑马安卓小飞");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("什么玩意儿");
+        showBO.setTitle("(第124期)疯狂搬砖中...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("马云");
+        commentBO.setContent("小伙子好好干");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("跑马安卓小飞");
+        replyBO.setToNickName("马云");
+        replyBO.setContent("好的");
+        replyBOList = new ArrayList<>();
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList = new ArrayList<>();
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+
+        showBO = new ShowBO();
+        showBO.setPicList(picList);
+        showBO.setNickName("劉強東");
+        showBO.setDynamicDt((new Date()).toString());
+        showBO.setContent("大愛奶茶妹");
+        showBO.setTitle("(第125期)愛愛愛...");
+
+        commentBO = new CommentBO();
+        commentBO.setNickName("劉強東");
+        commentBO.setContent("我媳婦是奶茶妹 ");
+
+        replyBO = new ReplyBO();
+        replyBO.setFromNickName("奶茶妹");
+        replyBO.setToNickName("劉強東");
+        replyBO.setContent("老公我愛你");
+        replyBOList = new ArrayList<>();
+        replyBOList.add(replyBO);
+
+        commentBO.setReplies(replyBOList);
+        commentBOList = new ArrayList<>();
+        commentBOList.add(commentBO);
+        showBO.setComments(commentBOList);
+
+        showBOList.add(showBO);
+        adapter.setItems(showBOList);
+    }*/
 
     private void getData() {
         //1表示晒单分享列表，2表示我的晒单列表
@@ -415,10 +417,11 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                commentBO = new CommentBO();
+                commentBO = (CommentBO) data.getObj();
                 commentBO.setNickName(application.getNickName());
                 commentBO.setContent(replyContent);
                 commentBO.setDynamicId(showBO.getDynamicId());
+                commentBO.setUserId(application.getUserId());
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
                 showBOList.get(itemPosition).getComments().add(commentBO);
@@ -444,7 +447,6 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             isReplyComment = true;
             toUserId = showBO.getComments().get(0).getUserId();
         }
-        LogUtils.i(TAG, "replyList:" + showBO.getComments().get(0).getReplies());
         //回复回复列表里面的评论
         if (showBO.getComments().get(0).getReplies() != null && showBO.getComments().get(0).getReplies().size() > 0) {
             isReplyComment = false;
@@ -706,4 +708,11 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         }
     }
 
+    @Override
+    public void onClick(String activeName, int activeId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(getString(R.string.intent_activeId), activeId);
+        bundle.putString(getString(R.string.intent_activityName), activeName);
+        openActivity(CommodityInformation2Activity.class, bundle);
+    }
 }
