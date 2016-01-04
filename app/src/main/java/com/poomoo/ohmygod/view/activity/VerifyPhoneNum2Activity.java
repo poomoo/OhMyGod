@@ -128,7 +128,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
                     closeProgressDialog();
                     Bundle bundle = new Bundle();
                     bundle.putString(getString(R.string.intent_parent), PARENT);
-                    openActivity(ResetPassWordActivity.class);
+                    openActivity(ResetPassWordActivity.class,bundle);
                     finish();
                     getActivityOutToRight();
                 } else {

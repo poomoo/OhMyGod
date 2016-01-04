@@ -39,10 +39,12 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_winning_record, null);
 
-            viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.img_winningRecordBg);
-            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.img_status);
-            viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winning_dateTime);
-            viewHolder.endDateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winning_endTime);
+            viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_imageView_pic);
+            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_imageView_pic);
+            viewHolder.titleTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_title);
+            viewHolder.dateTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_win_date);
+            viewHolder.addressTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_address);
+            viewHolder.endDateTimeTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_end_date);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
@@ -55,7 +57,9 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
         else
             viewHolder.statusImg.setImageResource(R.drawable.ic_no);
 
-        viewHolder.dateTimeTxt.setText(winningRecordsBO.getPlayDt());
+        viewHolder.titleTxt.setText(winningRecordsBO.getTitle());
+        viewHolder.dateTxt.setText(winningRecordsBO.getPlayDt());
+        viewHolder.addressTxt.setText(winningRecordsBO.getGetAddress());
         viewHolder.endDateTimeTxt.setText(winningRecordsBO.getGetEndDt());
         ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg);
 
@@ -75,7 +79,9 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
     class ViewHolder {
         private ImageView bgImg;//背景
         private ImageView statusImg;//奖品状态
-        private TextView dateTimeTxt;//获奖时间
+        private TextView titleTxt;//获奖时间
+        private TextView dateTxt;//获奖时间
+        private TextView addressTxt;//获奖时间
         private TextView endDateTimeTxt;//截止时间
     }
 }

@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -42,8 +43,10 @@ import com.poomoo.ohmygod.view.activity.MyShowActivity;
 import com.poomoo.ohmygod.view.activity.MyWithdrawDepositActivity;
 import com.poomoo.ohmygod.view.activity.SettingActivity;
 import com.poomoo.ohmygod.view.activity.SnatchRecordActivity;
+import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 import com.poomoo.ohmygod.view.activity.WithdrawDepositActivity;
+import com.poomoo.ohmygod.view.activity.WithdrawDepositDetailsActivity;
 import com.poomoo.ohmygod.view.popupwindow.SelectPicsPopupWindow;
 
 import org.json.JSONException;
@@ -60,18 +63,21 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/20 15:25.
  */
-public class MyFragment extends BaseFragment implements OnItemClickListener {
-    //    private TextView dialTxt;
+public class MyFragment extends BaseFragment implements View.OnClickListener {
     private ImageView dialImg;
     private ImageView settingImg;
-    private GridView gridView;
     private ImageView avatarImg;
     private TextView nickNameTxt;
     private TextView balanceTxt;
+    private TextView infoCountTxt;
     private ImageView genderImg;
-    private PersonalCenterAdapter personalCenterAdapter;
-    private static final Class[] menu = {SnatchRecordActivity.class, WinningRecordActivity.class, MyWithdrawDepositActivity.class
-            , WithdrawDepositActivity.class, InStationMessagesActivity.class, MyShowActivity.class};
+    private RelativeLayout snatchRlayout;
+    private RelativeLayout winRlayout;
+    private RelativeLayout withDrawRecordRlayout;
+    private RelativeLayout withDrawRlayout;
+    private RelativeLayout innerRlayout;
+    private RelativeLayout showRlayout;
+    private RelativeLayout contactRlayout;
 
     private String headPic;
     private SelectPicsPopupWindow popupWindow;
@@ -111,11 +117,29 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         genderImg = (ImageView) getActivity().findViewById(R.id.img_personal_gender);
         nickNameTxt = (TextView) getActivity().findViewById(R.id.txt_personal_nickName);
         balanceTxt = (TextView) getActivity().findViewById(R.id.txt_personal_walletBalance);
+        infoCountTxt = (TextView) getActivity().findViewById(R.id.txt_personal_centerinform_count);
 
-        gridView = (GridView) getActivity().findViewById(R.id.grid_personal_center);
-        personalCenterAdapter = new PersonalCenterAdapter(getActivity(), gridView);
-        gridView.setAdapter(personalCenterAdapter);
-        gridView.setOnItemClickListener(this);
+        snatchRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_snatch);
+        winRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_winning);
+        withDrawRecordRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_withDrawDepositRecord);
+        withDrawRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_withDrawDeposit);
+        innerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_innerInfo);
+        showRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_show);
+        contactRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_contactUs);
+
+        int count = MyUtil.getUnReadInfoCount();
+        if (count > 0) {
+            infoCountTxt.setVisibility(View.VISIBLE);
+            infoCountTxt.setText(count + "");
+        }
+
+        snatchRlayout.setOnClickListener(this);
+        winRlayout.setOnClickListener(this);
+        withDrawRecordRlayout.setOnClickListener(this);
+        withDrawRlayout.setOnClickListener(this);
+        innerRlayout.setOnClickListener(this);
+        showRlayout.setOnClickListener(this);
+        contactRlayout.setOnClickListener(this);
 
         dialImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,16 +302,6 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 4) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
-            bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
-            openActivity(menu[position], bundle);
-        } else
-            openActivity(menu[position]);
-    }
 
     @Override
     public void onResume() {
@@ -320,6 +334,38 @@ public class MyFragment extends BaseFragment implements OnItemClickListener {
         else
             genderImg.setImageResource(R.drawable.ic_gender_woman);
         balanceTxt.setText(TextUtils.isEmpty(application.getCurrentFee()) ? "0" : application.getCurrentFee());
-        personalCenterAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rlayout_snatch:
+                openActivity(SnatchRecordActivity.class);
+                break;
+            case R.id.rlayout_winning:
+                openActivity(WinningRecordActivity.class);
+                break;
+            case R.id.rlayout_withDrawDepositRecord:
+                openActivity(MyWithdrawDepositActivity.class);
+                break;
+            case R.id.rlayout_withDrawDeposit:
+                openActivity(WithdrawDepositActivity.class);
+                break;
+            case R.id.rlayout_innerInfo:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
+                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
+                openActivity(InStationMessagesActivity.class, bundle);
+                break;
+            case R.id.rlayout_show:
+                openActivity(MyShowActivity.class);
+                break;
+            case R.id.rlayout_contactUs:
+                bundle = new Bundle();
+                bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
+                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
+//                openActivity(WebViewActivity.class, bundle);
+                break;
+        }
     }
 }

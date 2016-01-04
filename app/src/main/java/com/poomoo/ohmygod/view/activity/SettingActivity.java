@@ -39,7 +39,7 @@ public class SettingActivity extends BaseActivity {
     // 首先在您的Activity中添加如下成员变量
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
     private String content = "天呐APP";
-    private String website = "http://zgqg.91jiaoyou.cn/zgqg";
+    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/companyDesc.htm";
     private String title = "天呐";
 
     @Override

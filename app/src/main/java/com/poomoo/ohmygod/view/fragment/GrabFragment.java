@@ -203,12 +203,32 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             /* 获取闹钟管理的实例 */
                             am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
                             /* 设置闹钟 */
-//                            am.cancel(pendingIntent);
                             am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
                         }
                     }
+
                     if (existCountDown)
                         MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
+                    else {
+                        time = calendar.getTimeInMillis() + MyConfig.time[position] * 60 * 1000;
+                        calendar.setTimeInMillis(time);
+                        LogUtils.i(TAG, "calendar:" + calendar.getTime());
+                            /* 建立Intent和PendingIntent，来调用目标组件 */
+                        Intent intent = new Intent(getActivity(), CallAlarm.class);
+                        intent.setAction("only");
+                        intent.setType("only");
+                        intent.setData(Uri.EMPTY);
+                        intent.addCategory("only");
+                        intent.setClass(getActivity(), CallAlarm.class);
+                        intent.putExtra("_id", 0);
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                        AlarmManager am;
+                            /* 获取闹钟管理的实例 */
+                        am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+                            /* 设置闹钟 */
+                        am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                        MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
+                    }
                     tipFlag = false;
                     setTipText(tipFlag);
                 } else
@@ -332,8 +352,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 int len = grabBOList.size();
                 for (int i = 0; i < len; i++)
                     LogUtils.i("lmf", grabBOList.get(i).getGoodsName() + "的倒计时时间:" + grabBOList.get(i).getStartCountdown());
-
-                adapter.setItems(grabBOList);
+                if (len > 0)
+                    adapter.setItems(grabBOList);
             }
 
             @Override
@@ -649,6 +669,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         for (int i = 0; i < len; i++) {
             long leftTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
             if (leftTime > 0) {
+                existCountDown = true;
                 /* 建立Intent和PendingIntent，来调用目标组件 */
                 Intent intent = new Intent(getActivity(), CallAlarm.class);
                 intent.setAction(i + "");
@@ -661,9 +682,25 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 AlarmManager am;
                 /* 获取闹钟管理的实例 */
                 am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                /* 设置闹钟 */
+                /* 取消闹钟 */
                 am.cancel(pendingIntent);
             }
+        }
+        if (!existCountDown) {
+            /* 建立Intent和PendingIntent，来调用目标组件 */
+            Intent intent = new Intent(getActivity(), CallAlarm.class);
+            intent.setAction("only");
+            intent.setType("only");
+            intent.setData(Uri.EMPTY);
+            intent.addCategory("only");
+            intent.setClass(getActivity(), CallAlarm.class);
+            intent.putExtra("_id", 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+            AlarmManager am;
+            /* 获取闹钟管理的实例 */
+            am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+            /* 取消闹钟 */
+            am.cancel(pendingIntent);
         }
         MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功");
         tipFlag = true;

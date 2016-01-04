@@ -84,7 +84,7 @@ public class TestActivity extends BaseActivity {
     private int percent = 0;
     private WebView webView;
     //    private static final String content = "<p>\n" + "<img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg\" >\n" + "</p>\n";
-    private static final String content = "<p style=\\\"text-align: center; \\\">&nbsp; &nbsp; &nbsp; 风机房：456方法发 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 方法：发的说法 地方 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;放假： 1268方法 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 简介：15发的说法 &nbsp; &nbsp; 发的说法：455 &nbsp;发发斯蒂芬：59发的 &nbsp; &nbsp;</p>";
+    private static final String content = "<meta name=\"viewport\" content=\"width=1200, initial-scale=1.0\"><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893944698.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893944698.jpg\" /><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893949589.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893949589.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893952256.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893952256.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893954099.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893954099.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893955909.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893955909.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893958402.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893958402.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893962925.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893962925.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893969978.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893969978.jpg\"/><img src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893973474.jpg\" _src=\"http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451893973474.jpg\"/>";
 
     private MyCustomView mView;
     private Movie mMovie;
@@ -96,16 +96,16 @@ public class TestActivity extends BaseActivity {
         setContentView(R.layout.activity_test);
 
 //        mView = new MyCustomView(this);
-//        webView = (WebView) findViewById(R.id.web_test);
+        webView = (WebView) findViewById(R.id.web_test);
         //html自适应
-//        WebSettings webSettings = webView.getSettings();
-//        webSettings.setUseWideViewPort(true);
-//        webSettings.setLoadWithOverviewMode(true);
-//        webSettings.setDefaultTextEncodingName("UTF-8");
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setDefaultTextEncodingName("UTF-8");
 //        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
-//        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
+        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
-        imageView = (ImageView) findViewById(R.id.img_test);
+//        imageView = (ImageView) findViewById(R.id.img_test);
 //        percentTxt = (TextView) findViewById(R.id.txt_percent);
 //        LogUtils.i(TAG, "前:" + "width:" + imageView.getWidth() + "--height:" + imageView.getHeight());
 //

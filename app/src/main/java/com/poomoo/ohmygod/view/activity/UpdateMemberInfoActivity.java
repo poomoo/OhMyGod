@@ -42,7 +42,7 @@ public class UpdateMemberInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_member_information);
 
-        initView();
+//        initView();
     }
 
     @Override
@@ -203,7 +203,7 @@ public class UpdateMemberInfoActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
+//        initData();
     }
 
     private void initData() {

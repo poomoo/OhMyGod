@@ -28,8 +28,4 @@
         <item name="android:layout">@layout/dialog_alarm_alert_title</item>
     </style>
 
-    <declare-styleable name="GifView">
-        <attr name="gif" format="reference" />
-        <attr name="paused" format="boolean" />
-    </declare-styleable>
 </resources>

@@ -600,8 +600,8 @@ public class CommodityInformationActivity extends BaseActivity {
 //                            Window window = dialog.getWindow();
 //                            window.setGravity(Gravity.BOTTOM);
 //                            dialog.setCanceledOnTouchOutside(false);
-                            if (MyUtil.isNeedCompleteInfo(application))
-                                showToast(true);
+
+                            showToast(true);
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             showToast(false);
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
@@ -695,33 +695,49 @@ public class CommodityInformationActivity extends BaseActivity {
             rlayout_clickToComplete.setVisibility(View.VISIBLE);
             TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
             ImageView imageView = (ImageView) findViewById(R.id.img_close);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    WinningRecordsBO winningRecordsBO = new WinningRecordsBO();
-                    winningRecordsBO.setTitle(commodityBO.getGoodsName());
-                    winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
-                    winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
-                    winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
-                    if (application.getIsAdvancedUser().equals("0"))
-                        openActivity(CompleteUserInformationActivity.class, bundle);
-                    else
-                        openActivity(CompleteMemberInformationActivity.class, bundle);
-                    finish();
-                }
-            });
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rlayout_clickToComplete.setVisibility(View.GONE);
-                }
-            });
+            if (MyUtil.isNeedCompleteInfo(application)) {
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        WinningRecordsBO winningRecordsBO = new WinningRecordsBO();
+                        winningRecordsBO.setTitle(commodityBO.getGoodsName());
+                        winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
+                        winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
+                        winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
+                        if (application.getIsAdvancedUser().equals("0"))
+                            openActivity(CompleteUserInformationActivity.class, bundle);
+                        else
+                            openActivity(CompleteMemberInformationActivity.class, bundle);
+                        finish();
+                    }
+                });
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rlayout_clickToComplete.setVisibility(View.GONE);
+                    }
+                });
+            } else {
+                textView.setText(getString(R.string.label_clickToReturn1));
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rlayout_clickToComplete.setVisibility(View.GONE);
+                    }
+                });
+            }
         } else {//失败
             rlayout_clickToComplete.setVisibility(View.VISIBLE);
             TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
-            textView.setText(getString(R.string.label_clickToReturn));
+            textView.setText(getString(R.string.label_clickToReturn2));
             ImageView imageView = (ImageView) findViewById(R.id.img_close);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -246,7 +246,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:hint="@string/hint_address1"
+        android:hint="@string/hint_addressDetail"
         android:paddingBottom="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_20"
         android:paddingRight="@dimen/dp_10"

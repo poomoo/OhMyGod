@@ -59,7 +59,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:38.
  */
-public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener,ActivityListener {
+public class MyShowActivity extends BaseActivity implements OnRefreshListener, OnLoadListener, ReplyListener, ShareListener, LongClickListener, ActivityListener {
     private RefreshLayout refreshLayout;
     private EditText replyEdt;
     private Button replyBtn;
@@ -94,6 +94,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     private String content = "天呐" + "\n" + "http://www.baidu.com";
     private String website = "http://zgqg.91jiaoyou.cn/zgqg";
     private String title = "天呐";
+    private String dynamicId = "";
     private String picUrl;
     private CopyPopupWindow copyPopupWindow;
     private String copyContent;
@@ -154,7 +155,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         });
 
-        adapter = new ShowAdapter(this, this, this, this,this);
+        adapter = new ShowAdapter(this, this, this, this, this);
         list.setAdapter(adapter);
 
         replyRlayout.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +178,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             }
         });
         headerViewHolder.rightImg.setVisibility(View.VISIBLE);
-        headerViewHolder.rightImg.setImageResource(R.drawable.ic_winning_small);
+        headerViewHolder.rightImg.setImageResource(R.drawable.ic_winning);
         headerViewHolder.rightImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -387,10 +388,12 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     }
 
     @Override
-    public void onResult(String title, String content, String picUrl) {
+    public void onResult(String title, String content, String picUrl, String dynamicId) {
         this.title = title;
         this.content = content;
         this.picUrl = picUrl;
+        this.dynamicId = dynamicId;
+        website += dynamicId;
         // 配置需要分享的相关平台
         configPlatforms();
         // 设置分享内容

@@ -70,7 +70,8 @@
     <string name="label_signInSuccess">报名成功</string>
     <string name="label_timeBeforeGrab">请选择开抢前提醒时间</string>
     <string name="label_clickToCompleteInfo">点击完善你的资料后兑奖</string>
-    <string name="label_clickToReturn">点击返回</string>
+    <string name="label_clickToReturn1">点击返回</string>
+    <string name="label_clickToReturn2">谢谢参与,点击返回</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -91,6 +92,8 @@
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
     <string name="label_gender_woman">女</string>
+    <string name="label_yes">是</string>
+    <string name="label_no">否</string>
     <string name="label_copy">复制</string>
     <string name="label_save">保存到本地</string>
     <string name="label_code">请输入开抢验证码</string>
@@ -100,20 +103,34 @@
     <string name="label_ensure">(请保证该账号能正常使用,因该账号原因导致款项不能准时到达,天呐平台不予承担任何责任)</string>
     <string name="label_zhu">　　　　注:</string>
     <string name="label_mark">"　　注:完善信息后请于3日内前往天呐运营中心办理相关手续(请获奖本人带上身份证明),逾期天呐平台将视为用户主动放弃获奖资格,平台不予承担任何责任"</string>
-    <string name="label_name">"　姓名"</string>
-    <string name="label_sex">"　性别"</string>
-    <string name="label_memberAge">"　年龄"</string>
-    <string name="label_memberPhone">"　电话"</string>
-    <string name="label_memberAddress">"　地址"</string>
-    <string name="label_memberIdNum">"身份证"</string>
-    <string name="label_detail1">(请勿盲目参与抢单)</string>
-    <string name="label_detail2">(抢单成功须先进行商品购买行为,若获奖者本人无力购买可向平台申请转让他人代为行使该行为)</string>
-    <string name="label_detail3">(商品购买行为发生后方可获取返现资格)</string>
-    <string name="label_detail4">(按照获得返现总额分为66期进行计返,该款项由银行监管执行)</string>
-    <string name="label_detail5">(每月　日自动转入用户帐号钱包,钱包内自主提现)</string>
-    <string name="label_detail6" formatted="false">(提现需支付20%的所得税、10%的手续费,转账时自动扣除)</string>
-    <string name="label_tipTitle">天呐君温馨提示</string>
-    <string name="label_tipContent">"　　由于大宗商品抢单活动中,涉及大额资金优惠,请准确填写完善下列信息,成为本平台注册会员后方可获得大宗商品抢单活动的参与资格。"</string>
+    <string name="label_name">"姓　名　"</string>
+    <string name="label_sex">"性　别　"</string>
+    <string name="label_memberAge">"年　龄　"</string>
+    <string name="label_memberPhone">"电　话　"</string>
+    <string name="label_memberAddress">"地　址　"</string>
+    <string name="label_memberIdNum">"身份证　"</string>
+    <string name="label_education">"学　历　"</string>
+    <string name="label_career">"职　业　"</string>
+    <string name="label_income">"月收入　"</string>
+    <string name="label_1">近期是否有购置房屋意向</string>
+    <string name="label_2">如购置房屋选择付款方式</string>
+    <string name="label_3">如购置房屋选择意愿</string>
+    <string name="label_4">如购置房屋选择面积</string>
+    <string name="label_5">如购置房屋选择价位</string>
+    <string name="label_6">如购置房屋选择区域</string>
+    <string name="label_7">如购置房屋您最为看重的问题</string>
+    <string name="label_detail1">请勿盲目参与抢单，抢单成功需进行线下购买行为</string>
+    <string name="label_detail2">用户抢单成功即获得购买该商品后，享受现金派送的资格</string>
+    <string name="label_detail3">用户抢单成功须在3日内联系平台办理手续，逾期将视为主动放弃</string>
+    <string name="label_detail4">用户抢单成功后，若本人无力购买，可向平台申请转让获奖资格，如取得平台认可后不得再次申请</string>
+    <string name="label_detail5">商品购买行为发生后，用户(受让用户)方可获取现金派送资格</string>
+    <string name="label_detail6">资格确认后，平台将根据用户获奖总额分为66期进行派送，该款项由银行监管执行</string>
+    <string name="label_detail7">现金派送将在每月10日自动划入用户平台帐号钱包，用户钱包内自主提现</string>
+    <string name="label_detail8">用户提现需支付10%的手续费，转账时自动扣除</string>
+    <string name="label_detail9">最终解释权归天呐平台所有</string>
+    <string name="label_detail10">用户提现需支付10%的手续费，转账时自动扣除</string>
+    <string name="label_tipTitle">天呐君温馨提示:</string>
+    <string name="label_tipContent">由于大宗商品抢单活动中，涉及大额现金优惠，请如实填写下列个人信息，全部完善后才能参与平台大宗商品抢单活动。</string>
     <!--个人资料-->
 
     <!--个人中心-->
@@ -123,6 +140,7 @@
     <string name="label_withdraw_deposit_now">立即提现</string>
     <string name="label_inner_information">站内信息</string>
     <string name="label_my_show">我的晒单</string>
+    <string name="label_contactUs">联系我们</string>
 
     <!--签到返现-->
     <string name="label_totalAmount">总金额池</string>
@@ -136,7 +154,7 @@
     <string name="label_rebateRule">返现声明</string>
     <string name="label_rebateRecords">返现记录</string>
     <string name="label_withdraw_deposit">我要提现</string>
-    <string name="label_rebate1">平台返现专用账户(元)</string>
+    <string name="label_rebate1">平台专用账户(元)</string>
     <string name="label_rebate2">本账户由中国工商银行全程监督</string>
     <string name="label_rebate3">天呐君温馨提示:积德行善攒人品</string>
     <!--签到返现-->
@@ -257,8 +275,9 @@
     <!--intent-->
 
     <!--hint-->
-    <string name="hint_realName">请填写真实姓名</string>
+    <string name="hint_realName">请填写你的真实姓名</string>
     <string name="hint_idCardNum">请填写本人有效证件号</string>
+    <string name="hint_idCardNum1">请填写你的正确身份证号码</string>
     <string name="hint_celPhone">请填写本人有效电话号码</string>
     <string name="hint_bankCardNum">请填写本人储蓄卡号</string>
     <string name="hint_address">请填写本人收货地址</string>
@@ -276,12 +295,12 @@
     <string name="hint_input_your_phoneNum">"请输入您的手机号"</string>
     <string name="hint_input_your_passWord">"密码"</string>
     <string name="hint_select_age">"请选择您的年龄"</string>
-    <string name="hint_input_age">"请输入您的年龄"</string>
+    <string name="hint_input_age">"请填写你的真实年龄"</string>
     <string name="hint_select_gender">"请选择您的性别"</string>
     <string name="hint_search">"城市名、拼音首字母..."</string>
     <string name="hint_feedBack">"请留下您的宝贵意见和建议，我们将努力改进"</string>
     <string name="hint_connection">联系方式(邮箱/手机)</string>
-    <string name="hint_address1">详细地址</string>
+    <string name="hint_addressDetail">请填写你的详细地址</string>
     <string name="hint_bankAccount">银行账号</string>
     <string name="hint_openBank">开户银行(银行+支行)</string>
     <string name="hint_bankAccountName">账户名</string>

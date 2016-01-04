@@ -12,16 +12,16 @@ import java.util.List;
  * 日期: 2015/11/20 10:43.
  */
 public class ShowBO {
-    private String activeId;//--活动编号
-    private List<CommentBO> comments;//--评论集合
-    private String content;//--动态内容
-    private String dynamicDt;//--动态时间
-    private String dynamicId;//--动态编号
-    private String headPic;//--分享人头部图片
-    private String nickName;//--分享人昵称
-    private ArrayList<String> picList;//--分享的图片集合
-    private String title;//--活动标题
-    private String userId;//--分享人编号
+    private String activeId = "";//--活动编号
+    private List<CommentBO> comments = new ArrayList<>();//--评论集合
+    private String content = "";//--动态内容
+    private String dynamicDt = "";//--动态时间
+    private String dynamicId = "";//--动态编号
+    private String headPic = "";//--分享人头部图片
+    private String nickName = "";//--分享人昵称
+    private ArrayList<String> picList = new ArrayList<>();//--分享的图片集合
+    private String title = "";//--活动标题
+    private String userId = "";//--分享人编号
     private String showPic = "";//--小图
 
     public String getActiveId() {

@@ -7,6 +7,6 @@ package com.poomoo.ohmygod.listeners;
  * 日期: 2015/11/11 11:11.
  */
 public interface ShareListener {
-    void onResult(String title, String content, String picUrl);
+    void onResult(String title, String content, String picUrl, String dynamicId);
 
 }

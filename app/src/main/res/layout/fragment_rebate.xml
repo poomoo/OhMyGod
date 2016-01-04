@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/divider"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -47,28 +47,26 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/rebate"
-                        android:orientation="vertical"
-                        android:padding="@dimen/dp_10">
+                        android:background="@color/themeRed"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
-
+                            android:gravity="center"
                             android:paddingBottom="@dimen/dp_10"
                             android:paddingLeft="@dimen/dp_8"
                             android:paddingTop="@dimen/dp_10"
                             android:text="@string/label_rebate1"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/txt_rebateTotalBalance"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:paddingLeft="@dimen/dp_8"
                             android:text="@string/label_rebate3"
                             android:textColor="@color/white"
@@ -77,7 +75,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
+                            android:gravity="center"
                             android:paddingBottom="@dimen/dp_10"
                             android:paddingLeft="@dimen/dp_8"
                             android:paddingTop="@dimen/dp_10"
@@ -86,11 +84,17 @@
                             android:textSize="@dimen/sp_16" />
                     </LinearLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/white" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
+                        android:background="@color/themeRed"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_10">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -105,7 +109,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_unRebateSum"
-                                android:textColor="@color/rebate"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
@@ -117,7 +121,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/rebate"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/sp_22"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -125,7 +129,9 @@
                         <TextView
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:background="@color/rebate" />
+                            android:background="@color/white"
+                            android:paddingBottom="6dp"
+                            android:paddingTop="6dp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -137,11 +143,10 @@
                             android:paddingLeft="@dimen/dp_18">
 
                             <TextView
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/label_rebateSum"
-                                android:textColor="@color/rebate"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
@@ -153,7 +158,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/rebate"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/sp_22"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -161,27 +166,25 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:background="@color/rebate" />
+                        android:layout_height="10dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="3"
-                        android:background="@color/white"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/white"
+
                             android:orientation="vertical">
 
                             <LinearLayout
                                 android:id="@+id/llayout_rebateRecords"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:padding="@dimen/dp_14">
@@ -191,24 +194,33 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="@dimen/dp_20"
                                     android:paddingRight="@dimen/dp_20"
-                                    android:src="@drawable/ic_rebate_records" />
+                                    android:src="@drawable/ic_rebate_record" />
 
                                 <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_rebateRecords"
+                                    android:textSize="14sp" />
+
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/label_rebateRecords"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:paddingLeft="@dimen/dp_20"
+                                    android:paddingRight="@dimen/dp_20"
+                                    android:src="@drawable/ic_arrow_right" />
                             </LinearLayout>
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
+                                android:layout_height="8dp"
                                 android:background="@color/divider" />
 
                             <LinearLayout
                                 android:id="@+id/llayout_rebateStatement"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:padding="@dimen/dp_14">
@@ -221,21 +233,29 @@
                                     android:src="@drawable/ic_rebate_statement" />
 
                                 <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_rebateRule"
+                                    android:textSize="14sp" />
+
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/label_rebateRule"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:paddingLeft="@dimen/dp_20"
+                                    android:paddingRight="@dimen/dp_20"
+                                    android:src="@drawable/ic_arrow_right" />
                             </LinearLayout>
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="@color/divider" />
+                                android:layout_height="8dp" />
 
                             <LinearLayout
                                 android:id="@+id/llayout_rebateWithdrawDeposit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:padding="@dimen/dp_14">
@@ -245,13 +265,21 @@
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="@dimen/dp_20"
                                     android:paddingRight="@dimen/dp_20"
-                                    android:src="@drawable/ic_rebate_withdraw_deposit" />
+                                    android:src="@drawable/ic_withdraw_deposit_now" />
 
                                 <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/label_withdraw_deposit"
+                                    android:textSize="14sp" />
+
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/label_withdraw_deposit"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:paddingLeft="@dimen/dp_20"
+                                    android:paddingRight="@dimen/dp_20"
+                                    android:src="@drawable/ic_arrow_right" />
                             </LinearLayout>
 
                             <TextView

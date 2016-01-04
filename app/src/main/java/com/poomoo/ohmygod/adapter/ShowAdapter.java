@@ -128,7 +128,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 
 
         viewHolder.replyImg.setOnClickListener(new imgClickListener(position, showBO));
-        viewHolder.shareImg.setOnClickListener(new shareClickListener(showBO.getTitle(), showBO.getContent(), showBO.getPicList().size() > 0 ? showBO.getPicList().get(0) : ""));
+        viewHolder.shareImg.setOnClickListener(new shareClickListener(showBO.getTitle(), showBO.getContent(), showBO.getPicList().size() > 0 ? showBO.getPicList().get(0) : "", showBO.getDynamicId()));
 
 
         // 给 ImageView 设置一个 tag
@@ -198,16 +198,18 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         private String title;
         private String content;
         private String picUrl;
+        private String dynamicId;
 
-        public shareClickListener(String title, String content, String picUrl) {
+        public shareClickListener(String title, String content, String picUrl, String dynamicId) {
             this.title = title;
             this.content = content;
             this.picUrl = picUrl;
+            this.dynamicId = dynamicId;
         }
 
         @Override
         public void onClick(View v) {
-            shareListener.onResult(title, content, picUrl);
+            shareListener.onResult(title, content, picUrl,dynamicId);
         }
     }
 

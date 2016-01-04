@@ -56,16 +56,16 @@ public class IndexViewPagerActivity extends BaseActivity implements
         views = new ArrayList<>();
 
         LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
 
         // 初始化引导图片列表
         for (int i = 0; i < pics.length; i++) {
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(mParams);
-            // 防止图片不能填满屏幕
-            iv.setScaleType(ScaleType.FIT_XY);
             iv.setAdjustViewBounds(true);
+            // 防止图片不能填满屏幕
+            iv.setScaleType(ScaleType.CENTER_CROP);
 
             iv.setImageResource(pics[i]);
             views.add(iv);

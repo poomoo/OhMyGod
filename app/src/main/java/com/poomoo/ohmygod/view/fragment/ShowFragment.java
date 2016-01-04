@@ -107,8 +107,9 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     // 首先在您的Activity中添加如下成员变量
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
     private String content = "天呐" + "\n" + "http://www.baidu.com";
-    private String website = "http://zgqg.91jiaoyou.cn/zgqg";
+    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/share.htm?dynamicId=";
     private String title = "天呐";
+    private String dynamicId = "";
     private String picUrl;
     private CopyPopupWindow copyPopupWindow;
     private String copyContent;
@@ -180,12 +181,14 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      * @param picUrl
      */
     @Override
-    public void onResult(String title, String content, String picUrl) {
+    public void onResult(String title, String content, String picUrl, String dynamicId) {
         if (!MyUtil.isLogin(getActivity()))
             return;
         this.title = title;
         this.content = content;
         this.picUrl = picUrl;
+        this.dynamicId = dynamicId;
+        website += dynamicId;
         // 配置需要分享的相关平台
         configPlatforms();
         // 设置分享内容
