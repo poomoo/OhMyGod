@@ -1,6 +1,5 @@
 package com.poomoo.ohmygod.view.activity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -677,6 +676,7 @@ public class CommodityInformationActivity extends BaseActivity {
             final Bundle bundle = new Bundle();
             bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
             if (MyUtil.isNeedCompleteInfo(application)) {
+                textView.setText(getString(R.string.label_clickToWinningRecords));
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

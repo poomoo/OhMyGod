@@ -339,7 +339,7 @@
                     android:background="@color/transparentBlack"
                     android:gravity="center"
                     android:padding="@dimen/dp_14"
-                    android:text="label_clickToCompleteInfo"
+                    android:text="@string/label_clickToCompleteInfo"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18" />
 

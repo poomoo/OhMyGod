@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.other.CountDownListener;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -29,32 +31,31 @@ public class TimeCountDownUtil extends CountDownTimer {
     private long millisUntilFinished;
     private CountDownListener countDownListener;
     private boolean isList;//是否传入list
+    private String flag = "";//1-活动倒计时 2-其他倒计时
 
     // 在这个构造方法里需要传入三个参数，一个是Activity，一个是总的时间millisInFuture，一个是countDownInterval，然后就是你在哪个按钮上做这个事，就把这个按钮传过来就可以了
-    public TimeCountDownUtil(long millisInFuture,
-                             long countDownInterval, List<TextView> textViewList, final CountDownListener countDownListener) {
+    public TimeCountDownUtil(long millisInFuture, long countDownInterval, List<TextView> textViewList, final CountDownListener countDownListener) {
         super(millisInFuture, countDownInterval);
         this.textViewList = textViewList;
         this.countDownListener = countDownListener;
         this.isList = true;
     }
 
-
-    public TimeCountDownUtil(long millisInFuture,
-                             long countDownInterval, View view) {
+    public TimeCountDownUtil(long millisInFuture, long countDownInterval, View view, String flag) {
         super(millisInFuture, countDownInterval);
         this.view = view;
         this.isList = false;
+        this.flag = flag;
     }
 
     public void setTextViewList(List<TextView> textViewList, final CountDownListener countDownListener) {
         this.textViewList = textViewList;
+        textViewList.add((TextView) this.view);
         this.isList = true;
         this.countDownListener = countDownListener;
     }
 
-    public TimeCountDownUtil(long millisInFuture,
-                             long countDownInterval, View view, final CountDownListener countDownListener) {
+    public TimeCountDownUtil(long millisInFuture, long countDownInterval, View view, final CountDownListener countDownListener) {
         super(millisInFuture, countDownInterval);
         this.view = view;
         this.countDownListener = countDownListener;
@@ -84,11 +85,17 @@ public class TimeCountDownUtil extends CountDownTimer {
                 // 设置按钮为灰色，这时是不能点击的
                 view.setBackgroundResource(R.drawable.bg_get_code_pressed);
             } else if (view instanceof TextView) {
-                if (view.getTag().equals("TextView")) {
+//                if (view.getTag().equals("TextView")) {
+//                    view.setClickable(false);// 设置不能点击
+//                    ((TextView) view).setText(millisUntilFinished / 1000 + "s");
+//                } else {
+//                    ((TextView) view).setText(spanned);
+//                }
+                if (flag.equals("1")) {
+                    ((TextView) view).setText(spanned);
+                } else {
                     view.setClickable(false);// 设置不能点击
                     ((TextView) view).setText(millisUntilFinished / 1000 + "s");
-                } else {
-                    ((TextView) view).setText(spanned);
                 }
 
             }

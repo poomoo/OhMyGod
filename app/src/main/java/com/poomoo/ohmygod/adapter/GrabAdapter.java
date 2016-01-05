@@ -76,8 +76,10 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             viewHolder.txt.setTag(grabBO.getPicture());
             if (grabBO.getStatus() == 1) {
                 //            LogUtils.i(TAG, "position:" + position + "剩余时间:" + grabBO.getStartCountdown());
-                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt);
-                LogUtils.i(TAG, "tag:" + viewHolder.txt.getTag()+" pic:"+grabBO.getPicture());
+                if (position == 2)
+                    grabBO.setStartCountdown(5 * 60 * 1000);
+                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1");
+                LogUtils.i(TAG, "tag:" + viewHolder.txt.getTag() + " pic:" + grabBO.getPicture());
                 timeCountDownUtil.start();
                 getCountDownUtils().put(position, timeCountDownUtil);
             } else {

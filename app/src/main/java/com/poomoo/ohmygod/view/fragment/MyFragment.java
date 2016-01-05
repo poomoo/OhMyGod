@@ -127,11 +127,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         showRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_show);
         contactRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_contactUs);
 
-        int count = MyUtil.getUnReadInfoCount();
-        if (count > 0) {
-            infoCountTxt.setVisibility(View.VISIBLE);
-            infoCountTxt.setText(count + "");
-        }
+        catInfoCount();
 
         snatchRlayout.setOnClickListener(this);
         winRlayout.setOnClickListener(this);
@@ -166,6 +162,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 openActivity(SettingActivity.class);
             }
         });
+    }
+
+    private void catInfoCount() {
+        int count = MyUtil.getUnReadInfoCount();
+        if (count > 0) {
+            infoCountTxt.setVisibility(View.VISIBLE);
+            infoCountTxt.setText(count + "");
+        }
     }
 
     private void select_pics() {
@@ -334,6 +338,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         else
             genderImg.setImageResource(R.drawable.ic_gender_woman);
         balanceTxt.setText(TextUtils.isEmpty(application.getCurrentFee()) ? "0" : application.getCurrentFee());
+        catInfoCount();
     }
 
     @Override

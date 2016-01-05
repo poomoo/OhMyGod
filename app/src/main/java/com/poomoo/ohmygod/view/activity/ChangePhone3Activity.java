@@ -78,7 +78,7 @@ public class ChangePhone3Activity extends BaseActivity {
 
     public void getCode() {
         codeTxt.setTag("TextView");
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt);
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt,"2");
         timeCountDownUtil.start();
         this.appAction.getCode(application.getTel(), new ActionCallbackListener() {
             @Override

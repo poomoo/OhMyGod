@@ -601,29 +601,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         // 显示窗口
         timePopupWindow.showAtLocation(getActivity().findViewById(R.id.llayout_main),
                 Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-//        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-//        String str = formatter.format(curDate);
-//        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-//                getActivity(), str);
-//        dateTimePicKDialog.dateTimePicKDialog(new AlarmtListener() {
-//            @Override
-//            public void onResult(long time) {
-//                /* 建立Intent和PendingIntent，来调用目标组件 */
-//                Intent intent = new Intent(getActivity(), CallAlarm.class);
-//                intent.putExtra("_id", 0);
-//                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-//                AlarmManager am;
-//            /* 获取闹钟管理的实例 */
-//                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-//            /* 设置闹钟 */
-//                am.cancel(pendingIntent);
-//                am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-//                LogUtils.i(TAG, "time:" + time);
-//                MyUtil.showToast(getActivity().getApplicationContext(), "提醒设置成功");
-//                hideFloatingActionButton();
-//            }
-//        });
     }
 
     private void initPopWindow() {
