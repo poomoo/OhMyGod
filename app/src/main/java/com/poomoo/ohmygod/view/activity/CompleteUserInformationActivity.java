@@ -148,9 +148,8 @@ public class CompleteUserInformationActivity extends BaseActivity implements OnC
      * @param view
      */
     public void toDo(View view) {
-        checkInput();
-//        if (checkInput())
-//            submit();
+        if (checkInput())
+            submit();
     }
 
     private boolean checkInput() {
