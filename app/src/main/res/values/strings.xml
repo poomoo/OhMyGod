@@ -56,6 +56,7 @@
     <string name="title_address">修改地址</string>
     <string name="title_updateMember">会员升级</string>
     <string name="title_openBank">开户银行</string>
+    <string name="title_contactUs">联系我们</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -277,6 +278,7 @@
     <string name="intent_addressSubmit">addressSubmit</string>
     <string name="intent_openBank">openBank</string>
     <string name="intent_ad">ad</string>
+    <string name="intent_contactUs">contactUs</string>
     <!--intent-->
 
     <!--hint-->

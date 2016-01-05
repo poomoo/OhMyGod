@@ -23,7 +23,7 @@ public class WebViewActivity extends BaseActivity {
     private String PARENT;
     private String title;
     private WebView webView;
-    private String type;//--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+    private String type;//--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助 10联系我们
     private int statementId;//--声明编号
 
     @Override
@@ -79,6 +79,12 @@ public class WebViewActivity extends BaseActivity {
             getData();
         }
 
+        if (PARENT.equals(getString(R.string.intent_contactUs))) {
+            type = "10";
+            title = getString(R.string.title_contactUs);
+            getData();
+        }
+
         if (PARENT.equals(getString(R.string.intent_message))) {
             statementId = getIntent().getIntExtra(getString(R.string.intent_value), 0);
             title = getIntent().getStringExtra(getString(R.string.intent_title));
@@ -108,7 +114,7 @@ public class WebViewActivity extends BaseActivity {
 //    }
 
     private void getData() {
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getStatement(type, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -126,7 +132,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void getInfo() {
-        showProgressDialog("请稍后...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getMessageInfo(statementId + "", new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

@@ -140,9 +140,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         dialImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent_dial = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getString(R.string.dial)));
-//                startActivity(intent_dial);
-
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getString(R.string.dial)));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -367,9 +364,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.rlayout_contactUs:
                 bundle = new Bundle();
-                bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
-                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
-//                openActivity(WebViewActivity.class, bundle);
+                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_contactUs));
+                openActivity(WebViewActivity.class, bundle);
                 break;
         }
     }

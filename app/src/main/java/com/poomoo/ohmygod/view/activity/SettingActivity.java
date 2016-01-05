@@ -73,7 +73,6 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toUserInfo(View view) {
-
         if (application.getIsAdvancedUser().equals("0"))              //普通用户
             openActivity(UserInfoActivity.class);
         else if (application.getIsAdvancedUser().equals("1"))         //升级会员
