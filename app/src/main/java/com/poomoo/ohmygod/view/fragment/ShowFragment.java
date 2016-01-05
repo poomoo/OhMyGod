@@ -218,6 +218,8 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         showTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!MyUtil.isLogin(getActivity()))
+                    return;
                 openActivity(WinningRecordActivity.class);
             }
         });
