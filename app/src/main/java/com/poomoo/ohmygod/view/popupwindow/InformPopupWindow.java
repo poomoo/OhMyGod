@@ -27,7 +27,7 @@ import java.io.InputStream;
  */
 public class InformPopupWindow extends PopupWindow {
     private View mMenuView;
-    private TextView titleTxt;
+    private TextView moreTxt;
     private ImageView moreImg;
     private ImageView closeImg;
     private WebView webView;
@@ -37,7 +37,7 @@ public class InformPopupWindow extends PopupWindow {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popupwindow_inform, null);
-//        titleTxt = (TextView) mMenuView.findViewById(R.id.txt_informTitle);
+        moreTxt = (TextView) mMenuView.findViewById(R.id.txt_more);
         moreImg = (ImageView) mMenuView.findViewById(R.id.img_more);
         closeImg = (ImageView) mMenuView.findViewById(R.id.img_close);
         webView = (WebView) mMenuView.findViewById(R.id.popup_inform_webView);
@@ -46,7 +46,7 @@ public class InformPopupWindow extends PopupWindow {
         webView.getSettings().setDefaultTextEncodingName("UTF-8");
         webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
-        moreImg.setOnClickListener(itemsOnClick);
+        moreTxt.setOnClickListener(itemsOnClick);
         closeImg.setOnClickListener(itemsOnClick);
 
         this.setContentView(mMenuView);

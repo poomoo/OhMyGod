@@ -232,7 +232,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     tipFlag = false;
                     setTipText(tipFlag);
                 } else
-                    MyUtil.showToast(getActivity().getApplicationContext(), "当前城市没有开启活动");
+                    MyUtil.showToast(getActivity().getApplicationContext(), "当前没有活动需要提醒");
 
                 timePopupWindow.dismiss();
 //                hideFloatingActionButton();

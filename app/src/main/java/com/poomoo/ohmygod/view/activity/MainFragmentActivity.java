@@ -90,7 +90,7 @@ public class MainFragmentActivity extends
         public void onClick(View view) {
             informPopupWindow.dismiss();
             switch (view.getId()) {
-                case R.id.img_more:
+                case R.id.txt_more:
                     Bundle bundle = new Bundle();
                     bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
                     bundle.putSerializable(getString(R.string.intent_value), (Serializable) messageBOList);
