@@ -77,7 +77,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
         for (int i = 0; i < 3; i++) {
             winningBO = new WinningRecordsBO();
             winningBO.setPlayDt("2015-12-12");
-            winningBO.setIsGot("1");
+            winningBO.setIsGot(1);
             winningBOList.add(winningBO);
         }
         adapter.setItems(winningBOList);

@@ -40,7 +40,7 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
             convertView = inflater.inflate(R.layout.item_list_winning_record, null);
 
             viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_imageView_pic);
-            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_imageView_pic);
+            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_ima_status);
             viewHolder.titleTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_title);
             viewHolder.dateTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_win_date);
             viewHolder.addressTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_address);
@@ -51,8 +51,8 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
 
 
         winningRecordsBO = itemList.get(position);
-//        LogUtils.i("MyBaseAdapter","winningRecordsBO:"+winningRecordsBO+":"+position);
-        if (winningRecordsBO.getIsGot().equals("1"))
+        LogUtils.i("WinningRecordAdapter", "winningRecordsBO:" + winningRecordsBO.getIsGot() + ":" + position);
+        if (winningRecordsBO.getIsGot() == 1)
             viewHolder.statusImg.setImageResource(R.drawable.ic_yes);
         else
             viewHolder.statusImg.setImageResource(R.drawable.ic_no);

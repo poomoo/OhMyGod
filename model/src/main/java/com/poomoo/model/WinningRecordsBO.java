@@ -19,8 +19,8 @@ public class WinningRecordsBO implements Serializable {
     private String userId;
     private String getEndDt;
     private String playDt;
-    private String isGot;//	--是否领取（0未，1已经领取）
-    private String isShare;//	--是否已经晒单分享（0未，1已经分享）
+    private int isGot;//	--是否领取（0未，1已经领取）
+    private int isShare;//	--是否已经晒单分享（0未，1已经分享）
     private String goodsName;//--奖品名称
     private String getAddress;//--领取地址
     private String getRequire;//--领取要求
@@ -89,19 +89,19 @@ public class WinningRecordsBO implements Serializable {
         this.playDt = playDt;
     }
 
-    public String getIsGot() {
+    public int getIsGot() {
         return isGot;
     }
 
-    public void setIsGot(String isGot) {
+    public void setIsGot(int isGot) {
         this.isGot = isGot;
     }
 
-    public String getIsShare() {
+    public int getIsShare() {
         return isShare;
     }
 
-    public void setIsShare(String isShare) {
+    public void setIsShare(int isShare) {
         this.isShare = isShare;
     }
 
@@ -140,8 +140,8 @@ public class WinningRecordsBO implements Serializable {
                 ", userId='" + userId + '\'' +
                 ", getEndDt='" + getEndDt + '\'' +
                 ", playDt='" + playDt + '\'' +
-                ", isGot='" + isGot + '\'' +
-                ", isShare='" + isShare + '\'' +
+                ", isGot=" + isGot +
+                ", isShare=" + isShare +
                 ", goodsName='" + goodsName + '\'' +
                 ", getAddress='" + getAddress + '\'' +
                 ", getRequire='" + getRequire + '\'' +
