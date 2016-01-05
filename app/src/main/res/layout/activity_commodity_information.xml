@@ -129,7 +129,7 @@
                             android:id="@+id/txt_head_timeCountDown"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2天5小时29分30秒"
+                            android:text=""
                             android:textColor="@color/themeRed"
                             android:textSize="@dimen/sp_18" />
                     </LinearLayout>
