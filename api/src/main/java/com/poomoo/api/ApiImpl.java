@@ -515,7 +515,7 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum) {
+    public ResponseBO putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum, String xueli, String zhiye, String ysr, String sfgfyx, String gfxzfs, String gfxzyy, String gfxzmj, String gfxzjw, String gfxzqy, String gfkzwt) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.ADVANCE);
@@ -526,6 +526,16 @@ public class ApiImpl implements Api {
         paramMap.put("tel", tel);
         paramMap.put("address", address);
         paramMap.put("idCardNum", idCardNum);
+        paramMap.put("xueli", xueli);//学历
+        paramMap.put("zhiye", zhiye);//职业
+        paramMap.put("ysr", ysr);//月收入
+        paramMap.put("sfgfyx", sfgfyx);//是否购房意向
+        paramMap.put("gfxzfs", gfxzfs);//购房选择方式
+        paramMap.put("gfxzyy", gfxzyy);//购房选择意愿
+        paramMap.put("gfxzmj", gfxzmj);//购房选择面积
+        paramMap.put("gfxzjw", gfxzjw);//购房选择价位
+        paramMap.put("gfxzqy", gfxzqy);//购房选择区域
+        paramMap.put("gfkzwt", gfkzwt);//购房看重问题
         try {
             return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {

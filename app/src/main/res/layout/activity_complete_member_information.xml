@@ -31,14 +31,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_uploadID"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:gravity="right"
                     android:paddingTop="@dimen/dp_8"
                     android:text="@string/label_click"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
@@ -114,14 +114,14 @@
                         android:paddingRight="@dimen/dp_8"
                         android:text="*"
                         android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18"
-                        android:visibility="gone" />
+                        android:textSize="16sp"
+                        android:visibility="visible" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_bankName"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <EditText
@@ -132,7 +132,45 @@
                     android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_openBank"
                     android:padding="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/dp_8"
+                        android:text="*"
+                        android:textColor="@color/themeRed"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_bankName"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_8"
+                    android:textColor="@color/themeGray" />
             </LinearLayout>
 
             <LinearLayout
@@ -170,14 +208,14 @@
                         android:paddingRight="@dimen/dp_8"
                         android:text="*"
                         android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18"
-                        android:visibility="gone" />
+                        android:textSize="16sp"
+                        android:visibility="visible" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_bankAccountName"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <EditText
@@ -188,7 +226,7 @@
                     android:background="@drawable/bg_edittext"
                     android:hint="@string/hint_bankAccountName"
                     android:padding="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -226,14 +264,14 @@
                         android:paddingRight="@dimen/dp_8"
                         android:text="*"
                         android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18"
-                        android:visibility="gone" />
+                        android:textSize="16sp"
+                        android:visibility="visible" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_bankCardAccount"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <EditText
@@ -246,7 +284,45 @@
                     android:inputType="number"
                     android:maxLength="23"
                     android:padding="@dimen/dp_10"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/dp_8"
+                        android:text="*"
+                        android:textColor="@color/themeRed"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_bankName"
+                        android:textSize="16sp"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_9"
+                    android:textColor="@color/themeGray" />
             </LinearLayout>
 
             <LinearLayout
@@ -268,7 +344,8 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/dp_8"
                     android:text="@string/label_ensure"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
 
                 <TextView
@@ -277,7 +354,7 @@
                     android:paddingTop="@dimen/dp_10"
                     android:text="@string/label_mark"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout

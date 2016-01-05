@@ -72,6 +72,7 @@
     <string name="label_clickToCompleteInfo">点击完善你的资料后兑奖</string>
     <string name="label_clickToReturn1">点击返回</string>
     <string name="label_clickToReturn2">谢谢参与,点击返回</string>
+    <string name="label_clickToWinningRecords">点击查看中奖纪录</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -85,9 +86,9 @@
     <string name="label_nickName">我的昵称</string>
     <string name="label_gender">性别</string>
     <string name="label_age">年龄</string>
-    <string name="label_bankCardAccount">银行账号</string>
-    <string name="label_bankAccountName">"账  户  名"</string>
-    <string name="label_bankName">开户银行</string>
+    <string name="label_bankCardAccount">"银行账号　"</string>
+    <string name="label_bankAccountName">"账  户  名　"</string>
+    <string name="label_bankName">"开户银行　"</string>
     <string name="label_address1">地址</string>
     <string name="label_changePassWord">修改密码</string>
     <string name="label_gender_man">男</string>
@@ -102,7 +103,7 @@
     <string name="label_click">(点击上方+上传)</string>
     <string name="label_ensure">(请保证该账号能正常使用,因该账号原因导致款项不能准时到达,天呐平台不予承担任何责任)</string>
     <string name="label_zhu">　　　　注:</string>
-    <string name="label_mark">"　　注:完善信息后请于3日内前往天呐运营中心办理相关手续(请获奖本人带上身份证明),逾期天呐平台将视为用户主动放弃获奖资格,平台不予承担任何责任"</string>
+    <string name="label_mark">"　　注:完善信息后请于3日内前往天呐运营中心办理相关手续(请获奖本人带上身份证明),逾期天呐平台将视为用户主动放弃获奖资格,平台不予承担任何责任。"</string>
     <string name="label_name">"姓　名　"</string>
     <string name="label_sex">"性　别　"</string>
     <string name="label_memberAge">"年　龄　"</string>
@@ -119,6 +120,8 @@
     <string name="label_5">如购置房屋选择价位</string>
     <string name="label_6">如购置房屋选择区域</string>
     <string name="label_7">如购置房屋您最为看重的问题</string>
+    <string name="label_8">用户需绑定平台指定银行账户，已有账户或新申请账户均可使用</string>
+    <string name="label_9">请保证该帐号能正常使用，因该帐号原因导致款项不能准时到达，天呐平台不予承担任何责任</string>
     <string name="label_detail1">请勿盲目参与抢单，抢单成功需进行线下购买行为</string>
     <string name="label_detail2">用户抢单成功即获得购买该商品后，享受现金派送的资格</string>
     <string name="label_detail3">用户抢单成功须在3日内联系平台办理手续，逾期将视为主动放弃</string>
@@ -130,7 +133,8 @@
     <string name="label_detail9">最终解释权归天呐平台所有</string>
     <string name="label_detail10">用户提现需支付10%的手续费，转账时自动扣除</string>
     <string name="label_tipTitle">天呐君温馨提示:</string>
-    <string name="label_tipContent">由于大宗商品抢单活动中，涉及大额现金优惠，请如实填写下列个人信息，全部完善后才能参与平台大宗商品抢单活动。</string>
+    <string name="label_tipContent">"　　由于大宗商品抢单活动中，涉及大额现金优惠，请如实填写下列个人信息，全部完善后才能参与平台大宗商品抢单活动。"</string>
+    <string name="label_tipContent2">"　　本次活动开抢所涉及的商品为平台免费赠予抢单成功的用户，并根据用户地址及时配送（县份用户将以物流送达），请如实填写下列信息。平台不会以任何方式向用户收取任何费用。"</string>
     <!--个人资料-->
 
     <!--个人中心-->
@@ -276,6 +280,7 @@
 
     <!--hint-->
     <string name="hint_realName">请填写你的真实姓名</string>
+    <string name="hint_realTel">请填写你的真实电话</string>
     <string name="hint_idCardNum">请填写本人有效证件号</string>
     <string name="hint_idCardNum1">请填写你的正确身份证号码</string>
     <string name="hint_celPhone">请填写本人有效电话号码</string>
@@ -301,9 +306,9 @@
     <string name="hint_feedBack">"请留下您的宝贵意见和建议，我们将努力改进"</string>
     <string name="hint_connection">联系方式(邮箱/手机)</string>
     <string name="hint_addressDetail">请填写你的详细地址</string>
-    <string name="hint_bankAccount">银行账号</string>
-    <string name="hint_openBank">开户银行(银行+支行)</string>
-    <string name="hint_bankAccountName">账户名</string>
+    <string name="hint_bankAccount">请填写详细的银行卡号</string>
+    <string name="hint_openBank">请填写详细的开户银行</string>
+    <string name="hint_bankAccountName">请填写详细的开户姓名</string>
 
     <!--hint-->
 

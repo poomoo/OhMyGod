@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_tipContent"
+                    android:text="@string/label_tipContent2"
                     android:textColor="@color/themeRed"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -61,13 +61,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edt_memberInfo_name"
@@ -77,7 +77,7 @@
                     android:hint="@string/hint_realName"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
@@ -95,14 +95,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -130,13 +130,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_sex"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:layout_width="wrap_content"
@@ -178,14 +178,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_sex"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -211,13 +211,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberAge"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edt_memberInfo_age"
@@ -229,7 +229,7 @@
                     android:maxLength="2"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -246,14 +246,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -281,13 +281,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberPhone"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txt_memberInfo_tel"
@@ -298,7 +298,7 @@
                     android:maxLength="11"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -315,14 +315,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
 
@@ -350,13 +350,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberAddress"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txt_memberInfo_address"
@@ -370,7 +370,7 @@
                     android:padding="@dimen/dp_10"
                     android:text=""
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -387,14 +387,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -421,13 +421,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_memberIdNum"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edt_memberInfo_idCardNum"
@@ -439,7 +439,7 @@
                     android:maxLength="18"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -456,14 +456,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -489,14 +489,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_education"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/llayout_education"
@@ -510,12 +510,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
-                        android:text="- - - - - - - - 请选择 - - - - - - - - "
+                        android:singleLine="true"
+                        android:text=" - - - - - - 请选择 - - - - - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -545,14 +547,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -578,14 +580,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_career"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/llayout_career"
@@ -599,12 +601,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
-                        android:text="- - - - - - - - 请选择 - - - - - - - - "
+                        android:singleLine="true"
+                        android:text=" - - - - - - 请选择 - - - - - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -634,14 +638,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -667,14 +671,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_income"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/llayout_income"
@@ -688,12 +692,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
-                        android:text="- - - - - - - - 请选择 - - - - - - - - "
+                        android:singleLine="true"
+                        android:text=" - - - - - - 请选择 - - - - - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -723,14 +729,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
@@ -756,13 +762,13 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_1"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:layout_width="wrap_content"
@@ -802,17 +808,17 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_2"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="10dp"
+                    android:layout_width="1dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
@@ -827,12 +833,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
+                        android:singleLine="true"
                         android:text=" - - 请选择 - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -866,14 +874,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_3"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="20dp"
@@ -891,12 +899,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
+                        android:singleLine="true"
                         android:text=" - - 请选择 - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -930,14 +940,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_4"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="20dp"
@@ -955,12 +965,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
+                        android:singleLine="true"
                         android:text=" - - 请选择 - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -994,14 +1006,14 @@
                     android:paddingRight="@dimen/dp_8"
                     android:text="*"
                     android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="16sp"
                     android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_5"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="20dp"
@@ -1019,76 +1031,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:paddingTop="6dp"
+                        android:singleLine="true"
                         android:text=" - - 请选择 - - "
                         android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_spinner"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_spinner" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="4dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/dp_8"
-                    android:text="*"
-                    android:textColor="@color/themeRed"
-                    android:textSize="@dimen/sp_18"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_6"
-                    android:textSize="@dimen/sp_18" />
-
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:id="@+id/llayout_6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edittext"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txt_6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        android:paddingTop="6dp"
-                        android:text=" - - 请选择 - - "
-                        android:textColor="@color/themeGray"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -1127,22 +1077,79 @@
                         android:paddingRight="@dimen/dp_8"
                         android:text="*"
                         android:textColor="@color/themeRed"
-                        android:textSize="@dimen/sp_18"
+                        android:textSize="16sp"
                         android:visibility="invisible" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_7"
-                        android:textSize="@dimen/sp_18" />
+                        android:text="@string/label_6"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_18"
+                    android:paddingRight="@dimen/dp_18">
+
+                    <EditText
+                        android:id="@+id/edt_memberInfo_zone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edittext"
+                        android:padding="@dimen/dp_10"
+                        android:singleLine="true"
+                        android:textColor="@color/themeGray"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:orientation="horizontal">
+                    android:paddingRight="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/dp_8"
+                        android:text="*"
+                        android:textColor="@color/themeRed"
+                        android:textSize="16sp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_7"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10">
 
                     <TextView
                         android:layout_width="0dp"
@@ -1162,12 +1169,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:paddingLeft="6dp"
                             android:paddingRight="6dp"
                             android:paddingTop="6dp"
+                            android:singleLine="true"
                             android:text=" - - 请选择 - - "
                             android:textColor="@color/themeGray"
-                            android:textSize="20sp" />
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"

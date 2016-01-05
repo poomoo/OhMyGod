@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -114,11 +115,10 @@ public class CommodityInformation2Activity extends BaseActivity {
         ImageLoader.getInstance().displayImage(commodityBO.getSmallPic(), detailsImg, defaultOptions);
 
         //商品详情
-        commodityWeb.getSettings().setUseWideViewPort(true);
-        commodityWeb.getSettings().setLoadWithOverviewMode(true);
+//        commodityWeb.getSettings().setUseWideViewPort(true);
+//        commodityWeb.getSettings().setLoadWithOverviewMode(true);
         commodityWeb.getSettings().setDefaultTextEncodingName("UTF-8");
-//        commodityWeb.setVerticalScrollBarEnabled(false);
-//        commodityWeb.setHorizontalScrollBarEnabled(false);
+        commodityWeb.getSettings().setJavaScriptEnabled(true);
         commodityWeb.loadData(commodityBO.getContent(), "text/html; charset=UTF-8", null);// 这种写法可以正确解码
         // 添加js交互接口类，并起别名 imagelistner
         commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");

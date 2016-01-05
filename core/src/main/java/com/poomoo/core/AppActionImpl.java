@@ -17,8 +17,6 @@ import com.poomoo.model.WinnerBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.model.WithdrawDepositBO;
 
-
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -818,12 +816,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void putAdvanceInfo(final String userId, final String realName, final String sex, final String age, final String tel, final String address, final String idCardNum, final ActionCallbackListener listener) {
+    public void putAdvanceInfo(final String userId, final String realName, final String sex, final String age, final String tel, final String address, final String idCardNum, final String xueli, final String zhiye, final String ysr, final String sfgfyx, final String gfxzfs, final String gfxzyy, final String gfxzmj, final String gfxzjw, final String gfxzqy, final String gfkzwt, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.putAdvanceInfo(userId, realName, sex, age, tel, address, idCardNum);
+                return api.putAdvanceInfo(userId, realName, sex, age, tel, address, idCardNum, xueli, zhiye, ysr, sfgfyx, gfxzfs, gfxzyy, gfxzmj, gfxzjw, gfxzqy, gfkzwt);
             }
 
             @Override

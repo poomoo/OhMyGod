@@ -307,7 +307,7 @@ public interface AppAction {
      * @param idCardNum
      * @param listener
      */
-    void putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum, ActionCallbackListener listener);
+    void putAdvanceInfo(String userId, String realName, String sex, String age, String tel, String address, String idCardNum, String xueli, String zhiye, String ysr, String sfgfyx, String gfxzfs, String gfxzyy, String gfxzmj, String gfxzjw, String gfxzqy, String gfkzwt, ActionCallbackListener listener);
 
     /**
      * 查询返现

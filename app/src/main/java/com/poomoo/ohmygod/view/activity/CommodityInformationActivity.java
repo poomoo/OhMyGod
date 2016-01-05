@@ -577,30 +577,7 @@ public class CommodityInformationActivity extends BaseActivity {
 //                                openActivity(CompleteMemberInformationActivity.class);
 //                                return;
 //                            }
-
                             animImg.setImageResource(succeedAnim);
-//                            String title = "恭喜中奖";
-//                            message = "请完善个人资料后领取奖品";
-//
-//                            Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setTitle(title).setMessage(message).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            if (application.getIsAdvancedUser().equals("0"))
-//                                                openActivity(CompleteUserInformationActivity.class);
-//                                            else
-//                                                openActivity(CompleteMemberInformationActivity.class);
-//                                            finish();
-//                                        }
-//                                    }
-//                            ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                }
-//                            }).create();
-//                            Window window = dialog.getWindow();
-//                            window.setGravity(Gravity.BOTTOM);
-//                            dialog.setCanceledOnTouchOutside(false);
-
                             showToast(true);
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             showToast(false);
@@ -658,9 +635,6 @@ public class CommodityInformationActivity extends BaseActivity {
         codeEdt.setFocusableInTouchMode(true);
         codeEdt.requestFocus();
 
-//        mMenuView.setFocusable(true);
-//        mMenuView.setFocusableInTouchMode(true);
-//        mMenuView.requestFocus();
         codeEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -695,17 +669,17 @@ public class CommodityInformationActivity extends BaseActivity {
             rlayout_clickToComplete.setVisibility(View.VISIBLE);
             TextView textView = (TextView) findViewById(R.id.txt_clickToCompleteInfo);
             ImageView imageView = (ImageView) findViewById(R.id.img_close);
+            WinningRecordsBO winningRecordsBO = new WinningRecordsBO();
+            winningRecordsBO.setTitle(commodityBO.getGoodsName());
+            winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
+            winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
+            winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
+            final Bundle bundle = new Bundle();
+            bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
             if (MyUtil.isNeedCompleteInfo(application)) {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        WinningRecordsBO winningRecordsBO = new WinningRecordsBO();
-                        winningRecordsBO.setTitle(commodityBO.getGoodsName());
-                        winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
-                        winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
-                        winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
                         if (application.getIsAdvancedUser().equals("0"))
                             openActivity(CompleteUserInformationActivity.class, bundle);
                         else
@@ -720,10 +694,11 @@ public class CommodityInformationActivity extends BaseActivity {
                     }
                 });
             } else {
-                textView.setText(getString(R.string.label_clickToReturn1));
+                textView.setText(getString(R.string.label_clickToWinningRecords));
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        openActivity(WinningRecord2Activity.class, bundle);
                         finish();
                     }
                 });

@@ -10,282 +10,241 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
+        android:layout_height="8dp"
         android:background="@color/divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_realName"
-            android:textSize="@dimen/sp_20" />
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_8"
+            android:text="@string/label_tipTitle"
+            android:textColor="@color/themeRed"
+            android:textSize="18sp" />
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_tipContent2"
+            android:textColor="@color/themeRed"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dp_8"
+                android:text="*"
+                android:textColor="@color/themeRed"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_name"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/edt_realName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
+            android:layout_weight="4"
+            android:background="@drawable/bg_edittext"
             android:hint="@string/hint_realName"
-            android:paddingLeft="@dimen/dp_16"
-            android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:padding="@dimen/dp_10"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/divider" />
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_idCardNum"
-            android:textSize="@dimen/sp_20" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dp_8"
+                android:text="*"
+                android:textColor="@color/themeRed"
+                android:textSize="16sp"
+                android:visibility="visible" />
 
-        <EditText
-            android:id="@+id/edt_idCardNum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-
-            android:digits="0123456789xyzXYZ"
-            android:hint="@string/hint_idCardNum"
-            android:maxLength="18"
-            android:paddingLeft="@dimen/dp_16"
-            android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/divider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_celPhone"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_memberPhone"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txt_celPhoneNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="@dimen/dp_16"
-            android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:layout_weight="4"
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_realTel"
+            android:padding="@dimen/dp_10"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/divider" />
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_idCardPic"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_16">
-
-            <ImageView
-                android:id="@+id/img_front_idCard"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:onClick="toSelectFront"
-                android:src="@drawable/bg_idcrad_front" />
-
-            <TextView
-                android:layout_width="@dimen/dp_10"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/img_back_idCard"
-                android:layout_width="100dp"
-                android:layout_height="90dp"
-                android:onClick="toSelectBack"
-                android:src="@drawable/bg_idcrad_back" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/divider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_bankCardNum"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
-
-        <EditText
-            android:id="@+id/edt_bankCardNum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/hint_bankCardNum"
-            android:inputType="number"
-            android:maxLength="23"
-            android:paddingLeft="@dimen/dp_16"
-            android:textSize="@dimen/sp_20" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_address"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
-            android:id="@+id/txt_locateCity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp_16"
-            android:text=""
-            android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
-
-
-        <Spinner
-            android:id="@+id/spinner_area"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edt_address1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:hint="@string/hint_addressDetail"
         android:paddingBottom="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_20"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_10"
-        android:textColor="@color/themeGray" />
+        android:paddingRight="@dimen/dp_20">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dp_8"
+                android:text="*"
+                android:textColor="@color/themeRed"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_memberAddress"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_locateCity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="遵义市"
+                    android:textColor="@color/themeGray"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/llayout_zone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edittext"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_zone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        android:paddingTop="6dp"
+                        android:singleLine="true"
+                        android:text=" - - 请选择 - - "
+                        android:textColor="@color/themeGray"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_spinner"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_spinner" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
-        android:visibility="gone">
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_address"
-            android:textSize="@dimen/sp_20" />
+            android:paddingRight="@dimen/dp_8"
+            android:text="*"
+            android:textColor="@color/themeRed"
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="@dimen/sp_20" />
+            android:text="@string/label_memberAddress"
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/edt_address"
-            android:layout_width="0dp"
+            android:id="@+id/edt_address1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/hint_address"
-            android:maxLength="23"
-            android:paddingLeft="@dimen/dp_16"
-            android:textSize="@dimen/sp_20" />
+            android:background="@drawable/bg_edittext"
+            android:hint="@string/hint_addressDetail"
+            android:padding="@dimen/dp_10"
+            android:textSize="16sp" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/divider" />
 </LinearLayout>

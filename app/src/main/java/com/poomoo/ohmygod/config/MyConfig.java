@@ -52,4 +52,23 @@ public class MyConfig {
             R.drawable.box64, R.drawable.box65, R.drawable.box66, R.drawable.box67, R.drawable.box68, R.drawable.box69, R.drawable.box70, R.drawable.box71, R.drawable.box72, R.drawable.box73};
 
     public static final int[] time = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
+
+    public static final String[] education = {"初中及以下", "高中/中专", "大专/本科", "研究生及以上"};
+
+    public static final String[] career = {"公务员/行政/事业单位", "计算机/互联网/通信", "生产/工艺/制造", "医疗/护理/制药", "金融/银行/保险", "商业/服务业/个体经营", "文化/广告/传媒", "娱乐/艺术/表演", "法务/财务/税务", "教育/培训", "交通/运输", "学生/其他"};
+
+    public static final String[] income = {"2000以下", "2000--3000", "3000--5000", "5000以上"};
+
+    public static final String[] item2 = {"全款", "按揭", "分期"};
+
+    public static final String[] item3 = {"改善居住", "工作", "结婚", "投资", "其他"};
+
+    public static final String[] item4 = {"60㎡以下", "61--80㎡", "81--100㎡", "100㎡以上"};
+
+    public static final String[] item5 = {"3000/㎡以下", "3000--5000/㎡", "5000/㎡以上"};
+
+    public static final String[] item6 = {"改善居住", "工作", "结婚", "投资", "其他"};
+
+    public static final String[] item7 = {"房开商", "价格", "户型结构", "地段环境"};
+
 }
