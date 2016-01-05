@@ -21,6 +21,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_locale" />
+
             <TextView
                 android:id="@+id/txt_currCity"
                 android:layout_width="wrap_content"
@@ -29,11 +34,6 @@
                 android:textColor="@color/themeRed"
                 android:textSize="@dimen/sp_20" />
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_locale" />
         </LinearLayout>
 
         <TextView

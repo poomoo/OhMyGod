@@ -191,7 +191,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         this.content = content;
         this.picUrl = picUrl;
         this.dynamicId = dynamicId;
-        website += dynamicId;
+        website = website + this.dynamicId;
         // 配置需要分享的相关平台
         configPlatforms();
         // 设置分享内容
