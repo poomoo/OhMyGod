@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -177,9 +178,10 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 getActivityOutToRight();
             }
         });
-        headerViewHolder.rightImg.setVisibility(View.VISIBLE);
-        headerViewHolder.rightImg.setImageResource(R.drawable.ic_winning);
-        headerViewHolder.rightImg.setOnClickListener(new View.OnClickListener() {
+        headerViewHolder.rightTxt.setVisibility(View.VISIBLE);
+        headerViewHolder.rightTxt.setText(getString(R.string.title_show_now));
+        headerViewHolder.rightTxt.setTextColor(Color.parseColor("#E81540"));
+        headerViewHolder.rightTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity(WinningRecordActivity.class);

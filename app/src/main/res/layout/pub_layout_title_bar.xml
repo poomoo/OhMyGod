@@ -49,7 +49,7 @@
         android:clickable="true"
         android:onClick="toDo"
         android:singleLine="true"
-        android:textSize="@dimen/sp_18"
+        android:textSize="14sp"
         android:visibility="gone" />
 
 </RelativeLayout>

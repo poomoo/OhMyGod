@@ -20,6 +20,20 @@
             android:singleLine="true"
             android:text="@string/title_show_and_share"
             android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/txt_show_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:singleLine="true"
+            android:text="@string/title_show_now"
+            android:textColor="@color/themeRed"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <include layout="@layout/layout_show" />

@@ -36,6 +36,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
+import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 import com.poomoo.ohmygod.view.popupwindow.CopyPopupWindow;
@@ -60,6 +61,7 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import java.util.ArrayList;
 
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -75,6 +77,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private LinearLayout fragmentView;
     private LinearLayout replyRlayout;
     private LinearLayout editLlayout;
+    private TextView showTxt;
     private ListView list;
     private ShowAdapter adapter;
     private ShowBO showBO;
@@ -207,9 +210,17 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         replyEdt = (EditText) getActivity().findViewById(R.id.edt_reply);
         replyBtn = (Button) getActivity().findViewById(R.id.btn_reply);
         list = (ListView) getActivity().findViewById(R.id.list_show);
+        showTxt = (TextView) getActivity().findViewById(R.id.txt_show_now);
 
         refreshLayout.setOnLoadListener(this);
         refreshLayout.setOnRefreshListener(this);
+
+        showTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(WinningRecordActivity.class);
+            }
+        });
 
         replyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
