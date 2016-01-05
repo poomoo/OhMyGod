@@ -201,7 +201,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/label_rebateRecords"
-                                    android:textSize="14sp" />
+                                    android:textSize="16sp" />
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/label_rebateRule"
-                                    android:textSize="14sp" />
+                                    android:textSize="16sp" />
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -272,7 +272,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="@string/label_withdraw_deposit"
-                                    android:textSize="14sp" />
+                                    android:textSize="16sp" />
 
                                 <ImageView
                                     android:layout_width="wrap_content"
