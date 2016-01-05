@@ -79,6 +79,9 @@ public class WinningRecord2Activity extends BaseActivity {
     }
 
     public void toCompletedUserInfo(View view) {
-        openActivity(CompleteUserInformationActivity.class);
+        if (application.getIsAdvancedUser().equals("1"))
+            openActivity(CompleteMemberInformationActivity.class);
+        else
+            openActivity(CompleteUserInformationActivity.class);
     }
 }

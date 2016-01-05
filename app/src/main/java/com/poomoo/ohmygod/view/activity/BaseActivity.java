@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -37,6 +38,7 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         application = (MyApplication) this.getApplication();
         appAction = application.getAppAction();
         // 去掉默认标题栏

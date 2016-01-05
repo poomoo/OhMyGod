@@ -17,6 +17,8 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
 
+import junit.framework.Test;
+
 import org.litepal.tablemanager.Connector;
 
 import java.io.File;

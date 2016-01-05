@@ -52,40 +52,36 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
                 .build();//
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_list_grab, null);
-            viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_bg);
-            viewHolder.txt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
+//        if (convertView == null) {
+        viewHolder = new ViewHolder();
+        convertView = inflater.inflate(R.layout.item_list_grab, null);
+        viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
+        viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_bg);
+        viewHolder.txt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
 
-            convertView.setTag(viewHolder);
-        } else
-            viewHolder = (ViewHolder) convertView.getTag();
+//            convertView.setTag(viewHolder);
+//        } else
+//            viewHolder = (ViewHolder) convertView.getTag();
         grabBO = itemList.get(position);
 
-
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
-
-//        if (viewHolder.txt.getTag() != null && viewHolder.txt.getTag().equals(grabBO.getPicture())) {
-        if (viewHolder.txt.getTag() == null) {
-            viewHolder.txt.setTag(grabBO.getPicture());
-            if (grabBO.getStatus() == 1) {
+        LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
+        if (grabBO.getStatus() == 1) {
+            if (viewHolder.txt.getTag() == null) {
+                viewHolder.txt.setTag(grabBO.getPicture());
                 TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1");
                 LogUtils.i(TAG, "tag:" + viewHolder.txt.getTag() + " pic:" + grabBO.getPicture());
                 timeCountDownUtil.start();
                 getCountDownUtils().put(position, timeCountDownUtil);
-            } else {
-                viewHolder.txt.setText("活动已结束");
-                viewHolder.txt.setTextColor(Color.parseColor("#E81540"));
             }
-
+            LogUtils.i(TAG, "活动已开始" + " position:" + position + " 内容:" + viewHolder.txt.getText().toString());
+        } else {
+            viewHolder.txt.setText("活动已结束");
+            viewHolder.txt.setTextColor(Color.parseColor("#E81540"));
         }
-
         return convertView;
     }
 

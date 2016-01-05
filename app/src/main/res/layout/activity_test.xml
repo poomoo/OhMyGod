@@ -16,7 +16,8 @@
     <WebView
         android:id="@+id/web_test"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
     <!--    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,6 +50,6 @@
         android:onClick="toTest"
         android:text="抢"
         android:textSize="@dimen/sp_20"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

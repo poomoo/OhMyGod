@@ -49,6 +49,9 @@ public class PhotoActivity extends BaseActivity {
         for (int i = 0; i < Bimp.drr.size(); i++) {
             drr.add(Bimp.drr.get(i));
         }
+        for (int i = 0; i < Bimp.files.size(); i++) {
+            files.add(Bimp.files.get(i));
+        }
         max = Bimp.max;
 
         Button photo_bt_del = (Button) findViewById(R.id.btn_del);

@@ -49,7 +49,6 @@ public class IndexViewPagerActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
 
-
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         clickInTxt = (TextView) findViewById(R.id.txt_clickIn);
 
@@ -78,6 +77,8 @@ public class IndexViewPagerActivity extends BaseActivity implements
         vp.setOnPageChangeListener(this);
 
         views.get(pics.length - 1).setOnClickListener(this);
+        // 初始化底部小点
+        initDots();
     }
 
     private void initDots() {
@@ -113,10 +114,8 @@ public class IndexViewPagerActivity extends BaseActivity implements
         if (positon < 0 || positon > lenth - 1 || currentIndex == positon) {
             return;
         }
-
         dots[positon].setEnabled(true);
         dots[currentIndex].setEnabled(false);
-
         currentIndex = positon;
     }
 
@@ -138,7 +137,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     @Override
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
-//        setCurDot(arg0);
+        setCurDot(arg0);
 //        LogUtils.i(TAG, "PARENT:" + PARENT + " arg0:" + arg0 + " length:" + pics.length);
 //        if (PARENT.equals("index"))
 //            if (arg0 == pics.length - 1)

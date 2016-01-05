@@ -196,7 +196,6 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getObjList().toString());
                 closeProgressDialog();
-                showBOList = new ArrayList<>();
                 // 更新完后调用该方法结束刷新
                 if (isLoad) {
                     LogUtils.i(TAG, "加载");
@@ -246,17 +245,20 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
      * 评论
      */
     private void putComment() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.putComment(application.getUserId(), replyContent, showBO.getDynamicId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                commentBO = new CommentBO();
+                commentBO = (CommentBO) data.getObj();
                 commentBO.setNickName(application.getNickName());
                 commentBO.setContent(replyContent);
                 commentBO.setDynamicId(showBO.getDynamicId());
+                commentBO.setUserId(application.getUserId());
                 replyBOList = new ArrayList<>();
                 commentBO.setReplies(replyBOList);
+                LogUtils.i(TAG, "showBOList:" + showBOList.size() + " itemPosition:" + itemPosition);
+                LogUtils.i(TAG, "getComments:" + showBOList.get(itemPosition).getComments());
                 showBOList.get(itemPosition).getComments().add(commentBO);
                 adapter.notifyDataSetChanged();
             }
@@ -273,22 +275,26 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
      * 回复
      */
     private void putReply() {
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         final String fromUserId = application.getUserId();
         //回复评论
         if (!TextUtils.isEmpty(showBO.getComments().get(0).getUserId())) {
             isReplyComment = true;
             toUserId = showBO.getComments().get(0).getUserId();
         }
-        LogUtils.i(TAG, "replyList:" + showBO.getComments().get(0).getReplies());
-        //回复回复
+        //回复回复列表里面的评论
         if (showBO.getComments().get(0).getReplies() != null && showBO.getComments().get(0).getReplies().size() > 0) {
             isReplyComment = false;
             toUserId = showBO.getComments().get(0).getReplies().get(0).getToUserId();
         }
 
+        if (isReplyComment)
+            LogUtils.i(TAG, "回复评论");
+        else
+            LogUtils.i(TAG, "回复回复列表里面的评论");
 
         final String commentId = showBO.getComments().get(0).getCommentId();
+        LogUtils.i(TAG, "showBO:" + showBO);
         this.appAction.putReply(fromUserId, toUserId, replyContent, commentId, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -356,21 +362,29 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
         }, 0);
     }
 
+    /**
+     * 回复
+     *
+     * @param name
+     * @param itemPosition
+     * @param v
+     * @param show
+     * @param commentPosition
+     */
     @Override
     public void onResult(String name, View v, ShowBO show, int itemPosition, int commentPosition) {
         toNickName = name;
-        this.itemPosition = itemPosition;
         view = v;
+        this.itemPosition = itemPosition;
         this.commentPosition = commentPosition;
+//        replyPosition = replyPosition;
+//        viewTop = view.getTop();
         showBO = show;
-        LogUtils.i(TAG, "showBO:" + showBO);
-
-        MyUtil.showToast(getApplication(), "onResult 点击:" + name);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        LogUtils.i(TAG, "showBO:" + showBO);
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        MainFragmentActivity.instance.invisible();
         replyRlayout.setVisibility(View.VISIBLE);
-        LogUtils.i(TAG, "replyRlayout可见");
+//        LogUtils.i(TAG, "replyRlayout可见");
         replyEdt.setFocusable(true);
         replyEdt.setFocusableInTouchMode(true);
         replyEdt.requestFocus();

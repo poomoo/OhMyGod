@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <selector  
   xmlns:android="http://schemas.android.com/apk/res/android">  
-    <item android:state_enabled="true" android:drawable="@drawable/dot_current" />  
-    <item android:state_enabled="false" android:drawable="@drawable/dot_other" />  
+    <item android:state_enabled="true" android:drawable="@drawable/ic_dot_selected" />
+    <item android:state_enabled="false" android:drawable="@drawable/ic_dot_normal" />
 </selector>  

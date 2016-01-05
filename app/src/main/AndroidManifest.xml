@@ -90,6 +90,9 @@
         <activity android:name=".view.activity.WinnerListActivity" />
         <activity android:name=".view.activity.IndexViewPagerActivity" />
 
+        <activity android:name=".view.activity.TestActivity" />
+
+
         <activity android:name=".view.activity.pics.ImageGridActivity" />
         <activity android:name=".view.activity.pics.PhotosActivity" />
         <activity android:name=".view.activity.pics.PhotoActivity" />

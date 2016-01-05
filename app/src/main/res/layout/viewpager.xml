@@ -29,14 +29,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24.0dip"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="@dimen/dp_16"
+            android:padding="8dp"
             android:src="@drawable/dot" />
 
         <ImageView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="@dimen/dp_16"
+            android:padding="8dp"
             android:src="@drawable/dot" />
 
         <ImageView
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="@dimen/dp_16"
+            android:padding="8dp"
             android:src="@drawable/dot" />
 
         <ImageView
@@ -60,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="true"
-            android:padding="@dimen/dp_16"
-            android:src="@drawable/dot" />
+            android:padding="8dp"
+            android:src="@drawable/dot"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

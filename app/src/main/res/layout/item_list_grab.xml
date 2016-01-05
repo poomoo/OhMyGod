@@ -18,6 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/bg_snatch_record" />
 
         <LinearLayout

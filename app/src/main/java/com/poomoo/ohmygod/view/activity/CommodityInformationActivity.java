@@ -245,6 +245,8 @@ public class CommodityInformationActivity extends BaseActivity {
      * 判断是否为升级会员
      */
     private void isMember() {
+        typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
+        LogUtils.i(TAG, "isMember  typeId:" + typeId + " 升级会员:" + application.getIsAdvancedUser());
         if (typeId != 4) {
             if (application.getIsAdvancedUser().equals("1")) {//升级会员
                 signInTxt.setVisibility(View.GONE);
@@ -268,7 +270,6 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 commodityBO = (CommodityBO) data.getObj();
-                typeId = commodityBO.getTypeId();
                 if (commodityBO.getStatus() == 2) {              //活动已结束
                     isGrab = false;
                     llayout_cat.setVisibility(View.VISIBLE);
@@ -294,6 +295,7 @@ public class CommodityInformationActivity extends BaseActivity {
     }
 
     private void initData() {
+        LogUtils.i(TAG, "isGrab:" + isGrab);
         if (isGrab) {
             isMember();
             //房子
@@ -676,7 +678,6 @@ public class CommodityInformationActivity extends BaseActivity {
             final Bundle bundle = new Bundle();
             bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
             if (MyUtil.isNeedCompleteInfo(application)) {
-                textView.setText(getString(R.string.label_clickToWinningRecords));
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

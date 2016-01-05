@@ -469,6 +469,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //            LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
             Bundle pBundle = new Bundle();
             pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
+            pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
             pBundle.putInt(getString(R.string.intent_position), position);
             pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
             pBundle.putString(getString(R.string.intent_activityName), grabBOList.get(position).getTitle());

@@ -304,86 +304,6 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
         isKeyBoardShow = false;
     }
 
-/*    private void testData() {
-        int len = MyConfig.testUrls.length;
-        for (int i = 0; i < len; i++)
-            picList.add(MyConfig.testUrls[i]);
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("十年九梦你");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("货已经收到了，东西不错");
-        showBO.setTitle("(第123期)电脑疯抢玩命中...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("糊涂图");
-        commentBO.setContent("你运气真好");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("十年九梦你");
-        replyBO.setToNickName("糊涂图");
-        replyBO.setContent("是的");
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("跑马安卓小飞");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("什么玩意儿");
-        showBO.setTitle("(第124期)疯狂搬砖中...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("马云");
-        commentBO.setContent("小伙子好好干");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("跑马安卓小飞");
-        replyBO.setToNickName("马云");
-        replyBO.setContent("好的");
-        replyBOList = new ArrayList<>();
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList = new ArrayList<>();
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-
-        showBO = new ShowBO();
-        showBO.setPicList(picList);
-        showBO.setNickName("劉強東");
-        showBO.setDynamicDt((new Date()).toString());
-        showBO.setContent("大愛奶茶妹");
-        showBO.setTitle("(第125期)愛愛愛...");
-
-        commentBO = new CommentBO();
-        commentBO.setNickName("劉強東");
-        commentBO.setContent("我媳婦是奶茶妹 ");
-
-        replyBO = new ReplyBO();
-        replyBO.setFromNickName("奶茶妹");
-        replyBO.setToNickName("劉強東");
-        replyBO.setContent("老公我愛你");
-        replyBOList = new ArrayList<>();
-        replyBOList.add(replyBO);
-
-        commentBO.setReplies(replyBOList);
-        commentBOList = new ArrayList<>();
-        commentBOList.add(commentBO);
-        showBO.setComments(commentBOList);
-
-        showBOList.add(showBO);
-        adapter.setItems(showBOList);
-    }*/
 
     private void getData() {
         //1表示晒单分享列表，2表示我的晒单列表
@@ -651,8 +571,11 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     private void addWXPlatform() {
         // 注意：在微信授权的时候，必须传递appSecret
         // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-        String appId = "wx55e834ca0a0327a6";
-        String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+//        String appId = "wx55e834ca0a0327a6";
+//        String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+
+        String appId = "wx49a72bd8d7b71519";
+        String appSecret = "584a22fe3611fe843f8486827f8a68ba";
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(getActivity(), appId, appSecret);
         wxHandler.addToSocialSDK();
@@ -717,6 +640,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.i(TAG, "onActivityResult");
         /** 使用SSO授权必须添加如下代码 */
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {

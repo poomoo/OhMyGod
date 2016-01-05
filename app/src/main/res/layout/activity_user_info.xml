@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:text="@string/label_avatar"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
             android:layout_weight="1"
             android:text="@string/label_nickName"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -133,7 +133,7 @@
             android:layout_weight="1"
             android:text="@string/label_gender"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -150,7 +150,7 @@
                 android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -185,7 +185,7 @@
             android:layout_weight="1"
             android:text="@string/label_age"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -202,7 +202,7 @@
                 android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -238,7 +238,7 @@
             android:layout_weight="1"
             android:text="@string/label_celPhone"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -255,7 +255,7 @@
                 android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -291,7 +291,7 @@
             android:layout_weight="1"
             android:text="@string/label_idCardNum"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -308,7 +308,7 @@
                 android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -345,7 +345,7 @@
             android:layout_weight="1"
             android:text="@string/label_bankCardAccount"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -362,7 +362,7 @@
                 android:gravity="center_vertical|right"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -398,7 +398,7 @@
             android:layout_weight="1"
             android:text="@string/label_address1"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -415,7 +415,7 @@
                 android:gravity="center_vertical"
                 android:text=""
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="@dimen/dp_20"
@@ -450,7 +450,7 @@
             android:layout_centerVertical="true"
             android:text="@string/label_changePassWord"
             android:textColor="@color/themeGray"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="16sp" />
 
         <ImageView
             android:layout_width="wrap_content"

@@ -1105,6 +1105,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edittext"
                         android:padding="@dimen/dp_10"
+                        android:hint="@string/hint_addressDetail"
                         android:singleLine="true"
                         android:textColor="@color/themeGray"
                         android:textSize="16sp" />
