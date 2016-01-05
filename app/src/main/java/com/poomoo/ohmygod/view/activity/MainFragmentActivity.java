@@ -177,7 +177,7 @@ public class MainFragmentActivity extends
     }
 
     private void getInfo() {
-        if ((messageBOList != null && messageBOList.size() > 0)) {
+        if ((messageBOList != null && messageBOList.size() > 0) && messageInfoBO != null) {
             statementId = messageBOList.get(0).getStatementId();
             content = messageInfoBO.getContent();
             if (!MyUtil.isRead(statementId)) {
