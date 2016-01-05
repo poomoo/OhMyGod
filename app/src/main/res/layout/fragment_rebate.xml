@@ -70,7 +70,7 @@
                             android:paddingLeft="@dimen/dp_8"
                             android:text="@string/label_rebate3"
                             android:textColor="@color/white"
-                            android:textSize="22sp" />
+                            android:textSize="20sp" />
 
                         <TextView
                             android:layout_width="match_parent"

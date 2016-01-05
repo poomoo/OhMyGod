@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/divider"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
@@ -39,7 +40,7 @@
                     android:maxEms="8"
                     android:singleLine="true"
                     android:text="系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息系统消息"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/img_inStationMessageStatus"
@@ -55,9 +56,7 @@
                     android:layout_alignParentRight="true"
                     android:text="2015-9-20 11:32:32"
                     android:textColor="@color/themeGray"
-                    android:textSize="@dimen/sp_16" />
-
-
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <TextView
@@ -66,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="系统消息系统消息系统消息系统消息系统消息"
                 android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_18"
+                android:textSize="16sp"
                 android:visibility="gone" />
 
         </LinearLayout>
