@@ -575,17 +575,21 @@ public class CommodityInformationActivity extends BaseActivity {
                         closeProgressDialog();
                         GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
                         String message;
+                        Message message1 = new Message();
                         if (grabResultBO.getIsWin().equals("true")) {
 //                            if(1==1){
 //                                openActivity(CompleteMemberInformationActivity.class);
 //                                return;
 //                            }
-                            animImg.setImageResource(succeedAnim);
+                            message1.what = 1;
+                            myHandler.sendMessage(message1);
                             showToast(true);
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             showToast(false);
                             LogUtils.i(TAG, "failedAnim:" + failedAnim);
-                            animImg.setImageResource(failedAnim);
+                            message1.what = 2;
+                            myHandler.sendMessage(message1);
+//                            animImg.setImageResource(failedAnim);
                             message = "很遗憾,没有中奖,请再接再厉";
                             MyUtil.showToast(getApplicationContext(), message);
                         } else {
@@ -677,6 +681,7 @@ public class CommodityInformationActivity extends BaseActivity {
             winningRecordsBO.setGetAddress(commodityBO.getGetAddress());
             winningRecordsBO.setGetEndDt(commodityBO.getEndDt());
             winningRecordsBO.setGetRequire(commodityBO.getGetRequire());
+            winningRecordsBO.setActiveId(activeId);//不传活动ID不能晒单
             final Bundle bundle = new Bundle();
             bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
             if (typeId == 4) {//小宗商品中奖后需要判断是否完善资料
@@ -833,4 +838,19 @@ public class CommodityInformationActivity extends BaseActivity {
 
         }
     }
+
+
+    Handler myHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    animImg.setImageResource(succeedAnim);
+                    break;
+                case 2:
+                    animImg.setImageResource(failedAnim);
+                    break;
+            }
+        }
+    };
 }
