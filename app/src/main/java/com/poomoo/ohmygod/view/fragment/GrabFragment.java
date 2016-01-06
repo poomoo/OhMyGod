@@ -292,6 +292,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             switch (msg.what) {
                 case 1:
                     SpannableString spannableString;
+                    if (winnerBOList.size() == 0)
+                        return;
                     if (index >= winnerBOList.size())
                         index = 0;
                     if (!TextUtils.isEmpty(winnerBOList.get(index).getWinNickName()))
