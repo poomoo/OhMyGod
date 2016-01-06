@@ -70,8 +70,8 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
         LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
 //        if (position == 0) {
-            grabBO.setStatus(1);
-            grabBO.setStartCountdown((position + 1) * 5 * 60 * 1000);
+//            grabBO.setStatus(1);
+//            grabBO.setStartCountdown((position + 1) * 5 * 60 * 1000);
 //        }
 
         if (grabBO.getStatus() == 1) {
