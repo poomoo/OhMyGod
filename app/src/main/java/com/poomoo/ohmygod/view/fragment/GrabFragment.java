@@ -345,6 +345,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 if (isRefreshable)
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
 
+                winnerRlayout.setVisibility(View.VISIBLE);
                 remindLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
 //                hideFloatingActionButton();
@@ -362,6 +363,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
 
                 slideShowView.setVisibility(View.GONE);
+                winnerRlayout.setVisibility(View.GONE);
 //                noWinningInfoLlayout.setVisibility(View.GONE);
                 remindLlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");

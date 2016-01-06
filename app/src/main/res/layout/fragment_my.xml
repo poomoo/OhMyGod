@@ -73,7 +73,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_avatar"
                 app:border_outside_color="@color/white"
-                app:border_thickness="3dp" />
+                app:border_thickness="1dp" />
         </LinearLayout>
 
 

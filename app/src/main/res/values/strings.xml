@@ -312,6 +312,7 @@
     <string name="hint_bankAccount">请填写详细的银行卡号</string>
     <string name="hint_openBank">请填写详细的开户银行</string>
     <string name="hint_bankAccountName">请填写详细的开户姓名</string>
+    <string name="hint_zone">请填写购置房屋区域</string>
 
     <!--hint-->
 

@@ -86,7 +86,7 @@ public class RebateFragment extends BaseFragment implements View.OnClickListener
                 //中奖
                 if (signedBO.getIsWin() == 1) {
                     totalBalanceTxt.setText(signedBO.getTotalCashFee());
-                    totalBalanceTxt.setTextSize(getResources().getDimension(R.dimen.sp_28));
+                    totalBalanceTxt.setTextSize(getResources().getDimension(R.dimen.sp_26));
                 }
                 unRebatedAmountTxt.setText(signedBO.getCountUse());
                 rebatedAmountTxt.setText(signedBO.getCountUsed());

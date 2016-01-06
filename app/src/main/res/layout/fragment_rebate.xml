@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="@dimen/dp_8">
+        android:padding="4dp">
 
         <!--显示标题-->
         <TextView
@@ -55,30 +55,30 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:paddingBottom="@dimen/dp_10"
-                            android:paddingLeft="@dimen/dp_8"
-                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="8dp"
                             android:text="@string/label_rebate1"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/txt_rebateTotalBalance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/dp_8"
+                            android:paddingLeft="4dp"
                             android:text="@string/label_rebate3"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            android:textSize="22sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:paddingBottom="@dimen/dp_10"
-                            android:paddingLeft="@dimen/dp_8"
-                            android:paddingTop="@dimen/dp_10"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="8dp"
                             android:text="@string/label_rebate2"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/themeRed"
                         android:orientation="horizontal"
-                        android:padding="@dimen/dp_10">
+                        android:padding="6dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -102,8 +102,8 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="@dimen/dp_10"
-                            android:paddingTop="@dimen/dp_10">
+                            android:padding="6dp"
+                            android:paddingTop="6dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -114,7 +114,7 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_8" />
+                                android:layout_height="4dp" />
 
                             <TextView
                                 android:id="@+id/txt_unRebatedAmount"
@@ -139,8 +139,9 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
-                            android:padding="@dimen/dp_10"
-                            android:paddingLeft="@dimen/dp_18">
+                            android:paddingBottom="6dp"
+                            android:paddingLeft="14dp"
+                            android:paddingTop="6dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -151,7 +152,7 @@
 
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dp_8" />
+                                android:layout_height="4dp" />
 
                             <TextView
                                 android:id="@+id/txt_rebatedAmount"
@@ -187,7 +188,7 @@
                                 android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/dp_14">
+                                android:padding="12dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -223,7 +224,7 @@
                                 android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/dp_14">
+                                android:padding="12dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -258,7 +259,7 @@
                                 android:background="@color/white"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/dp_14">
+                                android:padding="12dp">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
