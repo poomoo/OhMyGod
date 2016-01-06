@@ -156,6 +156,12 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
+        if (passWord.length() < 6) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "密码不能少于6位");
+            }
+            return;
+        }
 
         if (TextUtils.isEmpty(code)) {
             if (listener != null) {

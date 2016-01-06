@@ -4,213 +4,213 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/housefailed1"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed2"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed3"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed4"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed5"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed6"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed7"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed8"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed9"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed10"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed11"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed12"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed13"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed14"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed15"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed16"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed17"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed18"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed19"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed20"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed21"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed22"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed23"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed24"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed25"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed26"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed27"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed28"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed29"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed30"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed31"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed32"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed33"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed34"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed35"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed36"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed37"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed38"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed39"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed40"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed41"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed42"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed43"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed44"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed45"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed46"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed47"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed48"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed49"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed50"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed51"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed52"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed53"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed54"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed55"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed56"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed57"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed58"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed59"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed60"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed61"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed62"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed62"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed63"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed64"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed65"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed66"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed67"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed68"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/housefailed69"
-        android:duration="300" />
+        android:duration="600" />
 
 </animation-list>

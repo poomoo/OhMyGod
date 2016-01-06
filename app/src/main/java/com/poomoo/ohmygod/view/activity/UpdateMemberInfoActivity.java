@@ -350,7 +350,8 @@ public class UpdateMemberInfoActivity extends BaseActivity implements View.OnCli
     }
 
     private void initData() {
-        nameEdt.setText(application.getRealName());
+        if (TextUtils.isEmpty(nameEdt.getText().toString().trim()))
+            nameEdt.setText(application.getRealName());
         if (application.getSex().equals("1"))
             manRBtn.setChecked(true);
         else if (application.getSex().equals("2"))

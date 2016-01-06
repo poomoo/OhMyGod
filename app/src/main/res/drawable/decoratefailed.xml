@@ -4,69 +4,69 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/decoratefailed1"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed2"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed3"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed4"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed5"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed6"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed7"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed8"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed9"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed10"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed11"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed12"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed13"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed14"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed15"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed16"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed17"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed18"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed19"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed20"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed21"
-        android:duration="300" />
+        android:duration="600" />
     <item
         android:drawable="@drawable/decoratefailed22"
-        android:duration="300" />
+        android:duration="600" />
 
 </animation-list>
