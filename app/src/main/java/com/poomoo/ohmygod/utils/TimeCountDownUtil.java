@@ -118,15 +118,22 @@ public class TimeCountDownUtil extends CountDownTimer {
             }
 
             if (view instanceof TextView) {
-                if (view.getTag().equals("TextView")) {
-                    view.setClickable(true);// 设置点击
-                    ((TextView) view).setText("重新获取");
-                } else {
+                if (flag.equals("1")) {
                     ((TextView) view).setText("活动已开始");
                     ((TextView) view).setTextColor(Color.parseColor("#E81540"));
+                } else {
+                    view.setClickable(true);// 设置点击
+                    ((TextView) view).setText("重新获取");
                 }
-
             }
+//                if (view.getTag().equals("TextView")) {
+//                    view.setClickable(true);// 设置点击
+//                    ((TextView) view).setText("重新获取");
+//                } else {
+//                    ((TextView) view).setText("活动已开始");
+//                    ((TextView) view).setTextColor(Color.parseColor("#E81540"));
+//                }
+
 
 //            if (view instanceof Button) {
 //                ((Button) view).setText("重新获取");

@@ -292,7 +292,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             switch (msg.what) {
                 case 1:
                     SpannableString spannableString;
-                    if (index > winnerBOList.size())
+                    if (index >= winnerBOList.size())
                         index = 0;
                     if (!TextUtils.isEmpty(winnerBOList.get(index).getWinNickName()))
                         spannableString = new SpannableString("获奖用户: " + winnerBOList.get(index).getWinNickName() + "  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
