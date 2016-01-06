@@ -338,8 +338,7 @@ public class MyUtil {
                     || TextUtils.isEmpty(application.getIdOpsitePic()))
                 return true;
         } else {
-            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getIdCardNum())
-                    || TextUtils.isEmpty(application.getAddress()))
+            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getAddress()))
                 return true;
         }
         return false;
