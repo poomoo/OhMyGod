@@ -48,13 +48,14 @@ import java.util.List;
 public class MemberInfoActivity extends BaseActivity {
     private ImageView headImg;
     private TextView nickNameTxt;
+    private TextView realNameTxt;
     private TextView genderTxt;
     private TextView ageTxt;
     private TextView phoneNumTxt;
     private TextView idCardNumTxt;
     private TextView bankCardNumTxt;
     private TextView addressTxt;
-    private TextView realNameTxt;
+    private TextView bankAcountNameTxt;
     private TextView bankNameTxt;
     private ImageView frontImg;
     private ImageView backImg;
@@ -100,13 +101,14 @@ public class MemberInfoActivity extends BaseActivity {
 
         headImg = (ImageView) findViewById(R.id.img_memberInfo_head);
         nickNameTxt = (TextView) findViewById(R.id.txt_memberInfo_nickName);
+        realNameTxt = (TextView) findViewById(R.id.txt_memberInfo_realName);
         genderTxt = (TextView) findViewById(R.id.txt_memberInfo_gender);
         ageTxt = (TextView) findViewById(R.id.txt_memberInfo_age);
         phoneNumTxt = (TextView) findViewById(R.id.txt_memberInfo_phoneNum);
         idCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_idCardNum);
         bankCardNumTxt = (TextView) findViewById(R.id.txt_memberInfo_bankCardNum);
         addressTxt = (TextView) findViewById(R.id.txt_memberInfo_address);
-        realNameTxt = (TextView) findViewById(R.id.txt_memberInfo_bankAccountName);
+        bankAcountNameTxt = (TextView) findViewById(R.id.txt_memberInfo_bankAccountName);
         bankNameTxt = (TextView) findViewById(R.id.txt_memberInfo_bankName);
         frontImg = (ImageView) findViewById(R.id.img_memberInfo_front_idCard);
         backImg = (ImageView) findViewById(R.id.img_memberInfo_back_idCard);
@@ -182,6 +184,7 @@ public class MemberInfoActivity extends BaseActivity {
         addressTxt.setText(application.getAddress());
         realNameTxt.setText(application.getRealName());
         bankNameTxt.setText(application.getBankName());
+        realNameTxt.setText(application.getBankName());
     }
 
     /**

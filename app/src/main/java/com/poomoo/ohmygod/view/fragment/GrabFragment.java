@@ -169,7 +169,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         timeList.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                long time = 0;
+                long time;
                 // 获得日历实例
                 Calendar calendar = Calendar.getInstance();
                 int nYear = calendar.get(Calendar.YEAR);
@@ -179,17 +179,23 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 int minute = calendar.get(Calendar.MINUTE);
                 int second = calendar.get(Calendar.SECOND);
                 calendar.set(nYear, nMonth, nDayofMonth, hour, minute, second);
-
+                long currTime = calendar.getTimeInMillis();
+//                LogUtils.i(TAG, "当前时间:" + currTime);
+                long tipTime = MyConfig.time[position] * 60 * 1000;
+                long leftTime;
                 int len = GrabFragment.adapter.getCountDownUtils().size();
                 if (len > 0) {
                     for (int i = 0; i < len; i++) {
-                        long leftTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
-                        if (leftTime > 0) {
+                        long countDownTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
+                        if (countDownTime > 0) {
                             existCountDown = true;
-                            time = calendar.getTimeInMillis() + leftTime - MyConfig.time[position] * 60 * 1000;
-                            LogUtils.i(TAG, "i:" + i + " time:" + time);
-                            calendar.setTimeInMillis(time);
-                            LogUtils.i(TAG, "calendar:" + calendar.getTime());
+                            leftTime = countDownTime - tipTime;
+                            LogUtils.i(TAG, "i:" + i + "当前时间:" + currTime);
+                            LogUtils.i(TAG, "i:" + i + "倒计时间:" + countDownTime);
+                            LogUtils.i(TAG, "i:" + i + "提醒时间:" + tipTime);
+                            LogUtils.i(TAG, "i:" + i + "剩余时间:" + leftTime);
+
+
                             /* 建立Intent和PendingIntent，来调用目标组件 */
                             Intent intent = new Intent(getActivity(), CallAlarm.class);
                             intent.setAction(i + "");
@@ -198,19 +204,24 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             intent.addCategory(i + "");
                             intent.setClass(getActivity(), CallAlarm.class);
                             intent.putExtra("_id", 0);
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, 0);
                             AlarmManager am;
                             /* 获取闹钟管理的实例 */
                             am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
+                            time = currTime + leftTime;
+                            LogUtils.i(TAG, "提醒时间:" + time);
+                            calendar.setTimeInMillis(time);
                             /* 设置闹钟 */
-                            am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                            LogUtils.i(TAG, "calendar:" + calendar.getTime());
                         }
                     }
 
                     if (existCountDown)
                         MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
                     else {
-                        time = calendar.getTimeInMillis() + MyConfig.time[position] * 60 * 1000;
+                        time = currTime + tipTime;
                         calendar.setTimeInMillis(time);
                         LogUtils.i(TAG, "calendar:" + calendar.getTime());
                             /* 建立Intent和PendingIntent，来调用目标组件 */
@@ -226,7 +237,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             /* 获取闹钟管理的实例 */
                         am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
                             /* 设置闹钟 */
-                        am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+                        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                         MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
                     }
                     tipFlag = false;
@@ -235,7 +246,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     MyUtil.showToast(getActivity().getApplicationContext(), "当前没有活动需要提醒");
 
                 timePopupWindow.dismiss();
-//                hideFloatingActionButton();
             }
         });
         initPopWindow();
@@ -646,8 +656,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private void cancelTip() {
         int len = GrabFragment.adapter.getCountDownUtils().size();
         for (int i = 0; i < len; i++) {
-            long leftTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
-            if (leftTime > 0) {
+            long countDownTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
+            if (countDownTime > 0) {
                 existCountDown = true;
                 /* 建立Intent和PendingIntent，来调用目标组件 */
                 Intent intent = new Intent(getActivity(), CallAlarm.class);
@@ -657,7 +667,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 intent.addCategory(i + "");
                 intent.setClass(getActivity(), CallAlarm.class);
                 intent.putExtra("_id", 0);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, 0);
                 AlarmManager am;
                 /* 获取闹钟管理的实例 */
                 am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);

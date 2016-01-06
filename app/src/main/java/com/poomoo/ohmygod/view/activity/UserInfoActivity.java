@@ -49,6 +49,7 @@ import java.util.List;
 public class UserInfoActivity extends BaseActivity {
     private ImageView headImg;
     private TextView nickNameTxt;
+    private TextView realNameTxt;
     private TextView genderTxt;
     private TextView ageTxt;
     private TextView phoneNumTxt;
@@ -91,6 +92,7 @@ public class UserInfoActivity extends BaseActivity {
 
         headImg = (ImageView) findViewById(R.id.img_userInfo_head);
         nickNameTxt = (TextView) findViewById(R.id.txt_userInfo_nickName);
+        realNameTxt = (TextView) findViewById(R.id.txt_userInfo_realName);
         genderTxt = (TextView) findViewById(R.id.txt_userInfo_gender);
         ageTxt = (TextView) findViewById(R.id.txt_userInfo_age);
         phoneNumTxt = (TextView) findViewById(R.id.txt_userInfo_phoneNum);
@@ -137,7 +139,7 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         nickNameTxt.setText(application.getNickName());
-
+        realNameTxt.setText(application.getRealName());
         if (TextUtils.isEmpty(application.getSex()))
             gender = "";
         else if (application.getSex().equals("1"))
