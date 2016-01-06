@@ -187,9 +187,11 @@ public class CompleteUserInformationActivity extends BaseActivity implements OnC
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
                 startService(new Intent(CompleteUserInformationActivity.this, Get_UserInfo_Service.class));
                 winningRecordsBO = (WinningRecordsBO) getIntent().getSerializableExtra(getString(R.string.intent_value));
-                Bundle pBundle = new Bundle();
-                pBundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
-                openActivity(WinningRecord2Activity.class, pBundle);
+                if (winningRecordsBO != null) {
+                    Bundle pBundle = new Bundle();
+                    pBundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
+                    openActivity(WinningRecord2Activity.class, pBundle);
+                }
                 finish();
             }
 
