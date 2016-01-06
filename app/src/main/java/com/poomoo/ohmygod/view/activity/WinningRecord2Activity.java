@@ -52,10 +52,7 @@ public class WinningRecord2Activity extends BaseActivity {
         addressTxt.setText(winningRecordsBO.getGetAddress());
         dateTxt.setText(winningRecordsBO.getGetEndDt());
         requirementTxt.setText(winningRecordsBO.getGetRequire());
-        if (!MyUtil.isNeedCompleteInfo(application)) {
-            completeInfoBtn.setClickable(false);
-            completeInfoBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
-        }
+
     }
 
     protected void initTitleBar() {
@@ -90,5 +87,14 @@ public class WinningRecord2Activity extends BaseActivity {
             openActivity(CompleteMemberInformationActivity.class);
         else
             openActivity(CompleteUserInformationActivity.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!MyUtil.isNeedCompleteInfo(application)) {
+            completeInfoBtn.setClickable(false);
+            completeInfoBtn.setBackgroundResource(R.drawable.bg_open_activity_pressed);
+        }
     }
 }

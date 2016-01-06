@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
@@ -85,6 +86,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private final static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGod.temp";
     private WinningRecordsBO winningRecordsBO;
+    private DisplayImageOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +123,33 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     }
 
     private void initData() {
-        if (!(TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic()))) {
-            DisplayImageOptions options = new DisplayImageOptions.Builder() //
-                    .cacheInMemory(true) //
-                    .cacheOnDisk(true) //
-                    .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
-                    .build();//
-            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg, options);
-            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg, options);
-        }
+        options = new DisplayImageOptions.Builder() //
+                .cacheInMemory(true) //
+                .cacheOnDisk(true) //
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
+        if (!TextUtils.isEmpty(application.getIdFrontPic()))
+            ImageLoader.getInstance().loadImage(application.getIdFrontPic(), options, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    path1 = Environment.getExternalStorageDirectory() + "/" + "OhMyGod1.jpg";
+                    file1 = FileUtils.saveBitmapByPath(loadedImage, path1);
+                    frontIdCardImg.setImageBitmap(loadedImage);
+                }
+            });
+//            ImageLoader.getInstance().displayImage(application.getIdFrontPic(), frontIdCardImg, options);
+
+        if (!TextUtils.isEmpty(application.getIdOpsitePic()))
+            ImageLoader.getInstance().loadImage(application.getIdOpsitePic(), options, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    path2 = Environment.getExternalStorageDirectory() + "/" + "OhMyGod1.jpg";
+                    file2 = FileUtils.saveBitmapByPath(loadedImage, path2);
+                    backIdCardImg.setImageBitmap(loadedImage);
+                }
+            });
+//            ImageLoader.getInstance().displayImage(application.getIdOpsitePic(), backIdCardImg, options);
+
 
         openBankEdt.setText(application.getBankName());
         accountNameEdt.setText(application.getRealName());
