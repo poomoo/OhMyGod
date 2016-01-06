@@ -121,7 +121,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     }
 
     private void initData() {
-        if (TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic())) {
+        if (!(TextUtils.isEmpty(application.getIdFrontPic()) && TextUtils.isEmpty(application.getIdFrontPic()))) {
             DisplayImageOptions options = new DisplayImageOptions.Builder() //
                     .cacheInMemory(true) //
                     .cacheOnDisk(true) //

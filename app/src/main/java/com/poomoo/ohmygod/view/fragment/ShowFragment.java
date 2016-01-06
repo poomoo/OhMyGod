@@ -36,6 +36,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
+import com.poomoo.ohmygod.view.activity.NickNameActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
@@ -144,6 +145,12 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
     public void onResult(String name, View v, ShowBO show, int itemPosition, int commentPosition) {
         if (!MyUtil.isLogin(getActivity()))
             return;
+        if (TextUtils.isEmpty(application.getNickName())) {
+            Bundle pBundle = new Bundle();
+            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_nickName));
+            openActivity(NickNameActivity.class, pBundle);
+            return;
+        }
         toNickName = name;
         view = v;
         this.itemPosition = itemPosition;

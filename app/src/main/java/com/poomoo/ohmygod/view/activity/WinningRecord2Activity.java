@@ -71,11 +71,18 @@ public class WinningRecord2Activity extends BaseActivity {
     }
 
     public void toShow(View view) {
-        Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_title), winningRecordsBO.getTitle());
-        pBundle.putInt(getString(R.string.intent_activeId), winningRecordsBO.getActiveId());
-        openActivity(ShowAndShareActivity.class, pBundle);
-        finish();
+        if (TextUtils.isEmpty(application.getNickName())) {
+            Bundle pBundle = new Bundle();
+            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_nickName));
+            openActivity(NickNameActivity.class, pBundle);
+        } else {
+            Bundle pBundle = new Bundle();
+            pBundle.putString(getString(R.string.intent_title), winningRecordsBO.getTitle());
+            pBundle.putInt(getString(R.string.intent_activeId), winningRecordsBO.getActiveId());
+            openActivity(ShowAndShareActivity.class, pBundle);
+            finish();
+        }
+
     }
 
     public void toCompletedUserInfo(View view) {
