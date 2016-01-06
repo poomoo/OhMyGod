@@ -36,7 +36,8 @@
     <string name="title_setting">"设置"</string>
     <string name="title_userInfo">"个人资料"</string>
     <string name="title_nickName">"修改昵称"</string>
-    <string name="title_realName">"修改账户名"</string>
+    <string name="title_realName">"修改姓名"</string>
+    <string name="title_accountName">"修改账户名"</string>
     <string name="title_changePhone">"换绑手机"</string>
     <string name="title_changeIdCardInfo">"修改身份证信息"</string>
     <string name="title_idCardInfo">"身份证信息"</string>
@@ -261,6 +262,7 @@
     <string name="intent_countDownTime">countDownTime</string>
     <string name="intent_nickName">nickName</string>
     <string name="intent_realName">realName</string>
+    <string name="intent_accountName">accountName</string>
     <string name="intent_rebate">rebate</string>
     <string name="intent_signed">signed</string>
     <string name="intent_value">values</string>

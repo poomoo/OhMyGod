@@ -62,6 +62,8 @@ public class NickNameActivity extends BaseActivity {
             title = getString(R.string.title_nickName);
         if (PARENT.equals(getString(R.string.intent_realName)))
             title = getString(R.string.title_realName);
+        if (PARENT.equals(getString(R.string.intent_accountName)))
+            title = getString(R.string.title_accountName);
         if (PARENT.equals(getString(R.string.intent_age)))
             title = getString(R.string.title_age);
         if (PARENT.equals(getString(R.string.intent_openBank)))
@@ -85,7 +87,7 @@ public class NickNameActivity extends BaseActivity {
     public void toSubmit(View view) {
         if (PARENT.equals(getString(R.string.intent_nickName)))
             key = "nickName";
-        if (PARENT.equals(getString(R.string.intent_realName)))
+        if (PARENT.equals(getString(R.string.intent_realName)) || PARENT.equals(getString(R.string.intent_accountName)))
             key = "realName";
         if (PARENT.equals(getString(R.string.intent_age)))
             key = "age";

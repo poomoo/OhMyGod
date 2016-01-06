@@ -175,6 +175,16 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     /**
+     * @param view
+     */
+    public void toRealName(View view) {
+        Bundle pBundle = new Bundle();
+        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_realName));
+        openActivity(NickNameActivity.class, pBundle);
+    }
+
+
+    /**
      * 性别
      *
      * @param view

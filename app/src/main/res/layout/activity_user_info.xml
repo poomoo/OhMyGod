@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:clickable="true"
-        android:onClick="toNickName"
+        android:onClick="toRealName"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp_8"
         android:paddingLeft="@dimen/dp_16"
