@@ -185,7 +185,7 @@ public class MemberInfoActivity extends BaseActivity {
         addressTxt.setText(application.getAddress());
         realNameTxt.setText(application.getRealName());
         bankNameTxt.setText(application.getBankName());
-        realNameTxt.setText(application.getBankName());
+        bankAcountNameTxt.setText(application.getRealName());
     }
 
     /**

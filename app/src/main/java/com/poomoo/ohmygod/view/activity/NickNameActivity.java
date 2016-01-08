@@ -110,6 +110,12 @@ public class NickNameActivity extends BaseActivity {
                 if (PARENT.equals(getString(R.string.intent_realName))) {
                     application.setRealName(value);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), value);
+                    MyUtil.showToast(getApplicationContext(), "修改姓名成功");
+                }
+
+                if (PARENT.equals(getString(R.string.intent_accountName))) {
+                    application.setRealName(value);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), value);
                     MyUtil.showToast(getApplicationContext(), "修改账户名成功");
                 }
 
