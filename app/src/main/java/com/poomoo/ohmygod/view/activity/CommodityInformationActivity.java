@@ -685,24 +685,7 @@ public class CommodityInformationActivity extends BaseActivity {
             final Bundle bundle = new Bundle();
             bundle.putSerializable(getString(R.string.intent_value), winningRecordsBO);
             if (typeId == 4) {//小宗商品中奖后需要判断是否完善资料
-                if (MyUtil.isNeedCompleteInfo(application)) {
-                    textView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (application.getIsAdvancedUser().equals("0"))
-                                openActivity(CompleteUserInformationActivity.class, bundle);
-                            else
-                                openActivity(CompleteMemberInformationActivity.class, bundle);
-                            finish();
-                        }
-                    });
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            rlayout_clickToComplete.setVisibility(View.GONE);
-                        }
-                    });
-                } else {
+                if (application.getIsAdvancedUser().equals("1")) {//小宗商品中奖后如果是升级会员则不需要完善资料
                     textView.setText(getString(R.string.label_clickToWinningRecords));
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -717,7 +700,42 @@ public class CommodityInformationActivity extends BaseActivity {
                             rlayout_clickToComplete.setVisibility(View.GONE);
                         }
                     });
+                } else {
+                    if (MyUtil.isNeedCompleteInfo(application)) {
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+//                                if (application.getIsAdvancedUser().equals("0"))
+                                openActivity(CompleteUserInformationActivity.class, bundle);
+//                                else
+//                                    openActivity(CompleteMemberInformationActivity.class, bundle);
+                                finish();
+                            }
+                        });
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                rlayout_clickToComplete.setVisibility(View.GONE);
+                            }
+                        });
+                    } else {
+                        textView.setText(getString(R.string.label_clickToWinningRecords));
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                openActivity(WinningRecord2Activity.class, bundle);
+                                finish();
+                            }
+                        });
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                rlayout_clickToComplete.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                 }
+
             } else {//大宗商品中奖后直接跳转到中奖记录
                 textView.setText(getString(R.string.label_clickToWinningRecords));
                 textView.setOnClickListener(new View.OnClickListener() {
