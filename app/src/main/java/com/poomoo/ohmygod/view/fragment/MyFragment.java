@@ -85,6 +85,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private static final int NONE = 0;
     private static final int PHOTOHRAPH = 1;// 拍照
     private static final int PHOTORESOULT = 2;// 结果
+    public static final int PHOTOZOOM = 3; // 缩放
 
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private static String image_capture_path = Environment.getExternalStorageDirectory() + "/" + "OhMyGodHead.temp";
@@ -191,7 +192,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     Intent intent = new Intent(Intent.ACTION_PICK, null);
                     intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
                     intent.putExtra("return-data", true);
-                    startActivityForResult(intent, PHOTORESOULT);
+                    startActivityForResult(intent, PHOTOZOOM);
                     break;
             }
         }
@@ -203,48 +204,75 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         startActivityForResult(intent1, PHOTOHRAPH);
     }
 
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 100);
+        intent.putExtra("outputY", 100);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, PHOTORESOULT);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == NONE)
             return;
         // 拍照
         if (requestCode == PHOTOHRAPH) {
-            System.out.println("拍照返回");
-            setImage(image_capture_path);
+            // 设置文件保存路径这里放在跟目录下
+            File picture = new File(image_capture_path);
+            startPhotoZoom(Uri.fromFile(picture));
         }
         if (data == null) {
             System.out.println("返回为空");
             return;
         }
+        // 读取相册缩放图片
+        if (requestCode == PHOTOZOOM) {
+            startPhotoZoom(data.getData());
+        }
+
         // 处理结果
         if (requestCode == PHOTORESOULT) {
-            // 取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
-            Uri mImageCaptureUri = data.getData();
-            System.out.println("mImageCaptureUri:" + mImageCaptureUri);
-            // 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
-            if (mImageCaptureUri != null) {
-                try {
-                    Cursor cursor = getActivity().getContentResolver().query(mImageCaptureUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-                    String imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
-                    cursor.close();
-                    setImage(imagePath);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                bitmap = extras.getParcelable("data");
+                setImage(bitmap);
             }
-            super.onActivityResult(requestCode, resultCode, data);
         }
-
+//        if (requestCode == PHOTORESOULT) {
+//            // 取得返回的Uri,基本上选择照片的时候返回的是以Uri形式，但是在拍照中有得机子呢Uri是空的，所以要特别注意
+//            Uri mImageCaptureUri = data.getData();
+//            LogUtils.i(TAG, "mImageCaptureUri:" + mImageCaptureUri);
+//            // 返回的Uri不为空时，那么图片信息数据都会在Uri中获得。如果为空，那么我们就进行下面的方式获取
+//            if (mImageCaptureUri != null) {
+//                try {
+//                    Cursor cursor = getActivity().getContentResolver().query(mImageCaptureUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+//                    cursor.moveToFirst();
+//                    int columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+//                    String imagePath = cursor.getString(columnIndex); // 从内容提供者这里获取到图片的路径
+//                    cursor.close();
+//                    setImage(imagePath);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void setImage(String path) {
-        try {
-            bitmap = Bimp.revitionImageSize(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    private void setImage(Bitmap bitmap) {
+//        try {
+//            bitmap = Bimp.revitionImageSize(path);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         file = FileUtils.saveBitmapByPath(bitmap, image_capture_path);
         fileBOList = new ArrayList<>();
         fileBO = new FileBO();
