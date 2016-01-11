@@ -71,7 +71,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
     public void toLogin(View view) {
         phoneNum = phoneNumEdt.getText().toString().trim();
         passWord = passWordEdt.getText().toString().trim();
-        showProgressDialog("登陆中...");
+        showProgressDialog("登录中...");
         this.appAction.logIn(phoneNum, passWord, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
@@ -101,29 +101,25 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_register:
-                toRegister(v);
+                toRegister();
                 break;
             case R.id.txt_forgetPassWord:
-                toForgetPassWord(v);
+                toForgetPassWord();
                 break;
         }
     }
 
     /**
      * 注册
-     *
-     * @param view
      */
-    public void toRegister(View view) {
+    private void toRegister() {
         openActivity(RegisterActivity.class);
     }
 
     /**
      * 忘记密码
-     *
-     * @param view
      */
-    public void toForgetPassWord(View view) {
+    private void toForgetPassWord() {
         phoneNum = phoneNumEdt.getText().toString().trim();
         if (TextUtils.isEmpty(phoneNum)) {
             MyUtil.showToast(getApplicationContext(), "请输入手机号");
