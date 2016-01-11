@@ -233,8 +233,8 @@
 
     <!--登陆注册-->
     <string name="label_rememberPassWord">"记住登陆密码"</string>
-    <string name="label_register"><u>立即注册</u></string>
-    <string name="label_forgetPassWord"><u>忘记密码?</u></string>
+    <string name="label_register">立即注册</string>
+    <string name="label_forgetPassWord">忘记密码?</string>
     <string name="label_agree">请阅读同意后注册</string>
     <string name="label_protocol">《天呐用户协议》</string>
     <!--登陆注册-->
@@ -342,7 +342,7 @@
     <string name="btn_submit">提交</string>
     <string name="btn_get_code_again">重获验证码</string>
     <string name="btn_alter">修改</string>
-    <string name="btn_log_in">登　陆</string>
+    <string name="btn_log_in">登　录</string>
     <string name="btn_register">注　册</string>
     <string name="btn_lucky">看看大家手气</string>
     <string name="btn_signIn">我要报名</string>
