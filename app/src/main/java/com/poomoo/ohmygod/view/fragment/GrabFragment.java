@@ -474,10 +474,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         if (!MyUtil.isLogin(getActivity()))
             return;
 
-//        if (!application.getLocateCity().equals(application.getCurrCity())) {
-//            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-//            return;
-//        }
+        if (!application.getLocateCity().equals(application.getCurrCity())) {
+            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+            return;
+        }
         if (grabBOList.get(position).getStatus() == 1) {
 //            LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
             Bundle pBundle = new Bundle();
