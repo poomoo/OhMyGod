@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -40,11 +41,12 @@ import java.util.List;
 public class MainFragmentActivity extends
         BaseActivity {
     private RadioGroup group;
+    public static RadioButton showRBtn;
     private InformPopupWindow informPopupWindow;
-    private Fragment curFragment;
+    public static Fragment curFragment;
     private GrabFragment grabFrament;
     private RebateFragment rebateFragment;
-    private ShowFragment showFragment;
+    public static ShowFragment showFragment;
     private MyFragment myFragment;
     private long exitTime = 0;
     public static MainFragmentActivity instance;
@@ -59,6 +61,7 @@ public class MainFragmentActivity extends
         setContentView(R.layout.activity_main);
 
         group = (RadioGroup) findViewById(R.id.group_main);
+        showRBtn = (RadioButton) findViewById(R.id.activity_main_radioButton_show);
 
         setDefaultFragment();
         instance = this;
@@ -204,6 +207,10 @@ public class MainFragmentActivity extends
 //                }
 //            });
 //        }
+    }
+
+    public MainFragmentActivity getInstance() {
+        return MainFragmentActivity.this;
     }
 
     @Override

@@ -16,7 +16,8 @@
         android:padding="10dp"
         android:text="恭喜您已获得"
         android:textColor="@color/themeGray"
-        android:textSize="@dimen/sp_18" />
+        android:textSize="@dimen/sp_18"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.core.ErrorEvent;
@@ -26,7 +27,9 @@ import java.util.regex.Pattern;
  * 作者: 李苜菲
  * 日期: 2015/11/25 14:28.
  */
-public class LogInActivity extends BaseActivity {
+public class LogInActivity extends BaseActivity implements View.OnClickListener {
+    private TextView registerTxt;
+    private TextView forgetPassWordTxt;
     private EditText phoneNumEdt;
     private EditText passWordEdt;
     private CheckBox rememberPassWordChk;
@@ -44,6 +47,11 @@ public class LogInActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        registerTxt = (TextView) findViewById(R.id.txt_register);
+        forgetPassWordTxt = (TextView) findViewById(R.id.txt_forgetPassWord);
+
+        registerTxt.setOnClickListener(this);
+        forgetPassWordTxt.setOnClickListener(this);
         phoneNumEdt = (EditText) findViewById(R.id.edt_login_phoneNum);
         passWordEdt = (EditText) findViewById(R.id.edt_login_passWord);
         rememberPassWordChk = (CheckBox) findViewById(R.id.chk_rememberPassWord);
@@ -89,6 +97,17 @@ public class LogInActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_register:
+                toRegister(v);
+                break;
+            case R.id.txt_forgetPassWord:
+                toForgetPassWord(v);
+                break;
+        }
+    }
 
     /**
      * 注册

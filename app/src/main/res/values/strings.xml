@@ -47,7 +47,7 @@
     <string name="title_safe">"安全校验"</string>
     <string name="title_resetPassWord">"重置密码"</string>
     <string name="title_selectCity">"选择城市"</string>
-    <string name="title_selectAge">"选择年龄"</string>
+    <string name="title_selectAge">"选择您的年龄"</string>
     <string name="title_selectGender">"选择性别"</string>
     <string name="title_age">"年龄"</string>
     <string name="title_userHelp">用户帮助</string>

@@ -179,22 +179,21 @@
             android:paddingRight="@dimen/dp_30">
 
             <TextView
+                android:id="@+id/txt_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:clickable="true"
-                android:onClick="toRegister"
                 android:padding="@dimen/dp_10"
                 android:text="@string/label_register"
+
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
+                android:id="@+id/txt_forgetPassWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:onClick="toForgetPassWord"
                 android:padding="@dimen/dp_10"
                 android:text="@string/label_forgetPassWord"
                 android:textColor="@color/white"

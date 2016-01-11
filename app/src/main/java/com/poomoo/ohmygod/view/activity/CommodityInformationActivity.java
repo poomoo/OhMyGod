@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -100,13 +101,14 @@ public class CommodityInformationActivity extends BaseActivity {
     private int typeId;//活动分类 1-房子 2-车子 3-装修 4-其他
     private Timer timer;
     private boolean isGrab = false;//是否已经参与了该活动
-    private int succeedAnim;//成功动画
-    private int failedAnim;//失败动画
+    private int[] succeedAnim;//成功动画
+    private int[] failedAnim;//失败动画
 
     private double percent = 0;
     private int index = 0;
     private int[] anim;//动画
     private double animLen;//动画数组大小
+    private int len = 0;//抢完后的动画数组长度
     private boolean isScroll = false;
     private double step;//切换图片的步长
     private DecimalFormat df = new DecimalFormat("0.00");
@@ -303,32 +305,32 @@ public class CommodityInformationActivity extends BaseActivity {
             //房子
             if (typeId == 1) {
                 anim = MyConfig.house;
-                succeedAnim = R.drawable.housesuccess;
-                failedAnim = R.drawable.housefailed;
+                succeedAnim = MyConfig.houseSuccess;
+                failedAnim = MyConfig.houseFailed;
                 animSound = SoundUtil.HOUSE;
             }
 
             //车子
             if (typeId == 2) {
                 anim = MyConfig.car;
-                succeedAnim = R.drawable.carsuccess;
-                failedAnim = R.drawable.carfailed;
+                succeedAnim = MyConfig.carSuccess;
+                failedAnim = MyConfig.carFailed;
                 animSound = SoundUtil.CAR;
             }
 
             //装修
             if (typeId == 3) {
                 anim = MyConfig.decorate;
-                succeedAnim = R.drawable.decoratesuccess;
-                failedAnim = R.drawable.decoratefailed;
+                succeedAnim = MyConfig.decorateSuccess;
+                failedAnim = MyConfig.decorateFailed;
                 animSound = SoundUtil.DRAW;
             }
 
             //其他
             if (typeId == 4) {
                 anim = MyConfig.box;
-                succeedAnim = R.drawable.boxsuccess;
-                failedAnim = R.drawable.boxfailed;
+                succeedAnim = MyConfig.boxSuccess;
+                failedAnim = MyConfig.boxFailed;
                 animSound = SoundUtil.OTHER;
             }
         } else {
@@ -451,7 +453,9 @@ public class CommodityInformationActivity extends BaseActivity {
      */
     public void toGrab(View view) {
 //        if (1 == 1) {
-//            showToast();
+//            llayout_anim.setVisibility(View.VISIBLE);
+//            succeedAnim = MyConfig.houseFailed;
+//            showSuccessAnim();
 //            return;
 //        }
 //            customDialog customDialog = new customDialog(this);
@@ -575,21 +579,12 @@ public class CommodityInformationActivity extends BaseActivity {
                         closeProgressDialog();
                         GrabResultBO grabResultBO = (GrabResultBO) data.getObj();
                         String message;
-                        Message message1 = new Message();
                         if (grabResultBO.getIsWin().equals("true")) {
-//                            if(1==1){
-//                                openActivity(CompleteMemberInformationActivity.class);
-//                                return;
-//                            }
-                            message1.what = 1;
-                            myHandler.sendMessage(message1);
+                            showSuccessAnim();
                             showToast(true);
                         } else if (grabResultBO.getIsWin().equals("false")) {
                             showToast(false);
-                            LogUtils.i(TAG, "failedAnim:" + failedAnim);
-                            message1.what = 2;
-                            myHandler.sendMessage(message1);
-//                            animImg.setImageResource(failedAnim);
+                            showFailedAnim();
                             message = "很遗憾,没有中奖,请再接再厉";
                             MyUtil.showToast(getApplicationContext(), message);
                         } else {
@@ -857,16 +852,56 @@ public class CommodityInformationActivity extends BaseActivity {
         }
     }
 
+    private void showSuccessAnim() {
+        LogUtils.i(TAG, "showSucceessAnim");
+        index = 0;
+        len = succeedAnim.length;
+        TimerTask t = new TimerTask() {
+            public void run() {
+                myHandler.sendEmptyMessage(1);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(t, 1000, 500);
+    }
+
+    private void showFailedAnim() {
+        index = 0;
+        len = failedAnim.length;
+        TimerTask t = new TimerTask() {
+            public void run() {
+                myHandler.sendEmptyMessage(2);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(t, 1000, 500);
+    }
 
     Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    animImg.setImageResource(succeedAnim);
+                    LogUtils.i(TAG, "myHandler:" + index);
+                    if (index == len)
+                        index = 0;
+                    //通过ImageView对象拿到背景显示的AnimationDrawable
+                    try {
+                        animImg.setImageResource(succeedAnim[index++]);
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
+                        LogUtils.i(TAG, "内存溢出:" + e.getMessage());
+                    }
                     break;
                 case 2:
-                    animImg.setImageResource(failedAnim);
+                    if (index == len)
+                        index = 0;
+                    try {
+                        animImg.setImageResource(failedAnim[index]);
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
+                        LogUtils.i(TAG, "内存溢出:" + e.getMessage());
+                    }
                     break;
             }
         }

@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -59,6 +60,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     private TextView titleTxt;
     private EditText contentEdt;
     private GridView gridView;
+    private RadioButton showRBtn;
     private AddPicsAdapter addPicsAdapter;
 
     private static final int TAKE_PICTURE = 1;
@@ -86,6 +88,8 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
         titleTxt = (TextView) findViewById(R.id.txt_show_title);
         contentEdt = (EditText) findViewById(R.id.edt_show_content);
         gridView = (GridView) findViewById(R.id.grid_add_pics);
+
+        showRBtn = MainFragmentActivity.instance.showRBtn;
 
         title = getIntent().getStringExtra(getString(R.string.intent_title));
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
@@ -242,6 +246,11 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
+                if (WinningRecordActivity.instance != null)
+                    WinningRecordActivity.instance.finish();
+                MainFragmentActivity.instance.switchToShow(showRBtn);
+                MainFragmentActivity.curFragment = MainFragmentActivity.showFragment;
+                showRBtn.setChecked(true);
                 finish();
                 getActivityOutToRight();
             }

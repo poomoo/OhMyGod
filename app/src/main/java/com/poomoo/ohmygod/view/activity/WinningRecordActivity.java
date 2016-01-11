@@ -44,11 +44,13 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
     private SpannableString spannableString;
     private int currPage = 1;
     private boolean isLoad = false;//true 加载 false刷新
+    public static WinningRecordActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winning_record);
+        instance = this;
         initView();
         showProgressDialog(getString(R.string.dialog_message));
         getData();
@@ -128,6 +130,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
                     spannableString = new SpannableString("恭喜您已获得" + data.getTotalCount() + "个宝物");
                     spannableString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.themeRed)), 6, 7 + String.valueOf(data.getTotalCount()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textView.setText(spannableString);
+                    textView.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -138,6 +141,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
                     refreshLayout.setLoading(false);
                 else
                     refreshLayout.setRefreshing(false);
+                textView.setVisibility(View.GONE);
                 MyUtil.showToast(getApplicationContext(), message);
             }
         });
