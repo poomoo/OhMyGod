@@ -16,6 +16,7 @@ import com.poomoo.core.ErrorEvent;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
 
@@ -78,7 +79,6 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
                 closeProgressDialog();
                 UserBO userBO = (UserBO) data.getObj();
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_isLogin), true);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_phoneNum), phoneNum);
                 if (rememberPassWordChk.isChecked()) {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_rememberPassWord), true);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_passWord), passWord);
@@ -156,9 +156,11 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         this.application.setAddress(userBO.getAddress());
         this.application.setIsAdvancedUser(userBO.getIsAdvancedUser());
 
-//        if (!userBO.getTel().equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""))) {
-//
-//        }
+//        LogUtils.i(TAG, "userBO.getTel():" + userBO.getTel() + " phoneNum:" + SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
+        if (!userBO.getTel().equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""))) {
+            SPUtils.put(getApplicationContext(), getString(R.string.sp_headPicBitmap), "");
+            LogUtils.i(TAG, "电话不一样，清除头像缓存:" + SPUtils.get(getApplicationContext(), getString(R.string.sp_headPicBitmap), "123"));
+        }
         SPUtils.put(getApplicationContext(), getString(R.string.sp_userId), userBO.getUserId());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_phoneNum), userBO.getTel());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), userBO.getNickName());
