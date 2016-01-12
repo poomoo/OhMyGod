@@ -251,19 +251,19 @@ public class CommodityInformationActivity extends BaseActivity {
     private void isMember() {
         typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
         LogUtils.i(TAG, "isMember  typeId:" + typeId + " 升级会员:" + application.getIsAdvancedUser());
-        if (typeId != 4) {
-            if (application.getIsAdvancedUser().equals("1")) {//升级会员
+        if (!isOpen)
+            if (typeId != 4) {
+                if (application.getIsAdvancedUser().equals("1")) {//升级会员
+                    signInTxt.setVisibility(View.GONE);
+                    openActivityTxt.setVisibility(View.VISIBLE);
+                } else {//普通用户
+                    signInTxt.setVisibility(View.VISIBLE);
+                    openActivityTxt.setVisibility(View.GONE);
+                }
+            } else {
                 signInTxt.setVisibility(View.GONE);
                 openActivityTxt.setVisibility(View.VISIBLE);
-            } else {//普通用户
-                signInTxt.setVisibility(View.VISIBLE);
-                openActivityTxt.setVisibility(View.GONE);
             }
-        } else {
-            signInTxt.setVisibility(View.GONE);
-            openActivityTxt.setVisibility(View.VISIBLE);
-        }
-
     }
 
     private void getData() {
