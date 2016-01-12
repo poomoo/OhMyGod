@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
 
 
 public class IndexViewPagerActivity extends BaseActivity implements
-        OnClickListener, OnPageChangeListener {
+        OnClickListener, OnPageChangeListener, View.OnTouchListener {
 
     private ViewPager vp;
     private ViewPagerAdapter vpAdapter;
@@ -40,6 +41,8 @@ public class IndexViewPagerActivity extends BaseActivity implements
 
     private TextView clickInTxt;
     private String PARENT;
+    private float x1 = 0;
+    private float x2 = 0;
 
     /**
      * Called when the activity is first created.
@@ -77,6 +80,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
         vp.setOnPageChangeListener(this);
 
         views.get(pics.length - 1).setOnClickListener(this);
+        views.get(pics.length - 1).setOnTouchListener(this);
         // 初始化底部小点
         initDots();
     }
@@ -123,13 +127,13 @@ public class IndexViewPagerActivity extends BaseActivity implements
     @Override
     public void onPageScrollStateChanged(int arg0) {
         // TODO Auto-generated method stub
-
     }
 
     // 当当前页面被滑动时调用
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
         // TODO Auto-generated method stub
+
 
     }
 
@@ -152,5 +156,28 @@ public class IndexViewPagerActivity extends BaseActivity implements
             openActivity(MainFragmentActivity.class);
             finish();
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        //手指按下的点为(x1, y1)手指离开屏幕的点为(x2, y2)
+        LogUtils.i(TAG, "onTouch:" + event.getAction());
+        //继承了Activity的onTouchEvent方法，直接监听点击事件
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            //当手指按下的时候
+            x1 = event.getX();
+            LogUtils.i(TAG, "ACTION_DOWN:" + x1);
+        }
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            //当手指离开的时候
+            x2 = event.getX();
+            LogUtils.i(TAG, "ACTION_MOVE:" + "x1:" + x1 + " x2:" + x2);
+            if ((x1 - x2 > 20)) {//向左滑
+                openActivity(MainFragmentActivity.class);
+                finish();
+                return true;
+            }
+        }
+        return false;
     }
 }
