@@ -80,7 +80,8 @@ public class IndexViewPagerActivity extends BaseActivity implements
         vp.setOnPageChangeListener(this);
 
         views.get(pics.length - 1).setOnClickListener(this);
-        views.get(pics.length - 1).setOnTouchListener(this);
+        if (PARENT.equals("index"))
+            views.get(pics.length - 1).setOnTouchListener(this);
         // 初始化底部小点
         initDots();
     }
