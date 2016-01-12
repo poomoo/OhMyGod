@@ -172,7 +172,8 @@ public class MainFragmentActivity extends
         } else {
             fragmentTransaction.hide(curFragment).show(to); // 隐藏当前的fragment，显示下一个
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
+//        fragmentTransaction.commit();
     }
 
     public void showInform(View view) {

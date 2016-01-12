@@ -42,6 +42,7 @@ import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.activity.pics.PhotoActivity;
 import com.poomoo.ohmygod.view.activity.pics.PhotosActivity;
+import com.poomoo.ohmygod.view.fragment.ShowFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,13 +247,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), data.getMsg());
-                if (WinningRecordActivity.instance != null)
-                    WinningRecordActivity.instance.finish();
-                MainFragmentActivity.instance.switchToShow(showRBtn);
-                MainFragmentActivity.curFragment = MainFragmentActivity.showFragment;
-                showRBtn.setChecked(true);
-                finish();
-                getActivityOutToRight();
+                handler.sendEmptyMessage(1);
             }
 
             @Override
@@ -302,6 +297,24 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
                 } else {
                     uploadPics();
                 }
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            if (msg.what == 1) {
+                if (WinningRecordActivity.instance != null)
+                    WinningRecordActivity.instance.finish();
+                if (MainFragmentActivity.showFragment == null)
+                    MainFragmentActivity.showFragment = new ShowFragment();
+                MainFragmentActivity.instance.switchFragment(MainFragmentActivity.showFragment);
+                MainFragmentActivity.curFragment = MainFragmentActivity.showFragment;
+                showRBtn.setChecked(true);
+                finish();
+                getActivityOutToRight();
             }
             super.handleMessage(msg);
         }
