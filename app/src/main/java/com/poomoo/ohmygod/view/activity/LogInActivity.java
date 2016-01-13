@@ -38,11 +38,13 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
     private String phoneNum;
     private String passWord;
 
+    public static LogInActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-
+        instance = this;
         initView();
     }
 
