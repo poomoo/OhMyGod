@@ -50,56 +50,140 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.LogInActivity" />
-        <activity android:name=".view.activity.MainFragmentActivity" />
-        <activity android:name=".view.activity.WebViewActivity" />
-        <activity android:name=".view.activity.SnatchRecordActivity" />
-        <activity android:name=".view.activity.WinningRecordActivity" />
-        <activity android:name=".view.activity.WinningRecord2Activity" />
-        <activity android:name=".view.activity.ShowAndShareActivity" />
-        <activity android:name=".view.activity.MyWithdrawDepositActivity" />
-        <activity android:name=".view.activity.WithdrawDepositActivity" />
-        <activity android:name=".view.activity.VerifyPhoneNumActivity" />
-        <activity android:name=".view.activity.WithdrawDepositDetailsActivity" />
-        <activity android:name=".view.activity.InStationMessagesActivity" />
-        <activity android:name=".view.activity.MyShowActivity" />
-        <activity android:name=".view.activity.SettingActivity" />
-        <activity android:name=".view.activity.UserInfoActivity" />
-        <activity android:name=".view.activity.VerifyPhoneNum2Activity" />
-        <activity android:name=".view.activity.ChangePhone2Activity" />
-        <activity android:name=".view.activity.ChangePhone3Activity" />
-        <activity android:name=".view.activity.ChangeIdCardInfoActivity" />
-        <activity android:name=".view.activity.IdCardInfoActivity" />
-        <activity android:name=".view.activity.BankCardActivity" />
-        <activity android:name=".view.activity.ChangeBankCardNumActivity" />
-        <activity android:name=".view.activity.ChangeBankCardInfoActivity" />
-        <activity android:name=".view.activity.ResetPassWordActivity" />
-        <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.SelectActivity" />
-        <activity android:name=".view.activity.CommodityInformationActivity" />
-        <activity android:name=".view.activity.CommodityInformation2Activity" />
-        <activity android:name=".view.activity.CompleteUserInformationActivity" />
-        <activity android:name=".view.activity.UpdateMemberInfoActivity" />
-        <activity android:name=".view.activity.NickNameActivity" />
-        <activity android:name=".view.activity.FeedBackActivity" />
-        <activity android:name=".view.activity.CityListActivity" />
-        <activity android:name=".view.activity.WinInformationActivity" />
-        <activity android:name=".view.activity.AddressActivity" />
-        <activity android:name=".view.activity.CompleteMemberInformationActivity" />
-        <activity android:name=".view.activity.MemberInfoActivity" />
-        <activity android:name=".view.activity.RebateRecordsActivity" />
-        <activity android:name=".view.activity.WinnerListActivity" />
-        <activity android:name=".view.activity.IndexViewPagerActivity" />
+        <activity
+            android:name=".view.activity.LogInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MainFragmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.SnatchRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WinningRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WinningRecord2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ShowAndShareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MyWithdrawDepositActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WithdrawDepositActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.VerifyPhoneNumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WithdrawDepositDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.InStationMessagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MyShowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.VerifyPhoneNum2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChangePhone2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChangePhone3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChangeIdCardInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.IdCardInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.BankCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChangeBankCardNumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ChangeBankCardInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.ResetPassWordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.SelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.CommodityInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.CommodityInformation2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.CompleteUserInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.UpdateMemberInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.NickNameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.FeedBackActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.CityListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WinInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.CompleteMemberInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MemberInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.RebateRecordsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.WinnerListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.IndexViewPagerActivity"
+            android:exported="false" />
 
-        <activity android:name=".view.activity.TestActivity" />
+        <activity
+            android:name=".view.activity.pics.ImageGridActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.pics.PhotosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.pics.PhotoActivity"
+            android:exported="false" />
 
-
-        <activity android:name=".view.activity.pics.ImageGridActivity" />
-        <activity android:name=".view.activity.pics.PhotosActivity" />
-        <activity android:name=".view.activity.pics.PhotoActivity" />
-
-
-        <activity android:name=".view.bigimage.ImagePagerActivity" />
+        <activity
+            android:name=".view.bigimage.ImagePagerActivity"
+            android:exported="false" />
 
         <service
             android:name=".service.Get_UserInfo_Service"
