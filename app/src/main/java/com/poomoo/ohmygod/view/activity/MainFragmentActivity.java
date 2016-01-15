@@ -66,6 +66,7 @@ public class MainFragmentActivity extends
                 Check_Status_Service.dialog.dismiss();
             this.finish();
             openActivity(SplashActivity.class);
+            return;
         }
         LogUtils.i(TAG, "onCreate");
         addActivityToArrayList(this);
