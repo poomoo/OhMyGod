@@ -91,6 +91,7 @@ public class SlideShowView extends FrameLayout {
         defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.bg_snatch_record) //
                 .showImageOnFail(R.drawable.bg_snatch_record) //
+                .showImageOnLoading(R.drawable.bg_snatch_record)//
                 .cacheInMemory(true) //
                 .cacheOnDisk(true) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
