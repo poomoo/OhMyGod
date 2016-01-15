@@ -28,20 +28,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,7 +53,7 @@ public class HttpEngine {
     public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://www.tnomg.com/zgqg/app/";// 远程
     public static final String URL = BaseLocalUrl + "call.htm";
-    public static final String PICSURL = BaseRemoteUrl + "/common/uploadPic.ajax";
+    public static final String PICTURE = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间
     public static final int TIMEOUT = 1 * 30 * 1000;// 网络通讯超时
@@ -167,7 +160,7 @@ public class HttpEngine {
         String PREFIX = "--", LINE_END = "\r\n";
         String CONTENT_TYPE = "multipart/form-data"; // 内容类型
 
-        URL url = new URL(PICSURL);
+        URL url = new URL(PICTURE);
         HttpURLConnection conn = (HttpURLConnection) url
                 .openConnection();
         conn.setReadTimeout(5 * 1000); // 缓存的最长时间
