@@ -52,7 +52,7 @@ public class HttpEngine {
     // IP
     public static final String BaseLocalUrl = "http://192.168.0.122:8080/zgqg/app/";// 本地
     public static final String BaseRemoteUrl = "http://www.tnomg.com/zgqg/app/";// 远程
-    public static final String URL = BaseLocalUrl + "call.htm";
+    public static final String URL = BaseRemoteUrl + "call.htm";
     public static final String PICTURE = BaseRemoteUrl + "/common/uploadPic.ajax";
 
     // 时间
