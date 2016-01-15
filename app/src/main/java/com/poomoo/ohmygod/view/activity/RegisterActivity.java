@@ -198,7 +198,7 @@ public class RegisterActivity extends BaseActivity {
      */
     private void login() {
         showProgressDialog("登录中...");
-        this.appAction.logIn(phoneNum, passWord, new ActionCallbackListener() {
+        this.appAction.logIn(phoneNum, passWord, application.getChannelId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();

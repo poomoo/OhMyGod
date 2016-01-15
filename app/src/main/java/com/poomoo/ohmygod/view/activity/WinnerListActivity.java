@@ -37,7 +37,7 @@ public class WinnerListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winnner_list);
-
+        addActivityToArrayList(this);
         initView();
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
         activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));

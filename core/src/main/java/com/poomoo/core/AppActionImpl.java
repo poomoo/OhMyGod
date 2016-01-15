@@ -35,7 +35,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void logIn(final String phoneNum, final String passWord, final ActionCallbackListener listener) {
+    public void logIn(final String phoneNum, final String passWord, final String channelId, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(phoneNum)) {
             if (listener != null) {
@@ -62,7 +62,7 @@ public class AppActionImpl implements AppAction {
         new AsyncTask<Void, Void, ResponseBO<UserBO>>() {
             @Override
             protected ResponseBO<UserBO> doInBackground(Void... params) {
-                return api.login(phoneNum, passWord);
+                return api.login(phoneNum, passWord, channelId);
             }
 
             @Override
@@ -894,6 +894,28 @@ public class AppActionImpl implements AppAction {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
                 return api.getActivityWinnerList(activeId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void checkStatus(final String userId, final String channelId, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.checkStatus(userId, channelId);
             }
 
             @Override

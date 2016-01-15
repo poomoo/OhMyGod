@@ -47,7 +47,7 @@ public class CommodityInformation2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_information2);
-
+        addActivityToArrayList(this);
         initView();
         getData();
         activityName = getIntent().getStringExtra(getString(R.string.intent_activityName));

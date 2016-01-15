@@ -29,7 +29,7 @@ public class ResetPassWordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_passwrod);
-
+        addActivityToArrayList(this);
         initView();
     }
 

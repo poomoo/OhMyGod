@@ -23,7 +23,7 @@ public class WithdrawDepositDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_deposit_details);
-
+        addActivityToArrayList(this);
         initView();
     }
 

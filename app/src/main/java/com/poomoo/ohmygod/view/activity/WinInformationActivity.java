@@ -40,7 +40,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_information);
-
+        addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));
         getData();

@@ -7,6 +7,7 @@ import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
+import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.RebateBO;
@@ -39,12 +40,13 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO login(String phoneNum, String passWord) {
+    public ResponseBO login(String phoneNum, String passWord, String channelId) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.USERACTION);
         paramMap.put("method", Config.LOGIN);
         paramMap.put("tel", phoneNum);
         paramMap.put("password", passWord);
+        paramMap.put("channelId", channelId);
 
 //        Type type = new TypeToken<ResponseBO<Void>>() {
 //        }.getType();
@@ -198,7 +200,7 @@ public class ApiImpl implements Api {
 //        paramMap.put("idFrontPic", idFrontPic);
 //        paramMap.put("idOpsitePic", idOpsitePic);
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, UserBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -216,7 +218,7 @@ public class ApiImpl implements Api {
         paramMap.put("idFrontPic", idFrontPic);
         paramMap.put("idOpsitePic", idOpsitePic);
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, UserBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -324,7 +326,7 @@ public class ApiImpl implements Api {
         paramMap.put("pictures", pictures);
 
         try {
-            return httpEngine.postHandle(paramMap, WithdrawDepositBO.class);
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -374,7 +376,7 @@ public class ApiImpl implements Api {
         paramMap.put("commentId", commentId);
 
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, CommentBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -537,7 +539,7 @@ public class ApiImpl implements Api {
         paramMap.put("gfxzqy", gfxzqy);//购房选择区域
         paramMap.put("gfkzwt", gfkzwt);//购房看重问题
         try {
-            return httpEngine.postHandle(paramMap, null);
+            return httpEngine.postHandle(paramMap, UserBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -580,6 +582,21 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, WinnerListBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO checkStatus(String userId, String channelId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.USERACTION);
+        paramMap.put("method", Config.CHECKSTATUS);
+        paramMap.put("userId", userId);
+        paramMap.put("channelId", channelId);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

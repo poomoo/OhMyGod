@@ -74,6 +74,7 @@ public class SplashActivity extends BaseActivity {
                     application.setIdOpsitePic((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_idOpsitePic), ""));
                     application.setBankCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankCardNum), ""));
                     application.setBankName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankName), ""));
+                    application.setChannelId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_channelId), ""));
                     startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
                     openActivity(MainFragmentActivity.class);
                     finish();

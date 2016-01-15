@@ -383,6 +383,7 @@
     <string name="sp_userId">userId</string>
     <string name="sp_address">address</string>
     <string name="sp_isAdvancedUser">isAdvancedUser</string>
+    <string name="sp_channelId">channelId</string>
     <string name="sp_isIndex">isIndex</string>
     <string name="sp_historyCity">historyCity</string>
     <string name="sp_tipFlag">tipFlag</string>

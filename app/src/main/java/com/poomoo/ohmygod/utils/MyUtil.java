@@ -529,4 +529,9 @@ public class MyUtil {
         return cityBOList;
     }
 
+    //把字符串转为日期
+    public static Date ConverToDate(String strDate) throws Exception {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return df.parse(strDate);
+    }
 }

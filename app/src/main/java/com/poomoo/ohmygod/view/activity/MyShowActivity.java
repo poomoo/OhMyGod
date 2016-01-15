@@ -104,7 +104,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_show);
-
+        addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));
         getData();
@@ -252,7 +252,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
                 closeProgressDialog();
                 commentBO = (CommentBO) data.getObj();
                 commentBO.setNickName(application.getNickName());
-                commentBO.setContent(replyContent);
+                commentBO.setContent(commentBO.getContent());
                 commentBO.setDynamicId(showBO.getDynamicId());
                 commentBO.setUserId(application.getUserId());
                 replyBOList = new ArrayList<>();
@@ -299,10 +299,11 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
+                CommentBO commentBO=(CommentBO)data.getObj();
                 replyBO = new ReplyBO();
                 replyBO.setFromUserId(fromUserId);
                 replyBO.setToUserId(toUserId);
-                replyBO.setContent(replyContent);
+                replyBO.setContent(commentBO.getContent());
                 replyBO.setCommentId(commentId);
                 replyBO.setToNickName(toNickName);
                 replyBO.setFromNickName(application.getNickName());

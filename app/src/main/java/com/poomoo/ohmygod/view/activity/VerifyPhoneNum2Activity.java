@@ -43,7 +43,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
 
         if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard)))
             title = getString(R.string.title_safe);
-
+        addActivityToArrayList(this);
         initView();
     }
 

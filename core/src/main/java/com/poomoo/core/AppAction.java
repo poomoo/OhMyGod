@@ -15,7 +15,7 @@ public interface AppAction {
      * @param passWord 密码
      * @param listener 回调监听器
      */
-    void logIn(String phoneNum, String passWord, ActionCallbackListener listener);
+    void logIn(String phoneNum, String passWord,String channelId , ActionCallbackListener listener);
 
     /**
      * 获取验证码
@@ -332,4 +332,13 @@ public interface AppAction {
      * @param listener
      */
     void getActivityWinnerList(String activeId, ActionCallbackListener listener);
+
+    /**
+     * 检查登录状态
+     *
+     * @param userId
+     * @param channelId
+     * @param listener
+     */
+    void checkStatus(String userId, String channelId, ActionCallbackListener listener);
 }

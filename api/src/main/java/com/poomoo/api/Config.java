@@ -28,6 +28,7 @@ public class Config {
     public final static String PASSWORD = "10014";//重置帐号登录密码
     public final static String ADVANCE = "10015";//升级会员
     public final static String REBATEIINFO = "10016";//我的返现
+    public final static String CHECKSTATUS = "10017";//检查登录状态
 
     //ACTION 20000
     public final static String ACTIVITYACTION = "20000";//活动接口统一业务编号

@@ -18,6 +18,7 @@ import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.service.Check_Status_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
@@ -54,17 +55,21 @@ public class MainFragmentActivity extends
     private int statementId = 0;
     private String content;
     public static MessageInfoBO messageInfoBO;
+    private Intent checkStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        addActivityToArrayList(this);
         group = (RadioGroup) findViewById(R.id.group_main);
         showRBtn = (RadioButton) findViewById(R.id.activity_main_radioButton_show);
 
         setDefaultFragment();
         instance = this;
+
+        checkStatus = new Intent(this, Check_Status_Service.class);
+        startService(checkStatus);
     }
 
     private void setDefaultFragment() {
@@ -248,4 +253,11 @@ public class MainFragmentActivity extends
         curFragment.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(checkStatus);
+        LogUtils.i(TAG, "onDestroy");
+    }
 }

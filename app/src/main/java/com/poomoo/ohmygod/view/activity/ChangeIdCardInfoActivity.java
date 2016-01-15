@@ -29,7 +29,7 @@ public class ChangeIdCardInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_idcard_info);
-
+        addActivityToArrayList(this);
         initView();
     }
 

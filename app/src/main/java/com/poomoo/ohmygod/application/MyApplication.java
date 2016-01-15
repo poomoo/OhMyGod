@@ -1,5 +1,6 @@
 package com.poomoo.ohmygod.application;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -9,8 +10,12 @@ import com.poomoo.core.AppAction;
 import com.poomoo.core.AppActionImpl;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.crashhandler.CrashHandler;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import org.litepal.LitePalApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 自定义Application
@@ -39,6 +44,10 @@ public class MyApplication extends LitePalApplication {
     private String locateCity = "";//定位城市
     private String address = "";//收货地址
     private String isAdvancedUser = "";//是否为高级会员 默认值是0，1表示已经成为高级会员
+    private String channelId = "";//设备ID,登录时后台返回
+
+    private static MyApplication instance;//当前对象
+    private List<Activity> activityList;//activity栈
 
     @Override
     public void onCreate() {
@@ -225,5 +234,33 @@ public class MyApplication extends LitePalApplication {
 
     public void setIsAdvancedUser(String isAdvancedUser) {
         this.isAdvancedUser = isAdvancedUser;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+
+    public List<Activity> getActivityList() {
+        if (activityList == null) {
+            activityList = new ArrayList<>();
+        }
+        return activityList;
+    }
+
+    /**
+     * 清除所有activity
+     */
+    public void clearAllActivity() {
+        LogUtils.i("清除所有activity");
+        for (Activity activity : getActivityList()) {
+            activity.finish();
+            LogUtils.i("clearAllActivity:" + activity);
+        }
+        getActivityList().clear();
     }
 }

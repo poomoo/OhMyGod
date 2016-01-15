@@ -3,7 +3,6 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
-import android.app.AlarmManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.database.CityInfo;
@@ -50,7 +50,7 @@ public class AddressActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-
+        addActivityToArrayList(this);
         initView();
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
     }
@@ -126,8 +126,9 @@ public class AddressActivity extends BaseActivity {
                 @Override
                 public void onSuccess(ResponseBO data) {
                     closeProgressDialog();
-                    application.setAddress(address);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
+                    KeyAndValueBO keyAndValueBO = (KeyAndValueBO) data.getObj();
+                    application.setAddress(keyAndValueBO.getValue());
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), keyAndValueBO.getValue());
                     MyUtil.showToast(getApplicationContext(), "修改成功");
                     finish();
                 }

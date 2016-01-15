@@ -97,7 +97,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_list);
-
+        addActivityToArrayList(this);
         initView();
     }
 

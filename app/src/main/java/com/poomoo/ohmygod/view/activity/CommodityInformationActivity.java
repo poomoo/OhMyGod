@@ -131,7 +131,7 @@ public class CommodityInformationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_information);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        addActivityToArrayList(this);
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         LogUtils.i(TAG, "PARENT:" + PARENT);
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);

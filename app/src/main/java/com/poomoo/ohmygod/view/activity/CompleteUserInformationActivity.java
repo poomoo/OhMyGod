@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.PubAdapter;
@@ -91,6 +92,7 @@ public class CompleteUserInformationActivity extends BaseActivity implements OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_user_information);
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -181,10 +183,11 @@ public class CompleteUserInformationActivity extends BaseActivity implements OnC
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "上传成功");
-                application.setRealName(realName);
-                application.setAddress(address);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), realName);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
+                UserBO userBO = (UserBO) data.getObj();
+                application.setRealName(userBO.getRealName());
+                application.setAddress(userBO.getAddress());
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_address), userBO.getAddress());
                 startService(new Intent(CompleteUserInformationActivity.this, Get_UserInfo_Service.class));
                 winningRecordsBO = (WinningRecordsBO) getIntent().getSerializableExtra(getString(R.string.intent_value));
                 if (winningRecordsBO != null) {

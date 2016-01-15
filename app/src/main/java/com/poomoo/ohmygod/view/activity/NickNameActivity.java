@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 修改昵称
@@ -30,6 +34,7 @@ public class NickNameActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nick_name);
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -100,38 +105,43 @@ public class NickNameActivity extends BaseActivity {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
+                try {
+                    JSONObject jsonObject = new JSONObject(data.getJsonData().toString());
 
-                if (PARENT.equals(getString(R.string.intent_nickName))) {
-                    application.setNickName(value);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), value);
-                    MyUtil.showToast(getApplicationContext(), "修改昵称成功");
-                }
+                    if (PARENT.equals(getString(R.string.intent_nickName))) {
+                        application.setNickName(jsonObject.getString(getString(R.string.sp_nickName)));
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_nickName), jsonObject.getString(getString(R.string.sp_nickName)));
+                        MyUtil.showToast(getApplicationContext(), "修改昵称成功");
+                    }
 
-                if (PARENT.equals(getString(R.string.intent_realName))) {
-                    application.setRealName(value);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), value);
-                    MyUtil.showToast(getApplicationContext(), "修改姓名成功");
-                }
+                    if (PARENT.equals(getString(R.string.intent_realName))) {
+                        application.setRealName(jsonObject.getString(getString(R.string.sp_realName)));
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), jsonObject.getString(getString(R.string.sp_realName)));
+                        MyUtil.showToast(getApplicationContext(), "修改姓名成功");
+                    }
 
-                if (PARENT.equals(getString(R.string.intent_accountName))) {
-                    application.setRealName(value);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), value);
-                    MyUtil.showToast(getApplicationContext(), "修改账户名成功");
-                }
+                    if (PARENT.equals(getString(R.string.intent_accountName))) {
+                        application.setRealName(jsonObject.getString(getString(R.string.sp_realName)));
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), jsonObject.getString(getString(R.string.sp_realName)));
+                        MyUtil.showToast(getApplicationContext(), "修改账户名成功");
+                    }
 
-                if (PARENT.equals(getString(R.string.intent_age))) {
-                    application.setAge(value);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_age), value);
-                    MyUtil.showToast(getApplicationContext(), "修改年龄成功");
-                }
+                    if (PARENT.equals(getString(R.string.intent_age))) {
+                        application.setAge(value);
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_age), value);
+                        MyUtil.showToast(getApplicationContext(), "修改年龄成功");
+                    }
 
-                if (PARENT.equals(getString(R.string.intent_openBank))) {
-                    application.setBankName(value);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), value);
-                    MyUtil.showToast(getApplicationContext(), "修改开户银行成功");
+                    if (PARENT.equals(getString(R.string.intent_openBank))) {
+                        application.setBankName(jsonObject.getString(getString(R.string.sp_bankName)));
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), jsonObject.getString(getString(R.string.sp_bankName)));
+                        MyUtil.showToast(getApplicationContext(), "修改开户银行成功");
+                    }
+                    finish();
+                    getActivityOutToRight();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                finish();
-                getActivityOutToRight();
             }
 
             @Override

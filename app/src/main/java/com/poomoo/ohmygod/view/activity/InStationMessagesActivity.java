@@ -45,7 +45,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_station_messages);
-
+        addActivityToArrayList(this);
         initView();
 
     }

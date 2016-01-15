@@ -3,18 +3,24 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Movie;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Calendars;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,14 +29,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.ReplyBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.adapter.PersonalCenterAdapter;
-import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
+import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -52,8 +56,10 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,11 +68,6 @@ import java.util.TimerTask;
  * 日期: 2015/11/26 10:22.
  */
 public class TestActivity extends BaseActivity {
-//    private TextView startTxt;
-//    private TextView endTxt;
-//    private BezierView bezierView;
-//    private Point start;
-//    private Point end;
 
     private EditText replyEdt;
     private Button replyBtn;
@@ -113,6 +114,11 @@ public class TestActivity extends BaseActivity {
     private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/share.htm?dynamicId=";
     private String title = "天呐";
     private String picUrl = "asdf";
+    private int activeId[] = {111, 222, 333};
+    private static String calanderURL = "content://com.android.calendar/calendars";
+    private static String calanderEventURL = "content://com.android.calendar/events";
+    private static String calanderRemiderURL = "content://com.android.calendar/reminders";
+    private Uri queryUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,15 +151,170 @@ public class TestActivity extends BaseActivity {
 //        initView();
 
         // 配置需要分享的相关平台
-        configPlatforms();
+//        configPlatforms();
         // 设置分享内容
-        shareContent();
+//        shareContent();
 
+    }
+
+
+    public void toOk(View view) {
+//        setAlarm();
+        insertCalendar();
+    }
+
+    public void toCancel(View view) {
+//        cancelTip();
+        delete();
+    }
+
+
+    private void setAlarm() {
+        long time;
+        // 获得日历实例
+        Calendar calendar = Calendar.getInstance();
+        int nYear = calendar.get(Calendar.YEAR);
+        int nMonth = calendar.get(Calendar.MONTH);
+        int nDayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        calendar.set(nYear, nMonth, nDayofMonth, hour, minute, second);
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+        long currTime = calendar.getTimeInMillis();
+        long tipTime = 0;
+        for (int i = 0; i < 3; i++) {
+            tipTime += 30 * 1000;
+            LogUtils.i(TAG, "i:" + i + "当前时间:" + currTime);
+            LogUtils.i(TAG, "i:" + i + "定时时间:" + tipTime);
+
+            /* 建立Intent和PendingIntent，来调用目标组件 */
+            Intent intent = new Intent(this, CallAlarm.class);
+            intent.setAction(activeId[i] + "");
+            intent.setType(activeId[i] + "");
+            intent.setData(Uri.EMPTY);
+            intent.addCategory(activeId[i] + "");
+            intent.setClass(this, CallAlarm.class);
+            intent.putExtra("_id", 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, activeId[i], intent, 0);
+            AlarmManager am;
+            /* 获取闹钟管理的实例 */
+            am = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+            time = currTime + tipTime;
+            calendar.setTimeInMillis(time);
+            LogUtils.i(TAG, "提醒时间:" + calendar.getTime());
+            /* 设置闹钟 */
+            am.set(AlarmManager.ELAPSED_REALTIME, calendar.getTimeInMillis(), pendingIntent);
+        }
+        MyUtil.showToast(getApplicationContext(), "设置成功");
+    }
+
+    private void cancelTip() {
+        for (int i = 0; i < 3; i++) {
+                /* 建立Intent和PendingIntent，来调用目标组件 */
+            Intent intent = new Intent(this, CallAlarm.class);
+            intent.setAction(activeId[i] + "");
+            intent.setType(activeId[i] + "");
+            intent.setData(Uri.EMPTY);
+            intent.addCategory(activeId[i] + "");
+            intent.setClass(this, CallAlarm.class);
+            intent.putExtra("_id", 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, activeId[i], intent, 0);
+            AlarmManager am;
+                /* 获取闹钟管理的实例 */
+            am = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+                /* 取消闹钟 */
+            am.cancel(pendingIntent);
+        }
+        MyUtil.showToast(getApplicationContext(), "取消成功");
+
+    }
+
+
+    private void insertCalendar() {
+        String calId = "";
+//        queryUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+        Cursor userCursor = getContentResolver().query(Uri.parse(calanderURL), null, Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
+
+        if (userCursor.getCount() > 0) {
+            userCursor.moveToFirst();
+            calId = userCursor.getString(userCursor.getColumnIndex("_id"));
+        } else
+            initCalendars();
+        LogUtils.i(TAG, "calId:" + calId);
+        ContentValues event = new ContentValues();
+        event.put("title", "天呐开抢");
+        event.put("description", "快要开始抢购了");
+        event.put("calendar_id", calId);
+
+        Calendar mCalendar = Calendar.getInstance();
+        long start = 0;
+        long end = 0;
+        try {
+            mCalendar.setTime(MyUtil.ConverToDate("2016-01-14 15:50:00"));
+            start = mCalendar.getTime().getTime();
+            mCalendar.setTime(MyUtil.ConverToDate("2016-01-14 16:00:00"));
+            end = mCalendar.getTime().getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        event.put("dtstart", start);
+        event.put("dtend", end);
+        event.put("hasAlarm", 1);
+        event.put("eventTimezone", TimeZone.getDefault().getID().toString());  //这个是时区，必须有，
+
+        Uri newEvent = getContentResolver().insert(Uri.parse(calanderEventURL), event);
+
+        long id = Long.parseLong(newEvent.getLastPathSegment());
+
+        ContentValues values = new ContentValues();
+
+        values.put(CalendarContract.Reminders.EVENT_ID, id);
+        values.put(CalendarContract.Reminders.MINUTES, 5);
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        getContentResolver().insert(Uri.parse(calanderRemiderURL), values);
+        MyUtil.showToast(getApplicationContext(), "设置成功");
+    }
+
+    private void delete() {
+        getContentResolver().delete(Uri.parse(calanderURL), Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null);
+        MyUtil.showToast(getApplicationContext(), "取消成功");
+    }
+
+
+    //添加账户
+    private void initCalendars() {
+
+        TimeZone timeZone = TimeZone.getDefault();
+        ContentValues value = new ContentValues();
+        value.put(Calendars.NAME, "ohmygod");
+
+        value.put(Calendars.ACCOUNT_NAME, "ohmygod@gmail.com");
+        value.put(Calendars.ACCOUNT_TYPE, "com.android.exchange");
+        value.put(Calendars.CALENDAR_DISPLAY_NAME, "ohmygod");
+        value.put(Calendars.VISIBLE, 1);
+        value.put(Calendars.CALENDAR_COLOR, -9206951);
+        value.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
+        value.put(Calendars.SYNC_EVENTS, 1);
+        value.put(Calendars.CALENDAR_TIME_ZONE, timeZone.getID());
+        value.put(Calendars.OWNER_ACCOUNT, "ohmygod@gmail.com");
+        value.put(Calendars.CAN_ORGANIZER_RESPOND, 0);
+
+        Uri calendarUri = Calendars.CONTENT_URI;
+        calendarUri = calendarUri.buildUpon()
+                .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(Calendars.ACCOUNT_NAME, "ohmygod@gmail.com")
+                .appendQueryParameter(Calendars.ACCOUNT_TYPE, "com.android.exchange")
+                .build();
+
+        getContentResolver().insert(calendarUri, value);
     }
 
     /**
      * 配置分享平台参数</br>
      */
+
     private void configPlatforms() {
         // 添加新浪SSO授权
         mController.getConfig().setSsoHandler(new SinaSsoHandler());

@@ -34,6 +34,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.database.CityInfo;
@@ -92,6 +93,7 @@ public class CompleteMemberInformationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_member_information);
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -283,14 +285,15 @@ public class CompleteMemberInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 MyUtil.showToast(getApplicationContext(), "上传成功");
-                application.setBankName(bankName);
-                application.setRealName(accountName);
+                UserBO userBO = (UserBO) data.getObj();
+                application.setBankName(userBO.getBankName());
+                application.setRealName(userBO.getRealName());
                 application.setBankCardNum(bankCardNum);
                 application.setIdFrontPic(urlList.get(0));
                 application.setIdOpsitePic(urlList.get(1));
 
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), bankName);
-                SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), accountName);
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
+                SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_bankCardNum), bankCardNum);
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idFrontPic), urlList.get(0));
                 SPUtils.put(getApplicationContext(), getString(R.string.sp_idOpsitePic), urlList.get(1));

@@ -18,7 +18,7 @@ public class ChangeBankCardInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_bankcard_info);
-
+        addActivityToArrayList(this);
         initView();
     }
 

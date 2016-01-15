@@ -34,6 +34,14 @@
     <!--拨打电话-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!--日历-->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <!--系统级别的Dialog-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="false"
@@ -170,6 +178,9 @@
         <activity
             android:name=".view.activity.IndexViewPagerActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.activity.TestActivity"
+            android:exported="false" />
 
         <activity
             android:name=".view.activity.pics.ImageGridActivity"
@@ -187,6 +198,10 @@
 
         <service
             android:name=".service.Get_UserInfo_Service"
+            android:exported="false" />
+
+        <service
+            android:name=".service.Check_Status_Service"
             android:exported="false" />
 
         <service

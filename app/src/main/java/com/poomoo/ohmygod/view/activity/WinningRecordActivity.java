@@ -51,6 +51,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winning_record);
         instance = this;
+        addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));
         getData();

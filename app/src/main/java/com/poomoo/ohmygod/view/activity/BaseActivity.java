@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.poomoo.core.AppAction;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
+import com.poomoo.ohmygod.utils.SPUtils;
 
 /**
  * Activity基类
@@ -182,5 +183,54 @@ public class BaseActivity extends Activity {
             getActivityOutToRight();
         }
         return true;
+    }
+
+    /**
+     * 增加Activity
+     *
+     * @param activity 需要加入的activity
+     */
+    public void addActivityToArrayList(Activity activity) {
+        application.getActivityList().add(activity);
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(getString(R.string.sp_userId), application.getUserId());
+        outState.putString(getString(R.string.sp_sex), application.getSex());
+        outState.putString(getString(R.string.sp_nickName), application.getNickName());
+        outState.putString(getString(R.string.sp_realName), application.getRealName());
+        outState.putString(getString(R.string.sp_age), application.getAge());
+        outState.putString(getString(R.string.sp_phoneNum), application.getTel());
+        outState.putString(getString(R.string.sp_address), application.getAddress());
+        outState.putString(getString(R.string.sp_isAdvancedUser), application.getIsAdvancedUser());
+        outState.putString(getString(R.string.sp_idCardNum), application.getIdCardNum());
+        outState.putString(getString(R.string.sp_idFrontPic), application.getIdFrontPic());
+        outState.putString(getString(R.string.sp_idOpsitePic), application.getIdOpsitePic());
+        outState.putString(getString(R.string.sp_bankCardNum), application.getBankCardNum());
+        outState.putString(getString(R.string.sp_bankName), application.getBankName());
+        outState.putString(getString(R.string.sp_channelId), application.getChannelId());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            application.setUserId(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setSex(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setRealName(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setAge(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setTel(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setAddress(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setIsAdvancedUser(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setIdCardNum(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setIdFrontPic(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setIdOpsitePic(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setBankCardNum(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setBankName(savedInstanceState.getString(getString(R.string.sp_userId)));
+            application.setChannelId(savedInstanceState.getString(getString(R.string.sp_userId)));
+        }
     }
 }

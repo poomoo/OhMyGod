@@ -33,7 +33,7 @@ public class RebateRecordsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_rebate_records);
-
+        addActivityToArrayList(this);
         initView();
         getData();
     }

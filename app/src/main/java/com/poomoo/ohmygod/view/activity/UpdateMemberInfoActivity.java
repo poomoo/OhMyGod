@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
+import com.poomoo.model.UserBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.PubAdapter;
 import com.poomoo.ohmygod.adapter.TimeAdapter;
@@ -93,7 +94,7 @@ public class UpdateMemberInfoActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_member_information);
-
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -223,18 +224,19 @@ public class UpdateMemberInfoActivity extends BaseActivity implements View.OnCli
                 public void onSuccess(ResponseBO data) {
                     closeProgressDialog();
                     MyUtil.showToast(getApplicationContext(), "报名成功");
+                    UserBO userBO = (UserBO) data.getObj();
                     application.setIsAdvancedUser("1");
-                    application.setRealName(name);
+                    application.setRealName(userBO.getRealName());
                     application.setSex(sex);
                     application.setAge(age);
-                    application.setAddress(address);
+                    application.setAddress(userBO.getAddress());
                     application.setIdCardNum(idCardNum);
 
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_isAdvancedUser), "1");
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), name);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_realName), userBO.getRealName());
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_sex), sex);
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_age), age);
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), address);
+                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), userBO.getAddress());
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_idCardNum), idCardNum);
 
                     finish();

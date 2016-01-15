@@ -45,6 +45,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         instance = this;
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -75,7 +76,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         phoneNum = phoneNumEdt.getText().toString().trim();
         passWord = passWordEdt.getText().toString().trim();
         showProgressDialog("登录中...");
-        this.appAction.logIn(phoneNum, passWord, new ActionCallbackListener() {
+        this.appAction.logIn(phoneNum, passWord,application.getChannelId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
@@ -157,6 +158,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         this.application.setBankName(userBO.getBankName());
         this.application.setAddress(userBO.getAddress());
         this.application.setIsAdvancedUser(userBO.getIsAdvancedUser());
+        this.application.setChannelId(userBO.getChannelId());
 
 //        LogUtils.i(TAG, "userBO.getTel():" + userBO.getTel() + " phoneNum:" + SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
         if (!userBO.getTel().equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""))) {
@@ -179,5 +181,6 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         SPUtils.put(getApplicationContext(), getString(R.string.sp_bankName), userBO.getBankName());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_address), userBO.getAddress());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_isAdvancedUser), userBO.getIsAdvancedUser());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_channelId), userBO.getChannelId());
     }
 }

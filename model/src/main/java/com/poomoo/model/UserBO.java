@@ -26,6 +26,7 @@ public class UserBO {
     private String isActiveWarm = "";//--活动警告1开启，0未开启
     private String address = "";//收货地址
     private String isAdvancedUser = "";//是否为高级会员  默认值是0，1表示已经成为高级会员
+    private String channelId = "";//设备ID,登录时后台返回
 
     public String getUserId() {
         return userId;
@@ -163,6 +164,14 @@ public class UserBO {
         this.isAdvancedUser = isAdvancedUser;
     }
 
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
     @Override
     public String toString() {
         return "UserBO{" +
@@ -183,6 +192,7 @@ public class UserBO {
                 ", isActiveWarm='" + isActiveWarm + '\'' +
                 ", address='" + address + '\'' +
                 ", isAdvancedUser='" + isAdvancedUser + '\'' +
+                ", channelId='" + channelId + '\'' +
                 '}';
     }
 }

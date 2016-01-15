@@ -48,6 +48,7 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
 
         instance = this;
+        addActivityToArrayList(this);
         initView();
     }
 

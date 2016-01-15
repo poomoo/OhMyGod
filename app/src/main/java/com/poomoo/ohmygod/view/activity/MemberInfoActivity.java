@@ -94,6 +94,7 @@ public class MemberInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_info);
         instance = this;
+        addActivityToArrayList(this);
         initView();
     }
 

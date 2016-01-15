@@ -85,6 +85,7 @@ public class UserInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         instance = this;
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -294,7 +295,7 @@ public class UserInfoActivity extends BaseActivity {
             value = "1";
         else
             value = "2";
-        showProgressDialog("提交中...");
+        showProgressDialog(getString(R.string.dialog_message));
         this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

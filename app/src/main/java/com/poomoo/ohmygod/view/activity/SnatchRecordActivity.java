@@ -41,7 +41,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snatch_record);
-
+        addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));
         getData();

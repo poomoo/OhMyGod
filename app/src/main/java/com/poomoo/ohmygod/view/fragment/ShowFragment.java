@@ -362,7 +362,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
                 closeProgressDialog();
                 commentBO = (CommentBO) data.getObj();
                 commentBO.setNickName(application.getNickName());
-                commentBO.setContent(replyContent);
+                commentBO.setContent(commentBO.getContent());
                 commentBO.setDynamicId(showBO.getDynamicId());
                 commentBO.setUserId(application.getUserId());
                 replyBOList = new ArrayList<>();
@@ -407,10 +407,11 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
+                CommentBO commentBO=(CommentBO)data.getObj();
                 replyBO = new ReplyBO();
                 replyBO.setFromUserId(fromUserId);
                 replyBO.setToUserId(toUserId);
-                replyBO.setContent(replyContent);
+                replyBO.setContent(commentBO.getContent());
                 replyBO.setCommentId(commentId);
                 replyBO.setToNickName(toNickName);
                 replyBO.setFromNickName(application.getNickName());
