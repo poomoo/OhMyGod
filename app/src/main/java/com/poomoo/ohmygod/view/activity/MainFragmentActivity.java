@@ -61,6 +61,13 @@ public class MainFragmentActivity extends
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null) {
+            if (Check_Status_Service.dialog != null && Check_Status_Service.dialog.isShowing())
+                Check_Status_Service.dialog.dismiss();
+            this.finish();
+            openActivity(SplashActivity.class);
+        }
+        LogUtils.i(TAG, "onCreate");
         addActivityToArrayList(this);
         group = (RadioGroup) findViewById(R.id.group_main);
         showRBtn = (RadioButton) findViewById(R.id.activity_main_radioButton_show);
@@ -170,6 +177,7 @@ public class MainFragmentActivity extends
      * @param to
      */
     public void switchFragment(Fragment to) {
+        LogUtils.i(TAG, "switchFragment---" + to);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if (!to.isAdded()) { // 先判断是否被add过
@@ -259,5 +267,11 @@ public class MainFragmentActivity extends
         super.onDestroy();
         stopService(checkStatus);
         LogUtils.i(TAG, "onDestroy");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LogUtils.i(TAG, "onStop");
     }
 }

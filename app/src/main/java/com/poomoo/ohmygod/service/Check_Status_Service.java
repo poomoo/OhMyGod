@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -29,6 +30,7 @@ public class Check_Status_Service extends Service {
     private String TAG = "Check_Status_Service";
     private Timer timerSyncNef = null;// 定时
     private TimerTask syncNef = null;
+    public static AlertDialog dialog;
 
     public void onCreate() {
         super.onCreate();
@@ -72,8 +74,9 @@ public class Check_Status_Service extends Service {
             public void onFailure(int errorCode, String message) {
                 LogUtils.i(TAG, "该账号已登录" + "errorCode" + errorCode);
                 if (errorCode == -1) {
-
-                    Dialog dialog = new AlertDialog.Builder(getApplicationContext()).setTitle("该账号已在其他设备登录").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    timerSyncNef.cancel();
+                    stopSelf();
+                    dialog = new AlertDialog.Builder(getApplicationContext()).setTitle("该账号已在其他设备登录").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             application.clearAllActivity();
@@ -84,6 +87,14 @@ public class Check_Status_Service extends Service {
                     }).create();
                     dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
                     dialog.setCanceledOnTouchOutside(false);
+                    dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                            if (keyCode == KeyEvent.KEYCODE_BACK)
+                                return true;
+                            return false;
+                        }
+                    });
                     dialog.show();
                     LogUtils.i(TAG, "弹出对话框");
                 }
