@@ -38,9 +38,10 @@ public class SettingActivity extends BaseActivity {
 
     // 首先在您的Activity中添加如下成员变量
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-    private String content = "天呐APP";
-    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/companyDesc.htm";
-    private String title = "天呐";
+    private String content = "天呐APP下载";
+    //    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/companyDesc.htm";
+    private String website = "http://a.app.qq.com/o/simple.jsp?pkgname=com.poomoo.ohmygod";
+    private String title = "天呐APP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,8 +250,8 @@ public class SettingActivity extends BaseActivity {
      * : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
      */
     private void addQQQZonePlatform() {
-        String appId = "100424468";
-        String appKey = "c7394704798a158208a74ab60104f0ba";
+        String appId = "1105034933";
+        String appKey = "EjvftRWhsTXReJug";
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, appId, appKey);
         qqSsoHandler.setTargetUrl(website);
@@ -268,8 +269,8 @@ public class SettingActivity extends BaseActivity {
     private void addWXPlatform() {
         // 注意：在微信授权的时候，必须传递appSecret
         // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-        String appId = "wx55e834ca0a0327a6";
-        String appSecret = "5bb696d9ccd75a38c8a0bfe0675559b3";
+        String appId = "wx49a72bd8d7b71519";
+        String appSecret = "584a22fe3611fe843f8486827f8a68ba";
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(this, appId, appSecret);
         wxHandler.addToSocialSDK();

@@ -862,7 +862,7 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         };
         timer = new Timer();
-        timer.schedule(t, 1000, 500);
+        timer.schedule(t, 1000, 200);
     }
 
     private void showFailedAnim() {
@@ -874,9 +874,10 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         };
         timer = new Timer();
-        timer.schedule(t, 1000, 500);
+        timer.schedule(t, 1000, 200);
     }
 
+    private Bitmap bitmap;
     Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -887,7 +888,8 @@ public class CommodityInformationActivity extends BaseActivity {
                         index = 0;
                     //通过ImageView对象拿到背景显示的AnimationDrawable
                     try {
-                        animImg.setImageResource(succeedAnim[index++]);
+                        bitmap = MyUtil.readBitMap(getApplicationContext(), succeedAnim[index++]);
+                        animImg.setImageBitmap(bitmap);
                     } catch (OutOfMemoryError e) {
                         e.printStackTrace();
                         LogUtils.i(TAG, "内存溢出:" + e.getMessage());
@@ -897,7 +899,8 @@ public class CommodityInformationActivity extends BaseActivity {
                     if (index == len)
                         index = 0;
                     try {
-                        animImg.setImageResource(failedAnim[index]);
+                        bitmap=MyUtil.readBitMap(getApplicationContext(), failedAnim[index++]);
+                        animImg.setImageBitmap(bitmap);
                     } catch (OutOfMemoryError e) {
                         e.printStackTrace();
                         LogUtils.i(TAG, "内存溢出:" + e.getMessage());

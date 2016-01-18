@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -333,10 +334,10 @@ public class MyUtil {
             LogUtils.i(TAG, "bankName:" + application.getBankName());
             LogUtils.i(TAG, "getIdFrontPic:" + application.getIdFrontPic());
             LogUtils.i(TAG, "getIdOpsitePic:" + application.getIdOpsitePic());
-            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
-                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getIdFrontPic())
-                    || TextUtils.isEmpty(application.getIdOpsitePic()))
-                return true;
+//            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
+//                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getIdFrontPic())
+//                    || TextUtils.isEmpty(application.getIdOpsitePic()))
+                return false;
         } else {
             if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getAddress()))
                 return true;
@@ -533,5 +534,23 @@ public class MyUtil {
     public static Date ConverToDate(String strDate) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return df.parse(strDate);
+    }
+
+
+    /**
+     * 以最省内存的方式读取本地资源的图片
+     *
+     * @param context
+     * @param resId
+     * @return
+     */
+    public static Bitmap readBitMap(Context context, int resId) {
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;
+        opt.inPurgeable = true;
+        opt.inInputShareable = true;
+        //获取资源图片
+        InputStream is = context.getResources().openRawResource(resId);
+        return BitmapFactory.decodeStream(is, null, opt);
     }
 }

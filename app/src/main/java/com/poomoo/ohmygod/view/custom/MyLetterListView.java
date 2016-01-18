@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -41,7 +42,7 @@ public class MyLetterListView extends View {
         int singleHeight = height / b.length;
         for (int i = 0; i < b.length; i++) {
             paint.setColor(Color.parseColor("#8c8c8c"));
-            paint.setTextSize(26);
+            paint.setTextSize(24);
             // paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             /*if (i == choose) {

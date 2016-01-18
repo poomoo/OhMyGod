@@ -110,8 +110,9 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
 
     // 首先在您的Activity中添加如下成员变量
     public static final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-    private String content = "天呐" + "\n" + "http://www.baidu.com";
-    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/share.htm?dynamicId=";
+    private String content = "天呐";
+//    private String website = "http://zgqg.91jiaoyou.cn/zgqg/weixin/shareFromApp/share.htm?dynamicId=";
+    private String website = "http://www.tnomg.com/zgqg/weixin/shareFromApp/share.htm?dynamicId=";
     private String title = "天呐";
     private String dynamicId = "";
     private String picUrl;
@@ -407,7 +408,7 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
-                CommentBO commentBO=(CommentBO)data.getObj();
+                CommentBO commentBO = (CommentBO) data.getObj();
                 replyBO = new ReplyBO();
                 replyBO.setFromUserId(fromUserId);
                 replyBO.setToUserId(toUserId);
@@ -560,8 +561,8 @@ public class ShowFragment extends BaseFragment implements OnRefreshListener, OnL
      * : 用户点击该分享时跳转到的目标地址 [必填] ( 若不填写则默认设置为友盟主页 )
      */
     private void addQQQZonePlatform() {
-        String appId = "100424468";
-        String appKey = "c7394704798a158208a74ab60104f0ba";
+        String appId = "1105034933";
+        String appKey = "EjvftRWhsTXReJug";
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(getActivity(), appId, appKey);
         qqSsoHandler.setTargetUrl(website);
