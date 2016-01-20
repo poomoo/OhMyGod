@@ -280,7 +280,7 @@ public class MyFragmentOld extends BaseFragment implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 4) {
             Bundle bundle = new Bundle();
-            bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
+            bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.pubMessageBOList);
             bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
             openActivity(menu[position], bundle);
         } else

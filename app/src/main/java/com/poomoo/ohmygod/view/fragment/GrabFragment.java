@@ -270,6 +270,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             application.setCurrCity(application.getLocateCity());
             getAd();
             getInform();
+            getMessage();
             getGrabList(false);
             getWinnerList();
         }
@@ -414,6 +415,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
     }
 
+    /**
+     * 获取公共消息
+     */
     private void getInform() {
         //--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
         LogUtils.i(TAG, "getInform");
@@ -431,11 +435,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         messageInfo.setStatementId(messageBOList.get(i).getStatementId());
                         messageInfo.setStatus(false);
                         infoList.add(messageInfo);
-                        MyUtil.insertMessageInfo(infoList);
+                        MyUtil.insertMessageInfo(infoList, 1);//公共消息
                     }
                     updateInfoCount();
                 }
-                MainFragmentActivity.messageBOList = messageBOList;
+                MainFragmentActivity.pubMessageBOList = messageBOList;
                 getInfo(messageBOList.get(0).getStatementId());
             }
 
@@ -445,8 +449,40 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
     }
 
+    /**
+     * 获取站内信息
+     */
+    private void getMessage() {
+        //--1：注册声明，2：游戏规则声明，3返现声明，4提现帮助，5公共消息,6签到声明,7关于,8站内消息,9用户帮助
+        LogUtils.i(TAG, "getMessage");
+        this.appAction.getMessages("8", 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+
+                messageBOList = data.getObjList();
+                int len = messageBOList.size();
+                LogUtils.i(TAG, "getMessage成功:" + data.getObjList() + "  informCount:" + informCount);
+                if (len > 0) {
+                    countTxt.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < len; i++) {
+                        messageInfo = new MessageInfo();
+                        messageInfo.setStatementId(messageBOList.get(i).getStatementId());
+                        messageInfo.setStatus(false);
+                        infoList.add(messageInfo);
+                        MyUtil.insertMessageInfo(infoList, 2);//站内消息
+                    }
+                }
+                MainFragmentActivity.innerMessageBOList = messageBOList;
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+            }
+        });
+    }
+
     public void updateInfoCount() {
-        informCount = MyUtil.getUnReadInfoCount();
+        informCount = MyUtil.getUnReadInfoCount(1);
         if (informCount == 0)
             countTxt.setVisibility(View.GONE);
         else
@@ -577,6 +613,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 getWinnerList();
                 getAd();
                 getInform();
+                getMessage();
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);

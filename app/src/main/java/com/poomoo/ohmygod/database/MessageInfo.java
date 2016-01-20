@@ -11,6 +11,7 @@ import org.litepal.crud.DataSupport;
 public class MessageInfo extends DataSupport {
     private int statementId;
     private boolean status = false;
+    private int flag;//1-公共消息 2-站内信息
 
     public int getStatementId() {
         return statementId;
@@ -28,11 +29,20 @@ public class MessageInfo extends DataSupport {
         this.status = status;
     }
 
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "MessageInfo{" +
                 "statementId=" + statementId +
                 ", status=" + status +
+                ", flag=" + flag +
                 '}';
     }
 }

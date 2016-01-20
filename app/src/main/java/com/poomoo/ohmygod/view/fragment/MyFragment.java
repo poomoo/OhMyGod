@@ -163,7 +163,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void catInfoCount() {
-        int count = MyUtil.getUnReadInfoCount();
+        int count = MyUtil.getUnReadInfoCount(2);
         if (count > 0) {
             infoCountTxt.setVisibility(View.VISIBLE);
             infoCountTxt.setText(count + "");
@@ -383,8 +383,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.rlayout_innerInfo:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.messageBOList);
-                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
+                bundle.putSerializable(getString(R.string.intent_value), (Serializable) MainFragmentActivity.innerMessageBOList);
+                bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_innerMessage));
                 openActivity(InStationMessagesActivity.class, bundle);
                 break;
             case R.id.rlayout_show:

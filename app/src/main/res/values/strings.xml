@@ -31,6 +31,7 @@
     <string name="title_withdraw_deposit_help">提现帮助</string>
     <string name="title_verify_phone_num">验证手机号</string>
     <string name="title_withdraw_deposit_details">提现详情</string>
+    <string name="title_pub_messages">公共消息</string>
     <string name="title_in_station_messages">站内信息</string>
     <string name="title_my_show">我的晒单</string>
     <string name="title_setting">"设置"</string>

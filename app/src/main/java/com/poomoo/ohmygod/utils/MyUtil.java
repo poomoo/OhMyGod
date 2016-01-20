@@ -337,7 +337,7 @@ public class MyUtil {
 //            if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getBankName())
 //                    || TextUtils.isEmpty(application.getBankCardNum()) || TextUtils.isEmpty(application.getIdFrontPic())
 //                    || TextUtils.isEmpty(application.getIdOpsitePic()))
-                return false;
+            return false;
         } else {
             if (TextUtils.isEmpty(application.getRealName()) || TextUtils.isEmpty(application.getAddress()))
                 return true;
@@ -394,12 +394,15 @@ public class MyUtil {
      *
      * @param infoList
      */
-    public static void insertMessageInfo(List<MessageInfo> infoList) {
+    public static void insertMessageInfo(List<MessageInfo> infoList, int flag) {
 //        DataSupport.saveAll(infoList);
         for (MessageInfo messageInfo : infoList) {
             Cursor cursor = DataSupport.findBySQL("select * from messageinfo where statementId = ?", messageInfo.getStatementId() + "");
-            if (cursor.getCount() == 0)
+            if (cursor.getCount() == 0) {
+                messageInfo.setFlag(flag);
                 messageInfo.save();
+            }
+
             cursor.close();
         }
     }
@@ -420,8 +423,8 @@ public class MyUtil {
      *
      * @return
      */
-    public static int getUnReadInfoCount() {
-        List<MessageInfo> infoList = DataSupport.where("status = ?", "0").find(MessageInfo.class);
+    public static int getUnReadInfoCount(int flag) {
+        List<MessageInfo> infoList = DataSupport.where("status = ? and flag=?", "0", flag + "").find(MessageInfo.class);
 //        Cursor cursor = DataSupport.findBySQL("select * from messageinfo where isRead = ?", "0");
 //        int len = cursor.getCount();
         int len = infoList.size();

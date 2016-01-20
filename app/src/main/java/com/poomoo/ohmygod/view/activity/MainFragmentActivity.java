@@ -51,7 +51,8 @@ public class MainFragmentActivity extends
     private MyFragment myFragment;
     private long exitTime = 0;
     public static MainFragmentActivity instance;
-    public static List<MessageBO> messageBOList = new ArrayList<>();
+    public static List<MessageBO> pubMessageBOList = new ArrayList<>();
+    public static List<MessageBO> innerMessageBOList = new ArrayList<>();
     private int statementId = 0;
     private String content;
     public static MessageInfoBO messageInfoBO;
@@ -109,7 +110,7 @@ public class MainFragmentActivity extends
                 case R.id.txt_more:
                     Bundle bundle = new Bundle();
                     bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_pubMessage));
-                    bundle.putSerializable(getString(R.string.intent_value), (Serializable) messageBOList);
+                    bundle.putSerializable(getString(R.string.intent_value), (Serializable) pubMessageBOList);
                     openActivity(InStationMessagesActivity.class, bundle);
                     break;
             }
@@ -195,8 +196,8 @@ public class MainFragmentActivity extends
     }
 
     private void getInfo() {
-        if ((messageBOList != null && messageBOList.size() > 0) && messageInfoBO != null) {
-            statementId = messageBOList.get(0).getStatementId();
+        if ((pubMessageBOList != null && pubMessageBOList.size() > 0) && messageInfoBO != null) {
+            statementId = pubMessageBOList.get(0).getStatementId();
             content = messageInfoBO.getContent();
             if (!MyUtil.isRead(statementId)) {
                 MyUtil.updateMessageInfo(statementId);

@@ -62,7 +62,7 @@ public class PersonalCenterAdapter extends MyBaseAdapter {
         }
         viewHolder.textView.setText(name[position]);
         if (position == 4) {
-            int count = MyUtil.getUnReadInfoCount();
+            int count = MyUtil.getUnReadInfoCount(2);
             if (count > 0) {
                 viewHolder.infoCountTxt.setVisibility(View.VISIBLE);
                 viewHolder.infoCountTxt.setText(count + "");

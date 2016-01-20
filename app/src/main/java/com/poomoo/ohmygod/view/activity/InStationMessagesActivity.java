@@ -16,6 +16,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.InStationMessagesAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
@@ -46,6 +47,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_station_messages);
         addActivityToArrayList(this);
+        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         initView();
 
     }
@@ -62,24 +64,23 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadListener(this);
 
-        PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
-        if (PARENT.equals(getString(R.string.intent_pubMessage))) {
+        if (PARENT.equals(getString(R.string.intent_pubMessage)))
             type = "5";
-            currPage = 2;
-            messageBOList = (ArrayList) getIntent().getSerializableExtra(getString(R.string.intent_value));
-            adapter.setItems(messageBOList);
-        }
-        if (PARENT.equals(getString(R.string.intent_innerMessage))) {
+        if (PARENT.equals(getString(R.string.intent_innerMessage)))
             type = "8";
-            showProgressDialog("请稍后...");
-            getData();
-        }
+
+        currPage = 2;
+        messageBOList = (ArrayList) getIntent().getSerializableExtra(getString(R.string.intent_value));
+        adapter.setItems(messageBOList);
 
     }
 
     protected void initTitleBar() {
         HeaderViewHolder headerViewHolder = getHeaderView();
-        headerViewHolder.titleTxt.setText(R.string.title_in_station_messages);
+        if (PARENT.equals(getString(R.string.intent_pubMessage)))
+            headerViewHolder.titleTxt.setText(R.string.title_pub_messages);
+        else
+            headerViewHolder.titleTxt.setText(R.string.title_in_station_messages);
         headerViewHolder.backImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
