@@ -47,6 +47,7 @@ public class SplashActivity extends BaseActivity {
         initLocation();
         mLocationClient.start();
         isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
+        LogUtils.i(TAG, "isIndex" + isIndex);
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -77,6 +78,7 @@ public class SplashActivity extends BaseActivity {
                     application.setChannelId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_channelId), ""));
                     startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
                     openActivity(MainFragmentActivity.class);
+                    LogUtils.i(TAG, "openActivity(MainFragmentActivity.class);");
                     finish();
                 }
 

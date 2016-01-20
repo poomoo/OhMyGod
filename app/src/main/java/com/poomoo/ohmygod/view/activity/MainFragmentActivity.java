@@ -267,7 +267,8 @@ public class MainFragmentActivity extends
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        stopService(checkStatus);
+        if (checkStatus != null)
+            stopService(checkStatus);
         LogUtils.i(TAG, "onDestroy");
     }
 
