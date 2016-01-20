@@ -483,8 +483,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         LogUtils.i(TAG, "未读取公共消息条数:" + informCount);
         if (informCount == 0)
             countTxt.setVisibility(View.GONE);
-        else
+        else{
+            countTxt.setVisibility(View.VISIBLE);
             countTxt.setText(informCount + "");
+        }
+
     }
 
     private void getInfo(int statementId) {
