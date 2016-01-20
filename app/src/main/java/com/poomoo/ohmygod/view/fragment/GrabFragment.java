@@ -424,12 +424,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getMessages("5", 1, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-
                 messageBOList = data.getObjList();
                 int len = messageBOList.size();
                 LogUtils.i(TAG, "getInform成功:" + data.getObjList() + "  informCount:" + informCount);
                 if (len > 0) {
-                    countTxt.setVisibility(View.VISIBLE);
                     for (int i = 0; i < len; i++) {
                         messageInfo = new MessageInfo();
                         messageInfo.setStatementId(messageBOList.get(i).getStatementId());
@@ -437,8 +435,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         infoList.add(messageInfo);
                         MyUtil.insertMessageInfo(infoList, 1);//公共消息
                     }
-                    updateInfoCount();
                 }
+                updateInfoCount();
                 MainFragmentActivity.pubMessageBOList = messageBOList;
                 getInfo(messageBOList.get(0).getStatementId());
             }
@@ -463,7 +461,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 int len = messageBOList.size();
                 LogUtils.i(TAG, "getMessage成功:" + data.getObjList() + "  informCount:" + informCount);
                 if (len > 0) {
-                    countTxt.setVisibility(View.VISIBLE);
                     for (int i = 0; i < len; i++) {
                         messageInfo = new MessageInfo();
                         messageInfo.setStatementId(messageBOList.get(i).getStatementId());
@@ -483,6 +480,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     public void updateInfoCount() {
         informCount = MyUtil.getUnReadInfoCount(1);
+        LogUtils.i(TAG, "未读取公共消息条数:" + informCount);
         if (informCount == 0)
             countTxt.setVisibility(View.GONE);
         else
@@ -563,6 +561,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void onResume() {
         super.onResume();
+        updateInfoCount();
         if (!isFirst) {
             LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getLocateCity());
             if (!currCity.equals(application.getCurrCity())) {

@@ -167,7 +167,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (count > 0) {
             infoCountTxt.setVisibility(View.VISIBLE);
             infoCountTxt.setText(count + "");
-        }
+        } else
+            infoCountTxt.setVisibility(View.GONE);
     }
 
     private void select_pics() {
@@ -336,7 +337,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         headPic = (String) SPUtils.get(getActivity().getApplicationContext(), getString(R.string.sp_headPicBitmap), "");
-        LogUtils.i(TAG, "headPic:" + headPic);
+        LogUtils.i(TAG, "onResume");
         if (!TextUtils.isEmpty(headPic))
             avatarImg.setImageDrawable(MyUtil.loadDrawable(getActivity().getApplicationContext()));
         else if (!TextUtils.isEmpty(application.getHeadPic())) {
