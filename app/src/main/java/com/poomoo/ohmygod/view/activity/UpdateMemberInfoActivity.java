@@ -142,7 +142,6 @@ public class UpdateMemberInfoActivity extends BaseActivity implements View.OnCli
         layout5.setOnClickListener(this);
         layout7.setOnClickListener(this);
 
-
         pubAdapter = new PubAdapter(this);
         pubListView.setAdapter(pubAdapter);
 

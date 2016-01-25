@@ -20,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -43,15 +42,13 @@ import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
-import com.poomoo.ohmygod.adapter.TimeAdapter;
-import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
+import com.poomoo.ohmygod.adapter.TimeAdapter;
+import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.database.MessageInfo;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
-import com.poomoo.ohmygod.listeners.AlarmtListener;
-import com.poomoo.ohmygod.utils.DateTimePickDialogUtil;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
@@ -59,6 +56,7 @@ import com.poomoo.ohmygod.view.activity.CityListActivity;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
+import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
@@ -317,7 +315,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getAdvertisement(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                Log.i(TAG, "data:" + data.getObjList().toString());
+                Log.i(TAG, "广告返回data:" + data.getObjList().toString());
                 adBOList = data.getObjList();
                 int len = adBOList.size();
                 urls = new String[len];
@@ -332,14 +330,22 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     public void onResult(int position) {
                         if (!MyUtil.isLogin(getActivity()))
                             return;
-                        int activeId = adBOList.get(position).getActiveId();
-                        int typeId = 4;
-                        LogUtils.i(TAG, "activeId:" + activeId);
-                        LogUtils.i(TAG, "typeId:" + typeId);
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(getString(R.string.intent_activeId), activeId);
-                        bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_ad));
-                        openActivity(CommodityInformationActivity.class, bundle);
+                        if (!application.getLocateCity().equals(application.getCurrCity())) {
+                            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+                            return;
+                        }
+                        int activeId;
+                        activeId = adBOList.get(position).getActiveId();
+                        if (activeId <= 0) {
+                            Bundle pBundle = new Bundle();
+                            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_about));
+                            openActivity(WebViewActivity.class, pBundle);
+                        } else {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(getString(R.string.intent_activeId), activeId);
+                            bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_ad));
+                            openActivity(CommodityInformationActivity.class, bundle);
+                        }
                     }
                 });
             }
@@ -483,7 +489,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         LogUtils.i(TAG, "未读取公共消息条数:" + informCount);
         if (informCount == 0)
             countTxt.setVisibility(View.GONE);
-        else{
+        else {
             countTxt.setVisibility(View.VISIBLE);
             countTxt.setText(informCount + "");
         }
@@ -516,7 +522,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             return;
         }
         if (grabBOList.get(position).getStatus() == 1) {
-//            LogUtils.i("lmf", "首页时间:" + adapter.getCountDownUtils().get(position).getMillisUntilFinished() + "");
             Bundle pBundle = new Bundle();
             pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
             pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
@@ -566,7 +571,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         super.onResume();
         updateInfoCount();
         if (!isFirst) {
-            LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getLocateCity());
+            LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getCurrCity());
             if (!currCity.equals(application.getCurrCity())) {
                 currCityTxt.setText(application.getCurrCity());
                 grabBOList = new ArrayList<>();

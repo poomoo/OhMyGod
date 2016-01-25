@@ -135,6 +135,7 @@ public class CommodityInformationActivity extends BaseActivity {
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         LogUtils.i(TAG, "PARENT:" + PARENT);
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);
+        typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
         if (PARENT.equals(getString(R.string.intent_info)))
             position = getIntent().getIntExtra(getString(R.string.intent_position), 0);
 
@@ -249,21 +250,22 @@ public class CommodityInformationActivity extends BaseActivity {
      * 判断是否为升级会员
      */
     private void isMember() {
-        typeId = getIntent().getIntExtra(getString(R.string.intent_typeId), -1);
-        LogUtils.i(TAG, "isMember  typeId:" + typeId + " 升级会员:" + application.getIsAdvancedUser());
-        if (!isOpen)
-            if (typeId != 4) {
-                if (application.getIsAdvancedUser().equals("1")) {//升级会员
+        if (typeId != -1) {
+            LogUtils.i(TAG, "isMember  typeId:" + typeId + " 升级会员:" + application.getIsAdvancedUser());
+            if (!isOpen)
+                if (typeId != 4) {
+                    if (application.getIsAdvancedUser().equals("1")) {//升级会员
+                        signInTxt.setVisibility(View.GONE);
+                        openActivityTxt.setVisibility(View.VISIBLE);
+                    } else {//普通用户
+                        signInTxt.setVisibility(View.VISIBLE);
+                        openActivityTxt.setVisibility(View.GONE);
+                    }
+                } else {
                     signInTxt.setVisibility(View.GONE);
                     openActivityTxt.setVisibility(View.VISIBLE);
-                } else {//普通用户
-                    signInTxt.setVisibility(View.VISIBLE);
-                    openActivityTxt.setVisibility(View.GONE);
                 }
-            } else {
-                signInTxt.setVisibility(View.GONE);
-                openActivityTxt.setVisibility(View.VISIBLE);
-            }
+        }
     }
 
     private void getData() {
@@ -274,6 +276,8 @@ public class CommodityInformationActivity extends BaseActivity {
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();
                 commodityBO = (CommodityBO) data.getObj();
+                typeId = commodityBO.getTypeId();
+                isMember();
                 if (commodityBO.getStatus() == 2) {              //活动已结束
                     isGrab = false;
                     llayout_cat.setVisibility(View.VISIBLE);
@@ -899,7 +903,7 @@ public class CommodityInformationActivity extends BaseActivity {
                     if (index == len)
                         index = 0;
                     try {
-                        bitmap=MyUtil.readBitMap(getApplicationContext(), failedAnim[index++]);
+                        bitmap = MyUtil.readBitMap(getApplicationContext(), failedAnim[index++]);
                         animImg.setImageBitmap(bitmap);
                     } catch (OutOfMemoryError e) {
                         e.printStackTrace();
