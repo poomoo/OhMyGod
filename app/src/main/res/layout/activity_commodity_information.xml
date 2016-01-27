@@ -176,15 +176,15 @@
                         android:id="@+id/llayout_catWinnerList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10">
+                        android:padding="@dimen/dp_10"
+                        android:visibility="gone">
 
                         <Button
                             style="@style/myButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:onClick="catWinnerList"
-                            android:text="@string/btn_lucky"
-                            android:visibility="gone" />
+                            android:text="@string/btn_lucky" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -193,7 +193,6 @@
                         android:orientation="vertical"
                         android:padding="@dimen/dp_10"
                         android:visibility="gone">
-
 
                         <TextView
                             android:layout_width="match_parent"

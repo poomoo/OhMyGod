@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -141,7 +142,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
         initView();
         getData();
-
     }
 
 
@@ -279,10 +279,16 @@ public class CommodityInformationActivity extends BaseActivity {
                 typeId = commodityBO.getTypeId();
                 isMember();
                 if (commodityBO.getStatus() == 2) {              //活动已结束
+
+                    LogUtils.i(TAG, "活动已结束");
                     isGrab = false;
-                    llayout_cat.setVisibility(View.VISIBLE);
-                    GrabFragment.grabBOList.get(position).setStatus(2);
-                    GrabFragment.adapter.notifyDataSetChanged();
+//                    llayout_cat.setVisibility(View.VISIBLE);
+//                    signInTxt.setVisibility(View.GONE);
+//                    openActivityTxt.setVisibility(View.GONE);
+                    if (PARENT.equals(getString(R.string.intent_info))) {
+                        GrabFragment.grabBOList.get(position).setStatus(2);
+                        GrabFragment.adapter.notifyDataSetChanged();
+                    }
                 } else if (commodityBO.getStatus() == 1) {//活动已开始
                     //已参加
                     if (commodityBO.getPlayFlag().equals("1"))
@@ -338,8 +344,8 @@ public class CommodityInformationActivity extends BaseActivity {
                 animSound = SoundUtil.OTHER;
             }
         } else {
-            llayout_openActivity.setVisibility(View.VISIBLE);
-            llayout_bottom.setVisibility(View.VISIBLE);
+            llayout_openActivity.setVisibility(View.GONE);
+            llayout_bottom.setVisibility(View.GONE);
         }
         initCountDown();
         nameTxt.setText(commodityBO.getGoodsName());
@@ -375,7 +381,8 @@ public class CommodityInformationActivity extends BaseActivity {
                     if (isGrab) {
                         llayout_openActivity.setVisibility(View.VISIBLE);
                         llayout_bottom.setVisibility(View.VISIBLE);
-                    }
+                    } else
+                        llayout_cat.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -404,15 +411,19 @@ public class CommodityInformationActivity extends BaseActivity {
             }
 
         } else {
-//            for (TextView textView : textViewList)
-//                textView.setText("活动已开始");
-            headTimeCountDownUtil = new TimeCountDownUtil(commodityBO.getStartCountdown(), MyConfig.COUNTDOWNTIBTERVAL, textViewList, new CountDownListener() {
-                @Override
-                public void onFinish(int result) {
-                    begin();
-                }
-            });
-            headTimeCountDownUtil.start();
+            if (commodityBO.getStatus() == 2)//活动已结束
+            {
+                for (TextView textView : textViewList)
+                    textView.setText("活动已结束");
+            } else {
+                headTimeCountDownUtil = new TimeCountDownUtil(commodityBO.getStartCountdown(), MyConfig.COUNTDOWNTIBTERVAL, textViewList, new CountDownListener() {
+                    @Override
+                    public void onFinish(int result) {
+                        begin();
+                    }
+                });
+                headTimeCountDownUtil.start();
+            }
         }
     }
 
@@ -422,6 +433,7 @@ public class CommodityInformationActivity extends BaseActivity {
      *
      * @param view
      */
+
     public void toSignIn(View view) {
         openActivity(UpdateMemberInfoActivity.class);
     }
@@ -854,6 +866,7 @@ public class CommodityInformationActivity extends BaseActivity {
             super.onReceivedError(view, errorCode, description, failingUrl);
 
         }
+
     }
 
     private void showSuccessAnim() {
