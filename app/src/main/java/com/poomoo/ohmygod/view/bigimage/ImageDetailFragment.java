@@ -1,8 +1,6 @@
 package com.poomoo.ohmygod.view.bigimage;
 
 
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.bigimage.util.photoview.PhotoViewAttacher;
-import com.poomoo.ohmygod.view.popupwindow.CopyPopupWindow;
 import com.poomoo.ohmygod.view.popupwindow.DownloadPicPopupWindow;
 
 /**

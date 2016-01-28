@@ -9,7 +9,7 @@ package com.poomoo.api;
  */
 public class Config {
     public final static int TIME_OUT_EVENT = -3;//超时
-    public final static String TIME_OUT_EVENT_MSG = "连接服务器失败";
+    public final static String TIME_OUT_EVENT_MSG = "当前网络无法使用";
 
     //ACTION 10000
     public final static String USERACTION = "10000";//用户相关接口统一业务编号

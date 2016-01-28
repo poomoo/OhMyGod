@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,7 +29,10 @@ import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
+import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollGridView;
+
+import java.util.ArrayList;
 
 /**
  * 晒适配器
@@ -140,6 +144,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         if (viewHolder.avatarImg.getTag() != null && viewHolder.avatarImg.getTag().equals(showBO.getHeadPic())) {
             ImageLoader.getInstance().displayImage(showBO.getHeadPic(), viewHolder.avatarImg, defaultOptions);
         }
+        viewHolder.avatarImg.setOnClickListener(new avatarClickListener(showBO.getHeadPic()));
 
         viewHolder.gridView.setTag(showBO.getActiveId());
         LogUtils.i(TAG, "position:" + position + " size:" + showBO.getPicList().size() + "");
@@ -209,8 +214,34 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
 
         @Override
         public void onClick(View v) {
-            shareListener.onResult(title, content, picUrl,dynamicId);
+            shareListener.onResult(title, content, picUrl, dynamicId);
         }
+    }
+
+    public class avatarClickListener implements OnClickListener {
+        String pic;
+        ArrayList<String> list = new ArrayList<>();
+
+        public avatarClickListener(String pic) {
+            this.pic = pic;
+            if (TextUtils.isEmpty(pic))
+                pic = "drawable://" + R.drawable.ic_avatar; //  drawable文件
+            this.list.add(pic);
+        }
+
+        @Override
+        public void onClick(View v) {
+            imageBrowse(0, list);
+        }
+    }
+
+    private void imageBrowse(int position, ArrayList<String> urls2) {
+        LogUtils.i(TAG, "position:" + position + " size:" + urls2.size());
+        Intent intent = new Intent(context, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls2);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        context.startActivity(intent);
     }
 
 }
