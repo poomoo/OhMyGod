@@ -574,11 +574,13 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO getActivityWinnerList(String activeId) {
+    public ResponseBO getActivityWinnerList(String activeId, int currPage, int pageSize) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.ACTIVITYACTION);
         paramMap.put("method", Config.ACTIVITYWINNERLIST);
         paramMap.put("activeId", activeId);
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
 
         try {
             return httpEngine.postHandle(paramMap, WinnerListBO.class);

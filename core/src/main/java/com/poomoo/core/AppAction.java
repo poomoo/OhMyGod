@@ -331,7 +331,7 @@ public interface AppAction {
      * @param activeId
      * @param listener
      */
-    void getActivityWinnerList(String activeId, ActionCallbackListener listener);
+    void getActivityWinnerList(String activeId,  int currPage, int pageSize,ActionCallbackListener listener);
 
     /**
      * 检查登录状态

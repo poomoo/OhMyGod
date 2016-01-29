@@ -888,12 +888,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getActivityWinnerList(final String activeId, final ActionCallbackListener listener) {
+    public void getActivityWinnerList(final String activeId, final int currPage, final int pageSize, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.getActivityWinnerList(activeId);
+                return api.getActivityWinnerList(activeId, currPage, pageSize);
             }
 
             @Override

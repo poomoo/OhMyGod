@@ -11,7 +11,7 @@ import com.poomoo.model.ResponseBO;
  */
 public interface Api {
 
-    ResponseBO login(String phoneNum, String passWord,String channelId );
+    ResponseBO login(String phoneNum, String passWord, String channelId);
 
     ResponseBO getCode(String phoneNum);
 
@@ -79,8 +79,8 @@ public interface Api {
 
     ResponseBO getRebateInfo(String userId);
 
-    ResponseBO getActivityWinnerList(String activeId);
+    ResponseBO getActivityWinnerList(String activeId, int currPage, int pageSize);
 
-    ResponseBO checkStatus(String userId,String channelId);
+    ResponseBO checkStatus(String userId, String channelId);
 
 }
