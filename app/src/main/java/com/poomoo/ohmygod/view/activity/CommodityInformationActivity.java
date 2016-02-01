@@ -142,12 +142,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
         initView();
         getData();
-        if (1 == 1) {
-            llayout_anim.setVisibility(View.VISIBLE);
-            succeedAnim = MyConfig.boxSuccess;
-            showSuccessAnim();
-            return;
-        }
     }
 
 
