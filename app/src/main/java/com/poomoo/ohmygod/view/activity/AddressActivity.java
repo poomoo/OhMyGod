@@ -14,13 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
-import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.database.CityInfo;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,11 +128,16 @@ public class AddressActivity extends BaseActivity {
                 @Override
                 public void onSuccess(ResponseBO data) {
                     closeProgressDialog();
-                    KeyAndValueBO keyAndValueBO = (KeyAndValueBO) data.getObj();
-                    application.setAddress(keyAndValueBO.getValue());
-                    SPUtils.put(getApplicationContext(), getString(R.string.sp_address), keyAndValueBO.getValue());
-                    MyUtil.showToast(getApplicationContext(), "修改成功");
-                    finish();
+                    try {
+                        JSONObject jsonObject = new JSONObject(data.getJsonData().toString());
+                        application.setAddress(jsonObject.getString(getString(R.string.sp_address)));
+                        SPUtils.put(getApplicationContext(), getString(R.string.sp_address),jsonObject.getString(getString(R.string.sp_address)));
+                        MyUtil.showToast(getApplicationContext(), "修改成功");
+                        finish();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override

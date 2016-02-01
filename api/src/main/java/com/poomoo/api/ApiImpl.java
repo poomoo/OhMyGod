@@ -7,7 +7,6 @@ import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
-import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
 import com.poomoo.model.RebateBO;

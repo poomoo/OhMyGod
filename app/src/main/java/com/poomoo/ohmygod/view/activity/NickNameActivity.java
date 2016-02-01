@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.poomoo.core.ActionCallbackListener;
-import com.poomoo.model.KeyAndValueBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
