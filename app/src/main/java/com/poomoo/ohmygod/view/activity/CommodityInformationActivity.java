@@ -386,6 +386,11 @@ public class CommodityInformationActivity extends BaseActivity {
                 }
             }
         });
+//        if (1 == 1) {
+//            llayout_anim.setVisibility(View.VISIBLE);
+//            succeedAnim = MyConfig.carSuccess;
+//            showSuccessAnim();
+//        }
     }
 
     private void initCountDown() {
