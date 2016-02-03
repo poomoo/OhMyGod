@@ -5,6 +5,7 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -51,7 +52,7 @@ public class NickNameActivity extends BaseActivity {
 
         if (PARENT.equals(getString(R.string.intent_age))) {
             contentEdt.setHint(getString(R.string.hint_input_age));
-            contentEdt.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+            contentEdt.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         if (PARENT.equals(getString(R.string.intent_openBank))) {
             contentEdt.setHint(getString(R.string.hint_input_openBank));
@@ -89,15 +90,27 @@ public class NickNameActivity extends BaseActivity {
      * @param view
      */
     public void toSubmit(View view) {
+        value = contentEdt.getText().toString().trim();
+        if (TextUtils.isEmpty(value)) {
+            MyUtil.showToast(getApplicationContext(), "不能为空");
+            return;
+        }
+
         if (PARENT.equals(getString(R.string.intent_nickName)))
             key = "nickName";
         if (PARENT.equals(getString(R.string.intent_realName)) || PARENT.equals(getString(R.string.intent_accountName)))
             key = "realName";
-        if (PARENT.equals(getString(R.string.intent_age)))
+        if (PARENT.equals(getString(R.string.intent_age))) {
+            if (Integer.parseInt(value) <= 0 || Integer.parseInt(value) > 100) {
+                MyUtil.showToast(getApplicationContext(), "请输入有效的年龄");
+                return;
+            }
             key = "age";
+        }
+
         if (PARENT.equals(getString(R.string.intent_openBank)))
             key = "bankName";
-        value = contentEdt.getText().toString().trim();
+
 
         showProgressDialog(getString(R.string.dialog_message));
         this.appAction.changePersonalInfo(this.application.getUserId(), key, value, new ActionCallbackListener() {
