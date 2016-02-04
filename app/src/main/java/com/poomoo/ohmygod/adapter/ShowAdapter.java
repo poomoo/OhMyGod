@@ -3,11 +3,9 @@
  */
 package com.poomoo.ohmygod.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +26,6 @@ import com.poomoo.ohmygod.listeners.LongClickListener;
 import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
-import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollGridView;
 
@@ -112,13 +109,7 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         viewHolder.contentTxt.setText(showBO.getContent());
         viewHolder.titleTxt.setText(showBO.getTitle());
         LogUtils.i(TAG, "activeId:" + showBO.getActiveId());
-        viewHolder.activeInfoLlayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtils.i(TAG, "onClick activeId:" + Integer.parseInt(showBO.getActiveId()));
-                activityListener.onClick(showBO.getTitle(), Integer.parseInt(showBO.getActiveId()));
-            }
-        });
+        viewHolder.activeInfoLlayout.setOnClickListener(new activityClickListener(showBO.getTitle(), showBO.getActiveId()));
 
         ImageLoader.getInstance().displayImage(showBO.getShowPic(), viewHolder.smallImg, defaultOptions1);
 
@@ -215,6 +206,21 @@ public class ShowAdapter extends MyBaseAdapter<ShowBO> {
         @Override
         public void onClick(View v) {
             shareListener.onResult(title, content, picUrl, dynamicId);
+        }
+    }
+
+    public class activityClickListener implements OnClickListener {
+        String title;
+        String activeid;
+
+        public activityClickListener(String title, String activeid) {
+            this.title = title;
+            this.activeid = activeid;
+        }
+
+        @Override
+        public void onClick(View v) {
+            activityListener.onClick(title, Integer.parseInt(activeid));
         }
     }
 
