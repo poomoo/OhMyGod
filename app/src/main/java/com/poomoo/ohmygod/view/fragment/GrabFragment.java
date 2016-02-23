@@ -80,7 +80,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private View mMenuView;
     private ListView timeList;
     private PullDownScrollView refreshableView;
-    private LinearLayout remindLlayout;
+    private LinearLayout viewsLlayout;
     //    private LinearLayout remindLlayout2;
     private LinearLayout middleLlayout;
     private LinearLayout currCityLlayout;
@@ -91,7 +91,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private ImageView avatarImg;
     private TextView currCityTxt;
     private TextView countTxt;
-    private TextView tipTxt;
+    private TextView viewsTxt;
     private UpMarqueeTextView marqueeTextView;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
@@ -118,7 +118,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private PopupWindow timePopupWindow;
     private TimeAdapter timeAdapter;
     private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
-    private boolean tipFlag = true;//true-提醒 false-取消提醒
     private boolean existCountDown = false;//true-有倒计时
 
     @Override
@@ -144,12 +143,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         noWinningInfoTxt = (TextView) getActivity().findViewById(R.id.txt_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
-        tipTxt = (TextView) getActivity().findViewById(R.id.txt_tip);
+        viewsTxt = (TextView) getActivity().findViewById(R.id.txt_view);//总浏览量
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
-        remindLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_remind);
+        viewsLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_views);
         middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
 
 
@@ -238,9 +237,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                         MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
                     }
-                    tipFlag = false;
-                    setTipText(tipFlag);
-                    SPUtils.put(getActivity().getApplicationContext(), getString(R.string.sp_tipFlag), tipFlag);
                 } else
                     MyUtil.showToast(getActivity().getApplicationContext(), "当前没有活动需要提醒");
 
@@ -251,7 +247,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
         winnerRlayout.setOnClickListener(GrabFragment.this);
         currCityLlayout.setOnClickListener(this);
-        remindLlayout.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -281,9 +276,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
-
-        tipFlag = (boolean) SPUtils.get(getActivity().getApplicationContext(), getString(R.string.sp_tipFlag), true);
-        setTipText(tipFlag);
     }
 
     Handler handler = new Handler() {
@@ -331,10 +323,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     public void onResult(int position) {
                         if (!MyUtil.isLogin(getActivity()))
                             return;
-                        if (!application.getLocateCity().equals(application.getCurrCity())) {
-                            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-                            return;
-                        }
+//                        if (!application.getLocateCity().equals(application.getCurrCity())) {
+//                            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+//                            return;
+//                        }
                         int activeId;
                         activeId = adBOList.get(position).getActiveId();
                         if (activeId <= 0) {
@@ -366,7 +358,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
 
                 winnerRlayout.setVisibility(View.VISIBLE);
-                remindLlayout.setVisibility(View.VISIBLE);
+                viewsLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
 //                hideFloatingActionButton();
                 grabBOList = data.getObjList();
@@ -385,7 +377,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 slideShowView.setVisibility(View.GONE);
                 winnerRlayout.setVisibility(View.GONE);
 //                noWinningInfoLlayout.setVisibility(View.GONE);
-                remindLlayout.setVisibility(View.GONE);
+                viewsLlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });
@@ -518,10 +510,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         if (!MyUtil.isLogin(getActivity()))
             return;
 
-        if (!application.getLocateCity().equals(application.getCurrCity())) {
-            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-            return;
-        }
+//        if (!application.getLocateCity().equals(application.getCurrCity())) {
+//            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+//            return;
+//        }
 
         if (grabBOList.get(position).getStatus() == 1) {
             Bundle pBundle = new Bundle();
@@ -553,17 +545,16 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 openActivity(WinInformationActivity.class);
                 break;
 
-            case R.id.llayout_remind:
-                if (!application.getLocateCity().equals(application.getCurrCity())) {
-                    MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-                    return;
-                }
-                if (tipFlag)//提醒
-                    setDate();
-                else//取消提醒
-                    cancelTip();
-                break;
-
+//            case R.id.llayout_remind:
+//                if (!application.getLocateCity().equals(application.getCurrCity())) {
+//                    MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+//                    return;
+//                }
+//                if (tipFlag)//提醒
+//                    setDate();
+//                else//取消提醒
+//                    cancelTip();
+//                break;
         }
     }
 
@@ -641,16 +632,16 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //        as.start();
 //    }
 
-    public void showFloatingActionButton() {
-        isShow = true;
-        float width = remindLlayout.getWidth();
-        float off = middleLlayout.getWidth() - width;
-        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", off);
-        AnimatorSet as = new AnimatorSet();
-        as.play(translationRight);
-        as.setDuration(1000);
-        as.start();
-    }
+//    public void showFloatingActionButton() {
+//        isShow = true;
+//        float width = remindLlayout.getWidth();
+//        float off = middleLlayout.getWidth() - width;
+//        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", off);
+//        AnimatorSet as = new AnimatorSet();
+//        as.play(translationRight);
+//        as.setDuration(1000);
+//        as.start();
+//    }
 
 
     /**
@@ -739,15 +730,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             am.cancel(pendingIntent);
         }
         MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功");
-        tipFlag = true;
-        setTipText(tipFlag);
-        SPUtils.put(getActivity().getApplicationContext(), getString(R.string.sp_tipFlag), tipFlag);
     }
 
-    private void setTipText(boolean flag) {
-        if (flag)//提醒
-            tipTxt.setText(getString(R.string.label_grab_tip));
-        else//取消提醒
-            tipTxt.setText(getString(R.string.label_grab_cancelTip));
-    }
+//    private void setTipText(boolean flag) {
+//        if (flag)//提醒
+//            tipTxt.setText(getString(R.string.label_grab_tip));
+//        else//取消提醒
+//            tipTxt.setText(getString(R.string.label_grab_cancelTip));
+//    }
 }

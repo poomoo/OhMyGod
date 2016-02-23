@@ -5,16 +5,22 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -39,7 +45,9 @@ public class SplashActivity extends BaseActivity {
     public BDLocationListener myListener = new MyLocationListener();
     private boolean isIndex = false;//是否需要引导
     private int SDK_PERMISSION_REQUEST = 123;
-    private String permissionInfo="";
+    private String permissionInfo = "";
+    private String url = "http://f.hiphotos.baidu.com/image/pic/item/80cb39dbb6fd5266fd25a12eac18972bd40736f9.jpg";
+    private ImageView bgImg;
 
 
     @Override
@@ -47,7 +55,8 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        SQLiteDatabase db = Connector.getDatabase();
+        bgImg = (ImageView) findViewById(R.id.img_bg);
+
         importDB();        // 导入数据库文件
         getPersimmions();
         mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
@@ -56,13 +65,30 @@ public class SplashActivity extends BaseActivity {
         mLocationClient.start();
         isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
         LogUtils.i(TAG, "isIndex" + isIndex);
+        if (!TextUtils.isEmpty(url)) {
+            ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    bgImg.setAdjustViewBounds(true);
+                    bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    bgImg.setImageBitmap(loadedImage);
+                    start();
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    start();
+                }
+            });
+        } else
+            start();
+    }
+
+    public void start() {
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-//                if (!(boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isLogin), false))
-//                    openActivity(LogInActivity.class);
-//                else {
                 if (isIndex) {
                     SPUtils.put(getApplicationContext(), getString(R.string.sp_isIndex), false);
                     Bundle bundle = new Bundle();

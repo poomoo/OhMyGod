@@ -56,9 +56,9 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
         codeEdt = (EditText) findViewById(R.id.edt_verify_code);
 
         telTxt.setText(MyUtil.hiddenTel(application.getTel()));
-//        if (PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))) {
-        getCode();
-//        }
+        if (!(PARENT.equals(getString(R.string.intent_forgetPassWord)) || PARENT.equals(getString(R.string.intent_changePassWord)) || PARENT.equals(getString(R.string.intent_bankCard))))
+            getCode();
+
     }
 
     @Override
@@ -86,7 +86,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
 
     public void getCode() {
         codeTxt.setTag("TextView");
-        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt,"2");
+        TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(MyConfig.SMSCOUNTDOWNTIME, MyConfig.COUNTDOWNTIBTERVAL, codeTxt, "2");
         timeCountDownUtil.start();
         this.appAction.getCode(application.getTel(), new ActionCallbackListener() {
             @Override
@@ -128,7 +128,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
                     closeProgressDialog();
                     Bundle bundle = new Bundle();
                     bundle.putString(getString(R.string.intent_parent), PARENT);
-                    openActivity(ResetPassWordActivity.class,bundle);
+                    openActivity(ResetPassWordActivity.class, bundle);
                     finish();
                     getActivityOutToRight();
                 } else {

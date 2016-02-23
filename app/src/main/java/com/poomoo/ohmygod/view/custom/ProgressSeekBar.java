@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.widget.SeekBar;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 /**
  * :ProgressSeekBar
@@ -61,6 +63,8 @@ public class ProgressSeekBar extends SeekBar {
     private void init() {
         initDraw();
         setOnSeekBarChangeListener(new onSeekBarChangeListener());
+        // 图片的位置
+//        setThumbOffset(this.getThumb().getIntrinsicWidth());
     }
 
     private void initDraw() {
@@ -98,31 +102,34 @@ public class ProgressSeekBar extends SeekBar {
 
         try {
             super.onDraw(canvas);
-            if (ishide == true) {
-                mText = (getProgress() * 100 / getMax()) + "%";
-//                mTextWidth = mPaint.measureText(mText);
-                Rect bounds = this.getProgressDrawable().getBounds();
-                float xText;
-                Log.i("lmf", "getProgress:" + getProgress());
-                if (getProgress() >= 10 && getProgress() < 90)
-                    xText = bounds.width() * getProgress() / getMax() - getTextHei();
-                else if (getProgress() >= 90 && getProgress() < 98)
-                    xText = bounds.width() * getProgress() / getMax() - getTextHei();
-                else if (getProgress() >= 98 && getProgress() < 100)
-                    xText = bounds.width() * getProgress() / getMax() - getTextHei() - 8;
-                else if (getProgress() == 100)
-                    xText = bounds.width() * getProgress() / getMax() - getTextHei() - 30;
-                else
-                    xText = bounds.width() * getProgress() / getMax();
-                Log.i("lmf", "xText:" + xText + ":" + bounds.width());
-//                Log.i("lmf", "y:" + getTextHei() + ":" + bounds.height());
-                float yText = getTextHei() / 1.5f;
-//                Log.i("lmf", "yText:" + yText);
-                canvas.drawText(mText, xText, yText, mPaint);
-            }
+            LogUtils.i("ProgressSeekBar", "onDraw:" + ishide);
+//            if (ishide == true) {
+//            mText = (getProgress() * 100 / getMax()) + "%";
+            mText = "剩" + (getMax() - getProgress()) + "个123123132";
+            Rect bounds = this.getProgressDrawable().getBounds();
+//            Rect thumbBounds = this.getThumb().getBounds();
+            float xText;
+            Log.i("ProgressSeekBar", "getProgress:" + getProgress());
+            if (getProgress() == 0)
+                xText = bounds.width() * getProgress() / getMax();
+            else
+                xText = bounds.width() * getProgress() / getMax();
+            Log.i("ProgressSeekBar", "xText:" + xText + ":" + bounds.width());
+            float yText = bounds.height() * 2 + bounds.height() / 3;
+            canvas.drawText(mText, xText, yText, mPaint);
+//            this.setThumbOffset(-thumbBounds.width() / 2);
+            LogUtils.i("ProgressSeekBar", "位移" + this.getThumbOffset());
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //设置thumb的偏移数值
+    @Override
+    public void setThumbOffset(int thumbOffset) {
+        // TODO Auto-generated method stub
+        super.setThumbOffset(thumbOffset / 10);
     }
 
     /**

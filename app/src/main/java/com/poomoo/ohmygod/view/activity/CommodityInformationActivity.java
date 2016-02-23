@@ -489,6 +489,12 @@ public class CommodityInformationActivity extends BaseActivity {
 //            });
 
 //        }
+
+        if (!application.getLocateCity().equals(application.getCurrCity())) {
+            MyUtil.showToast(getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
+            return;
+        }
+
         if (!isGrab) {
             Dialog dialog = new AlertDialog.Builder(CommodityInformationActivity.this).setMessage("不能重复参加活动").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override

@@ -68,7 +68,7 @@
             android:gravity="center"
             android:onClick="toGetCode"
             android:padding="@dimen/dp_8"
-            android:text="@string/btn_get_code_again"
+            android:text="@string/btn_get_code"
             android:textColor="@color/themeRed"
             android:textSize="@dimen/sp_18" />
     </LinearLayout>

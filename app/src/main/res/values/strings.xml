@@ -64,7 +64,7 @@
     <!--标签提示-->
     <!--抢-->
     <string name="label_winner">获奖者</string>
-    <string name="label_grab_tip">开奖提醒</string>
+    <string name="label_views">浏览量</string>
     <string name="label_grab_cancelTip">取消提醒</string>
     <string name="label_grab_onclick">猛戳开抢......</string>
     <string name="label_grab_start_date">开抢时间：</string>

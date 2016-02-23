@@ -25,6 +25,8 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 
+import org.litepal.util.LogUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -80,7 +82,11 @@ public class SlideShowView extends FrameLayout {
         public void handleMessage(Message msg) {
             // TODO Auto-generated method stub
             super.handleMessage(msg);
-            viewPager.setCurrentItem(currentItem);
+            LogUtils.i(TAG, "currentItem:" + currentItem);
+            if (currentItem == 0)
+                viewPager.setCurrentItem(currentItem, false);
+            else
+                viewPager.setCurrentItem(currentItem, true);
         }
 
     };
@@ -172,11 +178,14 @@ public class SlideShowView extends FrameLayout {
     private class MyPagerAdapter extends PagerAdapter {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(imageViewsList.get(position));
+            LogUtils.i(TAG, "destroyItem:" + position);
+//            container.removeView(imageViewsList.get(position));
+            container.removeView((ImageView) object);
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
+            LogUtils.i(TAG, "instantiateItem:" + position);
             ImageView imageView = imageViewsList.get(position);
             imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
             imageView.setOnClickListener(new OnClickListener() {
@@ -203,10 +212,10 @@ public class SlideShowView extends FrameLayout {
             return arg0 == arg1;
         }
 
-//        @Override
-//        public int getItemPosition(Object object) {
-//            return POSITION_NONE;
-//        }
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
 
 
     }
@@ -232,11 +241,11 @@ public class SlideShowView extends FrameLayout {
                 case 0:// 滑动结束，即切换完毕或者加载完毕
                     // 当前为最后一张，此时从右向左滑，则切换到第一张
                     if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1 && !isAutoPlay) {
-                        viewPager.setCurrentItem(0);
+                        viewPager.setCurrentItem(0, false);
                     }
                     // 当前为第一张，此时从左向右滑，则切换到最后一张
                     else if (viewPager.getCurrentItem() == 0 && !isAutoPlay) {
-                        viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1);
+                        viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1, false);
                     }
                     break;
             }
