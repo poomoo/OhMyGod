@@ -7,5 +7,5 @@ package com.poomoo.ohmygod.listeners;
  * 日期: 2015/11/11 11:11.
  */
 public interface AlarmtListener {
-    void onResult(long time);
+    void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag);
 }

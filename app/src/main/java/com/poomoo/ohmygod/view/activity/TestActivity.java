@@ -67,7 +67,7 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/26 10:22.
  */
-public class TestActivity extends BaseActivity {
+public class  TestActivity extends BaseActivity {
 
     private EditText replyEdt;
     private Button replyBtn;

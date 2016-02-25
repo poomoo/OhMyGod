@@ -89,7 +89,7 @@ public class DateTimePickDialogUtil implements DatePicker.OnDateChangedListener,
                 .setView(dateTimeLayout)
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        listener.onResult(dateTime);
+//                        listener.onResult(dateTime);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

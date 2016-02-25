@@ -6,13 +6,11 @@ package com.poomoo.ohmygod.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,12 +18,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.listeners.AlarmtListener;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.custom.ProgressSeekBar;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * 抢
@@ -40,11 +39,13 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
     private static SparseArray<RelativeLayout> layoutSparseArray;
     private Timer timer;
     private ProgressSeekBar progressSeekBar;
+    private AlarmtListener alarmtListener;
 
-    public GrabAdapter(Context context) {
+    public GrabAdapter(Context context, AlarmtListener alarmtListener) {
         super(context);
         countDownUtils = new SparseArray<>();
         layoutSparseArray = new SparseArray<>();
+        this.alarmtListener = alarmtListener;
         defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.bg_snatch_record) //
                 .showImageOnFail(R.drawable.bg_snatch_record) //
@@ -60,7 +61,8 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 //        if (convertView == null) {
         viewHolder = new ViewHolder();
         convertView = inflater.inflate(R.layout.item_list_grab, null);
-        viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
+        viewHolder.llayout_remind = (LinearLayout) convertView.findViewById(R.id.llayout_remind);
+        viewHolder.img_bg_remind = (ImageView) convertView.findViewById(R.id.img_bg_alarm);
         viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_bg);
         viewHolder.txt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
         viewHolder.progressBar = (ProgressSeekBar) convertView.findViewById(R.id.my_progress);
@@ -83,50 +85,60 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
                 getCountDownUtils().put(position, timeCountDownUtil);
             }
             LogUtils.i(TAG, "活动已开始" + " position:" + position + " 内容:" + viewHolder.txt.getText().toString());
+            viewHolder.progressBar.setVisibility(View.VISIBLE);
+            viewHolder.progressBar.setVisibility(View.VISIBLE);
+            viewHolder.progressBar.setProgress(position);
+            viewHolder.progressBar.setMax(40);
+
+            viewHolder.llayout_remind.setVisibility(View.VISIBLE);
+            if (position == 0 || position == 1) {
+                if (MyUtil.isRemind(grabBO.getActiveId())) {
+                    viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), false));
+                    viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
+                } else {
+                    viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), true));
+                    viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
+                }
+            }
         } else {
             viewHolder.progressBar.setVisibility(View.GONE);
             viewHolder.txt.setText("活动已结束");
             viewHolder.txt.setTextColor(Color.parseColor("#E81540"));
+            viewHolder.llayout_remind.setVisibility(View.GONE);
         }
-        viewHolder.progressBar.setVisibility(View.VISIBLE);
-        viewHolder.progressBar.setProgress(position);
-        viewHolder.progressBar.setMax(40);
-//        if (position == 0) {
-//            grabBO.setStatus(1);
-//            grabBO.setStartCountdown((position + 1) * 5 * 60 * 1000);
-//            progressSeekBar = viewHolder.progressBar;
-//            decrease();
-//        }
+
         return convertView;
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    LogUtils.i(TAG, "progressSeekBar.getProgress():" + progressSeekBar.getProgress());
-                    progressSeekBar.setProgress(progressSeekBar.getProgress() - 1);
-                    break;
-            }
-        }
-    };
-
-    private void decrease() {
-        TimerTask t = new TimerTask() {
-            public void run() {
-                handler.sendEmptyMessage(1);
-            }
-        };
-        timer = new Timer();
-        timer.schedule(t, 1000, 1000);
-    }
 
     class ViewHolder {
-        private RelativeLayout rlayout;
+        private LinearLayout llayout_remind;
         private ImageView image;
+        private ImageView img_bg_remind;
         private TextView txt;
         private ProgressSeekBar progressBar;
+    }
+
+    public class alarmClikListener implements View.OnClickListener {
+        String title;
+        int activeId;
+        String startDt;
+        String endDt;
+        boolean flag;
+
+        public alarmClikListener(String title, int activeId, String startDt, String endDt, boolean flag) {
+            this.title = title;
+            this.activeId = activeId;
+            this.startDt = startDt;
+            this.endDt = endDt;
+            this.flag = flag;
+        }
+
+        @Override
+        public void onClick(View v) {
+            MyUtil.updateActivityInfo(activeId, flag);//更新活动状态
+            alarmtListener.setAlarm(title, activeId, startDt, endDt, flag);
+        }
     }
 
     public SparseArray<TimeCountDownUtil> getCountDownUtils() {

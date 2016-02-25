@@ -58,6 +58,7 @@ public class SplashActivity extends BaseActivity {
         bgImg = (ImageView) findViewById(R.id.img_bg);
 
         importDB();        // 导入数据库文件
+        SQLiteDatabase db = Connector.getDatabase();//新建表
         getPersimmions();
         mLocationClient = new LocationClient(getApplicationContext()); // 声明LocationClient类
         mLocationClient.registerLocationListener(myListener);

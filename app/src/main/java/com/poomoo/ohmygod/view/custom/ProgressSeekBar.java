@@ -18,6 +18,8 @@ import android.widget.SeekBar;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 
+import org.litepal.util.LogUtil;
+
 /**
  * :ProgressSeekBar
  * TODO(带有数字的水平拖动条)
@@ -28,7 +30,7 @@ public class ProgressSeekBar extends SeekBar {
 
     private Paint mPaint;
 
-    private final int textsize = 30;
+    private final int textsize = 24;
 
     private boolean ishide;
 
@@ -63,8 +65,6 @@ public class ProgressSeekBar extends SeekBar {
     private void init() {
         initDraw();
         setOnSeekBarChangeListener(new onSeekBarChangeListener());
-        // 图片的位置
-//        setThumbOffset(this.getThumb().getIntrinsicWidth());
     }
 
     private void initDraw() {
@@ -102,34 +102,42 @@ public class ProgressSeekBar extends SeekBar {
 
         try {
             super.onDraw(canvas);
-            LogUtils.i("ProgressSeekBar", "onDraw:" + ishide);
-//            if (ishide == true) {
-//            mText = (getProgress() * 100 / getMax()) + "%";
-            mText = "剩" + (getMax() - getProgress()) + "个123123132";
+            mText = "剩" + (getMax() - getProgress()) + "个";
             Rect bounds = this.getProgressDrawable().getBounds();
-//            Rect thumbBounds = this.getThumb().getBounds();
+            Rect thumbBounds = this.getThumb().getBounds();
             float xText;
-            Log.i("ProgressSeekBar", "getProgress:" + getProgress());
-            if (getProgress() == 0)
-                xText = bounds.width() * getProgress() / getMax();
-            else
-                xText = bounds.width() * getProgress() / getMax();
-            Log.i("ProgressSeekBar", "xText:" + xText + ":" + bounds.width());
+            float textLen = mPaint.measureText(mText);
+            float spaceLen = thumbBounds.width() - textLen;//左右端距离
+//            LogUtils.i("ProgressSeekBar", "onDraw:" + mText + ":" + textLen + ":" + spaceLen);
+//            LogUtils.i("ProgressSeekBar", "thumbBounds:" + thumbBounds.left + ":" + thumbBounds.right);
+//            xText = bounds.width() * getProgress() / getMax();
+//            LogUtils.i("poo", bounds.width() * getProgress() / getMax() + ":" + thumbBounds.width() / 2);
+//            if (bounds.width() * getProgress() / getMax() < (thumbBounds.width() / 2))//刚开始
+//                this.setThumbOffset(0);
+//            else if ((bounds.width() - bounds.width() * getProgress() / getMax()) < (thumbBounds.width() / 2)) {//最后
+//                this.setThumbOffset(thumbBounds.width() * 3 / 4);
+//
+//            } else {//中间
+//                this.setThumbOffset(0);
+////                if (spaceLen > 0)
+////                    xText = bounds.width() * getProgress() / getMax() - thumbBounds.width() / 2 + spaceLen / 2;
+////                else
+////                    xText = bounds.width() * getProgress() / getMax() - thumbBounds.width() / 2;
+//            }
+
+            //改进版
+            this.setThumbOffset(0);
+            xText = thumbBounds.left + spaceLen / 2;
+            if (this.getProgress() == this.getMax()){
+                this.setThumbOffset(thumbBounds.width() * 3 / 4);
+                xText = bounds.width() - thumbBounds.width() * 3 / 4;
+            }
             float yText = bounds.height() * 2 + bounds.height() / 3;
             canvas.drawText(mText, xText, yText, mPaint);
-//            this.setThumbOffset(-thumbBounds.width() / 2);
-            LogUtils.i("ProgressSeekBar", "位移" + this.getThumbOffset());
-//            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    //设置thumb的偏移数值
-    @Override
-    public void setThumbOffset(int thumbOffset) {
-        // TODO Auto-generated method stub
-        super.setThumbOffset(thumbOffset / 10);
     }
 
     /**
@@ -148,7 +156,6 @@ public class ProgressSeekBar extends SeekBar {
         FontMetrics fm = mPaint.getFontMetrics();
         return (float) Math.ceil(fm.descent - fm.top) + 2;
     }
-
 
     public void setIshide(boolean ishide) {
         this.ishide = ishide;

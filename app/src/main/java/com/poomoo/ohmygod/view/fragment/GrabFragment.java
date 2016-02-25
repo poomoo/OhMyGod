@@ -4,12 +4,15 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.CalendarContract;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,8 +50,10 @@ import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.adapter.TimeAdapter;
 import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.database.ActivityInfo;
 import com.poomoo.ohmygod.database.MessageInfo;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
+import com.poomoo.ohmygod.listeners.AlarmtListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
@@ -69,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,7 +82,7 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/11 16:26.
  */
-public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener {
+public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener, AlarmtListener {
     private View mMenuView;
     private ListView timeList;
     private PullDownScrollView refreshableView;
@@ -114,6 +120,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private DisplayImageOptions defaultOptions;
     private MessageInfo messageInfo;
     private List<MessageInfo> infoList = new ArrayList<>();
+    private ActivityInfo activityInfo;
+    private List<ActivityInfo> activityInfos = new ArrayList<>();
     public static GrabFragment instance;
     private PopupWindow timePopupWindow;
     private TimeAdapter timeAdapter;
@@ -247,7 +255,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
         winnerRlayout.setOnClickListener(GrabFragment.this);
         currCityLlayout.setOnClickListener(this);
-        adapter = new GrabAdapter(getActivity());
+        adapter = new GrabAdapter(getActivity(), this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         LogUtils.i(TAG, "定位城市:" + application.getLocateCity());
@@ -363,10 +371,16 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //                hideFloatingActionButton();
                 grabBOList = data.getObjList();
                 int len = grabBOList.size();
-                for (int i = 0; i < len; i++)
-                    LogUtils.i("lmf", grabBOList.get(i).getGoodsName() + "的倒计时时间:" + grabBOList.get(i).getStartCountdown());
-                if (len > 0)
+                if (len > 0) {
                     adapter.setItems(grabBOList);
+                    for (int i = 0; i < len; i++) {
+                        activityInfo = new ActivityInfo();
+                        activityInfo.setActiveId(grabBOList.get(i).getActiveId());
+                        activityInfo.setFlag(false);
+                        activityInfos.add(activityInfo);
+                        MyUtil.insertActivityInfo(activityInfos);//活动列表
+                    }
+                }
             }
 
             @Override
@@ -507,6 +521,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        LogUtils.i(TAG, "onItemClick");
         if (!MyUtil.isLogin(getActivity()))
             return;
 
@@ -688,54 +703,99 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
     }
 
-    /**
-     * 取消提醒
-     */
-    private void cancelTip() {
-        int len = GrabFragment.adapter.getCountDownUtils().size();
-        for (int i = 0; i < len; i++) {
-            long countDownTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
-            if (countDownTime > 0) {
-                existCountDown = true;
-                /* 建立Intent和PendingIntent，来调用目标组件 */
-                Intent intent = new Intent(getActivity(), CallAlarm.class);
-                intent.setAction(i + "");
-                intent.setType(i + "");
-                intent.setData(Uri.EMPTY);
-                intent.addCategory(i + "");
-                intent.setClass(getActivity(), CallAlarm.class);
-                intent.putExtra("_id", 0);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, 0);
-                AlarmManager am;
-                /* 获取闹钟管理的实例 */
-                am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                /* 取消闹钟 */
-                am.cancel(pendingIntent);
-            }
-        }
-        if (!existCountDown) {
-            /* 建立Intent和PendingIntent，来调用目标组件 */
-            Intent intent = new Intent(getActivity(), CallAlarm.class);
-            intent.setAction("only");
-            intent.setType("only");
-            intent.setData(Uri.EMPTY);
-            intent.addCategory("only");
-            intent.setClass(getActivity(), CallAlarm.class);
-            intent.putExtra("_id", 0);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-            AlarmManager am;
-            /* 获取闹钟管理的实例 */
-            am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-            /* 取消闹钟 */
-            am.cancel(pendingIntent);
-        }
-        MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功");
+    private static String calanderURL = "content://com.android.calendar/calendars";
+    private static String calanderEventURL = "content://com.android.calendar/events";
+    private static String calanderRemiderURL = "content://com.android.calendar/reminders";
+
+    @Override
+    public void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag) {
+        if (flag)
+            insertCalendar(title, startDt, endDt);
+        else
+            delete();
+        adapter.notifyDataSetChanged();
     }
 
-//    private void setTipText(boolean flag) {
-//        if (flag)//提醒
-//            tipTxt.setText(getString(R.string.label_grab_tip));
-//        else//取消提醒
-//            tipTxt.setText(getString(R.string.label_grab_cancelTip));
-//    }
+    private void insertCalendar(String title, String startDt, String endDt) {
+        String calId = "";
+        Cursor userCursor = getActivity().getContentResolver().query(Uri.parse(calanderURL), null, CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
+        LogUtils.i(TAG, "userCursor.getCount():" + userCursor.getCount());
+        if (userCursor.getCount() > 0) {
+            userCursor.moveToFirst();
+            calId = userCursor.getString(userCursor.getColumnIndex("_id"));
+        } else {
+            initCalendars();
+            userCursor = getActivity().getContentResolver().query(Uri.parse(calanderURL), null, CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
+            userCursor.moveToFirst();
+            calId = userCursor.getString(userCursor.getColumnIndex("_id"));
+        }
+
+        LogUtils.i(TAG, "calId:" + calId);
+        ContentValues event = new ContentValues();
+        event.put("title", title);
+        event.put("description", "快要开始抢购了");
+        event.put("calendar_id", calId);
+
+        Calendar mCalendar = Calendar.getInstance();
+        long start = 0;
+        long end = 0;
+        try {
+            mCalendar.setTime(MyUtil.ConverToDate(startDt));
+            start = mCalendar.getTime().getTime();
+            mCalendar.setTime(MyUtil.ConverToDate(endDt));
+            end = mCalendar.getTime().getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        event.put("dtstart", start);
+        event.put("dtend", end);
+        event.put("hasAlarm", 1);
+        event.put("eventTimezone", TimeZone.getDefault().getID().toString());  //这个是时区，必须有，
+
+        Uri newEvent = getActivity().getContentResolver().insert(Uri.parse(calanderEventURL), event);
+
+        long id = Long.parseLong(newEvent.getLastPathSegment());
+
+        ContentValues values = new ContentValues();
+
+        values.put(CalendarContract.Reminders.EVENT_ID, id);
+        values.put(CalendarContract.Reminders.MINUTES, 5);
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        getActivity().getContentResolver().insert(Uri.parse(calanderRemiderURL), values);
+        MyUtil.showToast(getActivity().getApplicationContext(), "设置成功,将在活动开抢前5分钟提醒您!");
+    }
+
+    //添加账户
+    private void initCalendars() {
+        LogUtils.i(TAG, "添加账户");
+        TimeZone timeZone = TimeZone.getDefault();
+        ContentValues value = new ContentValues();
+        value.put(CalendarContract.Calendars.NAME, "ohmygod");
+
+        value.put(CalendarContract.Calendars.ACCOUNT_NAME, "ohmygod@gmail.com");
+        value.put(CalendarContract.Calendars.ACCOUNT_TYPE, "com.android.exchange");
+        value.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "ohmygod");
+        value.put(CalendarContract.Calendars.VISIBLE, 1);
+        value.put(CalendarContract.Calendars.CALENDAR_COLOR, -9206951);
+        value.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+        value.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+        value.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, timeZone.getID());
+        value.put(CalendarContract.Calendars.OWNER_ACCOUNT, "ohmygod@gmail.com");
+        value.put(CalendarContract.Calendars.CAN_ORGANIZER_RESPOND, 0);
+
+        Uri calendarUri = CalendarContract.Calendars.CONTENT_URI;
+        calendarUri = calendarUri.buildUpon()
+                .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "ohmygod@gmail.com")
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, "com.android.exchange")
+                .build();
+
+        getActivity().getContentResolver().insert(calendarUri, value);
+    }
+
+    private void delete() {
+        getActivity().getContentResolver().delete(Uri.parse(calanderURL), CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null);
+        MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功!");
+    }
 }

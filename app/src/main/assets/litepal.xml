@@ -3,7 +3,7 @@
 
     <dbname value="area" />
 
-    <version value="1" />
+    <version value="2" />
 
     <list>
 
@@ -16,6 +16,8 @@
         <mapping class="com.poomoo.ohmygod.database.MessageInfo" />
 
         <mapping class="com.poomoo.ohmygod.database.HistoryCityInfo" />
+
+        <mapping class="com.poomoo.ohmygod.database.ActivityInfo" />
     </list>
 
 </litepal>

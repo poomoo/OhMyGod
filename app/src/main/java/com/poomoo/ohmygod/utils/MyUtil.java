@@ -29,6 +29,7 @@ import com.poomoo.model.CityBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
+import com.poomoo.ohmygod.database.ActivityInfo;
 import com.poomoo.ohmygod.database.AreaInfo;
 import com.poomoo.ohmygod.database.CityInfo;
 import com.poomoo.ohmygod.database.HistoryCityInfo;
@@ -446,6 +447,47 @@ public class MyUtil {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * 插入活动列表
+     *
+     * @param infoList
+     */
+    public static void insertActivityInfo(List<ActivityInfo> infoList) {
+        for (ActivityInfo activityInfo : infoList) {
+            Cursor cursor = DataSupport.findBySQL("select * from activityinfo where activeid = ?", activityInfo.getActiveId() + "");
+            if (cursor.getCount() == 0)
+                activityInfo.save();
+            cursor.close();
+        }
+    }
+
+    /**
+     * 活动提醒设置状态(已设置 未设置)
+     *
+     * @return
+     */
+    public static boolean isRemind(int activeId) {
+        LogUtils.i(TAG, "activeId:" + activeId);
+        List<ActivityInfo> infoList = DataSupport.where("activeId = ?", activeId + "").find(ActivityInfo.class);
+        LogUtils.i(TAG, "isRead:" + infoList.get(0).isFlag());
+        if (infoList.size() == 1) {
+            if (infoList.get(0).isFlag())
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * 更新消息为已读
+     *
+     * @param activeId
+     */
+    public static void updateActivityInfo(int activeId,boolean flag) {
+        ContentValues values = new ContentValues();
+        values.put("flag", flag);
+        DataSupport.updateAll(ActivityInfo.class, values, "activeId = ?", activeId + "");
     }
 
     /**
