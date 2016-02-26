@@ -9,6 +9,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class TimeCountDownUtil extends CountDownTimer {
     private CountDownListener countDownListener;
     private boolean isList;//是否传入list
     private String flag = "";//1-活动倒计时 2-其他倒计时
+    private ImageView imageView;//活动提醒图标
 
     // 在这个构造方法里需要传入三个参数，一个是Activity，一个是总的时间millisInFuture，一个是countDownInterval，然后就是你在哪个按钮上做这个事，就把这个按钮传过来就可以了
     public TimeCountDownUtil(long millisInFuture, long countDownInterval, List<TextView> textViewList, final CountDownListener countDownListener) {
@@ -46,6 +48,14 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.view = view;
         this.isList = false;
         this.flag = flag;
+    }
+
+    public TimeCountDownUtil(long millisInFuture, long countDownInterval, View view, String flag, ImageView imageView) {
+        super(millisInFuture, countDownInterval);
+        this.view = view;
+        this.isList = false;
+        this.flag = flag;
+        this.imageView = imageView;
     }
 
     public void setTextViewList(List<TextView> textViewList, final CountDownListener countDownListener) {
@@ -119,6 +129,7 @@ public class TimeCountDownUtil extends CountDownTimer {
 
             if (view instanceof TextView) {
                 if (flag.equals("1")) {
+                    imageView.setVisibility(View.GONE);
                     ((TextView) view).setText("活动已开始");
                     ((TextView) view).setTextColor(Color.parseColor("#E81540"));
                 } else {

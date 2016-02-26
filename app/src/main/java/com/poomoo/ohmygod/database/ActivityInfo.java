@@ -11,6 +11,7 @@ import org.litepal.crud.DataSupport;
 public class ActivityInfo extends DataSupport {
     private int activeId;
     private boolean flag = false;//是否设置提醒
+    private String eventId;//提醒时间的ID
 
     public int getActiveId() {
         return activeId;
@@ -26,5 +27,13 @@ public class ActivityInfo extends DataSupport {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 }

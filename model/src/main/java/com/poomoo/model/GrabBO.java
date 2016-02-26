@@ -20,6 +20,8 @@ public class GrabBO {
     private int status;//--活动状态：0未开启，1开启（正在进行），2结束
     private String startDt;//活动开始时间
     private String endDt;//活动结束时间
+    private int totalWinNum;//总的奖品名额
+    private int currWinNum;//已经中奖的数量
 
 
     public int getActiveId() {
@@ -103,6 +105,23 @@ public class GrabBO {
         this.endDt = endDt;
     }
 
+
+    public int getTotalWinNum() {
+        return totalWinNum;
+    }
+
+    public void setTotalWinNum(int totalWinNum) {
+        this.totalWinNum = totalWinNum;
+    }
+
+    public int getCurrWinNum() {
+        return currWinNum;
+    }
+
+    public void setCurrWinNum(int currWinNum) {
+        this.currWinNum = currWinNum;
+    }
+
     @Override
     public String toString() {
         return "GrabBO{" +
@@ -116,6 +135,8 @@ public class GrabBO {
                 ", status=" + status +
                 ", startDt='" + startDt + '\'' +
                 ", endDt='" + endDt + '\'' +
+                ", totalWinNum=" + totalWinNum +
+                ", currWinNum=" + currWinNum +
                 '}';
     }
 }

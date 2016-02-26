@@ -1,5 +1,7 @@
 package com.poomoo.ohmygod.listeners;
 
+import android.widget.ImageView;
+
 /**
  * 闹钟监听回调
  * <p/>

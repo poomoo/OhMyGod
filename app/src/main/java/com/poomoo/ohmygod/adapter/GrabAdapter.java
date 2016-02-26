@@ -7,10 +7,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.SparseArray;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AlarmtListener;
+import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
@@ -58,7 +61,6 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
-//        if (convertView == null) {
         viewHolder = new ViewHolder();
         convertView = inflater.inflate(R.layout.item_list_grab, null);
         viewHolder.llayout_remind = (LinearLayout) convertView.findViewById(R.id.llayout_remind);
@@ -66,20 +68,16 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         viewHolder.image = (ImageView) convertView.findViewById(R.id.img_grab_bg);
         viewHolder.txt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
         viewHolder.progressBar = (ProgressSeekBar) convertView.findViewById(R.id.my_progress);
-//            convertView.setTag(viewHolder);
-//        } else
-//            viewHolder = (ViewHolder) convertView.getTag();
         grabBO = itemList.get(position);
 
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
         LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
 
-
         if (grabBO.getStatus() == 1) {
 
             if (viewHolder.txt.getTag() == null) {
                 viewHolder.txt.setTag(grabBO.getPicture());
-                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1");
+                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1", viewHolder.img_bg_remind);
                 LogUtils.i(TAG, "tag:" + viewHolder.txt.getTag() + " pic:" + grabBO.getPicture());
                 timeCountDownUtil.start();
                 getCountDownUtils().put(position, timeCountDownUtil);
@@ -87,18 +85,17 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             LogUtils.i(TAG, "活动已开始" + " position:" + position + " 内容:" + viewHolder.txt.getText().toString());
             viewHolder.progressBar.setVisibility(View.VISIBLE);
             viewHolder.progressBar.setVisibility(View.VISIBLE);
-            viewHolder.progressBar.setProgress(position);
-            viewHolder.progressBar.setMax(40);
+            viewHolder.progressBar.setProgress(grabBO.getCurrWinNum());
+            viewHolder.progressBar.setMax(grabBO.getTotalWinNum());
 
             viewHolder.llayout_remind.setVisibility(View.VISIBLE);
-            if (position == 0 || position == 1) {
-                if (MyUtil.isRemind(grabBO.getActiveId())) {
-                    viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), false));
-                    viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
-                } else {
-                    viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), true));
-                    viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
-                }
+            LogUtils.i(TAG, grabBO.getActiveId() + ":" + "MyUtil.isRemind(grabBO.getActiveId())" + MyUtil.isRemind(grabBO.getActiveId()));
+            if (MyUtil.isRemind(grabBO.getActiveId())) {
+                viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), false, viewHolder.img_bg_remind));
+                viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
+            } else {
+                viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), true, viewHolder.img_bg_remind));
+                viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
             }
         } else {
             viewHolder.progressBar.setVisibility(View.GONE);
@@ -125,19 +122,28 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         String startDt;
         String endDt;
         boolean flag;
+        ImageView img_bg_remind;
 
-        public alarmClikListener(String title, int activeId, String startDt, String endDt, boolean flag) {
+        public alarmClikListener(String title, int activeId, String startDt, String endDt, boolean flag, ImageView img_bg_remind) {
             this.title = title;
             this.activeId = activeId;
             this.startDt = startDt;
             this.endDt = endDt;
             this.flag = flag;
+            this.img_bg_remind = img_bg_remind;
         }
 
         @Override
         public void onClick(View v) {
-            MyUtil.updateActivityInfo(activeId, flag);//更新活动状态
             alarmtListener.setAlarm(title, activeId, startDt, endDt, flag);
+            if (flag) {
+                img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
+                flag = false;
+            } else {
+                img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
+                flag = true;
+            }
+
         }
     }
 

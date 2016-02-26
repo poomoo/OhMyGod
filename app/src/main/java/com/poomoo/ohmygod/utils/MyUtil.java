@@ -480,14 +480,27 @@ public class MyUtil {
     }
 
     /**
-     * 更新消息为已读
+     * 更新活动提醒状态
      *
      * @param activeId
      */
-    public static void updateActivityInfo(int activeId,boolean flag) {
+    public static void updateActivityInfo(int activeId, boolean flag, String eventId) {
         ContentValues values = new ContentValues();
         values.put("flag", flag);
+        values.put("eventId", eventId);
         DataSupport.updateAll(ActivityInfo.class, values, "activeId = ?", activeId + "");
+    }
+
+    /**
+     * 查询活动提醒的ID
+     *
+     * @return
+     */
+    public static String getEventId(int activeId) {
+        List<ActivityInfo> infoList = DataSupport.where("activeId = ?", activeId + "").find(ActivityInfo.class);
+        if (infoList.size() == 1)
+            return infoList.get(0).getEventId();
+        return "";
     }
 
     /**

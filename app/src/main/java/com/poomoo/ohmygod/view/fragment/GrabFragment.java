@@ -69,6 +69,8 @@ import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownElasticImp;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
+import org.litepal.util.LogUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -127,6 +129,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private TimeAdapter timeAdapter;
     private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
     private boolean existCountDown = false;//true-有倒计时
+    private String eventId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -377,6 +380,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         activityInfo = new ActivityInfo();
                         activityInfo.setActiveId(grabBOList.get(i).getActiveId());
                         activityInfo.setFlag(false);
+                        activityInfo.setEventId("");
                         activityInfos.add(activityInfo);
                         MyUtil.insertActivityInfo(activityInfos);//活动列表
                     }
@@ -710,13 +714,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     @Override
     public void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag) {
         if (flag)
-            insertCalendar(title, startDt, endDt);
+            insertCalendar(activeId, title, startDt, endDt, flag);
         else
-            delete();
-        adapter.notifyDataSetChanged();
+            delete(activeId);
     }
 
-    private void insertCalendar(String title, String startDt, String endDt) {
+    private void insertCalendar(int activeId, String title, String startDt, String endDt, boolean flag) {
         String calId = "";
         Cursor userCursor = getActivity().getContentResolver().query(Uri.parse(calanderURL), null, CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
         LogUtils.i(TAG, "userCursor.getCount():" + userCursor.getCount());
@@ -754,9 +757,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         event.put("eventTimezone", TimeZone.getDefault().getID().toString());  //这个是时区，必须有，
 
         Uri newEvent = getActivity().getContentResolver().insert(Uri.parse(calanderEventURL), event);
+        LogUtils.i(TAG, title + ":" + newEvent);
 
         long id = Long.parseLong(newEvent.getLastPathSegment());
-
+        eventId = Long.toString(id);
         ContentValues values = new ContentValues();
 
         values.put(CalendarContract.Reminders.EVENT_ID, id);
@@ -764,6 +768,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         getActivity().getContentResolver().insert(Uri.parse(calanderRemiderURL), values);
         MyUtil.showToast(getActivity().getApplicationContext(), "设置成功,将在活动开抢前5分钟提醒您!");
+        MyUtil.updateActivityInfo(activeId, flag, eventId);//更新活动状态
     }
 
     //添加账户
@@ -794,8 +799,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         getActivity().getContentResolver().insert(calendarUri, value);
     }
 
-    private void delete() {
-        getActivity().getContentResolver().delete(Uri.parse(calanderURL), CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null);
+    private void delete(int activeId) {
+        getActivity().getContentResolver().delete(Uri.parse(calanderEventURL), CalendarContract.Events._ID + "='" + MyUtil.getEventId(activeId) + "'", null);
         MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功!");
+        MyUtil.updateActivityInfo(activeId, false, "");
     }
 }
