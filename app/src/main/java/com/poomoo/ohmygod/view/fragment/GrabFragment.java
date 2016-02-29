@@ -1,7 +1,5 @@
 package com.poomoo.ohmygod.view.fragment;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -56,7 +54,6 @@ import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.listeners.AlarmtListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
-import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.view.activity.CityListActivity;
 import com.poomoo.ohmygod.view.activity.CommodityInformation2Activity;
 import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
@@ -69,7 +66,8 @@ import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownElasticImp;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
-import org.litepal.util.LogUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private ImageView avatarImg;
     private TextView currCityTxt;
     private TextView countTxt;
-    private TextView viewsTxt;
+    private TextView browseTxt;
     private UpMarqueeTextView marqueeTextView;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
@@ -130,6 +128,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
     private boolean existCountDown = false;//true-有倒计时
     private String eventId;
+    private String browseNum = "";//总浏览量
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -154,7 +153,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         noWinningInfoTxt = (TextView) getActivity().findViewById(R.id.txt_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
-        viewsTxt = (TextView) getActivity().findViewById(R.id.txt_view);//总浏览量
+        browseTxt = (TextView) getActivity().findViewById(R.id.txt_view);//总浏览量
         avatarImg = (ImageView) getActivity().findViewById(R.id.img_grab_winner);
         marqueeTextView = (UpMarqueeTextView) getActivity().findViewById(R.id.txt_winnerInfo);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
@@ -371,7 +370,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 winnerRlayout.setVisibility(View.VISIBLE);
                 viewsLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
-//                hideFloatingActionButton();
                 grabBOList = data.getObjList();
                 int len = grabBOList.size();
                 if (len > 0) {
@@ -384,6 +382,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         activityInfos.add(activityInfo);
                         MyUtil.insertActivityInfo(activityInfos);//活动列表
                     }
+                }
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(data.getOtherData());
+                    browseNum = String.valueOf(jsonObject.get("browseNum"));
+                    browseTxt.setText(browseNum);
+                    LogUtils.i(TAG,"browseNum:"+browseNum);
+                } catch (JSONException e) {
                 }
             }
 

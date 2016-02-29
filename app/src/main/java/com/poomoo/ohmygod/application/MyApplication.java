@@ -3,6 +3,7 @@ package com.poomoo.ohmygod.application;
 import android.app.Activity;
 import android.graphics.Bitmap;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -53,12 +54,14 @@ public class MyApplication extends LitePalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        SDKInitializer.initialize(this);//初始化地图
         appAction = new AppActionImpl(this);
 
         initImageLoader();
         CrashHandler crashHandler = CrashHandler.getInstance();
         // 注册crashHandler
         crashHandler.init(getApplicationContext());
+
     }
 
     private void initImageLoader() {

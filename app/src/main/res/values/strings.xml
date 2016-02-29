@@ -77,6 +77,8 @@
     <string name="label_clickToReturn1">点击返回</string>
     <string name="label_clickToReturn2">谢谢参与,点击返回</string>
     <string name="label_clickToWinningRecords">平台将即时与你联系\n点击查看中奖记录</string>
+    <string name="label_merchantInfo">商家信息</string>
+    <string name="label_contactMerchant">联系商家</string>
     <!--抢-->
 
     <!--个人资料-->
@@ -282,6 +284,8 @@
     <string name="intent_openBank">openBank</string>
     <string name="intent_ad">ad</string>
     <string name="intent_contactUs">contactUs</string>
+    <string name="intent_latitude">latitude</string>
+    <string name="intent_longitude">longitude</string>
     <!--intent-->
 
     <!--hint-->

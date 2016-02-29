@@ -17,4 +17,5 @@
     <color name="bg_calender_signed">#FFF2D5</color>
     <color name="btn_reply">#DADADA</color>
     <color name="bg_reply">#EEF3FA</color>
+    <color name="gray">#E4E4E4</color>
 </resources>

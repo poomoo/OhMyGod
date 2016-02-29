@@ -30,6 +30,15 @@ public class CommodityBO {
     private String getEndDt = "";//
     private String getAddress = "";//
 
+    private String shopsName="";//店铺名称
+    private String shopsUserId="";//商家编号
+    private String shopsCityName="";//商家城市名称
+    private String shopsAddress="";//商家地址
+    private double shopsLat;//商家地址纬度
+    private double shopsLng;//商家地址经度
+    private String shopsRealName="";//商家姓名
+    private String shopsTel="";//商家电话号码
+
     public ArrayList<String> getPicList() {
         return picList;
     }
@@ -158,6 +167,70 @@ public class CommodityBO {
         this.getAddress = getAddress;
     }
 
+    public String getShopsName() {
+        return shopsName;
+    }
+
+    public void setShopsName(String shopsName) {
+        this.shopsName = shopsName;
+    }
+
+    public String getShopsUserId() {
+        return shopsUserId;
+    }
+
+    public void setShopsUserId(String shopsUserId) {
+        this.shopsUserId = shopsUserId;
+    }
+
+    public String getShopsCityName() {
+        return shopsCityName;
+    }
+
+    public void setShopsCityName(String shopsCityName) {
+        this.shopsCityName = shopsCityName;
+    }
+
+    public String getShopsAddress() {
+        return shopsAddress;
+    }
+
+    public void setShopsAddress(String shopsAddress) {
+        this.shopsAddress = shopsAddress;
+    }
+
+    public double getShopsLat() {
+        return shopsLat;
+    }
+
+    public void setShopsLat(double shopsLat) {
+        this.shopsLat = shopsLat;
+    }
+
+    public double getShopsLng() {
+        return shopsLng;
+    }
+
+    public void setShopsLng(double shopsLng) {
+        this.shopsLng = shopsLng;
+    }
+
+    public String getShopsRealName() {
+        return shopsRealName;
+    }
+
+    public void setShopsRealName(String shopsRealName) {
+        this.shopsRealName = shopsRealName;
+    }
+
+    public String getShopsTel() {
+        return shopsTel;
+    }
+
+    public void setShopsTel(String shopsTel) {
+        this.shopsTel = shopsTel;
+    }
+
     @Override
     public String toString() {
         return "CommodityBO{" +
@@ -177,6 +250,14 @@ public class CommodityBO {
                 ", getRequire='" + getRequire + '\'' +
                 ", getEndDt='" + getEndDt + '\'' +
                 ", getAddress='" + getAddress + '\'' +
+                ", shopsName='" + shopsName + '\'' +
+                ", shopsUserId='" + shopsUserId + '\'' +
+                ", shopsCityName='" + shopsCityName + '\'' +
+                ", shopsAddress='" + shopsAddress + '\'' +
+                ", shopsLat='" + shopsLat + '\'' +
+                ", shopsLng='" + shopsLng + '\'' +
+                ", shopsRealName='" + shopsRealName + '\'' +
+                ", shopsTel='" + shopsTel + '\'' +
                 '}';
     }
 }

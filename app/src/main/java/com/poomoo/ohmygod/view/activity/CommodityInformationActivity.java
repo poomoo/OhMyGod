@@ -7,10 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.baidu.location.LLSInterface;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
@@ -88,6 +91,9 @@ public class CommodityInformationActivity extends BaseActivity {
     private TextView percentTxt;//百分比
     private ScrollView scrollView;//
     private ImageView detailsImg;
+    private TextView shopNameTxt;//店铺名称
+    private TextView shopAddressTxt;//店铺地址
+    private LinearLayout merchantInfoLlayout;//商家信息
 
     private TimeCountDownUtil headTimeCountDownUtil;
     private List<TextView> textViewList;
@@ -169,6 +175,9 @@ public class CommodityInformationActivity extends BaseActivity {
         rlayout_clickToComplete = (RelativeLayout) findViewById(R.id.rlayout_clickToComplete);
         detailsImg = (ImageView) findViewById(R.id.img_commodityDetail);
 
+        shopNameTxt = (TextView) findViewById(R.id.txt_shopName);
+        shopAddressTxt = (TextView) findViewById(R.id.txt_shopAddress);
+        merchantInfoLlayout = (LinearLayout) findViewById(R.id.llayout_merchantInfo);
 
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
@@ -351,6 +360,13 @@ public class CommodityInformationActivity extends BaseActivity {
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
         startDate.setText(commodityBO.getStartDt());
+        if (TextUtils.isEmpty(commodityBO.getShopsName()) || TextUtils.isEmpty(commodityBO.getShopsAddress()))
+            merchantInfoLlayout.setVisibility(View.GONE);
+        else {
+            shopNameTxt.setText(commodityBO.getShopsName());
+            shopAddressTxt.setText(commodityBO.getShopsAddress());
+        }
+
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                 .cacheInMemory(true) //
                 .cacheOnDisk(true) //
@@ -937,4 +953,27 @@ public class CommodityInformationActivity extends BaseActivity {
             }
         }
     };
+
+    /**
+     * 跳转到地图
+     *
+     * @param view
+     */
+    public void toPosition(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putDouble(getString(R.string.intent_latitude), commodityBO.getShopsLat());
+        bundle.putDouble(getString(R.string.intent_longitude), commodityBO.getShopsLng());
+        openActivity(MapActivity.class, bundle);
+    }
+
+    /**
+     * 联系商家
+     *
+     * @param view
+     */
+    public void toContact(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
