@@ -217,6 +217,18 @@ public class MyUtil {
     }
 
     /**
+     * 隐藏验证码
+     *
+     * @param num 111 111 111
+     * @return *** *** ***
+     */
+    public static String hiddenCode(String num) {
+        if (TextUtils.isEmpty(num))
+            return "";
+        return num.replaceAll("[0123456789]", "*");
+    }
+
+    /**
      * 去掉所有空格
      *
      * @param string

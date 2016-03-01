@@ -8,6 +8,9 @@
     <string name="tab_my">我</string>
     <string name="tab_all">全部</string>
     <string name="tab_already">已揭晓</string>
+    <string name="tab_checkAll">所有验证码</string>
+    <string name="tab_unChecked">未验证</string>
+    <string name="tab_checked">已验证</string>
     <!--导航栏-->
 
     <!--标题栏-->
@@ -59,6 +62,7 @@
     <string name="title_updateMember">会员升级</string>
     <string name="title_openBank">开户银行</string>
     <string name="title_contactUs">联系我们</string>
+    <string name="title_shopCheck">商家验证</string>
     <!--标题栏-->
 
     <!--标签提示-->
@@ -321,6 +325,7 @@
     <string name="hint_openBank">请填写详细的开户银行</string>
     <string name="hint_bankAccountName">请填写详细的开户姓名</string>
     <string name="hint_zone">请填写购置房屋区域</string>
+    <string name="hint_inputCode">请输入天呐验证码</string>
 
     <!--hint-->
 
@@ -352,6 +357,7 @@
     <string name="btn_register">注　册</string>
     <string name="btn_lucky">看看大家手气</string>
     <string name="btn_signIn">我要报名</string>
+    <string name="btn_check">验　证</string>
     <!--按钮-->
 
     <!--星期-->
