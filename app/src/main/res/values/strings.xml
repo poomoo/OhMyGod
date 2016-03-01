@@ -286,6 +286,7 @@
     <string name="intent_contactUs">contactUs</string>
     <string name="intent_latitude">latitude</string>
     <string name="intent_longitude">longitude</string>
+    <string name="intent_shopName">shopName</string>
     <!--intent-->
 
     <!--hint-->

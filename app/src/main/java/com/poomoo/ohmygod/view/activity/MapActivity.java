@@ -4,7 +4,10 @@
 package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -13,6 +16,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -42,6 +46,7 @@ public class MapActivity extends BaseActivity {
     private Marker mMarker;
     private double mCurrentLantitude;
     private double mCurrentLongitude;
+    private InfoWindow mInfoWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,23 @@ public class MapActivity extends BaseActivity {
         longitude = getIntent().getDoubleExtra(getString(R.string.intent_longitude), 0);
         ll = new LatLng(latitude, longitude);
         MarkerOptions oo = new MarkerOptions().position(ll).icon(bd)
-                .zIndex(9).draggable(true);
+                .zIndex(9);
         mMarker = (Marker) (mBaiduMap.addOverlay(oo));
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.target(ll).zoom(18.0f);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
+
+        Button button = new Button(getApplicationContext());
+//        button.setBackgroundResource(R.drawable.map_bg_map_popup);
+//        button.setText(getIntent().getStringExtra(getString(R.string.intent_shopName)));
+        button.setText("长度测试方面的卡萨发简单快乐萨菲的拉法基打蜡是减肥的顺丰快递上来角度来说");
+        button.setMaxEms(16);
+        button.setMaxLines(1);
+        button.setEllipsize(TextUtils.TruncateAt.END);
+        button.setTextSize(16);
+        mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -40, null);
+        mBaiduMap.showInfoWindow(mInfoWindow);
     }
 
     @Override
@@ -116,10 +133,14 @@ public class MapActivity extends BaseActivity {
         }
     }
 
-    public void toLocation(View view){
+    public void toLocation(View view) {
         LatLng ll = new LatLng(mCurrentLantitude, mCurrentLongitude);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
         mBaiduMap.animateMapStatus(u);
+    }
+
+    public void toBack(View view){
+        this.finish();
     }
 
     @Override

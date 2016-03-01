@@ -963,6 +963,7 @@ public class CommodityInformationActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putDouble(getString(R.string.intent_latitude), commodityBO.getShopsLat());
         bundle.putDouble(getString(R.string.intent_longitude), commodityBO.getShopsLng());
+        bundle.putString(getString(R.string.intent_shopName),commodityBO.getShopsName());
         openActivity(MapActivity.class, bundle);
     }
 
