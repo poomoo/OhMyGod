@@ -32,9 +32,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_winning" />
+                android:src="@drawable/ic_merchant" />
 
             <TextView
+                android:id="@+id/txt_shopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="2dp"
@@ -52,15 +53,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center_vertical"
+            android:onClick="toSelectActiveType"
             android:orientation="horizontal"
             android:padding="@dimen/dp_14">
 
             <TextView
+                android:id="@+id/txt_activeName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="蛋糕套餐活动"
+                android:text="请选择活动"
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_18" />
 
@@ -80,6 +84,7 @@
         android:padding="@dimen/dp_14">
 
         <EditText
+            android:id="@+id/edt_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -99,6 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="toCheck"
             android:text="@string/btn_check" />
     </LinearLayout>
 
@@ -112,11 +118,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center_vertical"
+            android:onClick="toSelectDate"
             android:orientation="horizontal"
             android:padding="@dimen/dp_14">
 
             <TextView
+                android:id="@+id/txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2016年02月22日"
@@ -210,6 +219,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
+            android:onClick="toGetAll"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:singleLine="true"
@@ -224,6 +234,7 @@
             android:background="@drawable/bg_check_status"
             android:button="@null"
             android:gravity="center"
+            android:onClick="toGetUnChecked"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:singleLine="true"
@@ -238,6 +249,7 @@
             android:background="@drawable/bg_check_status"
             android:button="@null"
             android:gravity="center"
+            android:onClick="toGetChecked"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:singleLine="true"
@@ -246,8 +258,42 @@
 
     </RadioGroup>
 
-    <ListView
-        android:id="@+id/list_code_status"
+    <RelativeLayout
+        android:id="@+id/rlayout_progress"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pull_to_refresh_load_progress"
+            style="@android:style/Widget.ProgressBar.Large.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:indeterminate="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/pull_to_refresh_load_progress"
+            android:gravity="center"
+            android:text="加载中..."
+            android:textSize="@dimen/sp_20" />
+    </RelativeLayout>
+
+    <com.poomoo.ohmygod.view.custom.RefreshLayout
+        android:id="@+id/refresh_merchantInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ListView
+            android:id="@+id/list_code_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.poomoo.ohmygod.view.custom.RefreshLayout>
+
+
 </LinearLayout>

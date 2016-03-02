@@ -1,7 +1,10 @@
 package com.poomoo.api;
 
+import android.text.TextUtils;
+
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CityBO;
+import com.poomoo.model.CodeBO;
 import com.poomoo.model.CommentBO;
 import com.poomoo.model.CommodityBO;
 import com.poomoo.model.FileBO;
@@ -598,6 +601,29 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getMerchantInfo(String userId, int activeId, String playDt, String winNumber, String isGot, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.MERCHANTINFO);
+        paramMap.put("userId", userId);
+        if (activeId != 0)
+            paramMap.put("activeId", activeId + "");
+        paramMap.put("playDt", playDt);
+        if (!TextUtils.isEmpty(winNumber))
+            paramMap.put("winNumber", winNumber);
+        if (!TextUtils.isEmpty(isGot))
+            paramMap.put("isGot", isGot);
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, CodeBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

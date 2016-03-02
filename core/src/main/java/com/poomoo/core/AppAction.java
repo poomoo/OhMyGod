@@ -15,7 +15,7 @@ public interface AppAction {
      * @param passWord 密码
      * @param listener 回调监听器
      */
-    void logIn(String phoneNum, String passWord,String channelId , ActionCallbackListener listener);
+    void logIn(String phoneNum, String passWord, String channelId, ActionCallbackListener listener);
 
     /**
      * 获取验证码
@@ -331,7 +331,7 @@ public interface AppAction {
      * @param activeId
      * @param listener
      */
-    void getActivityWinnerList(String activeId,  int currPage, int pageSize,ActionCallbackListener listener);
+    void getActivityWinnerList(String activeId, int currPage, int pageSize, ActionCallbackListener listener);
 
     /**
      * 检查登录状态
@@ -341,4 +341,17 @@ public interface AppAction {
      * @param listener
      */
     void checkStatus(String userId, String channelId, ActionCallbackListener listener);
+
+    /**
+     * 查询商家信息
+     *
+     * @param userId   商家用户编号(必要参数)
+     * @param activeId 活动编号
+     * @param playDt   "2016-02-22",		--中奖时间（注意时间格式）
+     * @param isGot    默认是全部，则不传，0：未验证，1：已经验证
+     * @param currPage 当前页号码，默认值1
+     * @param pageSize 页面大小，默认值10
+     * @param listener
+     */
+    void getMerchantInfo(String userId, int activeId, String playDt,String winNumber, String isGot, int currPage, int pageSize, ActionCallbackListener listener);
 }

@@ -42,6 +42,7 @@ import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.MyShowActivity;
 import com.poomoo.ohmygod.view.activity.MyWithdrawDepositActivity;
 import com.poomoo.ohmygod.view.activity.SettingActivity;
+import com.poomoo.ohmygod.view.activity.ShopCheckActivity;
 import com.poomoo.ohmygod.view.activity.SnatchRecordActivity;
 import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinningRecordActivity;
@@ -78,6 +79,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout innerRlayout;
     private RelativeLayout showRlayout;
     private RelativeLayout contactRlayout;
+    private RelativeLayout merchantRlayout;
 
     private String headPic;
     private SelectPicsPopupWindow popupWindow;
@@ -127,6 +129,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         innerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_innerInfo);
         showRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_show);
         contactRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_contactUs);
+        merchantRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_merchant);
+
+        if (application.getUserType() == 1)
+            merchantRlayout.setVisibility(View.VISIBLE);
 
         catInfoCount();
 
@@ -137,6 +143,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         innerRlayout.setOnClickListener(this);
         showRlayout.setOnClickListener(this);
         contactRlayout.setOnClickListener(this);
+        merchantRlayout.setOnClickListener(this);
 
         dialImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,6 +402,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 bundle = new Bundle();
                 bundle.putString(getString(R.string.intent_parent), getString(R.string.intent_contactUs));
                 openActivity(WebViewActivity.class, bundle);
+                break;
+            case R.id.rlayout_merchant:
+                openActivity(ShopCheckActivity.class);
                 break;
         }
     }

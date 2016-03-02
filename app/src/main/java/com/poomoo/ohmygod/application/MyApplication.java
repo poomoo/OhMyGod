@@ -47,6 +47,7 @@ public class MyApplication extends LitePalApplication {
     private String address = "";//收货地址
     private String isAdvancedUser = "";//是否为高级会员 默认值是0，1表示已经成为高级会员
     private String channelId = "";//设备ID,登录时后台返回
+    private int userType;//1:商户，2普通用户
 
     private static MyApplication instance;//当前对象
     private List<Activity> activityList;//activity栈
@@ -248,6 +249,13 @@ public class MyApplication extends LitePalApplication {
         this.channelId = channelId;
     }
 
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
 
     public List<Activity> getActivityList() {
         if (activityList == null) {

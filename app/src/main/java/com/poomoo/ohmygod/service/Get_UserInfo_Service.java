@@ -66,6 +66,7 @@ public class Get_UserInfo_Service extends Service {
                 application.setBankName(userBO.getBankName());
                 application.setAddress(userBO.getAddress());
                 application.setIsAdvancedUser(userBO.getIsAdvancedUser());
+                application.setUserType(userBO.getUserType());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), application.getUserId());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), application.getTel());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_nickName), application.getNickName());
@@ -82,6 +83,7 @@ public class Get_UserInfo_Service extends Service {
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_bankName), application.getBankName());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_address), application.getAddress());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_isAdvancedUser), application.getIsAdvancedUser());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userType), application.getUserType());
                 stopSelf();
             }
 

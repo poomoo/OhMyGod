@@ -28,16 +28,22 @@ public class SelectAdapter extends MyBaseAdapter<String> {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_select, null);
             viewHolder.contentTxt = (TextView) convertView.findViewById(R.id.txt_select);
+            viewHolder.hiddenTxt = (TextView) convertView.findViewById(R.id.txt_hidden);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
         String content = itemList.get(position);
-
-        viewHolder.contentTxt.setText(content);
+        if (content.contains("#")) {
+            String temp[] = content.split("#");
+            viewHolder.contentTxt.setText(temp[0]);
+            viewHolder.hiddenTxt.setText(temp[1]);
+        } else
+            viewHolder.contentTxt.setText(content);
         return convertView;
     }
 
     class ViewHolder {
         TextView contentTxt;
+        TextView hiddenTxt;
     }
 }

@@ -386,7 +386,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 JSONObject jsonObject;
                 try {
                     jsonObject = new JSONObject(data.getOtherData());
-                    browseNum = String.valueOf(jsonObject.get("browseNum"));
+                    browseNum = jsonObject.getString("browseNum");
                     browseTxt.setText(browseNum);
                     LogUtils.i(TAG,"browseNum:"+browseNum);
                 } catch (JSONException e) {

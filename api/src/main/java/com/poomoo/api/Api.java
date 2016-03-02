@@ -83,4 +83,7 @@ public interface Api {
 
     ResponseBO checkStatus(String userId, String channelId);
 
+    ResponseBO getMerchantInfo(String userId, int activeId, String playDt,String winNumber, String isGot, int currPage, int pageSize);
+
+
 }

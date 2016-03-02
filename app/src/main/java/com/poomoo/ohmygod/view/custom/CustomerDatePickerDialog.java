@@ -18,10 +18,9 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
     }
 
 
-
     @Override
     public void onDateChanged(DatePicker view, int year, int month, int day) {
         super.onDateChanged(view, year, month, day);
-        setTitle(year + "年" + (month + 1) + "月");
+        setTitle(year + "年" + (month + 1) + "月" + day + "号");
     }
 }

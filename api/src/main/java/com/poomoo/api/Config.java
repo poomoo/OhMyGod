@@ -39,6 +39,7 @@ public class Config {
     public final static String WININFOLIST = "20005";//查询活动中奖列表（分页）
     public final static String RECORDS = "20006";//中奖记录
     public final static String ACTIVITYWINNERLIST = "20007";//活动中奖人列表
+    public final static String MERCHANTINFO = "20009";//商家信息
 
     //ACTION 30000
     public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号

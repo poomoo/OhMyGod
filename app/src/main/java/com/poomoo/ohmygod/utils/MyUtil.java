@@ -225,7 +225,7 @@ public class MyUtil {
     public static String hiddenCode(String num) {
         if (TextUtils.isEmpty(num))
             return "";
-        return num.replaceAll("[0123456789]", "*");
+        return num.replaceAll("[^\\s]", "*");
     }
 
     /**

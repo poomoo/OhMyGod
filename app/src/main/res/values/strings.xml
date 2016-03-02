@@ -53,6 +53,7 @@
     <string name="title_selectCity">"选择城市"</string>
     <string name="title_selectAge">"选择您的年龄"</string>
     <string name="title_selectGender">"选择性别"</string>
+    <string name="title_selectActive">"选择活动"</string>
     <string name="title_age">"年龄"</string>
     <string name="title_userHelp">用户帮助</string>
     <string name="title_about">关于天呐</string>
@@ -155,6 +156,7 @@
     <string name="label_inner_information">站内信息</string>
     <string name="label_my_show">我的晒单</string>
     <string name="label_contactUs">联系我们</string>
+    <string name="label_merchant">商家专区</string>
 
     <!--签到返现-->
     <string name="label_totalAmount">总金额池</string>
@@ -263,6 +265,7 @@
     <string name="intent_changePassWord">changePassWord</string>
     <string name="intent_age">age</string>
     <string name="intent_gender">gender</string>
+    <string name="intent_activeName">activeName</string>
     <string name="intent_activeId">activeId</string>
     <string name="intent_typeId">typeId</string>
     <string name="intent_position">position</string>
@@ -395,6 +398,7 @@
     <string name="sp_userId">userId</string>
     <string name="sp_address">address</string>
     <string name="sp_isAdvancedUser">isAdvancedUser</string>
+    <string name="sp_userType">userType</string>
     <string name="sp_channelId">channelId</string>
     <string name="sp_isIndex">isIndex</string>
     <string name="sp_historyCity">historyCity</string>

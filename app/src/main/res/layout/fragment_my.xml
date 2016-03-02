@@ -54,7 +54,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:background="@drawable/bg_personal_center"
         android:gravity="center"
         android:orientation="horizontal">
@@ -153,12 +153,11 @@
     <RelativeLayout
         android:id="@+id/rlayout_snatch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
@@ -172,6 +171,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_left1"
             android:paddingLeft="40dp"
             android:text="@string/label_snatch"
@@ -193,12 +193,11 @@
     <RelativeLayout
         android:id="@+id/rlayout_winning"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
@@ -212,6 +211,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_left2"
             android:paddingLeft="40dp"
             android:text="@string/label_winning"
@@ -233,16 +233,15 @@
     <RelativeLayout
         android:id="@+id/rlayout_withDrawDepositRecord"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
-            android:id="@+id/img_left7"
+            android:id="@+id/img_left3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -252,7 +251,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_left7"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left3"
             android:paddingLeft="40dp"
             android:text="@string/label_my_withdraw_deposit"
             android:textColor="@color/themeGray"
@@ -273,16 +273,15 @@
     <RelativeLayout
         android:id="@+id/rlayout_withDrawDeposit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
-            android:id="@+id/img_left3"
+            android:id="@+id/img_left4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -292,7 +291,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_left3"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left4"
             android:paddingLeft="40dp"
             android:text="@string/label_withdraw_deposit_now"
             android:textColor="@color/themeGray"
@@ -313,16 +313,15 @@
     <RelativeLayout
         android:id="@+id/rlayout_innerInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
-            android:id="@+id/img_left4"
+            android:id="@+id/img_left5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -333,7 +332,8 @@
             android:id="@+id/txt_inner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_left4"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left5"
             android:paddingLeft="40dp"
             android:text="@string/label_inner_information"
             android:textColor="@color/themeGray"
@@ -368,16 +368,15 @@
     <RelativeLayout
         android:id="@+id/rlayout_show"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
-            android:id="@+id/img_left5"
+            android:id="@+id/img_left6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -387,7 +386,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_left5"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left6"
             android:paddingLeft="40dp"
             android:text="@string/label_my_show"
             android:textColor="@color/themeGray"
@@ -408,16 +408,15 @@
     <RelativeLayout
         android:id="@+id/rlayout_contactUs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         android:paddingLeft="17dp"
-        android:paddingRight="17dp"
-        android:paddingTop="8dp">
+        android:paddingRight="17dp">
 
 
         <ImageView
-            android:id="@+id/img_left6"
+            android:id="@+id/img_left7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -427,7 +426,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_left6"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left7"
             android:paddingLeft="40dp"
             android:text="@string/label_contactUs"
             android:textColor="@color/themeGray"
@@ -446,4 +446,44 @@
         android:layout_width="match_parent"
         android:layout_height="6dp" />
 
+    <RelativeLayout
+        android:id="@+id/rlayout_merchant"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/img_left8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_merchant" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_left8"
+            android:paddingLeft="40dp"
+            android:text="@string/label_merchant"
+            android:textColor="@color/themeRed"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="6dp" />
 </LinearLayout>

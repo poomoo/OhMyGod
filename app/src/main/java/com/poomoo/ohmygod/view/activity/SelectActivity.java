@@ -14,6 +14,7 @@ import com.poomoo.ohmygod.adapter.SelectAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
     private String PARENT;
     private String title;
     private List<String> strings;
+    private List<HashMap<String, String>> hashMapList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,13 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
             strings.add(MyConfig.genders[1]);
         }
 
+        if (PARENT.equals(getString(R.string.intent_activeName))) {
+            hashMapList = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("activeList");
+            int len = hashMapList.size();
+            for (int i = 0; i < len; i++)
+                strings.add(hashMapList.get(i).get("activeName") + "#" + hashMapList.get(i).get("activeId"));
+        }
+
         adapter.setItems(strings);
         listView.setOnItemClickListener(this);
     }
@@ -67,6 +76,8 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
             title = getString(R.string.title_selectAge);
         if (PARENT.equals(getString(R.string.intent_gender)))
             title = getString(R.string.title_selectGender);
+        if (PARENT.equals(getString(R.string.intent_activeName)))
+            title = getString(R.string.title_selectActive);
 
         HeaderViewHolder headerViewHolder = getHeaderView();
         headerViewHolder.titleTxt.setText(title);
@@ -90,6 +101,11 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
         if (PARENT.equals(getString(R.string.intent_gender))) {
             intent.putExtra(getString(R.string.intent_gender), strings.get(position));
             setResult(MyConfig.GENDER, intent);
+        }
+
+        if (PARENT.equals(getString(R.string.intent_activeName))) {
+            intent.putExtra(getString(R.string.intent_activeName), strings.get(position));
+            setResult(MyConfig.ACTIVE, intent);
         }
         finish();
         getActivityOutToRight();
