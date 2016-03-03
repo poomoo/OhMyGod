@@ -932,12 +932,41 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getMerchantInfo(final String userId, final int activeId, final String playDt,final String winNumber, final String isGot, final int currPage, final int pageSize, final ActionCallbackListener listener) {
+    public void getMerchantInfo(final String userId, final int activeId, final String playDt, final String winNumber, final String isGot, final int currPage, final int pageSize, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.getMerchantInfo(userId, activeId, playDt,winNumber, isGot, currPage, pageSize);
+                return api.getMerchantInfo(userId, activeId, playDt, winNumber, isGot, currPage, pageSize);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void checkWinNum(final String winNumber, final ActionCallbackListener listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(winNumber)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入验证码");
+            }
+            return;
+        }
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.checkWinNum(winNumber);
             }
 
             @Override

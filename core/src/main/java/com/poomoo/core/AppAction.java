@@ -353,5 +353,13 @@ public interface AppAction {
      * @param pageSize 页面大小，默认值10
      * @param listener
      */
-    void getMerchantInfo(String userId, int activeId, String playDt,String winNumber, String isGot, int currPage, int pageSize, ActionCallbackListener listener);
+    void getMerchantInfo(String userId, int activeId, String playDt, String winNumber, String isGot, int currPage, int pageSize, ActionCallbackListener listener);
+
+    /**
+     * 验证中奖码
+     *
+     * @param winNumber
+     * @param listener
+     */
+    void checkWinNum(String winNumber, ActionCallbackListener listener);
 }

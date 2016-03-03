@@ -111,6 +111,7 @@ public class SplashActivity extends BaseActivity {
                     application.setBankCardNum((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankCardNum), ""));
                     application.setBankName((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_bankName), ""));
                     application.setChannelId((String) SPUtils.get(getApplicationContext(), getString(R.string.sp_channelId), ""));
+                    application.setUserType((Integer) SPUtils.get(getApplicationContext(), getString(R.string.sp_userType), -1));
                     startService(new Intent(SplashActivity.this, Get_UserInfo_Service.class));
                     openActivity(MainFragmentActivity.class);
                     LogUtils.i(TAG, "openActivity(MainFragmentActivity.class);");

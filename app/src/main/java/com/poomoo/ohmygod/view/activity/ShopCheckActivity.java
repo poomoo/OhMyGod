@@ -3,29 +3,25 @@
  */
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CodeBO;
-import com.poomoo.model.MessageBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.CodeStatusListAdapter;
@@ -33,7 +29,7 @@ import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.CustomerDatePickerDialog;
-import com.poomoo.ohmygod.view.custom.RefreshLayout;
+import com.poomoo.ohmygod.view.custom.MyPullUpListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,15 +45,15 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2016/3/1 15:16.
  */
-public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnLoadListener {
+public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.OnLoadListener {
     private TextView shopNameTxt;
     private EditText codeEdt;
     private TextView checkedNumTxt;
     private TextView totalNumTxt;
     private TextView dateTxt;
     private TextView activeNameTxt;
-    private RefreshLayout refreshLayout;
-    private ListView listView;
+    //    private RefreshLayout refreshLayout;
+    private MyPullUpListView listView;
     private RelativeLayout progressRlayout;
 
     private CodeStatusListAdapter adapter;
@@ -68,7 +64,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
     private String isGot = "";    //默认是全部，则不传，0：未验证，1：已经验证
     private boolean isLoad = false;//true 加载 false刷新
     private int currPage = 1;
-    private String winNumber;//中间号码
+    private String winNumber;//中奖号码
     private String shopName;
     private int totalWinNum;
     private int gotWinNum;
@@ -93,9 +89,11 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
     protected void initView() {
         initTitleBar();
 
-        refreshLayout = (RefreshLayout) findViewById(R.id.refresh_merchantInfo);
-        refreshLayout.setOnLoadListener(this);
-        listView = (ListView) findViewById(R.id.list_code_status);
+//        refreshLayout = (RefreshLayout) findViewById(R.id.refresh_merchantInfo);
+//        refreshLayout.setOnLoadListener(this);
+//        refreshLayout.setRefreshing(false);
+        listView = (MyPullUpListView) findViewById(R.id.list_code_status);
+        listView.setOnLoadListener(this);
         adapter = new CodeStatusListAdapter(this);
         listView.setAdapter(adapter);
 
@@ -150,6 +148,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
             adapter.setItems(codeBOList);
             currPage = 1;
             isLoad = false;
+            listView.smoothScrollToPosition(0);
             getData();
         }
         currStatus = isGot;
@@ -162,6 +161,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
             adapter.setItems(codeBOList);
             currPage = 1;
             isLoad = false;
+            listView.smoothScrollToPosition(0);
             getData();
         }
         currStatus = isGot;
@@ -174,6 +174,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
             adapter.setItems(codeBOList);
             currPage = 1;
             isLoad = false;
+            listView.smoothScrollToPosition(0);
             getData();
         }
         currStatus = isGot;
@@ -206,40 +207,74 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
      * @param view
      */
     public void toCheck(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive())
+            imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+//        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        winNumber = codeEdt.getText().toString().trim();
+        showProgressDialog(getString(R.string.dialog_message));
+        this.appAction.checkWinNum(winNumber, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                closeProgressDialog();
+                codeEdt.setText("");
+                Dialog dialog = new AlertDialog.Builder(ShopCheckActivity.this).setMessage(data.getMsg()).
+                        setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                codeBOList = new ArrayList<>();
+                                adapter.setItems(codeBOList);
+                                currPage = 1;
+                                isLoad = false;
+                                listView.smoothScrollToPosition(0);
+                                getData();
+                            }
+                        }).create();
+                dialog.show();
+            }
 
+            @Override
+            public void onFailure(int errorCode, String message) {
+                closeProgressDialog();
+                MyUtil.showToast(getApplicationContext(), message);
+            }
+        });
     }
 
     private void getData() {
-        if (!isFirst) {
+        if (!isFirst && !isLoad) {
             listView.setVisibility(View.GONE);
             progressRlayout.setVisibility(View.VISIBLE);
         }
 
-        this.appAction.getMerchantInfo(application.getUserId(), activeId, playDt, winNumber, isGot, currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
+        this.appAction.getMerchantInfo(application.getUserId(), activeId, playDt, "", isGot, currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getOtherData());
                 closeProgressDialog();
-                if (!isFirst) {
+                if (!isFirst && !isLoad) {
                     progressRlayout.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                     LogUtils.i(TAG, "显示listview,隐藏进度条");
                 } else
                     isFirst = false;
 
-                currPage++;
                 // 更新完后调用该方法结束刷新
                 if (isLoad) {
-                    refreshLayout.setLoading(false);
-                    for (int i = 0; i < data.getObjList().size(); i++)
+                    listView.onLoadComplete();
+                    int len = data.getObjList().size();
+                    for (int i = 0; i < len; i++)
                         codeBOList.add((CodeBO) data.getObjList().get(i));
-                    adapter.addItems(codeBOList);
+                    if (len > 0) {
+                        currPage++;
+                        adapter.addItems(codeBOList);
+                    } else
+                        MyUtil.showToast(getApplicationContext(), "没有更多");
                 } else {
                     currPage = 1;
                     currPage++;
                     codeBOList = new ArrayList<>();
                     codeBOList = data.getObjList();
-                    LogUtils.i(TAG, "codeBOList:" + codeBOList);
                     adapter.setItems(codeBOList);
                 }
                 JSONObject jsonObject;
@@ -256,12 +291,6 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
                     list_activeType = new ArrayList<>();
                     HashMap<String, String> item;
                     for (int i = 0; i < length; i++) {
-//                        if (i == 0)
-//                            if (TextUtils.isEmpty(activeName)) {
-//                                activeName = activeList.getJSONObject(i).getString("activeName");
-//                                activeNameTxt.setText(activeName);
-//                                activeId = activeList.getJSONObject(i).getInt("activeId");
-//                            }
                         item = new HashMap<>();
                         item.put("activeId", activeList.getJSONObject(i).getInt("activeId") + "");
                         item.put("activeName", activeList.getJSONObject(i).getString("activeName"));
@@ -274,7 +303,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
-                if (!isFirst) {
+                if (!isFirst && !isLoad) {
                     progressRlayout.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                 } else
@@ -287,15 +316,7 @@ public class ShopCheckActivity extends BaseActivity implements RefreshLayout.OnL
     @Override
     public void onLoad() {
         isLoad = true;
-        refreshLayout.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // 更新数据
-                refreshLayout.setLoading(false);
-//                getData();
-            }
-        }, 0);
+        getData();
     }
 
     /**

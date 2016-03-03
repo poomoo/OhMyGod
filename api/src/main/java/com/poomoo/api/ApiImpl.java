@@ -628,4 +628,18 @@ public class ApiImpl implements Api {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
     }
+
+    @Override
+    public ResponseBO checkWinNum(String winNumber) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.CHECKWINNUM);
+        paramMap.put("winNumber", winNumber);
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
 }

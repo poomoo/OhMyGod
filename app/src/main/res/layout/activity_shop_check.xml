@@ -91,6 +91,7 @@
             android:background="@drawable/bg_edittext_check"
             android:hint="@string/hint_inputCode"
             android:inputType="number"
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/sp_22" />
@@ -283,17 +284,17 @@
             android:textSize="@dimen/sp_20" />
     </RelativeLayout>
 
-    <com.poomoo.ohmygod.view.custom.RefreshLayout
-        android:id="@+id/refresh_merchantInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+    <!--<com.poomoo.ohmygod.view.custom.RefreshLayout-->
+    <!--android:id="@+id/refresh_merchantInfo"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="visible">-->
 
-        <ListView
-            android:id="@+id/list_code_status"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.poomoo.ohmygod.view.custom.RefreshLayout>
+    <com.poomoo.ohmygod.view.custom.MyPullUpListView
+        android:id="@+id/list_code_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!--</com.poomoo.ohmygod.view.custom.RefreshLayout>-->
 
 
 </LinearLayout>
