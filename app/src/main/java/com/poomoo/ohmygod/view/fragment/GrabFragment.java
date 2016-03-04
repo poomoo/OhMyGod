@@ -60,11 +60,11 @@ import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
-import com.poomoo.ohmygod.view.custom.MyPullUpListView;
+import com.poomoo.ohmygod.view.custom.pullable.MyListener;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
+import com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
-import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownElasticImp;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 
 import org.json.JSONException;
@@ -73,7 +73,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
@@ -86,15 +85,15 @@ import java.util.TimerTask;
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener, AlarmtListener {
     private View mMenuView;
     private ListView timeList;
-    private PullDownScrollView refreshableView;
     private LinearLayout viewsLlayout;
-    //    private LinearLayout remindLlayout2;
+    private PullToRefreshLayout fragment_grab_layout;
     private LinearLayout middleLlayout;
     private LinearLayout currCityLlayout;
-    //    private LinearLayout noWinningInfoLlayout;
     private TextView noWinningInfoTxt;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
+    private RelativeLayout refreshRlayout;
+    private RelativeLayout loadRlayout;
     private ImageView avatarImg;
     private TextView currCityTxt;
     private TextView countTxt;
@@ -146,11 +145,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private void initView() {
         mMenuView = LayoutInflater.from(getActivity()).inflate(R.layout.popupwindow_time, null);
         timeList = (ListView) mMenuView.findViewById(R.id.list_time);
-        refreshableView = (PullDownScrollView) getActivity().findViewById(R.id.refresh_grab);
+        fragment_grab_layout = (PullToRefreshLayout) getActivity().findViewById(R.id.fragment_grab_layout);
+
+        refreshRlayout = (RelativeLayout) getActivity().findViewById(R.id.refresh);
+        loadRlayout = (RelativeLayout) getActivity().findViewById(R.id.load);
+
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
-//        noWinningInfoLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_noWinningInfo);
         noWinningInfoTxt = (TextView) getActivity().findViewById(R.id.txt_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
@@ -161,11 +163,13 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         viewsLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_views);
         middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
+        fragment_grab_layout.setOnRefreshListener(new MyListener());
 
-
-        //初始化下拉刷新
-        refreshableView.setRefreshListener(this);
-        refreshableView.setPullDownElastic(new PullDownElasticImp(getActivity()));
+        slideShowView.setVisibility(View.GONE);
+        winnerRlayout.setVisibility(View.GONE);
+        viewsLlayout.setVisibility(View.GONE);
+        refreshRlayout.setVisibility(View.GONE);
+        loadRlayout.setVisibility(View.GONE);
 
         timeAdapter = new TimeAdapter(getActivity());
         List<Integer> integerList = new ArrayList<>();
@@ -365,12 +369,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         this.appAction.getGrabList(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
-                if (isRefreshable)
-                    refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
-
                 winnerRlayout.setVisibility(View.VISIBLE);
                 viewsLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
+                refreshRlayout.setVisibility(View.VISIBLE);
+                loadRlayout.setVisibility(View.VISIBLE);
                 grabBOList = data.getObjList();
                 int len = grabBOList.size();
                 if (len > 0) {
@@ -396,13 +399,11 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
             @Override
             public void onFailure(int errorCode, String message) {
-                if (isRefreshable)
-                    refreshableView.finishRefresh(format.format(new Date(System.currentTimeMillis())));
-
                 slideShowView.setVisibility(View.GONE);
                 winnerRlayout.setVisibility(View.GONE);
-//                noWinningInfoLlayout.setVisibility(View.GONE);
                 viewsLlayout.setVisibility(View.GONE);
+                refreshRlayout.setVisibility(View.GONE);
+                loadRlayout.setVisibility(View.GONE);
                 MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
             }
         });

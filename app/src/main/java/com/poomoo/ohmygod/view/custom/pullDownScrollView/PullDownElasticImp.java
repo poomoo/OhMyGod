@@ -18,14 +18,13 @@ public class PullDownElasticImp implements IPullDownElastic {
     private ProgressBar progressBar;
     private TextView tipsTextview;
     private TextView lastUpdatedTextView;
-
+    
     private Context mContext;
-
     public PullDownElasticImp(Context context) {
         mContext = context;
         init();
     }
-
+    
 
     private void init() {
         // ˢ����ͼ���˵ĵ�view
@@ -54,9 +53,9 @@ public class PullDownElasticImp implements IPullDownElastic {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
-
     /**
      * @return
+     * 
      */
     @Override
     public View getElasticLayout() {
@@ -65,6 +64,7 @@ public class PullDownElasticImp implements IPullDownElastic {
 
     /**
      * @return
+     * 
      */
     @Override
     public int getElasticHeight() {
@@ -78,6 +78,7 @@ public class PullDownElasticImp implements IPullDownElastic {
 
     /**
      * @param animation
+     * 
      */
     @Override
     public void startAnimation(Animation animation) {
@@ -85,8 +86,8 @@ public class PullDownElasticImp implements IPullDownElastic {
     }
 
     /**
-     *
-     *
+     * 
+     * 
      */
     @Override
     public void clearAnimation() {
@@ -100,6 +101,7 @@ public class PullDownElasticImp implements IPullDownElastic {
 
     /**
      * @param tips
+     * 
      */
     @Override
     public void setTips(String tips) {
@@ -113,6 +115,7 @@ public class PullDownElasticImp implements IPullDownElastic {
 
     /**
      * @param text
+     * 
      */
     public void setLastUpdateText(String text) {
         lastUpdatedTextView.setText(text);
@@ -122,11 +125,12 @@ public class PullDownElasticImp implements IPullDownElastic {
     /**
      * @param state
      * @param isBack
+     * 
      */
     @Override
     public void changeElasticState(int state, boolean isBack) {
         // TODO Auto-generated method stub
-
+        
     }
 
 }

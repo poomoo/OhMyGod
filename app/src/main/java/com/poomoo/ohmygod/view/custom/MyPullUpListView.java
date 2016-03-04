@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 public class MyPullUpListView extends ListView implements AbsListView.OnScrollListener {
 
@@ -81,7 +82,7 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-//        ifNeedLoad(view, scrollState);
+        ifNeedLoad(view, scrollState);
 //        if (canLoad()) {
 //            onLoad();
 //            isLoading = true;
@@ -91,7 +92,7 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
-
+        LogUtils.i("pull", "子action:" + action);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 // 按下
@@ -105,10 +106,16 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
 
             case MotionEvent.ACTION_UP:
                 // 抬起
+                LogUtils.i("pull", "子action:" + "抬起" + canLoad());
                 if (canLoad()) {
                     loadData();
                 }
                 break;
+            case MotionEvent.ACTION_CANCEL:
+                LogUtils.i("pull", "子action:" + "ACTION_CANCEL" + canLoad());
+                if (canLoad()) {
+                    loadData();
+                }
             default:
                 break;
         }
@@ -133,6 +140,7 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
      * @return
      */
     private boolean canLoad() {
+        LogUtils.i("pull", "canLoad:" + isBottom() + isLoading + isPullUp());
         return isBottom() && !isLoading && isPullUp();
     }
 
@@ -140,7 +148,6 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
      * 判断是否到了最底部
      */
     private boolean isBottom() {
-
         if (this.getAdapter() != null) {
             return this.getLastVisiblePosition() == (this
                     .getAdapter().getCount() - 1);
@@ -154,15 +161,17 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
      * @return
      */
     private boolean isPullUp() {
+        LogUtils.i("pull", mYDown + ":" + mLastY + ":" + mTouchSlop + "");
         return (mYDown - mLastY) >= mTouchSlop;
     }
 
     // 根据listview滑动的状态判断是否需要加载更多  
     private void ifNeedLoad(AbsListView view, int scrollState) {
+        LogUtils.i("pull", "ifNeedLoad"+view.getLastVisiblePosition()+":"+view.getPositionForView(footer));
         try {
             if (scrollState == OnScrollListener.SCROLL_STATE_IDLE
                     && !isLoading
-                    && view.getLastVisiblePosition() == view.getPositionForView(footer) && isPullUp()) {
+                    && view.getLastVisiblePosition() == view.getPositionForView(footer)) {
                 onLoad();
                 isLoading = true;
             }
@@ -191,11 +200,11 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
         void onLoad();
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // TODO Auto-generated method stub
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        super.onMeasure(widthMeasureSpec, expandSpec);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        // TODO Auto-generated method stub
+//        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+//        super.onMeasure(widthMeasureSpec, expandSpec);
+//    }
 
 } 

@@ -415,4 +415,14 @@
     <string name="click_cancel">闹铃通知，点击取消</string>
     <string name="song_pause">闹铃暂停</string>
     <string name="dial">4000010300</string>
+
+
+    <string name="head">这里是HeadView</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
 </resources>

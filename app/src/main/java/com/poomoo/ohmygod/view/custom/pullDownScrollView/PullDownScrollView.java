@@ -12,10 +12,11 @@ import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.poomoo.ohmygod.utils.LogUtils;
+
 /**
  * @author wangxiao1@cjsc.com.cn
  * @date 2013-7-9
- * 
  */
 public class PullDownScrollView extends LinearLayout {
 
@@ -28,19 +29,19 @@ public class PullDownScrollView extends LinearLayout {
 
     private RotateAnimation animation;
     private RotateAnimation reverseAnimation;
-    
+
     private final static int RATIO = 2;
     private int preY = 0;
     private boolean isElastic = false;
     private int startY;
     private int state;
-    
+
     private String note_release_to_refresh = "松开即刷新";
     private String note_pull_to_refresh = "下拉刷新";
     private String note_refreshing = "正在刷新...";
-    
+
     private IPullDownElastic mElastic;
-    
+
 
     public PullDownScrollView(Context context) {
         super(context);
@@ -64,21 +65,22 @@ public class PullDownScrollView extends LinearLayout {
         reverseAnimation.setDuration(200);
         reverseAnimation.setFillAfter(true);
     }
+
     public void setRefreshListener(RefreshListener listener) {
         this.refreshListener = listener;
     }
 
     public void setPullDownElastic(IPullDownElastic elastic) {
         mElastic = elastic;
-        
+
         headContentHeight = mElastic.getElasticHeight();
-        refreshTargetTop = - headContentHeight;
+        refreshTargetTop = -headContentHeight;
         LayoutParams lp = new LayoutParams(
                 LayoutParams.FILL_PARENT, headContentHeight);
         lp.topMargin = refreshTargetTop;
         addView(mElastic.getElasticLayout(), 0, lp);
     }
-    
+
     public void setRefreshTips(String pullToRefresh, String releaseToRefresh, String refreshing) {
         note_pull_to_refresh = pullToRefresh;
         note_release_to_refresh = releaseToRefresh;
@@ -86,116 +88,125 @@ public class PullDownScrollView extends LinearLayout {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        Log.d(TAG, "onInterceptTouchEvent");
-        printMotionEvent(ev);
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            preY = (int) ev.getY();
-        }
-        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-
-//            Log.d(TAG, "isElastic:" + isElastic + " canScroll:" + canScroll() + " ev.getY() - preY:" + (ev.getY() - preY));
-            if (!isElastic && canScroll()
-                    && (int) ev.getY() - preY >= headContentHeight / (3*RATIO)
-                    && refreshListener != null && mElastic != null) {
-
-                isElastic = true;
-                startY = (int) ev.getY();
-//                Log.i(TAG, "��moveʱ���¼��λ��startY:" + startY);
-                return true;
-            }
-
-        }
-        return super.onInterceptTouchEvent(ev);
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        final int action = event.getAction();
+        LogUtils.i("pull", "父action:" + action);
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                // 按下
+//                break;
+//
+//            case MotionEvent.ACTION_MOVE:
+//                // 移动
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//                // 抬起
+//                LogUtils.i("pull", "父action:" + "抬起");
+//                break;
+//            default:
+//                break;
+//        }
+        return super.dispatchTouchEvent(event);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-//        Log.d(TAG, "onTouchEvent");
-        printMotionEvent(event);
-        handleHeadElastic(event);
-        return super.onTouchEvent(event);
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        LogUtils.i("pull", "onInterceptTouchEvent:" + ev.getAction());
+//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+//            preY = (int) ev.getY();
+//        }
+//        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+//
+//            if (!isElastic && canScroll()
+//                    && (int) ev.getY() - preY >= headContentHeight / (3 * RATIO)
+//                    &&  refreshListener != null && mElastic != null) {
+//
+//                isElastic = true;
+//                startY = (int) ev.getY();
+//                return true;
+//            }
+//
+//        }
+
+        return super.onInterceptTouchEvent(ev);
     }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        LogUtils.i("pull", "onTouchEvent:" + event.getAction());
+//        handleHeadElastic(event);
+//        return super.onTouchEvent(event);
+//    }
 
     private void handleHeadElastic(MotionEvent event) {
         if (refreshListener != null && mElastic != null) {
             switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-//                Log.i(TAG, "down");
-                break;
-            case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_DOWN:
+                    LogUtils.i("pull", "onTouchEvent:" + "ACTION_DOWN");
+                    break;
+                case MotionEvent.ACTION_UP:
+                    LogUtils.i("pull", "onTouchEvent:" + "ACTION_UP");
+                    if (state != IPullDownElastic.REFRESHING && isElastic) {
 
-//                Log.i(TAG, "up");
-                if (state != IPullDownElastic.REFRESHING && isElastic) {
-                    
-                    if (state == IPullDownElastic.DONE) {
-                        // ʲô������
-                        setMargin(refreshTargetTop);
-                    }
-                    if (state == IPullDownElastic.PULL_To_REFRESH) {
-                        state = IPullDownElastic.DONE;
-                        setMargin(refreshTargetTop);
-                        changeHeaderViewByState(state, false);
-//                        Log.i(TAG, "������ˢ��״̬����done״̬");
-                    }
-                    if (state == IPullDownElastic.RELEASE_To_REFRESH) {
-                        state = IPullDownElastic.REFRESHING;
-                        setMargin(0);
-                        changeHeaderViewByState(state, false);
-                        onRefresh();
-//                        Log.i(TAG, "���ɿ�ˢ��״̬����done״̬");
-                    }
-
-                }
-                isElastic = false;
-                break;
-            case MotionEvent.ACTION_MOVE:
-//                Log.i(TAG, "move");
-                int tempY = (int) event.getY();
-                
-                if (state != IPullDownElastic.REFRESHING && isElastic) {
-                    // ��������ȥˢ����
-                    if (state == IPullDownElastic.RELEASE_To_REFRESH) {
-                        if (((tempY - startY) / RATIO < headContentHeight)
-                                && (tempY - startY) > 0) {
-                            state = IPullDownElastic.PULL_To_REFRESH;
-                            changeHeaderViewByState(state, true);
-//                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽����ˢ��״̬");
-                        } else if (tempY - startY <= 0) {
-                            state = IPullDownElastic.DONE;
-                            changeHeaderViewByState(state, false);
-//                            Log.i(TAG, "���ɿ�ˢ��״̬ת�䵽done״̬");
+                        if (state == IPullDownElastic.DONE) {
+                            setMargin(refreshTargetTop);
                         }
+                        if (state == IPullDownElastic.PULL_To_REFRESH) {
+                            state = IPullDownElastic.DONE;
+                            setMargin(refreshTargetTop);
+                            changeHeaderViewByState(state, false);
+                        }
+                        if (state == IPullDownElastic.RELEASE_To_REFRESH) {
+                            state = IPullDownElastic.REFRESHING;
+                            setMargin(0);
+                            changeHeaderViewByState(state, false);
+                            onRefresh();
+                        }
+
                     }
-                    if (state == IPullDownElastic.DONE) {
+                    isElastic = false;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    LogUtils.i("pull", "onTouchEvent:" + "ACTION_MOVE");
+                    int tempY = (int) event.getY();
+                    if (state != IPullDownElastic.REFRESHING && isElastic) {
+                        if (state == IPullDownElastic.RELEASE_To_REFRESH) {
+                            if (((tempY - startY) / RATIO < headContentHeight)
+                                    && (tempY - startY) > 0) {
+                                state = IPullDownElastic.PULL_To_REFRESH;
+                                changeHeaderViewByState(state, true);
+                            } else if (tempY - startY <= 0) {
+                                state = IPullDownElastic.DONE;
+                                changeHeaderViewByState(state, false);
+                            }
+                        }
+                        if (state == IPullDownElastic.DONE) {
+                            if (tempY - startY > 0) {
+                                state = IPullDownElastic.PULL_To_REFRESH;
+                                changeHeaderViewByState(state, false);
+                            }
+                        }
+                        if (state == IPullDownElastic.PULL_To_REFRESH) {
+                            if ((tempY - startY) / RATIO >= headContentHeight) {
+                                state = IPullDownElastic.RELEASE_To_REFRESH;
+                                changeHeaderViewByState(state, false);
+                            } else if (tempY - startY <= 0) {
+                                state = IPullDownElastic.DONE;
+                                changeHeaderViewByState(state, false);
+                            }
+                        }
                         if (tempY - startY > 0) {
-                            state = IPullDownElastic.PULL_To_REFRESH;
-                            changeHeaderViewByState(state, false);
+                            setMargin((tempY - startY) / 2 + refreshTargetTop);
                         }
                     }
-                    if (state == IPullDownElastic.PULL_To_REFRESH) {
-                        // ���������Խ���RELEASE_TO_REFRESH��״̬
-                        if ((tempY - startY) / RATIO >= headContentHeight) {
-                            state = IPullDownElastic.RELEASE_To_REFRESH;
-                            changeHeaderViewByState(state, false);
-//                            Log.i(TAG, "��done��������ˢ��״̬ת�䵽�ɿ�ˢ��");
-                        } else if (tempY - startY <= 0) {
-                            state = IPullDownElastic.DONE;
-                            changeHeaderViewByState(state, false);
-//                            Log.i(TAG, "��DOne��������ˢ��״̬ת�䵽done״̬");
-                        }
-                    }
-                    if (tempY - startY > 0) {
-                        setMargin((tempY - startY)/2 + refreshTargetTop);
-                    }
-                }
-                break;
+                    break;
             }
         }
     }
-    
+
     /**
-     * 
+     *
      */
     private void setMargin(int top) {
         LayoutParams lp = (LayoutParams) mElastic.getElasticLayout()
@@ -209,47 +220,47 @@ public class PullDownScrollView extends LinearLayout {
 
         mElastic.changeElasticState(state, isBack);
         switch (state) {
-        case IPullDownElastic.RELEASE_To_REFRESH:
-            mElastic.showArrow(View.VISIBLE);
-            mElastic.showProgressBar(View.GONE);
-            mElastic.showLastUpdate(View.VISIBLE);
-            mElastic.setTips(note_release_to_refresh);
+            case IPullDownElastic.RELEASE_To_REFRESH:
+                mElastic.showArrow(View.VISIBLE);
+                mElastic.showProgressBar(View.GONE);
+                mElastic.showLastUpdate(View.VISIBLE);
+                mElastic.setTips(note_release_to_refresh);
 
-            mElastic.clearAnimation();
-            mElastic.startAnimation(animation);
+                mElastic.clearAnimation();
+                mElastic.startAnimation(animation);
 //            Log.i(TAG, "��ǰ״̬���ɿ�ˢ��");
-            break;
-        case IPullDownElastic.PULL_To_REFRESH:
-            mElastic.showArrow(View.VISIBLE);
-            mElastic.showProgressBar(View.GONE);
-            mElastic.showLastUpdate(View.VISIBLE);
-            mElastic.setTips(note_pull_to_refresh);
+                break;
+            case IPullDownElastic.PULL_To_REFRESH:
+                mElastic.showArrow(View.VISIBLE);
+                mElastic.showProgressBar(View.GONE);
+                mElastic.showLastUpdate(View.VISIBLE);
+                mElastic.setTips(note_pull_to_refresh);
 
-            mElastic.clearAnimation();
+                mElastic.clearAnimation();
 
-            // ����RELEASE_To_REFRESH״̬ת������
-            if (isBack) {
-                mElastic.startAnimation(reverseAnimation);
-            }
+                // ����RELEASE_To_REFRESH״̬ת������
+                if (isBack) {
+                    mElastic.startAnimation(reverseAnimation);
+                }
 //            Log.i(TAG, "��ǰ״̬������ˢ��");
-            break;
-        case IPullDownElastic.REFRESHING:
-            mElastic.showArrow(View.GONE);
-            mElastic.showProgressBar(View.VISIBLE);
-            mElastic.showLastUpdate(View.GONE);
-            mElastic.setTips(note_refreshing);
+                break;
+            case IPullDownElastic.REFRESHING:
+                mElastic.showArrow(View.GONE);
+                mElastic.showProgressBar(View.VISIBLE);
+                mElastic.showLastUpdate(View.GONE);
+                mElastic.setTips(note_refreshing);
 
-            mElastic.clearAnimation();
+                mElastic.clearAnimation();
 //            Log.i(TAG, "��ǰ״̬,����ˢ��...");
-            break;
-        case IPullDownElastic.DONE:
-            mElastic.showProgressBar(View.GONE);
-            mElastic.clearAnimation();
+                break;
+            case IPullDownElastic.DONE:
+                mElastic.showProgressBar(View.GONE);
+                mElastic.clearAnimation();
 //            arrowImageView.setImageResource(R.drawable.goicon);
-            // tipsTextview.setText("����ˢ��");
-            // lastUpdatedTextView.setVisibility(View.VISIBLE);
+                // tipsTextview.setText("����ˢ��");
+                // lastUpdatedTextView.setVisibility(View.VISIBLE);
 //            Log.i(TAG, "��ǰ״̬��done");
-            break;
+                break;
         }
     }
 
@@ -263,7 +274,7 @@ public class PullDownScrollView extends LinearLayout {
     }
 
     /**
-     * 
+     *
      */
     @Override
     public void computeScroll() {
@@ -281,6 +292,7 @@ public class PullDownScrollView extends LinearLayout {
 
     /**
      * ����ˢ���¼���UIˢ����ɺ����ص��˷���
+     *
      * @param text һ�㴫�룺���ϴθ���ʱ��:12:23��
      */
     public void finishRefresh(String text) {
@@ -295,7 +307,7 @@ public class PullDownScrollView extends LinearLayout {
         if (text != null) {
             mElastic.setLastUpdateText(text);
         }
-        changeHeaderViewByState(state,false);
+        changeHeaderViewByState(state, false);
 //        Log.i(TAG, "==>ִ����=====finishRefresh " + text);
 
         mElastic.showArrow(View.VISIBLE);
@@ -329,9 +341,10 @@ public class PullDownScrollView extends LinearLayout {
         }
         return canScroll(this);
     }
-    
+
     /**
      * ������д�˷������Լ���������ӿؼ���Ŀǰֻ����AbsListView��ScrollView
+     *
      * @param view
      * @return
      */
@@ -341,18 +354,19 @@ public class PullDownScrollView extends LinearLayout {
 
     private void printMotionEvent(MotionEvent event) {
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN:
 //            Log.d(TAG, "down");
-            break;
-        case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_MOVE:
 //            Log.d(TAG, "move");
-            break;
-        case MotionEvent.ACTION_UP:
+                break;
+            case MotionEvent.ACTION_UP:
 //            Log.d(TAG, "up");
-        default:
-            break;
+            default:
+                break;
         }
     }
+
     /**
      * ˢ�¼���ӿ�
      */

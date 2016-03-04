@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_grab_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:focusableInTouchMode="true"
         android:padding="@dimen/dp_8">
 
         <LinearLayout
@@ -75,159 +75,162 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView
-        android:id="@+id/refresh_grab"
+    <include
+        android:id="@+id/refresh"
+        layout="@layout/refresh_head" />
+
+    <com.poomoo.ohmygod.view.custom.pullable.PullableScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.poomoo.ohmygod.view.custom.SlideShowView
+                android:id="@+id/flipper_ad"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_ad" />
+
 
             <LinearLayout
+                android:id="@+id/llayout_middle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-
-                <com.poomoo.ohmygod.view.custom.SlideShowView
-                    android:id="@+id/flipper_ad"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_ad" />
-
-
-                <LinearLayout
-                    android:id="@+id/llayout_middle"
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:id="@+id/rlayout_grab_winner"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_2"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:id="@+id/rlayout_grab_winner"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:gravity="center_vertical"
-                        android:paddingBottom="@dimen/dp_2"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_2"
-                        android:visibility="visible">
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_grab_avatar"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:visibility="gone">
 
-                            <RelativeLayout
-                                android:id="@+id/rlayout_grab_avatar"
-                                android:layout_width="44dp"
-                                android:layout_height="44dp"
-                                android:visibility="gone">
-
-                                <com.poomoo.ohmygod.view.custom.RoundImageView
-                                    android:id="@+id/img_grab_winner"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_avatar" />
-
-                                <TextView
-                                    android:id="@+id/fragmetn_grab_txt_middle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="3dp"
-                                    android:layout_centerInParent="true" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/fragmetn_grab_txt_middle"
-                                    android:background="@drawable/ic_head_logo"
-                                    android:gravity="center"
-                                    android:paddingBottom="@dimen/dp_8">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="@string/label_winner"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/sp_8" />
-                                </LinearLayout>
-                            </RelativeLayout>
-
+                            <com.poomoo.ohmygod.view.custom.RoundImageView
+                                android:id="@+id/img_grab_winner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_avatar" />
 
                             <TextView
-                                android:id="@+id/txt_noWinningInfo"
-                                android:layout_width="3dp"
-                                android:layout_height="wrap_content"
-                                android:background="@color/themeRed" />
+                                android:id="@+id/fragmetn_grab_txt_middle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="3dp"
+                                android:layout_centerInParent="true" />
 
-                            <com.poomoo.ohmygod.view.custom.UpMarqueeTextView
-                                android:id="@+id/txt_winnerInfo"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:gravity="center_vertical"
-                                android:singleLine="true"
-                                android:text="今日没有中奖信息"
-                                android:textSize="@dimen/sp_16"
-                                android:visibility="visible" />
+                                android:layout_below="@+id/fragmetn_grab_txt_middle"
+                                android:background="@drawable/ic_head_logo"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/dp_8">
 
-                        </LinearLayout>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="@string/label_winner"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_8" />
+                            </LinearLayout>
+                        </RelativeLayout>
 
-                        <LinearLayout
-                            android:id="@+id/llayout_views"
+
+                        <TextView
+                            android:id="@+id/txt_noWinningInfo"
+                            android:layout_width="3dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/themeRed" />
+
+                        <com.poomoo.ohmygod.view.custom.UpMarqueeTextView
+                            android:id="@+id/txt_winnerInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:text="今日没有中奖信息"
+                            android:textSize="@dimen/sp_16"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llayout_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_grab_tip_red"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="1dp"
+                        android:paddingTop="1dp"
+                        android:visibility="visible">
+
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/bg_grab_tip_red"
-                            android:gravity="center"
-                            android:paddingBottom="1dp"
-                            android:paddingTop="1dp"
-                            android:visibility="visible"
-                            android:orientation="vertical">
+                            android:src="@drawable/ic_grab_tip"
+                            android:visibility="gone" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_grab_tip"
-                                android:visibility="gone"/>
-                            <TextView
-                                android:id="@+id/txt_view"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="4dp"
-                                android:text="10000"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_14" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="4dp"
-                                android:text="@string/label_views"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_14" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:text="10000"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14" />
 
-
-                <com.poomoo.ohmygod.view.custom.NoScrollListView
-                    android:id="@+id/list_grab"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:scrollbars="none" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:text="@string/label_views"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
-        </ScrollView>
-    </com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView>
-</LinearLayout>
+
+
+            <com.poomoo.ohmygod.view.custom.NoScrollListView
+                android:id="@+id/list_grab"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </com.poomoo.ohmygod.view.custom.pullable.PullableScrollView>
+
+    <include
+        android:id="@+id/load"
+        layout="@layout/load_more" />
+</com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout>
