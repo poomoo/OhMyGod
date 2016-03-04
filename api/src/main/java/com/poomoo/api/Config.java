@@ -56,4 +56,5 @@ public class Config {
     public final static String INFO = "40003";//查询声明列表详情信息
     public final static String CITYS = "40004";//查询城市
     public final static String FEEDBACK = "40005";//查询声明列表详情信息
+    public final static String BOOTPICS = "40006";//查询app加载页面和引导页面
 }

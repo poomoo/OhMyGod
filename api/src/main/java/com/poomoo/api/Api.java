@@ -87,4 +87,6 @@ public interface Api {
 
     ResponseBO checkWinNum(String winNumber);
 
+    ResponseBO getBootPics(int type);
+
 }

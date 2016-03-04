@@ -386,6 +386,7 @@
     <string name="sp_realName">realName</string>
     <string name="sp_headPic">headPic</string>
     <string name="sp_headPicBitmap">headPicBitmap</string>
+    <string name="sp_bootUrl">bootUrl</string>
     <string name="sp_currentFee">currentFee</string>
     <string name="sp_realNameAuth">realNameAuth</string>
     <string name="sp_idCardNum">idCardNum</string>

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,11 +22,15 @@ import com.baidu.location.LocationClientOption.LocationMode;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.PicBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 
 import junit.framework.Test;
 
@@ -35,6 +40,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SplashActivity extends BaseActivity {
     private static String DB_PATH = "/data/data/com.poomoo.ohmygod/databases/";
@@ -48,6 +54,8 @@ public class SplashActivity extends BaseActivity {
     private String permissionInfo = "";
     private String url = "http://f.hiphotos.baidu.com/image/pic/item/80cb39dbb6fd5266fd25a12eac18972bd40736f9.jpg";
     private ImageView bgImg;
+    private List<PicBO> picBOList = new ArrayList<>();
+    private String bootPicPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ohmygod/" + "boot.jpg";
 
 
     @Override
@@ -56,6 +64,11 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         bgImg = (ImageView) findViewById(R.id.img_bg);
+        File f = new File(bootPicPath);
+        if (f.exists()) {
+            LogUtils.i(TAG, "图片不为空");
+            bgImg.setImageBitmap(FileUtils.readBitmapByPath(bootPicPath));
+        }
 
         importDB();        // 导入数据库文件
         SQLiteDatabase db = Connector.getDatabase();//新建表
@@ -66,23 +79,40 @@ public class SplashActivity extends BaseActivity {
         mLocationClient.start();
         isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
         LogUtils.i(TAG, "isIndex" + isIndex);
-        if (!TextUtils.isEmpty(url)) {
-            ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    bgImg.setAdjustViewBounds(true);
-                    bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    bgImg.setImageBitmap(loadedImage);
-                    start();
-                }
+        this.appAction.getBootPics(1, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                picBOList = data.getObjList();
+                url = picBOList.get(0).getPicture();
+                LogUtils.i(TAG, "URL:" + url);
+                if (!TextUtils.isEmpty(url) && !url.equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_bootUrl), ""))) {
+                    LogUtils.i(TAG, "有新图片");
+                    ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            bgImg.setAdjustViewBounds(true);
+                            bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            bgImg.setImageBitmap(loadedImage);
+                            FileUtils.saveBitmapByPath(loadedImage, bootPicPath);
+                            SPUtils.put(getApplicationContext(), getString(R.string.sp_bootUrl), url);
+                            start();
+                        }
 
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            start();
+                        }
+                    });
+                } else
                     start();
-                }
-            });
-        } else
-            start();
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
+            }
+        });
+
     }
 
     public void start() {

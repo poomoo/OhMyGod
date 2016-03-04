@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
@@ -57,6 +58,10 @@ public class FileUtils {
             e.printStackTrace();
         }
         return f;
+    }
+
+    public static Bitmap readBitmapByPath(String path) {
+        return BitmapFactory.decodeFile(path);
     }
 
     public static File createSDDir(String dirName) throws IOException {

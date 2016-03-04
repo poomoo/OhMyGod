@@ -12,6 +12,7 @@ import com.poomoo.model.GrabBO;
 import com.poomoo.model.GrabResultBO;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
+import com.poomoo.model.PicBO;
 import com.poomoo.model.RebateBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
@@ -638,6 +639,20 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getBootPics(int type) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.BOOTPICS);
+        paramMap.put("type", type+"");
+
+        try {
+            return httpEngine.postHandle(paramMap, PicBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

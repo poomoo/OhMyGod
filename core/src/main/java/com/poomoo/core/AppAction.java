@@ -362,4 +362,12 @@ public interface AppAction {
      * @param listener
      */
     void checkWinNum(String winNumber, ActionCallbackListener listener);
+
+    /**
+     * 查询app加载页面和引导页面接口
+     *
+     * @param type//类型；1加载页，2引导页（可为空，则查询所有）
+     * @param listener
+     */
+    void getBootPics(int type, ActionCallbackListener listener);
 }

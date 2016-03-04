@@ -60,6 +60,7 @@ import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
+import com.poomoo.ohmygod.view.custom.MyPullUpListView;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
@@ -388,7 +389,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     jsonObject = new JSONObject(data.getOtherData());
                     browseNum = jsonObject.getString("browseNum");
                     browseTxt.setText(browseNum);
-                    LogUtils.i(TAG,"browseNum:"+browseNum);
+                    LogUtils.i(TAG, "browseNum:" + browseNum);
                 } catch (JSONException e) {
                 }
             }
