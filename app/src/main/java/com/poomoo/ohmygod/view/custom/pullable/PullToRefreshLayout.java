@@ -440,12 +440,12 @@ public class PullToRefreshLayout extends RelativeLayout {
                     changeState(REFRESHING);
                     // 刷新操作
                     if (mListener != null)
-                        mListener.onRefresh(this);
+                        mListener.onRefresh();
                 } else if (state == RELEASE_TO_LOAD) {
                     changeState(LOADING);
                     // 加载操作
                     if (mListener != null)
-                        mListener.onLoadMore(this);
+                        mListener.onLoadMore();
                 }
                 hide();
             default:
@@ -481,7 +481,7 @@ public class PullToRefreshLayout extends RelativeLayout {
             changeState(REFRESHING);
             // 刷新操作
             if (mListener != null)
-                mListener.onRefresh(PullToRefreshLayout.this);
+                mListener.onRefresh();
             hide();
         }
 
@@ -511,7 +511,7 @@ public class PullToRefreshLayout extends RelativeLayout {
         changeState(LOADING);
         // 加载操作
         if (mListener != null)
-            mListener.onLoadMore(this);
+            mListener.onLoadMore();
     }
 
     private void initView() {
@@ -532,7 +532,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         Log.d("Test", "Test");
-        LogUtils.i(TAG,"onLayout"+isLayout);
+        LogUtils.i(TAG, "onLayout" + isLayout);
         if (!isLayout) {
             // 这里是第一次进来的时候做一些初始化
             layoutView = getChildAt(0);
@@ -627,12 +627,12 @@ public class PullToRefreshLayout extends RelativeLayout {
         /**
          * 刷新操作
          */
-        void onRefresh(PullToRefreshLayout pullToRefreshLayout);
+        void onRefresh();
 
         /**
          * 加载操作
          */
-        void onLoadMore(PullToRefreshLayout pullToRefreshLayout);
+        void onLoadMore();
     }
 
 }

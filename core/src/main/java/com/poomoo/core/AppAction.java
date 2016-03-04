@@ -59,7 +59,7 @@ public interface AppAction {
      * @param cityName
      * @param listener
      */
-    void getGrabList(String cityName, ActionCallbackListener listener);
+    void getGrabList(String cityName, int currPage, int pageSize, ActionCallbackListener listener);
 
     /**
      * 活动详情

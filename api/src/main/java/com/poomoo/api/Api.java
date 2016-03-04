@@ -21,7 +21,7 @@ public interface Api {
 
     ResponseBO getAdvertisement(String cityName);
 
-    ResponseBO getGrabList(String cityName);
+    ResponseBO getGrabList(String cityName, int currPage, int pageSize);
 
     ResponseBO getCommodityInformation(String userId, String activeId);
 

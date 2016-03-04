@@ -60,12 +60,11 @@ import com.poomoo.ohmygod.view.activity.CommodityInformationActivity;
 import com.poomoo.ohmygod.view.activity.MainFragmentActivity;
 import com.poomoo.ohmygod.view.activity.WebViewActivity;
 import com.poomoo.ohmygod.view.activity.WinInformationActivity;
-import com.poomoo.ohmygod.view.custom.pullable.MyListener;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
-import com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
 import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
+import com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +81,7 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/11 16:26.
  */
-public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, PullDownScrollView.RefreshListener, AlarmtListener {
+public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, AlarmtListener, PullToRefreshLayout.OnRefreshListener {
     private View mMenuView;
     private ListView timeList;
     private LinearLayout viewsLlayout;
@@ -129,6 +128,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private boolean existCountDown = false;//true-有倒计时
     private String eventId;
     private String browseNum = "";//总浏览量
+    private int currPage = 1;//当前页
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -163,7 +163,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         viewsLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_views);
         middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
-        fragment_grab_layout.setOnRefreshListener(new MyListener());
+        fragment_grab_layout.setOnRefreshListener(this);
 
         slideShowView.setVisibility(View.GONE);
         winnerRlayout.setVisibility(View.GONE);
@@ -366,39 +366,61 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void getGrabList(final boolean isRefreshable) {
-        this.appAction.getGrabList(application.getCurrCity(), new ActionCallbackListener() {
+        this.appAction.getGrabList(application.getCurrCity(), currPage, 15, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
+                if (isRefreshable) {
+                    fragment_grab_layout.refreshFinish(PullToRefreshLayout.SUCCEED);
+
+                    grabBOList = data.getObjList();
+                    int len = grabBOList.size();
+                    if (len > 0) {
+                        currPage++;
+                        adapter.setItems(grabBOList);
+                        for (int i = 0; i < len; i++) {
+                            activityInfo = new ActivityInfo();
+                            activityInfo.setActiveId(grabBOList.get(i).getActiveId());
+                            activityInfo.setFlag(false);
+                            activityInfo.setEventId("");
+                            activityInfos.add(activityInfo);
+                            MyUtil.insertActivityInfo(activityInfos);//活动列表
+                        }
+                    }
+                    JSONObject jsonObject;
+                    try {
+                        jsonObject = new JSONObject(data.getOtherData());
+                        browseNum = jsonObject.getString("browseNum");
+                        browseTxt.setText(browseNum);
+                        LogUtils.i(TAG, "browseNum:" + browseNum);
+                    } catch (JSONException e) {
+                    }
+                } else {
+                    int len = data.getObjList().size();
+                    if (len > 0) {
+                        currPage++;
+                        adapter.addItems(grabBOList);
+                        for (int i = 0; i < len; i++) {
+                            activityInfo = new ActivityInfo();
+                            activityInfo.setActiveId(grabBOList.get(i).getActiveId());
+                            activityInfo.setFlag(false);
+                            activityInfo.setEventId("");
+                            activityInfos.add(activityInfo);
+                            MyUtil.insertActivityInfo(activityInfos);//活动列表
+                        }
+                    }
+                }
+
                 winnerRlayout.setVisibility(View.VISIBLE);
                 viewsLlayout.setVisibility(View.VISIBLE);
                 slideShowView.setVisibility(View.VISIBLE);
                 refreshRlayout.setVisibility(View.VISIBLE);
                 loadRlayout.setVisibility(View.VISIBLE);
-                grabBOList = data.getObjList();
-                int len = grabBOList.size();
-                if (len > 0) {
-                    adapter.setItems(grabBOList);
-                    for (int i = 0; i < len; i++) {
-                        activityInfo = new ActivityInfo();
-                        activityInfo.setActiveId(grabBOList.get(i).getActiveId());
-                        activityInfo.setFlag(false);
-                        activityInfo.setEventId("");
-                        activityInfos.add(activityInfo);
-                        MyUtil.insertActivityInfo(activityInfos);//活动列表
-                    }
-                }
-                JSONObject jsonObject;
-                try {
-                    jsonObject = new JSONObject(data.getOtherData());
-                    browseNum = jsonObject.getString("browseNum");
-                    browseTxt.setText(browseNum);
-                    LogUtils.i(TAG, "browseNum:" + browseNum);
-                } catch (JSONException e) {
-                }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
+                if (isRefreshable)
+                    fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
                 slideShowView.setVisibility(View.GONE);
                 winnerRlayout.setVisibility(View.GONE);
                 viewsLlayout.setVisibility(View.GONE);
@@ -619,10 +641,22 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         mLocationClient.setLocOption(option);
     }
 
+    //    @Override
+//    public void onRefresh(PullDownScrollView view) {
+//        getGrabList(true);
+//        getWinnerList();
+//    }
+
+
     @Override
-    public void onRefresh(PullDownScrollView view) {
+    public void onRefresh() {
         getGrabList(true);
         getWinnerList();
+    }
+
+    @Override
+    public void onLoadMore() {
+
     }
 
     public class MyLocationListener implements BDLocationListener {

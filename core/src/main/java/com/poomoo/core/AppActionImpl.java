@@ -213,12 +213,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getGrabList(final String cityName, final ActionCallbackListener listener) {
+    public void getGrabList(final String cityName, final int currPage, final int pageSize, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<GrabBO>>() {
             @Override
             protected ResponseBO<GrabBO> doInBackground(Void... params) {
-                return api.getGrabList(cityName);
+                return api.getGrabList(cityName, currPage, pageSize);
             }
 
             @Override

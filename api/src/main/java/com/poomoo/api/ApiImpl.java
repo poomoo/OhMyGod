@@ -125,11 +125,13 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO<GrabBO> getGrabList(String cityName) {
+    public ResponseBO<GrabBO> getGrabList(String cityName, int currPage, int pageSize) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.ACTIVITYACTION);
         paramMap.put("method", Config.ACTIVITYLIST);
         paramMap.put("cityName", cityName);
+        paramMap.put("currPage", currPage+"");
+        paramMap.put("pageSize", pageSize+"");
 
         try {
             return httpEngine.postHandle(paramMap, GrabBO.class);
@@ -649,7 +651,7 @@ public class ApiImpl implements Api {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.PUBACTION);
         paramMap.put("method", Config.BOOTPICS);
-        paramMap.put("type", type+"");
+        paramMap.put("type", type + "");
 
         try {
             return httpEngine.postHandle(paramMap, PicBO.class);
