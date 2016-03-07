@@ -50,6 +50,8 @@ public class PullToRefreshLayout extends RelativeLayout {
     public static final int SUCCEED = 0;
     // 刷新失败
     public static final int FAIL = 1;
+    // 没有更多
+    public static final int NOMORE = 2;
     // 按下Y坐标，上一个事件点Y坐标
     private float downY, lastY;
 
@@ -259,10 +261,15 @@ public class PullToRefreshLayout extends RelativeLayout {
                 loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
                 break;
             case FAIL:
-            default:
                 // 加载失败
                 loadStateImageView.setVisibility(View.VISIBLE);
                 loadStateTextView.setText(R.string.load_fail);
+                loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+                break;
+            default:
+                //没有更多
+                loadStateImageView.setVisibility(View.VISIBLE);
+                loadStateTextView.setText(R.string.load_end);
                 loadStateImageView.setBackgroundResource(R.drawable.load_failed);
                 break;
         }

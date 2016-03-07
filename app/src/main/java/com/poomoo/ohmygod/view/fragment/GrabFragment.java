@@ -280,7 +280,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             getAd();
             getInform();
             getMessage();
-            getGrabList(false);
+            getGrabList(true);
             getWinnerList();
         }
 
@@ -371,7 +371,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             public void onSuccess(ResponseBO data) {
                 if (isRefreshable) {
                     fragment_grab_layout.refreshFinish(PullToRefreshLayout.SUCCEED);
-
+                    grabBOList = new ArrayList<>();
                     grabBOList = data.getObjList();
                     int len = grabBOList.size();
                     if (len > 0) {
@@ -395,7 +395,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     } catch (JSONException e) {
                     }
                 } else {
-                    int len = data.getObjList().size();
+                    fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    grabBOList = data.getObjList();
+                    int len = grabBOList.size();
                     if (len > 0) {
                         currPage++;
                         adapter.addItems(grabBOList);
@@ -419,14 +421,22 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
             @Override
             public void onFailure(int errorCode, String message) {
-                if (isRefreshable)
+                if (isRefreshable) {
                     fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
-                slideShowView.setVisibility(View.GONE);
-                winnerRlayout.setVisibility(View.GONE);
-                viewsLlayout.setVisibility(View.GONE);
-                refreshRlayout.setVisibility(View.GONE);
-                loadRlayout.setVisibility(View.GONE);
-                MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
+                    slideShowView.setVisibility(View.GONE);
+                    winnerRlayout.setVisibility(View.GONE);
+                    viewsLlayout.setVisibility(View.GONE);
+                    refreshRlayout.setVisibility(View.GONE);
+                    loadRlayout.setVisibility(View.GONE);
+                    MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
+                } else {
+                    if(message.contains("无数据"))
+                    fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.NOMORE);
+                    else
+                        fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.FAIL);
+//                    MyUtil.showToast(application.getApplicationContext(), "没有更多活动");
+                }
+
             }
         });
     }
@@ -564,18 +574,18 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //            return;
 //        }
 
-        if (grabBOList.get(position).getStatus() == 1) {
+        if (adapter.getItemList().get(position).getStatus() == 1) {
             Bundle pBundle = new Bundle();
-            pBundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
-            pBundle.putInt(getString(R.string.intent_typeId), grabBOList.get(position).getTypeId());
+            pBundle.putInt(getString(R.string.intent_activeId), adapter.getItemList().get(position).getActiveId());
+            pBundle.putInt(getString(R.string.intent_typeId), adapter.getItemList().get(position).getTypeId());
             pBundle.putInt(getString(R.string.intent_position), position);
             pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_info));
-            pBundle.putString(getString(R.string.intent_activityName), grabBOList.get(position).getTitle());
+            pBundle.putString(getString(R.string.intent_activityName), adapter.getItemList().get(position).getTitle());
             openActivity(CommodityInformationActivity.class, pBundle);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putInt(getString(R.string.intent_activeId), grabBOList.get(position).getActiveId());
-            bundle.putString(getString(R.string.intent_activityName), grabBOList.get(position).getTitle());
+            bundle.putInt(getString(R.string.intent_activeId), adapter.getItemList().get(position).getActiveId());
+            bundle.putString(getString(R.string.intent_activityName), adapter.getItemList().get(position).getTitle());
             openActivity(CommodityInformation2Activity.class, bundle);
         }
 
@@ -615,9 +625,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getCurrCity());
             if (!currCity.equals(application.getCurrCity())) {
                 currCityTxt.setText(application.getCurrCity());
-                grabBOList = new ArrayList<>();
-                adapter.setItems(grabBOList);
-                getGrabList(false);
+//                grabBOList = new ArrayList<>();
+//                adapter.setItems(grabBOList);
+                getGrabList(true);
                 getAd();
                 getWinnerList();
             }
@@ -650,13 +660,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     @Override
     public void onRefresh() {
+        currPage = 1;
         getGrabList(true);
         getWinnerList();
     }
 
     @Override
     public void onLoadMore() {
-
+        getGrabList(false);
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -669,7 +680,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 currCityTxt.setText(location.getCity());
                 application.setLocateCity(location.getCity());
                 application.setCurrCity(location.getCity());
-                getGrabList(false);
+                getGrabList(true);
                 getWinnerList();
                 getAd();
                 getInform();
