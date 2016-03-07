@@ -81,8 +81,12 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
             winningBO = new WinningRecordsBO();
             winningBO.setTitle("放假看到了放假抵抗力");
             winningBO.setPlayDt("2015-12-12");
+            winningBO.setGetEndDt("2016-02-29 19:19:19");
             winningBO.setIsGot(1);
             winningBO.setIsWin(1);
+            winningBO.setWinNumber(MyUtil.addSpaceBy4("88888"));
+            winningBO.setGetAddress("北京市中南海1号，这个地址你敢去吗？");
+            winningBO.setPicture("http://www.tnomg.com/zgqg/upload/activeGoods/1455438567415.png");//http://myeducs.cn/uploadfile/201006/4/C314339927.jpg
             winningBOList.add(winningBO);
         }
         adapter.setItems(winningBOList);

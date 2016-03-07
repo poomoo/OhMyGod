@@ -232,9 +232,9 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote">
-<!--            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" />
-            </intent-filter>-->
+            <!--            <intent-filter>
+                            <action android:name="com.baidu.location.service_v2.2" />
+                        </intent-filter>-->
         </service>
 
         <!-- meta-data需要写在application中 -->

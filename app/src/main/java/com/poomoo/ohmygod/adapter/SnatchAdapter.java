@@ -52,7 +52,7 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         winningRecordsBO = itemList.get(position);
-        viewHolder.snatchNameTxt.setText(winningRecordsBO.getGoodsName());
+        viewHolder.snatchNameTxt.setText(winningRecordsBO.getTitle());
         viewHolder.snatchTimeTxt.setText(winningRecordsBO.getPlayDt());
         if (winningRecordsBO.getIsWin() == 0)//未中奖
             viewHolder.snatchStatusTxt.setText("未中奖");

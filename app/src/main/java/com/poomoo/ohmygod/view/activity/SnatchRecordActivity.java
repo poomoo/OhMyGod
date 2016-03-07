@@ -5,6 +5,10 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -36,6 +40,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
     private int currPage = 1;
     private boolean isLoad = false;//true 加载 false刷新
     private List<WinningRecordsBO> recordsBOList = new ArrayList<>();
+    private WinningRecordsBO winningBO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,24 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
         refreshLayout.setRefreshing(false);
         listView.setOnItemClickListener(this);
 
+//        testData();
+    }
+
+    private void testData() {
+        recordsBOList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            winningBO = new WinningRecordsBO();
+            winningBO.setTitle("放假看到了放假抵抗力");
+            winningBO.setPlayDt("2015-12-12");
+            winningBO.setGetEndDt("2016-02-29 19:19:19");
+            winningBO.setIsGot(1);
+            winningBO.setIsWin(1);
+            winningBO.setWinNumber(MyUtil.addSpaceBy4("88888"));
+            winningBO.setGetAddress("北京市中南海1号，这个地址你敢去吗？");
+            winningBO.setPicture("http://www.tnomg.com/zgqg/upload/activeGoods/1455438567415.png");//http://myeducs.cn/uploadfile/201006/4/C314339927.jpg
+            recordsBOList.add(winningBO);
+        }
+        adapter.setItems(recordsBOList);
     }
 
     protected void initTitleBar() {

@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
 
 /**
  * 中奖记录
@@ -20,6 +21,7 @@ import com.poomoo.ohmygod.utils.LogUtils;
  * 日期: 2015/11/23 13:43.
  */
 public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
+    private static final java.lang.String TAG = "WinningRecordAdapter";
     private WinningRecordsBO winningRecordsBO;
 
     public WinningRecordAdapter(Context context) {
@@ -52,22 +54,13 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
         else
             viewHolder.statusImg.setImageResource(R.drawable.ic_unget);
         viewHolder.titleTxt.setText(winningRecordsBO.getTitle());
-        viewHolder.codeTxt.setText(winningRecordsBO.getWinNumber());
+        viewHolder.codeTxt.setText(MyUtil.addSpaceBy4(winningRecordsBO.getWinNumber()));
         viewHolder.dateTxt.setText(winningRecordsBO.getPlayDt());
         viewHolder.addressTxt.setText(winningRecordsBO.getGetAddress());
         viewHolder.endDateTimeTxt.setText(winningRecordsBO.getGetEndDt());
-//        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg);
-
-//        ImageLoader.getInstance().loadImage(winningRecordsBO.getPicture(), new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                Drawable drawable = new BitmapDrawable(context.getResources(), loadedImage);
-//                // 通过 tag 来防止图片错位
-//                if (viewHolder.fLayout.getTag() != null && viewHolder.fLayout.getTag().equals(imageUri)) {
-//                    viewHolder.fLayout.setBackground(drawable);
-//                }
-//            }
-//        });
+        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg);
+        LogUtils.i(TAG, winningRecordsBO.getPicture());
+        viewHolder.statusImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return convertView;
     }
 

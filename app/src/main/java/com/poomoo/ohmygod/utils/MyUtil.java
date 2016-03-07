@@ -623,4 +623,26 @@ public class MyUtil {
         InputStream is = context.getResources().openRawResource(resId);
         return BitmapFactory.decodeStream(is, null, opt);
     }
+
+    /**
+     * 每隔4位空一格
+     *
+     * @return
+     */
+    public static String addSpaceBy4(String s) {
+        if (TextUtils.isEmpty(s))
+            return "";
+        int len = s.length();
+        if (!(len > 4))
+            return s;
+        int quotient = len / 4;//商
+        int remainder = len % 4;//余数
+        String temp = "";
+        for (int i = 0; i < quotient; i++) {
+            temp += s.substring(0, i + 4) + " ";
+        }
+        if (remainder > 0)
+        temp += " " + s.substring(s.length() - 1 - remainder, s.length() - 1);
+        return temp;
+    }
 }
