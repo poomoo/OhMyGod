@@ -41,25 +41,23 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_list_grab, null);
-            viewHolder.rlayout = (RelativeLayout) convertView.findViewById(R.id.rlayout_grab);
-            viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.img_grab_bg);
-            viewHolder.countDownTxt = (TextView) convertView.findViewById(R.id.txt_grab_countDown);
-//            viewHolder.labelTxt = (TextView) convertView.findViewById(R.id.txt_label);
+            convertView = inflater.inflate(R.layout.item_list_snatch, null);
+            viewHolder.snatchImg = (ImageView) convertView.findViewById(R.id.img_snatch);
+            viewHolder.snatchNameTxt = (TextView) convertView.findViewById(R.id.txt_snatchName);
+            viewHolder.snatchTimeTxt = (TextView) convertView.findViewById(R.id.txt_snatchTime);
+            viewHolder.snatchStatusTxt = (TextView) convertView.findViewById(R.id.txt_snatchStatus);
 
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
 
         winningRecordsBO = itemList.get(position);
-        if (winningRecordsBO.getStatus().equals("0"))
-            viewHolder.countDownTxt.setText("未开启");
-        else if (winningRecordsBO.getStatus().equals("1"))
-            viewHolder.countDownTxt.setText("正在进行");
-        else if (winningRecordsBO.getStatus().equals("2"))
-            viewHolder.countDownTxt.setText("已结束");
-        viewHolder.countDownTxt.setTextColor(Color.parseColor("#FFFFFF"));
-//        viewHolder.labelTxt.setVisibility(View.GONE);
+        viewHolder.snatchNameTxt.setText(winningRecordsBO.getGoodsName());
+        viewHolder.snatchTimeTxt.setText(winningRecordsBO.getPlayDt());
+        if (winningRecordsBO.getIsWin() == 0)//未中奖
+            viewHolder.snatchStatusTxt.setText("未中奖");
+        else
+            viewHolder.snatchStatusTxt.setText("恭喜中奖");
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.bg_snatch_record) //
@@ -68,7 +66,7 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
-        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg, defaultOptions);
+        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.snatchImg, defaultOptions);
 //        viewHolder.rlayout.setT   ag(winningRecordsBO.getPicture());
 
 //        ImageLoader.getInstance().loadImage(winningRecordsBO.getPicture(), new SimpleImageLoadingListener() {
@@ -86,9 +84,9 @@ public class SnatchAdapter extends MyBaseAdapter<WinningRecordsBO> {
     }
 
     class ViewHolder {
-        private RelativeLayout rlayout;
-        private ImageView bgImg;
-        private TextView countDownTxt;
-//        private TextView labelTxt;
+        private ImageView snatchImg;
+        private TextView snatchNameTxt;
+        private TextView snatchTimeTxt;
+        private TextView snatchStatusTxt;
     }
 }

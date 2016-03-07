@@ -4,18 +4,12 @@
 package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -39,12 +33,13 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_list_winning_record, null);
 
-            viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_imageView_pic);
-            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.item_list_winning_record_ima_status);
-            viewHolder.titleTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_title);
-            viewHolder.dateTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_win_date);
-            viewHolder.addressTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_address);
-            viewHolder.endDateTimeTxt = (TextView) convertView.findViewById(R.id.item_list_winning_record_textView_end_date);
+            viewHolder.bgImg = (ImageView) convertView.findViewById(R.id.img_winPic);
+            viewHolder.statusImg = (ImageView) convertView.findViewById(R.id.img_getStatus);
+            viewHolder.titleTxt = (TextView) convertView.findViewById(R.id.txt_winName);
+            viewHolder.codeTxt = (TextView) convertView.findViewById(R.id.txt_winCode);
+            viewHolder.dateTxt = (TextView) convertView.findViewById(R.id.txt_winDate);
+            viewHolder.addressTxt = (TextView) convertView.findViewById(R.id.txt_winAddress);
+            viewHolder.endDateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winEndDate);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
@@ -53,15 +48,15 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
         winningRecordsBO = itemList.get(position);
         LogUtils.i("WinningRecordAdapter", "winningRecordsBO:" + winningRecordsBO.getIsGot() + ":" + position);
         if (winningRecordsBO.getIsGot() == 1)
-            viewHolder.statusImg.setImageResource(R.drawable.ic_yes);
+            viewHolder.statusImg.setImageResource(R.drawable.ic_get);
         else
-            viewHolder.statusImg.setImageResource(R.drawable.ic_no);
-
+            viewHolder.statusImg.setImageResource(R.drawable.ic_unget);
         viewHolder.titleTxt.setText(winningRecordsBO.getTitle());
+        viewHolder.codeTxt.setText(winningRecordsBO.getWinNumber());
         viewHolder.dateTxt.setText(winningRecordsBO.getPlayDt());
         viewHolder.addressTxt.setText(winningRecordsBO.getGetAddress());
         viewHolder.endDateTimeTxt.setText(winningRecordsBO.getGetEndDt());
-        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg);
+//        ImageLoader.getInstance().displayImage(winningRecordsBO.getPicture(), viewHolder.bgImg);
 
 //        ImageLoader.getInstance().loadImage(winningRecordsBO.getPicture(), new SimpleImageLoadingListener() {
 //            @Override
@@ -79,6 +74,7 @@ public class WinningRecordAdapter extends MyBaseAdapter<WinningRecordsBO> {
     class ViewHolder {
         private ImageView bgImg;//背景
         private ImageView statusImg;//奖品状态
+        private TextView codeTxt;//获奖编码
         private TextView titleTxt;//获奖时间
         private TextView dateTxt;//获奖时间
         private TextView addressTxt;//获奖时间

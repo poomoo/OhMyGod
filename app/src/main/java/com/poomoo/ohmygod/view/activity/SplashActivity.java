@@ -56,6 +56,7 @@ public class SplashActivity extends BaseActivity {
     private ImageView bgImg;
     private List<PicBO> picBOList = new ArrayList<>();
     private String bootPicPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ohmygod/" + "boot.jpg";
+    private boolean isLoad = false;//是否需要加载新的启动页 默认不需要
 
 
     @Override
@@ -66,9 +67,10 @@ public class SplashActivity extends BaseActivity {
         bgImg = (ImageView) findViewById(R.id.img_bg);
         File f = new File(bootPicPath);
         if (f.exists()) {
-            LogUtils.i(TAG, "图片不为空");
             bgImg.setImageBitmap(FileUtils.readBitmapByPath(bootPicPath));
-        }
+            isLoad = false;
+        } else
+            isLoad = true;
 
         importDB();        // 导入数据库文件
         SQLiteDatabase db = Connector.getDatabase();//新建表
@@ -85,31 +87,56 @@ public class SplashActivity extends BaseActivity {
                 picBOList = data.getObjList();
                 url = picBOList.get(0).getPicture();
                 LogUtils.i(TAG, "URL:" + url);
-                if (!TextUtils.isEmpty(url) && !url.equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_bootUrl), ""))) {
-                    LogUtils.i(TAG, "有新图片");
-                    ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            bgImg.setAdjustViewBounds(true);
-                            bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                            bgImg.setImageBitmap(loadedImage);
-                            FileUtils.saveBitmapByPath(loadedImage, bootPicPath);
-                            SPUtils.put(getApplicationContext(), getString(R.string.sp_bootUrl), url);
-                            start();
-                        }
+                if (!TextUtils.isEmpty(url)) {
+                    //图片地址与上次保存的地址不相等
+                    if (!url.equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_bootUrl), ""))) {
+                        LogUtils.i(TAG, "有新图片");
+                        ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                bgImg.setAdjustViewBounds(true);
+                                bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                bgImg.setImageBitmap(loadedImage);
+                                FileUtils.saveBitmapByPath(loadedImage, bootPicPath);
+                                SPUtils.put(getApplicationContext(), getString(R.string.sp_bootUrl), url);
+                                start();
+                            }
 
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                start();
+                            }
+                        });
+                    } else {
+                        //没有新图片，但是老图片被删除掉了
+                        if (isLoad)
+                            ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    bgImg.setAdjustViewBounds(true);
+                                    bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                                    bgImg.setImageBitmap(loadedImage);
+                                    FileUtils.saveBitmapByPath(loadedImage, bootPicPath);
+                                    SPUtils.put(getApplicationContext(), getString(R.string.sp_bootUrl), url);
+                                    start();
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    start();
+                                }
+                            });
+                            //没有新图片，老图片依然存在
+                        else
                             start();
-                        }
-                    });
+                    }
                 } else
                     start();
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
-
+                start();
             }
         });
 

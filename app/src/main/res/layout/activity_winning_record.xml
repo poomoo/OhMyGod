@@ -31,6 +31,8 @@
         <ListView
             android:id="@+id/list_winning"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@color/themeGray"
+            android:dividerHeight="1dp"/>
     </com.poomoo.ohmygod.view.custom.RefreshLayout>
 </LinearLayout>

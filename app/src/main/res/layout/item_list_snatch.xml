@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/img_snatch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_2">
+
+        <TextView
+            android:id="@+id/txt_snatchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发的货解散"
+            android:textColor="@color/themeRed"
+            android:textSize="@dimen/sp_20" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="夺宝时间："
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/txt_snatchTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-02-04 19:12:12"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_snatchStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="恭喜中奖"
+            android:textColor="@color/themeRed"
+            android:textSize="@dimen/sp_20" />
+    </LinearLayout>
+
+</LinearLayout>

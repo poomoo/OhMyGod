@@ -4,34 +4,40 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/item_list_winning_record_imageView_pic"
+            android:id="@+id/img_winPic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/test" />
 
         <ImageView
-            android:id="@+id/item_list_winning_record_ima_status"
+            android:id="@+id/img_getStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_get" />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1.5"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:id="@+id/item_list_winning_record_textView_title"
+            android:id="@+id/txt_winName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_8"
@@ -48,15 +54,60 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="获奖编码 : "
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/txt_winCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8652 8564 9523"
+                android:textColor="@color/themeRed"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="获奖时间 : "
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/item_list_winning_record_textView_win_date"
+                android:id="@+id/txt_winDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2015年8月4日"
+                android:text="2016-02-06 19:00:00"
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="截止领奖时间 : "
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/txt_winEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2016-02-07 19:00:00"
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -75,32 +126,10 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/item_list_winning_record_textView_address"
+                android:id="@+id/txt_winAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="观山湖区世纪城"
-                android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_14" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp_8">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="领取截止日期 : "
-                android:textColor="@color/themeGray"
-                android:textSize="@dimen/sp_14" />
-
-            <TextView
-                android:id="@+id/item_list_winning_record_textView_end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2015年8月5日-2015年8月10日"
+                android:text="天呐君配送"
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>

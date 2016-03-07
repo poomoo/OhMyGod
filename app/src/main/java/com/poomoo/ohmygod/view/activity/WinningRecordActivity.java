@@ -77,10 +77,12 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
 
     private void testData() {
         winningBOList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             winningBO = new WinningRecordsBO();
+            winningBO.setTitle("放假看到了放假抵抗力");
             winningBO.setPlayDt("2015-12-12");
             winningBO.setIsGot(1);
+            winningBO.setIsWin(1);
             winningBOList.add(winningBO);
         }
         adapter.setItems(winningBOList);

@@ -24,6 +24,8 @@ public class WinningRecordsBO implements Serializable {
     private String goodsName;//--奖品名称
     private String getAddress;//--领取地址
     private String getRequire;//--领取要求
+    private int isWin;// 0未中奖  1中奖
+    private String winNumber = "";//中奖编码
 
     public String getPicture() {
         return picture;
@@ -129,6 +131,22 @@ public class WinningRecordsBO implements Serializable {
         this.getRequire = getRequire;
     }
 
+    public int getIsWin() {
+        return isWin;
+    }
+
+    public void setIsWin(int isWin) {
+        this.isWin = isWin;
+    }
+
+    public String getWinNumber() {
+        return winNumber;
+    }
+
+    public void setWinNumber(String winNumber) {
+        this.winNumber = winNumber;
+    }
+
     @Override
     public String toString() {
         return "WinningRecordsBO{" +
@@ -145,6 +163,8 @@ public class WinningRecordsBO implements Serializable {
                 ", goodsName='" + goodsName + '\'' +
                 ", getAddress='" + getAddress + '\'' +
                 ", getRequire='" + getRequire + '\'' +
+                ", isWin=" + isWin +
+                ", winNumber='" + winNumber + '\'' +
                 '}';
     }
 }
