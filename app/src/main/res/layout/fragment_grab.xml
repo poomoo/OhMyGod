@@ -93,7 +93,7 @@
             <com.poomoo.ohmygod.view.custom.SlideShowView
                 android:id="@+id/flipper_ad"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_ad" />
+                android:layout_height="210dp" />
 
 
             <LinearLayout

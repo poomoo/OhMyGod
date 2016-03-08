@@ -367,78 +367,88 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 
     private void getGrabList(final boolean isRefreshable) {
         this.appAction.getGrabList(application.getCurrCity(), currPage, 15, new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                if (isRefreshable) {
-                    fragment_grab_layout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    grabBOList = new ArrayList<>();
-                    grabBOList = data.getObjList();
-                    int len = grabBOList.size();
-                    if (len > 0) {
-                        currPage++;
-                        adapter.setItems(grabBOList);
-                        for (int i = 0; i < len; i++) {
-                            activityInfo = new ActivityInfo();
-                            activityInfo.setActiveId(grabBOList.get(i).getActiveId());
-                            activityInfo.setFlag(false);
-                            activityInfo.setEventId("");
-                            activityInfos.add(activityInfo);
-                            MyUtil.insertActivityInfo(activityInfos);//活动列表
+                    @Override
+                    public void onSuccess(ResponseBO data) {
+                        if (isRefreshable) {
+                            fragment_grab_layout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            grabBOList = new ArrayList<>();
+                            grabBOList = data.getObjList();
+                            int len = grabBOList.size();
+                            if (len > 0) {
+                                currPage++;
+                                adapter.setItems(grabBOList);
+                                for (int i = 0; i < len; i++) {
+                                    activityInfo = new ActivityInfo();
+                                    activityInfo.setActiveId(grabBOList.get(i).getActiveId());
+                                    activityInfo.setFlag(false);
+                                    activityInfo.setEventId("");
+                                    activityInfos.add(activityInfo);
+                                    MyUtil.insertActivityInfo(activityInfos);//活动列表
+                                }
+                            }
+                            JSONObject jsonObject;
+                            try {
+                                jsonObject = new JSONObject(data.getOtherData());
+                                browseNum = jsonObject.getString("browseNum");
+                                browseTxt.setText(browseNum);
+                                LogUtils.i(TAG, "browseNum:" + browseNum);
+                            } catch (JSONException e) {
+                            }
+                        } else {
+                            fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                            grabBOList = data.getObjList();
+                            int len = grabBOList.size();
+                            if (len > 0) {
+                                currPage++;
+                                adapter.addItems(grabBOList);
+                                for (int i = 0; i < len; i++) {
+                                    activityInfo = new ActivityInfo();
+                                    activityInfo.setActiveId(grabBOList.get(i).getActiveId());
+                                    activityInfo.setFlag(false);
+                                    activityInfo.setEventId("");
+                                    activityInfos.add(activityInfo);
+                                    MyUtil.insertActivityInfo(activityInfos);//活动列表
+                                }
+                            }
                         }
+
+                        winnerRlayout.setVisibility(View.VISIBLE);
+                        viewsLlayout.setVisibility(View.VISIBLE);
+                        slideShowView.setVisibility(View.VISIBLE);
+                        refreshRlayout.setVisibility(View.VISIBLE);
+                        loadRlayout.setVisibility(View.VISIBLE);
                     }
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(data.getOtherData());
-                        browseNum = jsonObject.getString("browseNum");
-                        browseTxt.setText(browseNum);
-                        LogUtils.i(TAG, "browseNum:" + browseNum);
-                    } catch (JSONException e) {
-                    }
-                } else {
-                    fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                    grabBOList = data.getObjList();
-                    int len = grabBOList.size();
-                    if (len > 0) {
-                        currPage++;
-                        adapter.addItems(grabBOList);
-                        for (int i = 0; i < len; i++) {
-                            activityInfo = new ActivityInfo();
-                            activityInfo.setActiveId(grabBOList.get(i).getActiveId());
-                            activityInfo.setFlag(false);
-                            activityInfo.setEventId("");
-                            activityInfos.add(activityInfo);
-                            MyUtil.insertActivityInfo(activityInfos);//活动列表
+
+                    @Override
+                    public void onFailure(int errorCode, String message) {
+                        if (errorCode == -3) {
+                            MyUtil.showToast(getActivity().getApplicationContext(), message);
+                            if (isRefreshable)
+                                fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
+                            else
+                                fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                            return;
                         }
-                    }
-                }
-
-                winnerRlayout.setVisibility(View.VISIBLE);
-                viewsLlayout.setVisibility(View.VISIBLE);
-                slideShowView.setVisibility(View.VISIBLE);
-                refreshRlayout.setVisibility(View.VISIBLE);
-                loadRlayout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(int errorCode, String message) {
-                if (isRefreshable) {
-                    fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
-                    slideShowView.setVisibility(View.GONE);
-                    winnerRlayout.setVisibility(View.GONE);
-                    viewsLlayout.setVisibility(View.GONE);
-                    refreshRlayout.setVisibility(View.GONE);
-                    loadRlayout.setVisibility(View.GONE);
-                    MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
-                } else {
-                    if(message.contains("无数据"))
-                    fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.NOMORE);
-                    else
-                        fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                        if (isRefreshable) {
+                            fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
+                            slideShowView.setVisibility(View.GONE);
+                            winnerRlayout.setVisibility(View.GONE);
+                            viewsLlayout.setVisibility(View.GONE);
+                            refreshRlayout.setVisibility(View.GONE);
+                            loadRlayout.setVisibility(View.GONE);
+                            MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
+                        } else {
+                            if (message.contains("无数据"))
+                                fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.NOMORE);
+                            else
+                                fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.FAIL);
 //                    MyUtil.showToast(application.getApplicationContext(), "没有更多活动");
+                        }
+
+                    }
                 }
 
-            }
-        });
+        );
     }
 
     private void getWinnerList() {
@@ -625,8 +635,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             LogUtils.i(TAG, "currCity:" + currCity + "application.getCurrCity():" + application.getCurrCity());
             if (!currCity.equals(application.getCurrCity())) {
                 currCityTxt.setText(application.getCurrCity());
-//                grabBOList = new ArrayList<>();
-//                adapter.setItems(grabBOList);
+                grabBOList = new ArrayList<>();
+                adapter.setItems(grabBOList);
                 getGrabList(true);
                 getAd();
                 getWinnerList();

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class SelectAdapter extends MyBaseAdapter<String> {
             viewHolder.hiddenTxt.setText(temp[1]);
         } else
             viewHolder.contentTxt.setText(content);
+        LogUtils.i("SelectAdapter","position:"+position+":"+content);
         return convertView;
     }
 

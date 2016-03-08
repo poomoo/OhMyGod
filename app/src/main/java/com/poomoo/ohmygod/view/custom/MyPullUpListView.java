@@ -82,11 +82,11 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        ifNeedLoad(view, scrollState);
-//        if (canLoad()) {
-//            onLoad();
-//            isLoading = true;
-//        }
+//        ifNeedLoad(view, scrollState);
+        if (canLoad()) {
+            onLoad();
+            isLoading = true;
+        }
     }
 
     @Override
@@ -111,11 +111,11 @@ public class MyPullUpListView extends ListView implements AbsListView.OnScrollLi
                     loadData();
                 }
                 break;
-            case MotionEvent.ACTION_CANCEL:
-                LogUtils.i("pull", "子action:" + "ACTION_CANCEL" + canLoad());
-                if (canLoad()) {
-                    loadData();
-                }
+//            case MotionEvent.ACTION_CANCEL:
+//                LogUtils.i("pull", "子action:" + "ACTION_CANCEL" + canLoad());
+//                if (canLoad()) {
+//                    loadData();
+//                }
             default:
                 break;
         }

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,17 +19,28 @@ public class MyLetterListView extends View {
     int choose = -1;
     Paint paint = new Paint();
     boolean showBkg = false;
+    private int textsize;
+    private static final float defaultSize=15f;
 
     public MyLetterListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
     }
 
     public MyLetterListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public MyLetterListView(Context context) {
         super(context);
+        init();
+
+    }
+
+    private void init() {
+        DisplayMetrics dm = this.getResources().getDisplayMetrics();
+        textsize = (int) (defaultSize * dm.density);
     }
 
     @Override
@@ -42,7 +54,7 @@ public class MyLetterListView extends View {
         int singleHeight = height / b.length;
         for (int i = 0; i < b.length; i++) {
             paint.setColor(Color.parseColor("#8c8c8c"));
-            paint.setTextSize(24);
+            paint.setTextSize(textsize);
             // paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             /*if (i == choose) {

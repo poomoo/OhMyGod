@@ -13,10 +13,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +32,8 @@ import com.poomoo.model.CodeBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.CodeStatusListAdapter;
+import com.poomoo.ohmygod.adapter.PubAdapter;
+import com.poomoo.ohmygod.adapter.SelectAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -45,7 +54,7 @@ import java.util.List;
  * 作者: 李苜菲
  * 日期: 2016/3/1 15:16.
  */
-public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.OnLoadListener {
+public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.OnLoadListener, AdapterView.OnItemClickListener {
     private TextView shopNameTxt;
     private EditText codeEdt;
     private TextView checkedNumTxt;
@@ -55,6 +64,8 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     //    private RefreshLayout refreshLayout;
     private MyPullUpListView listView;
     private RelativeLayout progressRlayout;
+    private View mMenuView;
+    private ListView activeListView;
 
     private CodeStatusListAdapter adapter;
     private List<CodeBO> codeBOList;
@@ -76,6 +87,9 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     private int nYear;
     private int nMonth;
     private int nDay;
+    private SelectAdapter selectAdapter;
+    private List<String> strings = new ArrayList<>();
+    private boolean isLoadActiveType = false;//是否加载了活动类型
 
 
     @Override
@@ -89,9 +103,13 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     protected void initView() {
         initTitleBar();
 
-//        refreshLayout = (RefreshLayout) findViewById(R.id.refresh_merchantInfo);
-//        refreshLayout.setOnLoadListener(this);
-//        refreshLayout.setRefreshing(false);
+
+        mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_active_type, null);
+        activeListView = (ListView) mMenuView.findViewById(R.id.list_active);
+        selectAdapter = new SelectAdapter(this);
+        activeListView.setAdapter(selectAdapter);
+        activeListView.setOnItemClickListener(this);
+
         listView = (MyPullUpListView) findViewById(R.id.list_code_status);
         listView.setOnLoadListener(this);
         adapter = new CodeStatusListAdapter(this);
@@ -186,10 +204,11 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
      * @param view
      */
     public void toSelectActiveType(View view) {
-        Bundle pBundle = new Bundle();
-        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_activeName));
-        pBundle.putSerializable("activeList", list_activeType);
-        openActivityForResult(SelectActivity.class, pBundle, MyConfig.ACTIVE);
+//        Bundle pBundle = new Bundle();
+//        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_activeName));
+//        pBundle.putSerializable("activeList", list_activeType);
+//        openActivityForResult(SelectActivity.class, pBundle, MyConfig.ACTIVE);
+        show();
     }
 
     /**
@@ -286,29 +305,45 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
                     totalNumTxt.setText(totalWinNum + "");
                     gotWinNum = jsonObject.getInt("gotWinNum");
                     checkedNumTxt.setText(gotWinNum + "");
-                    JSONArray activeList = jsonObject.getJSONArray("activeList");
-                    int length = activeList.length();
-                    list_activeType = new ArrayList<>();
-                    HashMap<String, String> item;
-                    for (int i = 0; i < length; i++) {
-                        item = new HashMap<>();
-                        item.put("activeId", activeList.getJSONObject(i).getInt("activeId") + "");
-                        item.put("activeName", activeList.getJSONObject(i).getString("activeName"));
-                        list_activeType.add(item);
+                    if (!isLoadActiveType) {
+                        isLoadActiveType = true;//活动类型只加载一次
+                        JSONArray activeList = jsonObject.getJSONArray("activeList");
+                        int length = activeList.length();
+                        list_activeType = new ArrayList<>();
+                        HashMap<String, String> item;
+                        for (int i = 0; i < length; i++) {
+                            item = new HashMap<>();
+                            item.put("activeId", activeList.getJSONObject(i).getInt("activeId") + "");
+                            item.put("activeName", activeList.getJSONObject(i).getString("activeName"));
+                            list_activeType.add(item);
+                            strings.add(activeList.getJSONObject(i).getString("activeName") + "");
+                            LogUtils.i(TAG, "strings:" + strings.get(i));
+                        }
+
+                        selectAdapter.setItems(strings);
+                        LogUtils.i(TAG, "selectAdapter.setItems(strings)");
+                        initPopWindow();
                     }
                 } catch (JSONException e) {
+                    LogUtils.i(TAG, "异常:" + e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+                //超时
+                if (errorCode == -3) {
+                    MyUtil.showToast(getApplicationContext(), message);
+                    return;
+                }
                 if (!isFirst && !isLoad) {
                     progressRlayout.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                 } else
                     isFirst = false;
-                MyUtil.showToast(getApplicationContext(), message);
+                if (!TextUtils.isEmpty(message))
+                    MyUtil.showToast(getApplicationContext(), message);
             }
         });
     }
@@ -361,6 +396,41 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         dp.setMaxDate(cal.getTime().getTime());
     }
 
+    PopupWindow popupWindow;
+
+    private void show() {
+        popupWindow.showAsDropDown(findViewById(R.id.llayout_shopCheck));
+    }
+
+    private void initPopWindow() {
+        LogUtils.i(TAG, "initPopWindow");
+        popupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        popupWindow.setFocusable(true);
+
+        mMenuView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int height_left = mMenuView.findViewById(R.id.popup_active_layout).getLeft();
+                int height_top = mMenuView.findViewById(R.id.popup_active_layout).getTop();
+                int height_right = mMenuView.findViewById(R.id.popup_active_layout).getLeft();
+                int height_bottom = mMenuView.findViewById(R.id.popup_active_layout).getBottom();
+
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (x < height_left || x > height_right) {
+                        popupWindow.dismiss();
+                        activeListView.setSelection(0);
+                    }
+                    if (y < height_top || y > height_bottom) {
+                        popupWindow.dismiss();
+                        activeListView.setSelection(0);
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MyConfig.ACTIVE && resultCode == MyConfig.ACTIVE) {
@@ -375,4 +445,16 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        activeNameTxt.setText(list_activeType.get(position).get("activeName"));
+        activeId = Integer.parseInt(list_activeType.get(position).get("activeId"));
+        codeBOList = new ArrayList<>();
+        adapter.setItems(codeBOList);
+        currPage = 1;
+        isLoad = false;
+        getData();
+        popupWindow.dismiss();
+        activeListView.setSelection(0);
+    }
 }

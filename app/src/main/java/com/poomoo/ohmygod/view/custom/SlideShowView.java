@@ -122,8 +122,10 @@ public class SlideShowView extends FrameLayout {
      * 开始轮播图切换
      */
     private void startPlay() {
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 1, 4, TimeUnit.SECONDS);
+        if (scheduledExecutorService == null) {
+            scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 1, 4, TimeUnit.SECONDS);
+        }
     }
 
 
@@ -154,7 +156,7 @@ public class SlideShowView extends FrameLayout {
             ImageView view = new ImageView(context);
             view.setTag(imageUrls[i]);
             view.setImageResource(R.mipmap.ic_launcher);
-            view.setAdjustViewBounds(true);
+//            view.setAdjustViewBounds(true);
             view.setScaleType(ScaleType.CENTER_CROP);
             imageViewsList.add(view);
 

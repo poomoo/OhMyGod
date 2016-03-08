@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -30,7 +31,8 @@ public class ProgressSeekBar extends SeekBar {
 
     private Paint mPaint;
 
-    private final int textsize = 24;
+    private int textsize;
+    private static final float defaultSize = 12f;
 
     private boolean ishide;
 
@@ -63,6 +65,9 @@ public class ProgressSeekBar extends SeekBar {
 
     // 初始化
     private void init() {
+        DisplayMetrics dm = this.getResources().getDisplayMetrics();
+        textsize = (int) (defaultSize * dm.density);
+        LogUtils.i("lmf","textsize"+textsize+"density"+dm.density);
         initDraw();
         setOnSeekBarChangeListener(new onSeekBarChangeListener());
     }
@@ -128,7 +133,7 @@ public class ProgressSeekBar extends SeekBar {
             //改进版
             this.setThumbOffset(0);
             xText = thumbBounds.left + spaceLen / 2;
-            if (this.getProgress() == this.getMax()){
+            if (this.getProgress() == this.getMax()) {
                 this.setThumbOffset(thumbBounds.width() * 3 / 4);
                 xText = bounds.width() - thumbBounds.width() * 3 / 4;
             }
