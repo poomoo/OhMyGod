@@ -145,7 +145,20 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void toCheckUpdate(View view) {
-        MyUtil.showToast(getApplicationContext(), "检查更新");
+        if (MyUtil.isUpdate(this, application)) {
+            AlertDialog dialog = new AlertDialog.Builder(this).setMessage("检测到新版本,是否需要更新?").setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).create();
+            dialog.show();
+        } else
+            MyUtil.showToast(getApplicationContext(), "恭喜,已经是最新版本");
     }
 
     /**

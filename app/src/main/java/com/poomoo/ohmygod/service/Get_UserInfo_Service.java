@@ -2,6 +2,7 @@ package com.poomoo.ohmygod.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.IBinder;
 
 import com.poomoo.core.ActionCallbackListener;
@@ -67,6 +68,7 @@ public class Get_UserInfo_Service extends Service {
                 application.setAddress(userBO.getAddress());
                 application.setIsAdvancedUser(userBO.getIsAdvancedUser());
                 application.setUserType(userBO.getUserType());
+                application.setAppVersion(userBO.getAppVersion());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userId), application.getUserId());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_phoneNum), application.getTel());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_nickName), application.getNickName());
@@ -84,6 +86,7 @@ public class Get_UserInfo_Service extends Service {
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_address), application.getAddress());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_isAdvancedUser), application.getIsAdvancedUser());
                 SPUtils.put(application.getApplicationContext(), getString(R.string.sp_userType), application.getUserType());
+                SPUtils.put(application.getApplicationContext(), getString(R.string.sp_appVersion), application.getAppVersion());
                 stopSelf();
             }
 

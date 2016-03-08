@@ -160,6 +160,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         this.application.setIsAdvancedUser(userBO.getIsAdvancedUser());
         this.application.setChannelId(userBO.getChannelId());
         this.application.setUserType(userBO.getUserType());
+        this.application.setAppVersion(userBO.getAppVersion());
 
 //        LogUtils.i(TAG, "userBO.getTel():" + userBO.getTel() + " phoneNum:" + SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""));
         if (!userBO.getTel().equals(SPUtils.get(getApplicationContext(), getString(R.string.sp_phoneNum), ""))) {
@@ -184,5 +185,6 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         SPUtils.put(getApplicationContext(), getString(R.string.sp_isAdvancedUser), userBO.getIsAdvancedUser());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_channelId), userBO.getChannelId());
         SPUtils.put(getApplicationContext(), getString(R.string.sp_userType), userBO.getUserType());
+        SPUtils.put(getApplicationContext(), getString(R.string.sp_appVersion), userBO.getAppVersion());
     }
 }

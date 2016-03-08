@@ -9,6 +9,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +25,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,6 +50,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -394,6 +401,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         DatePicker dp = mDialog.getDatePicker();
 //        ((ViewGroup) ((ViewGroup) dp.getChildAt(0)).getChildAt(0)).getChildAt(2).setVisibility(View.GONE);  //隐藏掉日
         dp.setMaxDate(cal.getTime().getTime());
+//        setDatePickerDividerColor(dp);
     }
 
     PopupWindow popupWindow;
@@ -431,19 +439,19 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MyConfig.ACTIVE && resultCode == MyConfig.ACTIVE) {
-            String temp[] = data.getStringExtra(getString(R.string.intent_activeName)).split("#");
-            activeName = temp[0];
-            activeNameTxt.setText(activeName);
-            activeId = Integer.parseInt(temp[1]);
-            currPage = 1;
-            isLoad = false;
-            getData();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == MyConfig.ACTIVE && resultCode == MyConfig.ACTIVE) {
+//            String temp[] = data.getStringExtra(getString(R.string.intent_activeName)).split("#");
+//            activeName = temp[0];
+//            activeNameTxt.setText(activeName);
+//            activeId = Integer.parseInt(temp[1]);
+//            currPage = 1;
+//            isLoad = false;
+//            getData();
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -457,4 +465,108 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         popupWindow.dismiss();
         activeListView.setSelection(0);
     }
+
+    /**
+     * 设置时间选择器的分割线颜色
+     *
+     * @param datePicker
+     */
+    private void setDatePickerDividerColor(DatePicker datePicker) {
+        // Divider changing:
+
+        // 获取 mSpinners
+        LinearLayout llFirst = (LinearLayout) datePicker.getChildAt(0);
+
+        // 获取 NumberPicker
+        LinearLayout mSpinners = (LinearLayout) llFirst.getChildAt(0);
+        for (int i = 0; i < mSpinners.getChildCount(); i++) {
+            NumberPicker picker = (NumberPicker) mSpinners.getChildAt(i);
+
+            Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+            for (Field pf : pickerFields) {
+                if (pf.getName().equals("mSelectionDivider")) {
+                    pf.setAccessible(true);
+                    try {
+                        pf.set(picker, new ColorDrawable(getResources().getColor(R.color.themeRed)));
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (Resources.NotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+
+//    public DatePickerDialog makeDatePicker(OnDateSetListener listener, Calendar cal) {
+//        Calendar c;
+//        if (cal == null) {
+//            c = Calendar.getInstance();
+//        } else {
+//            c = cal;
+//        }
+//        int year = c.get(Calendar.YEAR);
+//        int month = c.get(Calendar.MONTH);
+//        int day = c.get(Calendar.DAY_OF_MONTH);
+//        DatePickerDialog newFragment = new DatePickerDialog(this, listener, year, month, day);
+//
+//        // removes the original topbar:
+//        newFragment.setTitle("");
+//
+//        // Divider changing:
+//        DatePicker dpView = newFragment.getDatePicker();
+//        LinearLayout llFirst = (LinearLayout) dpView.getChildAt(0);
+//        LinearLayout llSecond = (LinearLayout) llFirst.getChildAt(0);
+//        for (int i = 0; i < llSecond.getChildCount(); i++) {
+//            NumberPicker picker = (NumberPicker) llSecond.getChildAt(i); // Numberpickers in llSecond
+//            // reflection - picker.setDividerDrawable(divider); << didn't seem to work.
+//            Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+//            for (Field pf : pickerFields) {
+//                if (pf.getName().equals("mSelectionDivider")) {
+//                    pf.setAccessible(true);
+//                    try {
+//                        pf.set(picker, getResources().getDrawable(R.drawable.np_numberpicker_selection_divider_orange));
+//                    } catch (IllegalArgumentException e) {
+//                        e.printStackTrace();
+//                    } catch (Resources.NotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (IllegalAccessException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+//        // New top:
+//        int titleHeight = 90;
+//        // Container:
+//        LinearLayout llTitleBar = new LinearLayout(this);
+//        llTitleBar.setOrientation(LinearLayout.VERTICAL);
+//        llTitleBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight));
+//
+//        // TextView Title:
+//        TextView tvTitle = new TextView(this);
+//        tvTitle.setText("Select a date");
+//        tvTitle.setGravity(Gravity.CENTER);
+//        tvTitle.setPadding(10, 10, 10, 10);
+//        tvTitle.setTextSize(24);
+//        tvTitle.setTextColor(Color.BLACK);
+//        tvTitle.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight-2));
+//        llTitleBar.addView(tvTitle);
+//
+//        // View line:
+//        View vTitleDivider = new View(this);
+//        vTitleDivider.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2));
+//        vTitleDivider.setBackgroundColor(getResources().getColor(R.color.crumblrOrange));
+//        llTitleBar.addView(vTitleDivider);
+//
+//        dpView.addView(llTitleBar);
+//        FrameLayout.LayoutParams lp = (android.widget.FrameLayout.LayoutParams) llFirst.getLayoutParams();
+//        lp.setMargins(0, titleHeight, 0, 0);
+//        return newFragment;
+//    }
 }

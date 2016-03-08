@@ -5,9 +5,12 @@ package com.poomoo.ohmygod.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -642,7 +645,31 @@ public class MyUtil {
             temp += s.substring(0, i + 4) + " ";
         }
         if (remainder > 0)
-        temp += " " + s.substring(s.length() - 1 - remainder, s.length() - 1);
+            temp += " " + s.substring(s.length() - 1 - remainder, s.length() - 1);
         return temp;
     }
+
+    /**
+     * 判断是否需要更新
+     *
+     * @param context
+     * @param application
+     * @return
+     */
+    public static boolean isUpdate(Context context, MyApplication application) {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = null;
+        try {
+            packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        int version = packInfo.versionCode;
+        if (application.getAppVersion() > version)
+            return true;
+        return false;
+    }
+
 }
