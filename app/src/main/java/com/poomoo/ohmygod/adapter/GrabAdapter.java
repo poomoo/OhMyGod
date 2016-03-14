@@ -74,10 +74,9 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
 
 //        if (position == 0)
-            grabBO.setStatus(1);
+//            grabBO.setStatus(1);
 
         if (grabBO.getStatus() == 1) {
-
             if (viewHolder.txt.getTag() == null) {
                 viewHolder.txt.setTag(grabBO.getPicture());
                 TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1", viewHolder.img_bg_remind);

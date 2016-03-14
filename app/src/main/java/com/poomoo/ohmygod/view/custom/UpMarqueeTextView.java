@@ -106,4 +106,9 @@ public class UpMarqueeTextView extends TextView implements Animator.AnimatorList
     public void onAnimationRepeat(Animator animator) {
 
     }
+
+    @Override
+    public boolean isFocused() {
+        return true;
+    }
 }

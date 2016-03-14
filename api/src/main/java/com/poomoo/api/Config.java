@@ -41,6 +41,7 @@ public class Config {
     public final static String ACTIVITYWINNERLIST = "20007";//活动中奖人列表
     public final static String MERCHANTINFO = "20009";//商家信息
     public final static String CHECKWINNUM = "20010";//商家信息
+    public final static String WININFOLISTNEW = "20011";//查询中奖信息接口（由首页滚动中奖信息点击进入）
 
     //ACTION 30000
     public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号
@@ -57,4 +58,5 @@ public class Config {
     public final static String CITYS = "40004";//查询城市
     public final static String FEEDBACK = "40005";//查询声明列表详情信息
     public final static String BOOTPICS = "40006";//查询app加载页面和引导页面
+    public final static String ADINFO = "40007";//查询广告详情
 }

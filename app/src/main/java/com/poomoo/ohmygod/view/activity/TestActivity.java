@@ -21,6 +21,7 @@ import android.provider.CalendarContract.Calendars;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -126,13 +127,23 @@ public class  TestActivity extends BaseActivity {
         setContentView(R.layout.activity_test);
 
 //        mView = new MyCustomView(this);
-//        webView = (WebView) findViewById(R.id.web_test);
+        webView = (WebView) findViewById(R.id.web_test);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        webView.getSettings().setPluginsEnabled(true);//可以使用插件
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setDefaultTextEncodingName("UTF-8");
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.setVisibility(View.VISIBLE);
+        webView.loadUrl("http://v.qq.com/page/w/0/6/w01802c0ov6.html");//http://player.youku.com/embed/XNTM5MTUwNDA0 http://v.youku.com/v_show/id_XMTQ5NTE0OTQ3Ng
         //html自适应
 //        WebSettings webSettings = webView.getSettings();
 //        webSettings.setUseWideViewPort(true);
 //        webSettings.setLoadWithOverviewMode(true);
 //        webSettings.setDefaultTextEncodingName("UTF-8");
-//        webView.loadUrl("http://zgqg.91jiaoyou.cn/zgqg/upload/umEditor/1451098807631.jpg");
+//        webView.loadUrl("http://static.video.qq.com/TPout.swf?vid=w01802c0ov6&auto=0");
 //        webView.loadData(content, "text/html; charset=UTF-8", null);// 这种写法可以正确解码
 
 //        imageView = (ImageView) findViewById(R.id.img_test);
@@ -508,7 +519,7 @@ public class  TestActivity extends BaseActivity {
             @Override
             public void onGlobalLayout() {
                 Rect r = new Rect();
-                replyLlayout.getWindowVisibleDisplayFrame(r);
+//                replyLlayout.getWindowebViewisibleDisplayFrame(r);
                 screenHeight = replyLlayout.getRootView().getHeight();
                 keyBoardHeight = screenHeight - (r.bottom - r.top);
                 boolean visible = keyBoardHeight > screenHeight / 3;

@@ -34,8 +34,8 @@ public class CommodityBO {
     private String shopsUserId="";//商家编号
     private String shopsCityName="";//商家城市名称
     private String shopsAddress="";//商家地址
-    private double shopsLat;//商家地址纬度
-    private double shopsLng;//商家地址经度
+    private String shopsLat="";//商家地址纬度
+    private String shopsLng="";//商家地址经度
     private String shopsRealName="";//商家姓名
     private String shopsTel="";//商家电话号码
 
@@ -199,19 +199,19 @@ public class CommodityBO {
         this.shopsAddress = shopsAddress;
     }
 
-    public double getShopsLat() {
+    public String getShopsLat() {
         return shopsLat;
     }
 
-    public void setShopsLat(double shopsLat) {
+    public void setShopsLat(String shopsLat) {
         this.shopsLat = shopsLat;
     }
 
-    public double getShopsLng() {
+    public String getShopsLng() {
         return shopsLng;
     }
 
-    public void setShopsLng(double shopsLng) {
+    public void setShopsLng(String shopsLng) {
         this.shopsLng = shopsLng;
     }
 

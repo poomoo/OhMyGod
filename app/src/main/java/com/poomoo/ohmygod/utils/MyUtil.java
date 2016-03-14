@@ -14,6 +14,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +25,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -657,6 +660,20 @@ public class MyUtil {
      * @return
      */
     public static boolean isUpdate(Context context, MyApplication application) {
+        int version = getCurrAppVersionCode(context);
+
+        if (application.getAppVersion() > version)
+            return true;
+        return false;
+    }
+
+    /**
+     * 获取当前的版本号
+     *
+     * @param context
+     * @return
+     */
+    public static int getCurrAppVersionCode(Context context) {
         // 获取packagemanager的实例
         PackageManager packageManager = context.getPackageManager();
         // getPackageName()是你当前类的包名，0代表是获取版本信息
@@ -666,10 +683,26 @@ public class MyUtil {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        int version = packInfo.versionCode;
-        if (application.getAppVersion() > version)
-            return true;
-        return false;
+        return packInfo.versionCode;
+    }
+
+    /**
+     * 获得和屏幕一样宽高的图片
+     *
+     * @param m
+     * @param context
+     * @return
+     */
+    public static Bitmap FitTheScreenSizeImage(Bitmap m, Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        wm.getDefaultDisplay().getSize(point);
+        float width = (float) point.x / m.getWidth();
+        float height = (float) point.y / m.getHeight();
+        LogUtils.i(TAG, point.x + ":" + point.y);
+        Matrix matrix = new Matrix();
+        matrix.postScale(width, height);
+        return Bitmap.createBitmap(m, 0, 0, m.getWidth(), m.getHeight(), matrix, true);
     }
 
 }

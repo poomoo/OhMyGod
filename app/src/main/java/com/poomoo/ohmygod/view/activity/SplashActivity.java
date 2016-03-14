@@ -12,6 +12,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
@@ -52,22 +54,29 @@ public class SplashActivity extends BaseActivity {
     private boolean isIndex = false;//是否需要引导
     private int SDK_PERMISSION_REQUEST = 123;
     private String permissionInfo = "";
-    private String url = "http://f.hiphotos.baidu.com/image/pic/item/80cb39dbb6fd5266fd25a12eac18972bd40736f9.jpg";
+    private String url = "http://p1.so.qhimg.com/t012142eb3f8e5f96c6.jpg";
     private ImageView bgImg;
     private List<PicBO> picBOList = new ArrayList<>();
     private String bootPicPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ohmygod/" + "boot.jpg";
     private boolean isLoad = false;//是否需要加载新的启动页 默认不需要
+    private int currAppVersion;//当前的版本号
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //去除title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //去掉Activity上面的状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_splash);
 
         bgImg = (ImageView) findViewById(R.id.img_bg);
         File f = new File(bootPicPath);
         if (f.exists()) {
-            bgImg.setImageBitmap(FileUtils.readBitmapByPath(bootPicPath));
+            bgImg.setImageBitmap(MyUtil.FitTheScreenSizeImage(FileUtils.readBitmapByPath(bootPicPath), this));
             isLoad = false;
         } else
             isLoad = true;
@@ -80,6 +89,13 @@ public class SplashActivity extends BaseActivity {
         initLocation();
         mLocationClient.start();
         isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
+
+        currAppVersion = (int) SPUtils.get(getApplicationContext(), getString(R.string.sp_currAppVersion), 0);
+        if (currAppVersion < MyUtil.getCurrAppVersionCode(this)){
+            isIndex = true;
+            SPUtils.put(getApplicationContext(),getString(R.string.sp_currAppVersion),MyUtil.getCurrAppVersionCode(this));
+        }
+
         LogUtils.i(TAG, "isIndex" + isIndex);
         this.appAction.getBootPics(1, new ActionCallbackListener() {
             @Override
@@ -94,9 +110,7 @@ public class SplashActivity extends BaseActivity {
                         ImageLoader.getInstance().loadImage(url, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                bgImg.setAdjustViewBounds(true);
-                                bgImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                                bgImg.setImageBitmap(loadedImage);
+                                bgImg.setImageBitmap(MyUtil.FitTheScreenSizeImage(loadedImage, SplashActivity.this));
                                 FileUtils.saveBitmapByPath(loadedImage, bootPicPath);
                                 SPUtils.put(getApplicationContext(), getString(R.string.sp_bootUrl), url);
                                 start();

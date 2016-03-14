@@ -6,15 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,8 +34,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
-import com.baidu.location.LLSInterface;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
@@ -56,6 +55,8 @@ import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
+import com.tencent.qcload.playersdk.ui.VideoRootFrame;
+import com.tencent.qcload.playersdk.util.VideoInfo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private TextView shopNameTxt;//店铺名称
     private TextView shopAddressTxt;//店铺地址
     private LinearLayout merchantInfoLlayout;//商家信息
+    private VideoView videoView;
 
     private TimeCountDownUtil headTimeCountDownUtil;
     private List<TextView> textViewList;
@@ -153,6 +155,51 @@ public class CommodityInformationActivity extends BaseActivity {
 
     protected void initView() {
         initTitleBar();
+        //获取页面中的播放器控件
+//        final VideoRootFrame player = (VideoRootFrame) findViewById(R.id.video);
+//        //调用播放器的播放方法
+//        List<VideoInfo> videos = new ArrayList<>();
+//        VideoInfo v1 = new VideoInfo();
+//        v1.description = "标清";
+//        v1.type = VideoInfo.VideoType.MP4;
+//        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/VID_20160309_115250.mp4";
+//        v1.url = "http://player.youku.com/embed/XMTQ5NTE0OTQ3Ng";
+//        videos.add(v1);
+//        player.play(videos);
+//        player.pause();
+//        player.enableStat(false);
+//        VideoInfo v2 = new VideoInfo();
+//        v2.description = "高清";
+//        v2.type = VideoInfo.VideoType.MP4;
+//
+//        v2.url = "http://4500.vod.myqcloud.com/4500_d754e448e74c11e4ad9e37e079c2b389.
+//        f0.mp4 ? vkey = 77F 279 B72A3788656E0A14837DA6C89AA57D5CA46FBAD14A81FE3B63FE2DE92
+//        C5668CBD27304071B & ocid = 12345 ";
+//        videos.add(v2);
+//        player.play(videos);
+//        videoView = (VideoView) findViewById(R.id.video);
+//        MediaController mediaco = new MediaController(this);
+//        File file = new File(path);
+//        if (file.exists()) {
+//            LogUtils.i(TAG, "文件存在" + path);
+//            //VideoView与MediaController进行关联
+//            videoView.setVideoPath(file.getAbsolutePath());
+//            videoView.setMediaController(mediaco);
+//            mediaco.setMediaPlayer(videoView);
+//            //让VideiView获取焦点
+//            videoView.requestFocus();
+//            videoView.pause();
+//        }
+//        videoView.setVideoPath("http://www.iqiyi.com/v_19rrifujmu.html");
+//        videoView.setVideoPath(path); http://player.video.qiyi.com/e550ba690000f6a03fd4c4354a5a5062/0/59/v_19rrht3jow.swf-albumId=239235100-tvId=239235100-isPurchase=0-cnId=7
+//        Uri uri = Uri.parse("rtsp://v2.cache2.c.youtube.com/CjgLENy73wIaLwm3JbT_%ED%AF%80%ED%B0%819HqWohMYESARFEIJbXYtZ29vZ2xlSARSB3Jlc3VsdHNg_vSmsbeSyd5JDA==/0/0/0/video.3gp");
+//        Uri uri = Uri.parse("http://player.video.qiyi.com/e550ba690000f6a03fd4c4354a5a5062/0/59/v_19rrht3jow.swf-albumId=239235100-tvId=239235100-isPurchase=0-cnId=7");
+//        LogUtils.i(TAG, "uri" + uri);
+//        videoView.setVideoURI(uri);
+//        videoView.setMediaController(mediaco);
+//        mediaco.setMediaPlayer(videoView);
+        //让VideiView获取焦点
+//        videoView.requestFocus();
 
         nameTxt = (TextView) findViewById(R.id.txt_commodityStatement);
         priceTxt = (TextView) findViewById(R.id.txt_price);
@@ -961,9 +1008,9 @@ public class CommodityInformationActivity extends BaseActivity {
      */
     public void toPosition(View view) {
         Bundle bundle = new Bundle();
-        bundle.putDouble(getString(R.string.intent_latitude), commodityBO.getShopsLat());
-        bundle.putDouble(getString(R.string.intent_longitude), commodityBO.getShopsLng());
-        bundle.putString(getString(R.string.intent_shopName),commodityBO.getShopsName());
+        bundle.putDouble(getString(R.string.intent_latitude), Double.parseDouble(commodityBO.getShopsLat()));
+        bundle.putDouble(getString(R.string.intent_longitude), Double.parseDouble(commodityBO.getShopsLng()));
+        bundle.putString(getString(R.string.intent_shopName), commodityBO.getShopsName());
         openActivity(MapActivity.class, bundle);
     }
 

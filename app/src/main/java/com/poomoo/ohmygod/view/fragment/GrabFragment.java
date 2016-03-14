@@ -260,7 +260,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         });
         initPopWindow();
 
-        winnerRlayout.setOnClickListener(GrabFragment.this);
+        winnerRlayout.setOnClickListener(this);
         currCityLlayout.setOnClickListener(this);
         adapter = new GrabAdapter(getActivity(), this);
         listView.setAdapter(adapter);
@@ -308,6 +308,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     else
                         spannableString = new SpannableString("  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
 
+                    LogUtils.i(TAG,"滚动:"+spannableString);
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
                     ImageLoader.getInstance().displayImage(winnerBOList.get(index).getHeadPic(), avatarImg, defaultOptions);
@@ -343,10 +344,16 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
 //                            return;
 //                        }
                         int activeId;
+                        int advId;
+                        String title;
                         activeId = adBOList.get(position).getActiveId();
+                        advId = adBOList.get(position).getAdvId();
+                        title = adBOList.get(position).getTitle();
                         if (activeId <= 0) {
                             Bundle pBundle = new Bundle();
-                            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_about));
+                            pBundle.putInt(getString(R.string.intent_value), advId);
+                            pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_ad));
+                            pBundle.putString(getString(R.string.intent_title), title);
                             openActivity(WebViewActivity.class, pBundle);
                         } else {
                             Bundle bundle = new Bundle();

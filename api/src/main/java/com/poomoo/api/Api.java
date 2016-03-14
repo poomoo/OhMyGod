@@ -89,4 +89,6 @@ public interface Api {
 
     ResponseBO getBootPics(int type);
 
+    ResponseBO getAd(int advId);
+
 }

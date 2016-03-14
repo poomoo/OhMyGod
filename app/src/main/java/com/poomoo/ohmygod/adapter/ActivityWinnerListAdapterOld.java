@@ -5,7 +5,6 @@ package com.poomoo.ohmygod.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.poomoo.model.MessageBO;
 import com.poomoo.model.WinnerListBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
@@ -23,14 +21,12 @@ import com.poomoo.ohmygod.utils.MyUtil;
  * 作者: 李苜菲
  * 日期: 2015/11/24 11:06.
  */
-public class ActivityWinnerListAdapter extends MyBaseAdapter<WinnerListBO> {
+public class ActivityWinnerListAdapterOld extends MyBaseAdapter<WinnerListBO> {
     private final DisplayImageOptions defaultOptions;
     private WinnerListBO winnerListBO;
-    private String goodName;//商品名称
 
-    public ActivityWinnerListAdapter(Context context, String goodName) {
+    public ActivityWinnerListAdapterOld(Context context) {
         super(context);
-        this.goodName = goodName;
         defaultOptions = new DisplayImageOptions.Builder() //
                 .showImageForEmptyUri(R.drawable.ic_avatar) //
                 .showImageOnFail(R.drawable.ic_avatar) //
@@ -45,11 +41,12 @@ public class ActivityWinnerListAdapter extends MyBaseAdapter<WinnerListBO> {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.item_list_activity_winner_new, null);
-            viewHolder.avatarImg = (ImageView) convertView.findViewById(R.id.img_winnerAvatar);
-            viewHolder.nameTxt = (TextView) convertView.findViewById(R.id.txt_winnerNickName);
-            viewHolder.goodNameTxt = (TextView) convertView.findViewById(R.id.txt_activeName);
-            viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_winnerDate);
+            convertView = inflater.inflate(R.layout.item_list_activity_winner, null);
+            viewHolder.avatarImg = (ImageView) convertView.findViewById(R.id.img_activityWinnerAvatar);
+            viewHolder.nameTxt = (TextView) convertView.findViewById(R.id.txt_activityWinnerNickName);
+            viewHolder.telTxt = (TextView) convertView.findViewById(R.id.txt_activityWinnerTel);
+            viewHolder.goodNameTxt = (TextView) convertView.findViewById(R.id.txt_activityWinnerGoodName);
+            viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_activityWinnerDate);
             convertView.setTag(viewHolder);
         } else
             viewHolder = (ViewHolder) convertView.getTag();
@@ -57,7 +54,8 @@ public class ActivityWinnerListAdapter extends MyBaseAdapter<WinnerListBO> {
         winnerListBO = itemList.get(position);
         ImageLoader.getInstance().displayImage(winnerListBO.getHeadPic(), viewHolder.avatarImg, defaultOptions);
         viewHolder.nameTxt.setText(winnerListBO.getNickName());
-        viewHolder.goodNameTxt.setText(goodName);
+        viewHolder.telTxt.setText(MyUtil.hiddenTel(winnerListBO.getTel()));
+        viewHolder.goodNameTxt.setText(winnerListBO.getGoodsName());
         viewHolder.dateTimeTxt.setText(winnerListBO.getPlayDt());
 
         return convertView;
@@ -66,6 +64,7 @@ public class ActivityWinnerListAdapter extends MyBaseAdapter<WinnerListBO> {
     class ViewHolder {
         private ImageView avatarImg;
         private TextView nameTxt;
+        private TextView telTxt;
         private TextView goodNameTxt;
         private TextView dateTimeTxt;
     }

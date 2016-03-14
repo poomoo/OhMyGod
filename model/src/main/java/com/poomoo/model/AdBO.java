@@ -13,6 +13,7 @@ public class AdBO {
     private String url;
     private String title;
     private int activeId;
+    private int advId;//广告编号
 
     public String getPicture() {
         return picture;
@@ -46,6 +47,14 @@ public class AdBO {
         this.activeId = activeId;
     }
 
+    public int getAdvId() {
+        return advId;
+    }
+
+    public void setAdvId(int advId) {
+        this.advId = advId;
+    }
+
     @Override
     public String toString() {
         return "AdBO{" +
@@ -53,6 +62,7 @@ public class AdBO {
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", activeId=" + activeId +
+                ", advId=" + advId +
                 '}';
     }
 }

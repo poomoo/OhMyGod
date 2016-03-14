@@ -15,6 +15,7 @@ import com.poomoo.model.WinnerListBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ActivityWinnerListAdapter;
+import com.poomoo.ohmygod.adapter.ActivityWinnerListAdapterOld;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
@@ -32,7 +33,7 @@ public class WinnerListActivity extends BaseActivity implements RefreshLayout.On
     private RefreshLayout refreshLayout;
     private ListView listView;
 
-    private ActivityWinnerListAdapter adapter;
+    private ActivityWinnerListAdapterOld adapter;
     private List<WinnerListBO> winnerListBOList = new ArrayList<>();
     private WinnerListBO winnerListBO = new WinnerListBO();
     private int activeId;
@@ -67,7 +68,7 @@ public class WinnerListActivity extends BaseActivity implements RefreshLayout.On
 
         titleTxt.setText(activityName);
 
-        adapter = new ActivityWinnerListAdapter(this);
+        adapter = new ActivityWinnerListAdapterOld(this);
         listView.setAdapter(adapter);
     }
 

@@ -2,6 +2,7 @@ package com.poomoo.api;
 
 import android.text.TextUtils;
 
+import com.poomoo.model.ActiveWinInfoBO;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CityBO;
 import com.poomoo.model.CodeBO;
@@ -130,8 +131,8 @@ public class ApiImpl implements Api {
         paramMap.put("bizName", Config.ACTIVITYACTION);
         paramMap.put("method", Config.ACTIVITYLIST);
         paramMap.put("cityName", cityName);
-        paramMap.put("currPage", currPage+"");
-        paramMap.put("pageSize", pageSize+"");
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
 
         try {
             return httpEngine.postHandle(paramMap, GrabBO.class);
@@ -510,12 +511,12 @@ public class ApiImpl implements Api {
     public ResponseBO getWinningInfo(String cityName, int currPage, int pageSize) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.ACTIVITYACTION);
-        paramMap.put("method", Config.WININFOLIST);
+        paramMap.put("method", Config.WININFOLISTNEW);
         paramMap.put("cityName", cityName);
         paramMap.put("currPage", currPage + "");
         paramMap.put("pageSize", pageSize + "");
         try {
-            return httpEngine.postHandle(paramMap, WinInformationBO.class);
+            return httpEngine.postHandle(paramMap, ActiveWinInfoBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }
@@ -655,6 +656,20 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, PicBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getAd(int advId) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.PUBACTION);
+        paramMap.put("method", Config.ADINFO);
+        paramMap.put("advId", advId + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, null);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

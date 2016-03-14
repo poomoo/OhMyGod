@@ -8,10 +8,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ActiveWinInfoBO;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinInformationBO;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.adapter.ActiveWinnerInfoListAdapter;
 import com.poomoo.ohmygod.adapter.WinInformationAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
@@ -30,8 +32,8 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     private RefreshLayout refreshLayout;
     private ListView listView;
 
-    private WinInformationAdapter adapter;
-    private List<WinInformationBO> list = new ArrayList<>();
+    private ActiveWinnerInfoListAdapter adapter;
+    private List<ActiveWinInfoBO> list = new ArrayList<>();
 
     private int currPage = 1;
     private boolean isLoad = false;//true 加载 false刷新
@@ -55,7 +57,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadListener(this);
 
-        adapter = new WinInformationAdapter(this);
+        adapter = new ActiveWinnerInfoListAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
     }
@@ -82,11 +84,11 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
                     refreshLayout.setLoading(false);
                     int len = data.getObjList().size();
                     for (int i = 0; i < len; i++) {
-                        list.add((WinInformationBO) data.getObjList().get(i));
+                        list.add((ActiveWinInfoBO) data.getObjList().get(i));
                     }
                     if (len > 0) {
                         currPage++;
-                        adapter.addItems(list);
+                        adapter.addItems(data.getObjList());
                     }
                 } else {
                     refreshLayout.setRefreshing(false);
@@ -112,10 +114,10 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
-        bundle.putString(getString(R.string.intent_activityName), list.get(position).getTitle());
-        openActivity(CommodityInformation2Activity.class, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
+//        bundle.putString(getString(R.string.intent_activityName), list.get(position).getTitle());
+//        openActivity(CommodityInformation2Activity.class, bundle);
     }
 
     @Override

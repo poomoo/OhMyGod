@@ -370,4 +370,12 @@ public interface AppAction {
      * @param listener
      */
     void getBootPics(int type, ActionCallbackListener listener);
+
+    /**
+     * 查询广告详情
+     *
+     * @param advId
+     * @param listener
+     */
+    void getAd(int advId, ActionCallbackListener listener);
 }

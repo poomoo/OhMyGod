@@ -1,24 +1,42 @@
 package com.poomoo.ohmygod.view.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.PicBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ViewPagerAdapter;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 
 
 public class IndexViewPagerActivity extends BaseActivity implements
@@ -26,8 +44,8 @@ public class IndexViewPagerActivity extends BaseActivity implements
 
     private ViewPager vp;
     private ViewPagerAdapter vpAdapter;
+    private MyPagerAdapter myPagerAdapter;
     private List<View> views;
-    private Button button;
 
     // 引导图片资源
     private static final int[] pics = {R.drawable.index1, R.drawable.index2, R.drawable.index3};
@@ -43,6 +61,14 @@ public class IndexViewPagerActivity extends BaseActivity implements
     private String PARENT;
     private float x1 = 0;
     private float x2 = 0;
+    private List<PicBO> picBOList;
+    private LinearLayout.LayoutParams mParams;
+    //放轮播图片的ImageView 的list
+    private List<ImageView> imageViewsList = new ArrayList<>();
+    private DisplayImageOptions defaultOptions;
+    private String bootPicPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ohmygod/" + "index";
+    private int index = 0;
+    private boolean isExist = false;//引导页是否存在本地 默认不存在
 
     /**
      * Called when the activity is first created.
@@ -56,34 +82,57 @@ public class IndexViewPagerActivity extends BaseActivity implements
         clickInTxt = (TextView) findViewById(R.id.txt_clickIn);
 
         views = new ArrayList<>();
-
-        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
+        defaultOptions = new DisplayImageOptions.Builder() //
+                .showImageOnLoading(null)//
+                .showImageForEmptyUri(null)//
+                .showImageOnFail(null)//
+                .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
+                .build();//
+        mParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
+        if (PARENT.equals("index")) {
+            //先清除原有的引导页的缓存图片
+            while (1 == 1) {
+                File f = new File(bootPicPath + index++ + ".jpg");
+                if (f.exists()) {
+                    f.delete();
+                } else
+                    break;
+            }
+            getData();
+        } else {
+            // 初始化引导图片列表
+            while (1 == 1) {
+                File f = new File(bootPicPath + index + ".jpg");
+                if (f.exists()) {
+                    ImageView iv = new ImageView(this);
+                    iv.setLayoutParams(mParams);
+                    iv.setAdjustViewBounds(true);
+                    // 防止图片不能填满屏幕
+                    iv.setScaleType(ScaleType.CENTER_CROP);
+                    iv.setImageBitmap(FileUtils.readBitmapByPath(bootPicPath + index++ + ".jpg"));
+                    views.add(iv);
+                    isExist = true;
+                } else
+                    break;
+            }
+            LogUtils.i(TAG, "isExist:" + isExist);
+            if (!isExist)
+                getData();
+            else {
+                vp = (ViewPager) findViewById(R.id.viewpager_viewpager);
+                // 初始化Adapter
+                vpAdapter = new ViewPagerAdapter(views);
+                vp.setAdapter(vpAdapter);
+                views.get(pics.length - 1).setOnClickListener(this);
+                if (PARENT.equals("index"))
+                    views.get(pics.length - 1).setOnTouchListener(this);
+            }
 
-        // 初始化引导图片列表
-        for (int i = 0; i < pics.length; i++) {
-            ImageView iv = new ImageView(this);
-            iv.setLayoutParams(mParams);
-            iv.setAdjustViewBounds(true);
-            // 防止图片不能填满屏幕
-            iv.setScaleType(ScaleType.CENTER_CROP);
-
-            iv.setImageResource(pics[i]);
-            views.add(iv);
+            // 初始化底部小点
+//                initDots();
         }
-        vp = (ViewPager) findViewById(R.id.viewpager_viewpager);
-        // 初始化Adapter
-        vpAdapter = new ViewPagerAdapter(views);
-        vp.setAdapter(vpAdapter);
-        // 绑定回调
-        vp.setOnPageChangeListener(this);
-
-        views.get(pics.length - 1).setOnClickListener(this);
-        if (PARENT.equals("index"))
-            views.get(pics.length - 1).setOnTouchListener(this);
-        // 初始化底部小点
-        initDots();
     }
 
     private void initDots() {
@@ -134,8 +183,6 @@ public class IndexViewPagerActivity extends BaseActivity implements
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
         // TODO Auto-generated method stub
-
-
     }
 
     // 当新的页面被选中时调用
@@ -143,12 +190,6 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
         setCurDot(arg0);
-//        LogUtils.i(TAG, "PARENT:" + PARENT + " arg0:" + arg0 + " length:" + pics.length);
-//        if (PARENT.equals("index"))
-//            if (arg0 == pics.length - 1)
-//                clickInTxt.setVisibility(View.VISIBLE);
-//            else
-//                clickInTxt.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -173,12 +214,107 @@ public class IndexViewPagerActivity extends BaseActivity implements
             //当手指离开的时候
             x2 = event.getX();
             LogUtils.i(TAG, "ACTION_MOVE:" + "x1:" + x1 + " x2:" + x2);
-            if ((x1 - x2 > 20)) {//向左滑
-                openActivity(MainFragmentActivity.class);
-                finish();
+            if ((x1 - x2 > 5)) {//向左滑
+                if (PARENT.equals("index")) {
+                    openActivity(MainFragmentActivity.class);
+                    finish();
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    private void getData() {
+        this.appAction.getBootPics(2, new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                picBOList = data.getObjList();
+                // 初始化引导图片列表
+                for (int i = 0; i < picBOList.size(); i++) {
+                    ImageView iv = new ImageView(IndexViewPagerActivity.this);
+                    iv.setTag(picBOList.get(i).getPicture());
+                    iv.setLayoutParams(mParams);
+                    iv.setAdjustViewBounds(true);
+                    // 防止图片不能填满屏幕
+                    iv.setScaleType(ScaleType.CENTER_CROP);
+//                    iv.setImageResource(R.mipmap.ic_launcher);
+
+                    imageViewsList.add(iv);
+                    views.add(iv);
+                }
+                vp = (ViewPager) findViewById(R.id.viewpager_viewpager);
+                // 初始化Adapter
+                myPagerAdapter = new MyPagerAdapter();
+                vp.setAdapter(myPagerAdapter);
+                views.get(picBOList.size() - 1).setOnClickListener(IndexViewPagerActivity.this);
+                views.get(picBOList.size() - 1).setOnTouchListener(IndexViewPagerActivity.this);
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
+            }
+        });
+    }
+
+    /**
+     * 填充ViewPager的页面适配器
+     */
+    private class MyPagerAdapter extends PagerAdapter {
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(imageViewsList.get(position));
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+            final ImageView imageView = imageViewsList.get(position);
+            ImageLoader.getInstance().loadImage(imageView.getTag() + "", defaultOptions, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    imageView.setImageBitmap(loadedImage);
+                    FileUtils.saveBitmapByPath(loadedImage, bootPicPath + position + ".jpg");
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                }
+            });
+//            ImageLoader.getInstance().displayImage(imageView.getTag() + "", imageView, defaultOptions);
+            container.addView(imageViewsList.get(position));
+            return imageViewsList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+//            LogUtils.i(TAG, "imageViewsList.size():" + imageViewsList.size());
+            return imageViewsList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            // TODO Auto-generated method stub
+            return arg0 == arg1;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            LogUtils.i(TAG, "onKeyDown" + PARENT);
+            if (PARENT.equals("index"))
+                return true;
+        }
+        LogUtils.i(TAG, "onKeyDown11" + PARENT);
+        return super.onKeyDown(keyCode, event);
     }
 }

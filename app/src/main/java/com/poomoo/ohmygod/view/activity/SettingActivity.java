@@ -6,6 +6,8 @@ package com.poomoo.ohmygod.view.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -146,14 +148,12 @@ public class SettingActivity extends BaseActivity {
      */
     public void toCheckUpdate(View view) {
         if (MyUtil.isUpdate(this, application)) {
-            AlertDialog dialog = new AlertDialog.Builder(this).setMessage("检测到新版本,是否需要更新?").setPositiveButton("更新", new DialogInterface.OnClickListener() {
+            AlertDialog dialog = new AlertDialog.Builder(this).setMessage("检测到新版本,请到相应的市场进行更新!").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
-                }
-            }).setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+//                    Uri uri = Uri.parse("http://www.leyidao.com/yidao/appDownLoad/wap.html");
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                    startActivity(intent);
                 }
             }).create();
             dialog.show();

@@ -405,6 +405,7 @@
     <string name="sp_isIndex">isIndex</string>
     <string name="sp_historyCity">historyCity</string>
     <string name="sp_tipFlag">tipFlag</string>
+    <string name="sp_currAppVersion">currAppVersion</string>
 
     <!--SharedPreferences-->
 
