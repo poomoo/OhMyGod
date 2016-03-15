@@ -90,11 +90,13 @@ public class SplashActivity extends BaseActivity {
         mLocationClient.start();
         isIndex = (boolean) SPUtils.get(getApplicationContext(), getString(R.string.sp_isIndex), true);
 
+
         currAppVersion = (int) SPUtils.get(getApplicationContext(), getString(R.string.sp_currAppVersion), 0);
-        if (currAppVersion < MyUtil.getCurrAppVersionCode(this)){
+        if (currAppVersion < MyUtil.getCurrAppVersionCode(this)) {
             isIndex = true;
-            SPUtils.put(getApplicationContext(),getString(R.string.sp_currAppVersion),MyUtil.getCurrAppVersionCode(this));
+            SPUtils.put(getApplicationContext(), getString(R.string.sp_currAppVersion), MyUtil.getCurrAppVersionCode(this));
         }
+        isIndex = true;
 
         LogUtils.i(TAG, "isIndex" + isIndex);
         this.appAction.getBootPics(1, new ActionCallbackListener() {

@@ -81,8 +81,7 @@ public class MapActivity extends BaseActivity {
 
         Button button = new Button(getApplicationContext());
 //        button.setBackgroundResource(R.drawable.map_bg_map_popup);
-//        button.setText(getIntent().getStringExtra(getString(R.string.intent_shopName)));
-        button.setText("长度测试方面的卡萨发简单快乐萨菲的拉法基打蜡是减肥的顺丰快递上来角度来说");
+        button.setText(getIntent().getStringExtra(getString(R.string.intent_shopName)));
         button.setMaxEms(16);
         button.setMaxLines(1);
         button.setEllipsize(TextUtils.TruncateAt.END);

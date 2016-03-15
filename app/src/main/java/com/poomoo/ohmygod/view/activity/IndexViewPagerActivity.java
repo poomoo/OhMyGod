@@ -55,7 +55,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     private ImageView[] dots;
 
     // 记录当前选中位置
-    private int currentIndex;
+    private int currentIndex = 0;
 
     private TextView clickInTxt;
     private String PARENT;
@@ -69,6 +69,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     private String bootPicPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ohmygod/" + "index";
     private int index = 0;
     private boolean isExist = false;//引导页是否存在本地 默认不存在
+    private int totalNum = 0;//图片的总张数
 
     /**
      * Called when the activity is first created.
@@ -155,7 +156,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
      * 设置当前的引导页
      */
     private void setCurView(int position) {
-        if (position < 0 || position >= lenth) {
+        if (position < 0 || position >= totalNum) {
             return;
         }
         vp.setCurrentItem(position);
@@ -189,14 +190,21 @@ public class IndexViewPagerActivity extends BaseActivity implements
     @Override
     public void onPageSelected(int arg0) {
         // 设置底部小点选中状态
-        setCurDot(arg0);
+//        setCurDot(arg0);
+        currentIndex = arg0;
+        LogUtils.i(TAG, "onPageSelected:" + currentIndex);
     }
 
     @Override
     public void onClick(View v) {
         if (PARENT.equals("index")) {
-            openActivity(MainFragmentActivity.class);
-            finish();
+            LogUtils.i(TAG, "onClick:" + currentIndex + ":" + totalNum);
+            if (currentIndex < totalNum - 1)
+                setCurView(currentIndex + 1);
+            else {
+                openActivity(MainFragmentActivity.class);
+                finish();
+            }
         }
     }
 
@@ -230,8 +238,9 @@ public class IndexViewPagerActivity extends BaseActivity implements
             @Override
             public void onSuccess(ResponseBO data) {
                 picBOList = data.getObjList();
+                totalNum = picBOList.size();
                 // 初始化引导图片列表
-                for (int i = 0; i < picBOList.size(); i++) {
+                for (int i = 0; i < totalNum; i++) {
                     ImageView iv = new ImageView(IndexViewPagerActivity.this);
                     iv.setTag(picBOList.get(i).getPicture());
                     iv.setLayoutParams(mParams);
@@ -242,12 +251,14 @@ public class IndexViewPagerActivity extends BaseActivity implements
 
                     imageViewsList.add(iv);
                     views.add(iv);
+                    iv.setOnClickListener(IndexViewPagerActivity.this);
                 }
                 vp = (ViewPager) findViewById(R.id.viewpager_viewpager);
                 // 初始化Adapter
                 myPagerAdapter = new MyPagerAdapter();
                 vp.setAdapter(myPagerAdapter);
-                views.get(picBOList.size() - 1).setOnClickListener(IndexViewPagerActivity.this);
+                vp.setOnPageChangeListener(IndexViewPagerActivity.this);
+//                views.get(picBOList.size() - 1).setOnClickListener(IndexViewPagerActivity.this);
                 views.get(picBOList.size() - 1).setOnTouchListener(IndexViewPagerActivity.this);
             }
 
