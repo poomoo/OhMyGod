@@ -58,6 +58,8 @@ public class RefreshLayout extends SwipeRefreshLayout implements
      * 是否在加载中 ( 上拉加载更多 )
      */
     private boolean isLoading = false;
+    private int mXDown;
+    private int mLastX;
 
     /**
      * @param context
@@ -115,10 +117,12 @@ public class RefreshLayout extends SwipeRefreshLayout implements
             case MotionEvent.ACTION_DOWN:
                 // 按下
                 mYDown = (int) event.getRawY();
+                mXDown = (int) event.getRawX();
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 // 移动
+                mLastX = (int) event.getRawX();
                 mLastY = (int) event.getRawY();
                 break;
 
@@ -162,7 +166,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements
      * @return
      */
     private boolean isPullUp() {
-        return (mYDown - mLastY) >= 80;
+        return (mYDown - mLastY) > (mXDown - mLastX) && (mYDown - mLastY) > 100;
     }
 
     /**
