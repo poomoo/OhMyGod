@@ -58,11 +58,11 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
             }
         }
         // New top:
-        int titleHeight = 90;
+//        int titleHeight = 90;
         // Container:
         LinearLayout llTitleBar = new LinearLayout(context);
         llTitleBar.setOrientation(LinearLayout.VERTICAL);
-        llTitleBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight));
+        llTitleBar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         // TextView Title:
         TextView tvTitle = new TextView(context);
@@ -72,7 +72,7 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         tvTitle.setTextSize((int) (12f * dm.density));
         tvTitle.setTextColor(context.getResources().getColor(R.color.themeRed));
-        tvTitle.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, titleHeight - 2));
+        tvTitle.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         llTitleBar.addView(tvTitle);
 
         // View line:
@@ -83,7 +83,7 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
 
         dpView.addView(llTitleBar);
         FrameLayout.LayoutParams lp = (android.widget.FrameLayout.LayoutParams) llFirst.getLayoutParams();
-        lp.setMargins(0, titleHeight, 0, 0);
+        lp.setMargins(0, (int) (12f * dm.density), 0, 0);
     }
 
 
