@@ -285,12 +285,6 @@
                             android:background="@color/gray" />
                     </LinearLayout>
 
-                    <com.tencent.qcload.playersdk.ui.VideoRootFrame
-                        android:id="@+id/video"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:visibility="gone"/>
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -319,11 +313,12 @@
 
                     </RelativeLayout>
                     <LinearLayout
-                        android:id="@+id/llayout_merchantInfo"
+                        android:id="@+id/llayout_merchantInfo2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -341,18 +336,18 @@
                                 android:textSize="@dimen/sp_20" />
 
                             <RatingBar
-                                android:id="@+id/ratingbar"
+                                android:id="@+id/ratingbar2"
                                 style="@style/myRatingBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/dp_8"
-                                android:layout_toLeftOf="@+id/txt_points"
+                                android:layout_toLeftOf="@+id/txt_points2"
                                 android:numStars="5"
                                 android:rating="4"
                                 android:visibility="gone" />
 
                             <TextView
-                                android:id="@+id/txt_points"
+                                android:id="@+id/txt_points2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -376,7 +371,7 @@
                             android:padding="@dimen/dp_10">
 
                             <LinearLayout
-                                android:id="@+id/llayout_position"
+                                android:id="@+id/llayout_position2"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
@@ -385,7 +380,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/txt_shopName"
+                                    android:id="@+id/txt_shopName2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="贵州龙(宁波路店)"
@@ -405,7 +400,7 @@
                                         android:src="@drawable/ic_location" />
 
                                     <TextView
-                                        android:id="@+id/txt_shopAddress"
+                                        android:id="@+id/txt_shopAddress2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingBottom="4dp"
@@ -415,7 +410,7 @@
                                         android:textSize="@dimen/sp_16" />
 
                                     <TextView
-                                        android:id="@+id/txt_shopDistance"
+                                        android:id="@+id/txt_shopDistance2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="@dimen/dp_10"
@@ -432,7 +427,7 @@
                                 android:background="@color/gray" />
 
                             <LinearLayout
-                                android:id="@+id/llayout_contactMerchant"
+                                android:id="@+id/llayout_contactMerchant2"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

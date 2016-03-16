@@ -95,7 +95,7 @@ public class CommodityInformationActivity extends BaseActivity {
     private TextView shopNameTxt;//店铺名称
     private TextView shopAddressTxt;//店铺地址
     private LinearLayout merchantInfoLlayout;//商家信息
-    private VideoView videoView;
+    private LinearLayout merchantInfoLlayout2;//底部商家信息
 
     private TimeCountDownUtil headTimeCountDownUtil;
     private List<TextView> textViewList;
@@ -155,51 +155,6 @@ public class CommodityInformationActivity extends BaseActivity {
 
     protected void initView() {
         initTitleBar();
-        //获取页面中的播放器控件
-//        final VideoRootFrame player = (VideoRootFrame) findViewById(R.id.video);
-//        //调用播放器的播放方法
-//        List<VideoInfo> videos = new ArrayList<>();
-//        VideoInfo v1 = new VideoInfo();
-//        v1.description = "标清";
-//        v1.type = VideoInfo.VideoType.MP4;
-//        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/VID_20160309_115250.mp4";
-//        v1.url = "http://player.youku.com/embed/XMTQ5NTE0OTQ3Ng";
-//        videos.add(v1);
-//        player.play(videos);
-//        player.pause();
-//        player.enableStat(false);
-//        VideoInfo v2 = new VideoInfo();
-//        v2.description = "高清";
-//        v2.type = VideoInfo.VideoType.MP4;
-//
-//        v2.url = "http://4500.vod.myqcloud.com/4500_d754e448e74c11e4ad9e37e079c2b389.
-//        f0.mp4 ? vkey = 77F 279 B72A3788656E0A14837DA6C89AA57D5CA46FBAD14A81FE3B63FE2DE92
-//        C5668CBD27304071B & ocid = 12345 ";
-//        videos.add(v2);
-//        player.play(videos);
-//        videoView = (VideoView) findViewById(R.id.video);
-//        MediaController mediaco = new MediaController(this);
-//        File file = new File(path);
-//        if (file.exists()) {
-//            LogUtils.i(TAG, "文件存在" + path);
-//            //VideoView与MediaController进行关联
-//            videoView.setVideoPath(file.getAbsolutePath());
-//            videoView.setMediaController(mediaco);
-//            mediaco.setMediaPlayer(videoView);
-//            //让VideiView获取焦点
-//            videoView.requestFocus();
-//            videoView.pause();
-//        }
-//        videoView.setVideoPath("http://www.iqiyi.com/v_19rrifujmu.html");
-//        videoView.setVideoPath(path); http://player.video.qiyi.com/e550ba690000f6a03fd4c4354a5a5062/0/59/v_19rrht3jow.swf-albumId=239235100-tvId=239235100-isPurchase=0-cnId=7
-//        Uri uri = Uri.parse("rtsp://v2.cache2.c.youtube.com/CjgLENy73wIaLwm3JbT_%ED%AF%80%ED%B0%819HqWohMYESARFEIJbXYtZ29vZ2xlSARSB3Jlc3VsdHNg_vSmsbeSyd5JDA==/0/0/0/video.3gp");
-//        Uri uri = Uri.parse("http://player.video.qiyi.com/e550ba690000f6a03fd4c4354a5a5062/0/59/v_19rrht3jow.swf-albumId=239235100-tvId=239235100-isPurchase=0-cnId=7");
-//        LogUtils.i(TAG, "uri" + uri);
-//        videoView.setVideoURI(uri);
-//        videoView.setMediaController(mediaco);
-//        mediaco.setMediaPlayer(videoView);
-        //让VideiView获取焦点
-//        videoView.requestFocus();
 
         nameTxt = (TextView) findViewById(R.id.txt_commodityStatement);
         priceTxt = (TextView) findViewById(R.id.txt_price);
@@ -225,6 +180,7 @@ public class CommodityInformationActivity extends BaseActivity {
         shopNameTxt = (TextView) findViewById(R.id.txt_shopName);
         shopAddressTxt = (TextView) findViewById(R.id.txt_shopAddress);
         merchantInfoLlayout = (LinearLayout) findViewById(R.id.llayout_merchantInfo);
+        merchantInfoLlayout2 = (LinearLayout) findViewById(R.id.llayout_merchantInfo2);
 
         mMenuView = LayoutInflater.from(this).inflate(R.layout.popupwindow_code, null);
         changeTxt = (TextView) mMenuView.findViewById(R.id.txt_change);
@@ -407,9 +363,10 @@ public class CommodityInformationActivity extends BaseActivity {
         nameTxt.setText(commodityBO.getGoodsName());
         priceTxt.setText("￥" + commodityBO.getPrice());
         startDate.setText(commodityBO.getStartDt());
-        if (TextUtils.isEmpty(commodityBO.getShopsName()) || TextUtils.isEmpty(commodityBO.getShopsAddress()))
+        if (TextUtils.isEmpty(commodityBO.getShopsName()) || TextUtils.isEmpty(commodityBO.getShopsAddress())) {
             merchantInfoLlayout.setVisibility(View.GONE);
-        else {
+            merchantInfoLlayout2.setVisibility(View.GONE);
+        } else {
             shopNameTxt.setText(commodityBO.getShopsName());
             shopAddressTxt.setText(commodityBO.getShopsAddress());
         }
@@ -441,6 +398,7 @@ public class CommodityInformationActivity extends BaseActivity {
         commodityWeb.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress == 100) {
+                    merchantInfoLlayout2.setVisibility(View.VISIBLE);
                     if (isGrab) {
                         llayout_openActivity.setVisibility(View.VISIBLE);
                         llayout_bottom.setVisibility(View.VISIBLE);
