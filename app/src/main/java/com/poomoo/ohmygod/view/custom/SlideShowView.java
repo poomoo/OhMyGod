@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -24,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.view.custom.pullable.Pullable;
 
 import org.litepal.util.LogUtil;
 
@@ -292,6 +294,7 @@ public class SlideShowView extends FrameLayout {
 
     }
 
+
     /**
      * 销毁ImageView资源，回收内存
      */
@@ -339,4 +342,22 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        LogUtils.i("test", "子dispatchTouchEvent" + ev.getAction());
+//        return true;
+//    }
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        LogUtils.i("test", "子onInterceptTouchEvent" + ev.getAction());
+//        return super.onInterceptTouchEvent(ev);
+//    }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//        LogUtils.i("test", "子onTouchEvent" + ev.getAction());
+//        return super.onInterceptTouchEvent(ev);
+//    }
 }

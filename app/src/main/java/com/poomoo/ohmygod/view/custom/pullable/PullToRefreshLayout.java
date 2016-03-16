@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -167,6 +168,9 @@ public class PullToRefreshLayout extends RelativeLayout {
         }
 
     };
+    private boolean disallowInterceptTouchEvent = false;
+    private float downX;
+    private int mTouchSlop;
 
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
@@ -344,6 +348,13 @@ public class PullToRefreshLayout extends RelativeLayout {
         canPullUp = true;
     }
 
+//    @Override
+//    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//        LogUtils.i(TAG, "requestDisallowInterceptTouchEvent" + disallowIntercept);
+//        disallowInterceptTouchEvent = disallowIntercept;
+//        super.requestDisallowInterceptTouchEvent(disallowIntercept);
+//    }
+
     /*
      * （非 Javadoc）由父控件决定是否分发事件，防止事件冲突
      *
@@ -351,8 +362,13 @@ public class PullToRefreshLayout extends RelativeLayout {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        LogUtils.i(TAG, "父dispatchTouchEvent" + ev.getAction() + disallowInterceptTouchEvent);
+        if (disallowInterceptTouchEvent)
+            return super.dispatchTouchEvent(ev);
+
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                downX = ev.getX();
                 downY = ev.getY();
                 lastY = downY;
                 timer.cancel();
@@ -365,6 +381,14 @@ public class PullToRefreshLayout extends RelativeLayout {
                 mEvents = -1;
                 break;
             case MotionEvent.ACTION_MOVE:
+                final float eventX = ev.getX();
+                final float eventY = ev.getY();
+                float xDiff = Math.abs(eventX - downX);
+                float yDiff = Math.abs(eventY - downY);
+                LogUtils.i("test", "xDiff:" + xDiff + "yDiff:" + yDiff);
+                if (xDiff > yDiff)//大于表示横向滑动 小于表示下拉 避免广告栏滑动时的冲突
+                    return super.dispatchTouchEvent(ev);
+                LogUtils.i("test", "ACTION_MOVE继续了");
                 if (mEvents == 0) {
                     if (pullDownY > 0
                             || (((Pullable) pullableView).canPullDown()
@@ -406,6 +430,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 // 根据下拉距离改变比例
                 radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight()
                         * (pullDownY + Math.abs(pullUpY))));
+                LogUtils.i(TAG, "pullDownY:" + pullDownY);
                 if (pullDownY > 0 || pullUpY < 0)
                     requestLayout();
                 if (pullDownY > 0) {
@@ -538,7 +563,6 @@ public class PullToRefreshLayout extends RelativeLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.d("Test", "Test");
         LogUtils.i(TAG, "onLayout" + isLayout);
         if (!isLayout) {
             // 这里是第一次进来的时候做一些初始化

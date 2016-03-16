@@ -96,7 +96,6 @@ public class SplashActivity extends BaseActivity {
             isIndex = true;
             SPUtils.put(getApplicationContext(), getString(R.string.sp_currAppVersion), MyUtil.getCurrAppVersionCode(this));
         }
-        isIndex = true;
 
         LogUtils.i(TAG, "isIndex" + isIndex);
         this.appAction.getBootPics(1, new ActionCallbackListener() {
