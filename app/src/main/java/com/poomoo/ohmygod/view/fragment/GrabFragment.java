@@ -373,6 +373,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void getGrabList(final boolean isRefreshable) {
+        LogUtils.i(TAG,"getGrabList:"+currPage);
         this.appAction.getGrabList(application.getCurrCity(), currPage, 15, new ActionCallbackListener() {
                     @Override
                     public void onSuccess(ResponseBO data) {
@@ -644,6 +645,8 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 currCityTxt.setText(application.getCurrCity());
                 grabBOList = new ArrayList<>();
                 adapter.setItems(grabBOList);
+                currPage=1;
+                LogUtils.i(TAG,"onResume  getGrabList");
                 getGrabList(true);
                 getAd();
                 getWinnerList();
@@ -697,6 +700,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 currCityTxt.setText(location.getCity());
                 application.setLocateCity(location.getCity());
                 application.setCurrCity(location.getCity());
+                currPage=1;
                 getGrabList(true);
                 getWinnerList();
                 getAd();

@@ -139,7 +139,9 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.CommodityInformationActivity"
-            android:exported="false" />
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".view.activity.CommodityInformation2Activity"
             android:exported="false" />

@@ -190,6 +190,7 @@ public class CommodityInformationActivity extends BaseActivity {
         webSettings.setDefaultTextEncodingName("UTF-8");
         webSettings.setJavaScriptEnabled(true);
 
+
         //将验证码用图片的形式显示出来
         codeImg.setImageBitmap(Code.getInstance().createBitmap());
         realCode = Code.getInstance().getCode();
@@ -391,18 +392,9 @@ public class CommodityInformationActivity extends BaseActivity {
         // 添加js交互接口类，并起别名 imagelistner
         commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");
         commodityWeb.setWebViewClient(new MyWebViewClient());
-        commodityWeb.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                if (progress == 100) {
-                    merchantInfoLlayout2.setVisibility(View.VISIBLE);
-                    if (isGrab) {
-                        llayout_openActivity.setVisibility(View.VISIBLE);
-                        llayout_bottom.setVisibility(View.VISIBLE);
-                    } else
-                        llayout_cat.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        LogUtils.i(TAG,"设置了setWebChromeClient1");
+        commodityWeb.setWebChromeClient(new MyWebChromeClient());
+        LogUtils.i(TAG,"设置了setWebChromeClient2");
 //        if (1 == 1) {
 //            llayout_anim.setVisibility(View.VISIBLE);
 //            succeedAnim = MyConfig.carSuccess;
@@ -661,6 +653,13 @@ public class CommodityInformationActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         isMember();
+        commodityWeb.onResume();
+    }
+
+    @Override
+    protected void onPause() {//继承自Activity
+        super.onPause();
+        commodityWeb.onPause();
     }
 
     @Override
@@ -668,6 +667,7 @@ public class CommodityInformationActivity extends BaseActivity {
         super.onDestroy();
         if (timer != null)
             timer.cancel();
+        commodityWeb.destroy();
     }
 
     private void code() {
@@ -897,6 +897,64 @@ public class CommodityInformationActivity extends BaseActivity {
 
     }
 
+    class MyWebChromeClient extends WebChromeClient {
+
+        private View myView = null;
+        private CustomViewCallback myCallback = null;
+
+        public void onProgressChanged(WebView view, int progress) {
+            LogUtils.i(TAG,"onProgressChanged");
+            if (progress == 100) {
+                merchantInfoLlayout2.setVisibility(View.VISIBLE);
+                if (isGrab) {
+                    llayout_openActivity.setVisibility(View.VISIBLE);
+                    llayout_bottom.setVisibility(View.VISIBLE);
+                } else
+                    llayout_cat.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onShowCustomView(View view, CustomViewCallback callback) {
+            // TODO Auto-generated method stub
+            LogUtils.i(TAG,"onShowCustomView");
+            if (myCallback != null) {
+                myCallback.onCustomViewHidden();
+                myCallback = null;
+                return;
+            }
+
+            long id = Thread.currentThread().getId();
+
+            ViewGroup parent = (ViewGroup) commodityWeb.getParent();
+            String s = parent.getClass().getName();
+            parent.removeView(commodityWeb);
+            parent.addView(view);
+            myView = view;
+            myCallback = callback;
+//            chromeClient = this;
+            super.onShowCustomView(view, callback);
+
+        }
+
+        public void onHideCustomView() {
+            LogUtils.i(TAG,"onHideCustomView");
+            long id = Thread.currentThread().getId();
+            if (myView != null) {
+                if (myCallback != null) {
+                    myCallback.onCustomViewHidden();
+                    myCallback = null;
+                }
+
+                ViewGroup parent = (ViewGroup) myView.getParent();
+                parent.removeView(myView);
+                parent.addView(commodityWeb);
+                myView = null;
+            }
+        }
+    }
+
+
     private void showSuccessAnim() {
         LogUtils.i(TAG, "showSucceessAnim");
         index = 0;
@@ -978,4 +1036,5 @@ public class CommodityInformationActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
 }

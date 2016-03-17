@@ -81,7 +81,6 @@ public class PullToRefreshLayout extends RelativeLayout {
     // 均匀旋转动画
     private RotateAnimation refreshingAnimation;
 
-    private View layoutView;
     // 下拉头
     private View refreshView;
     // 下拉的箭头
@@ -430,7 +429,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 // 根据下拉距离改变比例
                 radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight()
                         * (pullDownY + Math.abs(pullUpY))));
-                LogUtils.i(TAG, "pullDownY:" + pullDownY);
+                LogUtils.i(TAG, "pullUpY:" + pullUpY);
                 if (pullDownY > 0 || pullUpY < 0)
                     requestLayout();
                 if (pullDownY > 0) {
@@ -566,10 +565,9 @@ public class PullToRefreshLayout extends RelativeLayout {
         LogUtils.i(TAG, "onLayout" + isLayout);
         if (!isLayout) {
             // 这里是第一次进来的时候做一些初始化
-            layoutView = getChildAt(0);
-            refreshView = getChildAt(1);
-            pullableView = getChildAt(2);
-            loadmoreView = getChildAt(3);
+            refreshView = getChildAt(0);
+            pullableView = getChildAt(1);
+            loadmoreView = getChildAt(2);
             isLayout = true;
             initView();
             refreshDist = ((ViewGroup) refreshView).getChildAt(0)
@@ -580,12 +578,10 @@ public class PullToRefreshLayout extends RelativeLayout {
         if (refreshDist == 0)
             isLayout = false;
         // 改变子控件的布局，这里直接用(pullDownY + pullUpY)作为偏移量，这样就可以不对当前状态作区分
-        layoutView.layout(0, 0,
-                layoutView.getMeasuredWidth(), layoutView.getMeasuredHeight());
         refreshView.layout(0,
-                layoutView.getMeasuredHeight(),
-                refreshView.getMeasuredWidth(), (int) (pullDownY + pullUpY) + layoutView.getMeasuredHeight());
-        pullableView.layout(0, (int) (pullDownY + pullUpY) + layoutView.getMeasuredHeight(),
+                (int) (pullDownY + pullUpY) - refreshView.getMeasuredHeight(),
+                refreshView.getMeasuredWidth(), (int) (pullDownY + pullUpY));
+        pullableView.layout(0, (int) (pullDownY + pullUpY),
                 pullableView.getMeasuredWidth(), (int) (pullDownY + pullUpY)
                         + pullableView.getMeasuredHeight());
         loadmoreView.layout(0,
@@ -593,19 +589,6 @@ public class PullToRefreshLayout extends RelativeLayout {
                 loadmoreView.getMeasuredWidth(),
                 (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight()
                         + loadmoreView.getMeasuredHeight());
-
-
-//        refreshView.layout(0,
-//                (int) (pullDownY + pullUpY) - refreshView.getMeasuredHeight(),
-//                refreshView.getMeasuredWidth(), (int) (pullDownY + pullUpY));
-//        pullableView.layout(0, (int) (pullDownY + pullUpY),
-//                pullableView.getMeasuredWidth(), (int) (pullDownY + pullUpY)
-//                        + pullableView.getMeasuredHeight());
-//        loadmoreView.layout(0,
-//                (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight(),
-//                loadmoreView.getMeasuredWidth(),
-//                (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight()
-//                        + loadmoreView.getMeasuredHeight());
     }
 
     class MyTimer {

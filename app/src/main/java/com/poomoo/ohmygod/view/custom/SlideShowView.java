@@ -84,7 +84,7 @@ public class SlideShowView extends FrameLayout {
         public void handleMessage(Message msg) {
             // TODO Auto-generated method stub
             super.handleMessage(msg);
-            LogUtils.i(TAG, "currentItem:" + currentItem);
+//            LogUtils.i(TAG, "currentItem:" + currentItem);
             if (currentItem == 0)
                 viewPager.setCurrentItem(currentItem, false);
             else
@@ -182,14 +182,14 @@ public class SlideShowView extends FrameLayout {
     private class MyPagerAdapter extends PagerAdapter {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            LogUtils.i(TAG, "destroyItem:" + position);
+//            LogUtils.i(TAG, "destroyItem:" + position);
 //            container.removeView(imageViewsList.get(position));
             container.removeView((ImageView) object);
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            LogUtils.i(TAG, "instantiateItem:" + position);
+//            LogUtils.i(TAG, "instantiateItem:" + position);
             ImageView imageView = imageViewsList.get(position);
             imageLoader.displayImage(imageView.getTag() + "", imageView, defaultOptions);
             imageView.setOnClickListener(new OnClickListener() {
