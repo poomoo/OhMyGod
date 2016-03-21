@@ -191,12 +191,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void getAdvertisement(final String cityName, final ActionCallbackListener listener) {
+    public void getAdvertisement(final String cityName, final int type, final ActionCallbackListener listener) {
         // 请求Api
         new AsyncTask<Void, Void, ResponseBO<AdBO>>() {
             @Override
             protected ResponseBO<AdBO> doInBackground(Void... params) {
-                return api.getAdvertisement(cityName);
+                return api.getAdvertisement(cityName, type);
             }
 
             @Override
@@ -1011,6 +1011,50 @@ public class AppActionImpl implements AppAction {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
                 return api.getAd(advId);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getActivityType(final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getActivityType();
+            }
+
+            @Override
+            protected void onPostExecute(ResponseBO<Void> response) {
+                if (listener != null && response != null) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(response);
+                    } else {
+                        listener.onFailure(response.getRsCode(), response.getMsg());
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    @Override
+    public void getActivityById(final String cityName, final int cateId, final int currPage, final int pageSize, final ActionCallbackListener listener) {
+        // 请求Api
+        new AsyncTask<Void, Void, ResponseBO<Void>>() {
+            @Override
+            protected ResponseBO<Void> doInBackground(Void... params) {
+                return api.getActivityById(cityName, cateId, currPage, pageSize);
             }
 
             @Override

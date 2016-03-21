@@ -46,6 +46,7 @@ public class CodeStatusListAdapter extends MyBaseAdapter<CodeBO> {
             viewHolder.avatarImg = (ImageView) convertView.findViewById(R.id.img_avatar);
             viewHolder.codeTxt = (TextView) convertView.findViewById(R.id.txt_code);
             viewHolder.nameTxt = (TextView) convertView.findViewById(R.id.txt_nickName);
+            viewHolder.telTxt = (TextView) convertView.findViewById(R.id.txt_tel);
             viewHolder.activeNameTxt = (TextView) convertView.findViewById(R.id.txt_activeName);
             viewHolder.dateTimeTxt = (TextView) convertView.findViewById(R.id.txt_time);
             viewHolder.statusTxt = (TextView) convertView.findViewById(R.id.txt_status);
@@ -57,6 +58,7 @@ public class CodeStatusListAdapter extends MyBaseAdapter<CodeBO> {
         codeBO = itemList.get(position);
         ImageLoader.getInstance().displayImage(codeBO.getHeadPic(), viewHolder.avatarImg, defaultOptions);
         viewHolder.nameTxt.setText(codeBO.getNickName());
+//        viewHolder.telTxt.setText(codeBO.get);
         viewHolder.activeNameTxt.setText(codeBO.getActiveName());
         viewHolder.dateTimeTxt.setText(codeBO.getPlay_dt());
         if (codeBO.getIsGot() == 0)//未领取
@@ -77,6 +79,7 @@ public class CodeStatusListAdapter extends MyBaseAdapter<CodeBO> {
         private ImageView avatarImg;
         private TextView codeTxt;
         private TextView nameTxt;
+        private TextView telTxt;
         private TextView activeNameTxt;
         private TextView dateTimeTxt;
         private TextView statusTxt;

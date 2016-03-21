@@ -8,30 +8,22 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.MessageBO;
 import com.poomoo.model.MessageInfoBO;
-import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.service.Check_Status_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
+import com.poomoo.ohmygod.view.fragment.GrabManageFragment;
 import com.poomoo.ohmygod.view.fragment.MyFragment;
 import com.poomoo.ohmygod.view.fragment.RebateFragment;
-import com.poomoo.ohmygod.view.fragment.RebateFragmentOld;
 import com.poomoo.ohmygod.view.fragment.ShowFragment;
 import com.poomoo.ohmygod.view.popupwindow.InformPopupWindow;
-import com.umeng.socialize.sso.UMSsoHandler;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +37,7 @@ public class MainFragmentActivity extends
     public static RadioButton showRBtn;
     private InformPopupWindow informPopupWindow;
     public static Fragment curFragment;
-    private GrabFragment grabFrament;
+    private GrabManageFragment grabManageFragment;
     private RebateFragment rebateFragment;
     public static ShowFragment showFragment;
     private MyFragment myFragment;
@@ -85,9 +77,11 @@ public class MainFragmentActivity extends
         // TODO 自动生成的方法存根
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        grabFrament = new GrabFragment();
-        curFragment = grabFrament;
-        fragmentTransaction.add(R.id.activity_main_frameLayout, grabFrament);
+
+//        grabFrament = new GrabFragment();
+        grabManageFragment=new GrabManageFragment();
+        curFragment = grabManageFragment;
+        fragmentTransaction.add(R.id.activity_main_frameLayout, grabManageFragment);
         fragmentTransaction.commit();
     }
 
@@ -125,10 +119,10 @@ public class MainFragmentActivity extends
     public void switchToGrab(View view) {
         if (!MyUtil.isLogin(this))
             return;
-        if (grabFrament == null)
-            grabFrament = new GrabFragment();
-        switchFragment(grabFrament);
-        curFragment = grabFrament;
+        if (grabManageFragment == null)
+            grabManageFragment = new GrabManageFragment();
+        switchFragment(grabManageFragment);
+        curFragment = grabManageFragment;
     }
 
     /**

@@ -51,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp_8"
-            android:paddingTop="@dimen/dp_8">
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,7 +65,29 @@
                 android:id="@+id/txt_nickName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XXX"
+                android:text=""
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电话:"
+                android:textColor="@color/themeGray"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:id="@+id/txt_tel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:textColor="@color/themeGray"
                 android:textSize="@dimen/sp_18" />
         </LinearLayout>
@@ -75,7 +97,7 @@
             android:id="@+id/txt_activeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="贵州龙蛋糕店套餐"
+            android:text=""
             android:textColor="@color/themeGray"
             android:textSize="@dimen/sp_18" />
 

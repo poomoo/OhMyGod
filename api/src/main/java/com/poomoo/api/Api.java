@@ -19,7 +19,7 @@ public interface Api {
 
     ResponseBO register(String phoneNum, String passWord, String code, String age, String sex, String channelId);
 
-    ResponseBO getAdvertisement(String cityName);
+    ResponseBO getAdvertisement(String cityName, int type);
 
     ResponseBO getGrabList(String cityName, int currPage, int pageSize);
 
@@ -90,5 +90,9 @@ public interface Api {
     ResponseBO getBootPics(int type);
 
     ResponseBO getAd(int advId);
+
+    ResponseBO getActivityType();
+
+    ResponseBO getActivityById(String cityName, int cateId, int currPage, int pageSize);
 
 }

@@ -42,6 +42,8 @@ public class Config {
     public final static String MERCHANTINFO = "20009";//商家信息
     public final static String CHECKWINNUM = "20010";//商家信息
     public final static String WININFOLISTNEW = "20011";//查询中奖信息接口（由首页滚动中奖信息点击进入）
+    public final static String ACTIVITYTYPE = "20012";//查询活动类别接口
+    public final static String ACTIVITYLISTBYID = "20013";//查询活动类别接口
 
     //ACTION 30000
     public final static String SHOWANDSHARE = "30000";//发表动态统一业务编号

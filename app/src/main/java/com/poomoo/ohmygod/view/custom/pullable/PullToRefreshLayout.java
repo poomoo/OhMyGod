@@ -5,10 +5,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -17,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
-import com.poomoo.ohmygod.utils.LogUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -158,7 +155,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 timer.cancel();
                 requestLayout();
             }
-            Log.d("handle", "handle");
+//            Log.d("handle", "handle");
             // 刷新布局,会自动调用onLayout
             requestLayout();
             // 没有拖拉或者回弹完成
@@ -293,7 +290,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
     private void changeState(int to) {
         state = to;
-        LogUtils.i(TAG, "pullDownY:" + pullDownY + "state" + state + "refreshDist:" + refreshDist);
+//        LogUtils.i(TAG, "pullDownY:" + pullDownY + "state" + state + "refreshDist:" + refreshDist);
         switch (state) {
             case INIT:
                 // 下拉布局初始状态
@@ -361,7 +358,7 @@ public class PullToRefreshLayout extends RelativeLayout {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        LogUtils.i(TAG, "父dispatchTouchEvent" + ev.getAction() + disallowInterceptTouchEvent);
+//        LogUtils.i(TAG, "父dispatchTouchEvent" + ev.getAction() + disallowInterceptTouchEvent);
         if (disallowInterceptTouchEvent)
             return super.dispatchTouchEvent(ev);
 
@@ -384,10 +381,10 @@ public class PullToRefreshLayout extends RelativeLayout {
                 final float eventY = ev.getY();
                 float xDiff = Math.abs(eventX - downX);
                 float yDiff = Math.abs(eventY - downY);
-                LogUtils.i("test", "xDiff:" + xDiff + "yDiff:" + yDiff);
+//                LogUtils.i("test", "xDiff:" + xDiff + "yDiff:" + yDiff);
                 if (xDiff > yDiff)//大于表示横向滑动 小于表示下拉 避免广告栏滑动时的冲突
                     return super.dispatchTouchEvent(ev);
-                LogUtils.i("test", "ACTION_MOVE继续了");
+//                LogUtils.i("test", "ACTION_MOVE继续了");
                 if (mEvents == 0) {
                     if (pullDownY > 0
                             || (((Pullable) pullableView).canPullDown()
@@ -429,7 +426,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 // 根据下拉距离改变比例
                 radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight()
                         * (pullDownY + Math.abs(pullUpY))));
-                LogUtils.i(TAG, "pullUpY:" + pullUpY);
+//                LogUtils.i(TAG, "pullUpY:" + pullUpY);
                 if (pullDownY > 0 || pullUpY < 0)
                     requestLayout();
                 if (pullDownY > 0) {
@@ -562,7 +559,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        LogUtils.i(TAG, "onLayout" + isLayout);
+//        LogUtils.i(TAG, "onLayout" + isLayout);
         if (!isLayout) {
             // 这里是第一次进来的时候做一些初始化
             refreshView = getChildAt(0);

@@ -64,6 +64,8 @@
     <string name="title_openBank">开户银行</string>
     <string name="title_contactUs">联系我们</string>
     <string name="title_shopCheck">商家验证</string>
+    <string name="title_service">抢服务</string>
+    <string name="title_commodity">抢商品</string>
     <!--标题栏-->
 
     <!--标签提示-->

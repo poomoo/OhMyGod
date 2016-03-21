@@ -3,6 +3,7 @@ package com.poomoo.api;
 import android.text.TextUtils;
 
 import com.poomoo.model.ActiveWinInfoBO;
+import com.poomoo.model.ActivityTypeBO;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.CityBO;
 import com.poomoo.model.CodeBO;
@@ -112,11 +113,12 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO<AdBO> getAdvertisement(String cityName) {
+    public ResponseBO<AdBO> getAdvertisement(String cityName, int type) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.PUBACTION);
         paramMap.put("method", Config.AD);
         paramMap.put("cityName", cityName);
+        paramMap.put("type", type + "");
 
         try {
             return httpEngine.postHandle(paramMap, AdBO.class);
@@ -670,6 +672,36 @@ public class ApiImpl implements Api {
 
         try {
             return httpEngine.postHandle(paramMap, null);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getActivityType() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.ACTIVITYTYPE);
+
+        try {
+            return httpEngine.postHandle(paramMap, ActivityTypeBO.class);
+        } catch (IOException e) {
+            return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
+        }
+    }
+
+    @Override
+    public ResponseBO getActivityById(String cityName, int cateId, int currPage, int pageSize) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("bizName", Config.ACTIVITYACTION);
+        paramMap.put("method", Config.ACTIVITYLISTBYID);
+        paramMap.put("cityName", cityName);
+        paramMap.put("cateId", cateId + "");
+        paramMap.put("currPage", currPage + "");
+        paramMap.put("pageSize", pageSize + "");
+
+        try {
+            return httpEngine.postHandle(paramMap, GrabBO.class);
         } catch (IOException e) {
             return new ResponseBO(Config.TIME_OUT_EVENT, Config.TIME_OUT_EVENT_MSG);
         }

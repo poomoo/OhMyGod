@@ -47,11 +47,11 @@ public interface AppAction {
     void register(String phoneNum, String passWord, String code, String age, String sex, String channelId, ActionCallbackListener listener);
 
     /**
-     * 获取广告
-     *
+     * @param cityName
+     * @param type     1首页广告，2商品区广告，3服务区广告
      * @param listener
      */
-    void getAdvertisement(String cityName, ActionCallbackListener listener);
+    void getAdvertisement(String cityName, int type, ActionCallbackListener listener);
 
     /**
      * 获取活动列表
@@ -378,4 +378,22 @@ public interface AppAction {
      * @param listener
      */
     void getAd(int advId, ActionCallbackListener listener);
+
+    /**
+     * 查询活动类别
+     *
+     * @param listener
+     */
+    void getActivityType(ActionCallbackListener listener);
+
+    /**
+     * 按照活动类别查询活动列表
+     *
+     * @param cityName --当前用户定位的城市
+     * @param cateId   -类别编号，1商品区，2服务区
+     * @param currPage
+     * @param pageSize
+     * @param listener
+     */
+    void getActivityById(String cityName, int cateId, int currPage, int pageSize, ActionCallbackListener listener);
 }

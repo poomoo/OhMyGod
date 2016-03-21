@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="@dimen/dp_8">
+
+        <ImageView
+            android:id="@+id/img_service_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/title_service"
+            android:textColor="@color/themeRed"
+            android:textSize="@dimen/sp_20" />
+
+        <LinearLayout
+            android:id="@+id/llayout_toCommodity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_inform_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="商品区"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:padding="@dimen/dp_inform_padding"
+                android:src="@drawable/ic_arrow_right2" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout
+        android:id="@+id/fragment_service_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/refresh"
+            layout="@layout/refresh_head" />
+
+        <com.poomoo.ohmygod.view.custom.pullable.PullableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.poomoo.ohmygod.view.custom.SlideShowView
+                    android:id="@+id/flipper_ad_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp" />
+
+                <com.poomoo.ohmygod.view.custom.NoScrollListView
+                    android:id="@+id/list_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none" />
+            </LinearLayout>
+        </com.poomoo.ohmygod.view.custom.pullable.PullableScrollView>
+
+        <include
+            android:id="@+id/load"
+            layout="@layout/load_more" />
+    </com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout>
+</LinearLayout>

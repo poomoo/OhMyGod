@@ -1,9 +1,9 @@
 package com.poomoo.ohmygod.view.fragment;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,19 +14,16 @@ import android.provider.CalendarContract;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +34,7 @@ import com.baidu.location.LocationClientOption;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.core.ActionCallbackListener;
+import com.poomoo.model.ActivityTypeBO;
 import com.poomoo.model.AdBO;
 import com.poomoo.model.GrabBO;
 import com.poomoo.model.MessageBO;
@@ -45,8 +43,6 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
-import com.poomoo.ohmygod.adapter.TimeAdapter;
-import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.database.ActivityInfo;
 import com.poomoo.ohmygod.database.MessageInfo;
@@ -63,13 +59,11 @@ import com.poomoo.ohmygod.view.activity.WinInformationActivity;
 import com.poomoo.ohmygod.view.custom.NoScrollListView;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 import com.poomoo.ohmygod.view.custom.UpMarqueeTextView;
-import com.poomoo.ohmygod.view.custom.pullDownScrollView.PullDownScrollView;
 import com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -86,7 +80,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private ListView timeList;
     private LinearLayout viewsLlayout;
     private PullToRefreshLayout fragment_grab_layout;
-    private LinearLayout middleLlayout;
+    private LinearLayout typeLlayout;
     private LinearLayout currCityLlayout;
     private TextView noWinningInfoTxt;
     private RelativeLayout avatarRlayout;
@@ -100,6 +94,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private UpMarqueeTextView marqueeTextView;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
+    private ImageView commodityImg;
+    private ImageView serviceImg;
+
     public static GrabAdapter adapter;
     private String[] urls;
     private AdBO adBO;
@@ -115,17 +112,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private List<MessageBO> messageBOList = new ArrayList<>();
     private boolean isFirst = true;//true第一次进入
     private boolean isWinListFirst = true;
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");//下拉时间格式
     private DisplayImageOptions defaultOptions;
     private MessageInfo messageInfo;
     private List<MessageInfo> infoList = new ArrayList<>();
     private ActivityInfo activityInfo;
     private List<ActivityInfo> activityInfos = new ArrayList<>();
+    private ActivityTypeBO activityTypeBO;
+    private List<ActivityTypeBO> activityTypeBOs = new ArrayList<>();
     public static GrabFragment instance;
-    private PopupWindow timePopupWindow;
-    private TimeAdapter timeAdapter;
-    private boolean isShow = false;//提醒按钮 true-展开  false-隐藏
-    private boolean existCountDown = false;//true-有倒计时
     private String eventId;
     private String browseNum = "";//总浏览量
     private int currPage = 1;//当前页
@@ -162,103 +156,19 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         viewsLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_views);
-        middleLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_middle);
+        typeLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_type);
+        commodityImg = (ImageView) getActivity().findViewById(R.id.img_commodity);
+        serviceImg = (ImageView) getActivity().findViewById(R.id.img_service);
         fragment_grab_layout.setOnRefreshListener(this);
+        commodityImg.setOnClickListener(this);
+        serviceImg.setOnClickListener(this);
 
         slideShowView.setVisibility(View.GONE);
         winnerRlayout.setVisibility(View.GONE);
         viewsLlayout.setVisibility(View.GONE);
+        typeLlayout.setVisibility(View.GONE);
         refreshRlayout.setVisibility(View.GONE);
         loadRlayout.setVisibility(View.GONE);
-
-        timeAdapter = new TimeAdapter(getActivity());
-        List<Integer> integerList = new ArrayList<>();
-        int len = MyConfig.time.length;
-        for (int i = 0; i < len; i++)
-            integerList.add(MyConfig.time[i]);
-        timeAdapter.setItems(integerList);
-        timeList.setAdapter(timeAdapter);
-        timeList.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                long time;
-                // 获得日历实例
-                Calendar calendar = Calendar.getInstance();
-                int nYear = calendar.get(Calendar.YEAR);
-                int nMonth = calendar.get(Calendar.MONTH);
-                int nDayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
-                int second = calendar.get(Calendar.SECOND);
-                calendar.set(nYear, nMonth, nDayofMonth, hour, minute, second);
-                long currTime = calendar.getTimeInMillis();
-//                LogUtils.i(TAG, "当前时间:" + currTime);
-                long tipTime = MyConfig.time[position] * 60 * 1000;
-                long leftTime;
-                int len = GrabFragment.adapter.getCountDownUtils().size();
-                if (len > 0) {
-                    for (int i = 0; i < len; i++) {
-                        long countDownTime = GrabFragment.adapter.getCountDownUtils().get(i).getMillisUntilFinished();
-                        if (countDownTime > 0) {
-                            existCountDown = true;
-                            leftTime = countDownTime - tipTime;
-                            LogUtils.i(TAG, "i:" + i + "当前时间:" + currTime);
-                            LogUtils.i(TAG, "i:" + i + "倒计时间:" + countDownTime);
-                            LogUtils.i(TAG, "i:" + i + "提醒时间:" + tipTime);
-                            LogUtils.i(TAG, "i:" + i + "剩余时间:" + leftTime);
-
-
-                            /* 建立Intent和PendingIntent，来调用目标组件 */
-                            Intent intent = new Intent(getActivity(), CallAlarm.class);
-                            intent.setAction(i + "");
-                            intent.setType(i + "");
-                            intent.setData(Uri.EMPTY);
-                            intent.addCategory(i + "");
-                            intent.setClass(getActivity(), CallAlarm.class);
-                            intent.putExtra("_id", 0);
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), i, intent, 0);
-                            AlarmManager am;
-                            /* 获取闹钟管理的实例 */
-                            am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                            time = currTime + leftTime;
-                            LogUtils.i(TAG, "提醒时间:" + time);
-                            calendar.setTimeInMillis(time);
-                            /* 设置闹钟 */
-                            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-                            LogUtils.i(TAG, "calendar:" + calendar.getTime());
-                        }
-                    }
-
-                    if (existCountDown)
-                        MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
-                    else {
-                        time = currTime + tipTime;
-                        calendar.setTimeInMillis(time);
-                        LogUtils.i(TAG, "calendar:" + calendar.getTime());
-                            /* 建立Intent和PendingIntent，来调用目标组件 */
-                        Intent intent = new Intent(getActivity(), CallAlarm.class);
-                        intent.setAction("only");
-                        intent.setType("only");
-                        intent.setData(Uri.EMPTY);
-                        intent.addCategory("only");
-                        intent.setClass(getActivity(), CallAlarm.class);
-                        intent.putExtra("_id", 0);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-                        AlarmManager am;
-                            /* 获取闹钟管理的实例 */
-                        am = (AlarmManager) getActivity().getSystemService(getActivity().ALARM_SERVICE);
-                            /* 设置闹钟 */
-                        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                        MyUtil.showToast(getActivity().getApplicationContext(), "亲，我将在每次活动开枪前" + MyConfig.time[position] + "分钟提醒您！");
-                    }
-                } else
-                    MyUtil.showToast(getActivity().getApplicationContext(), "当前没有活动需要提醒");
-
-                timePopupWindow.dismiss();
-            }
-        });
-        initPopWindow();
 
         winnerRlayout.setOnClickListener(this);
         currCityLlayout.setOnClickListener(this);
@@ -282,6 +192,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             getMessage();
             getGrabList(true);
             getWinnerList();
+            getActivityType();
         }
 
         defaultOptions = new DisplayImageOptions.Builder() //
@@ -308,7 +219,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     else
                         spannableString = new SpannableString("  获奖时间: " + winnerBOList.get(index).getPlayDt() + "  商品名称:" + winnerBOList.get(index).getGoodsName() + "  电话:" + MyUtil.hiddenTel(winnerBOList.get(index).getWinTel()));
 
-                    LogUtils.i(TAG,"滚动:"+spannableString);
+                    LogUtils.i(TAG, "滚动:" + spannableString);
                     marqueeTextView.setText(spannableString + "");
                     avatarImg.setImageResource(R.drawable.ic_avatar);
                     ImageLoader.getInstance().displayImage(winnerBOList.get(index).getHeadPic(), avatarImg, defaultOptions);
@@ -321,7 +232,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     };
 
     private void getAd() {
-        this.appAction.getAdvertisement(application.getCurrCity(), new ActionCallbackListener() {
+        this.appAction.getAdvertisement(application.getCurrCity(), 1, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 Log.i(TAG, "广告返回data:" + data.getObjList().toString());
@@ -339,10 +250,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                     public void onResult(int position) {
                         if (!MyUtil.isLogin(getActivity()))
                             return;
-//                        if (!application.getLocateCity().equals(application.getCurrCity())) {
-//                            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-//                            return;
-//                        }
                         int activeId;
                         int advId;
                         String title;
@@ -373,7 +280,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void getGrabList(final boolean isRefreshable) {
-        LogUtils.i(TAG,"getGrabList:"+currPage);
+        LogUtils.i(TAG, "getGrabList:" + currPage);
         this.appAction.getGrabList(application.getCurrCity(), currPage, 15, new ActionCallbackListener() {
                     @Override
                     public void onSuccess(ResponseBO data) {
@@ -441,6 +348,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
                             slideShowView.setVisibility(View.GONE);
                             winnerRlayout.setVisibility(View.GONE);
+                            typeLlayout.setVisibility(View.GONE);
                             viewsLlayout.setVisibility(View.GONE);
                             refreshRlayout.setVisibility(View.GONE);
                             loadRlayout.setVisibility(View.GONE);
@@ -450,12 +358,9 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                                 fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.NOMORE);
                             else
                                 fragment_grab_layout.loadmoreFinish(PullToRefreshLayout.FAIL);
-//                    MyUtil.showToast(application.getApplicationContext(), "没有更多活动");
                         }
-
                     }
                 }
-
         );
     }
 
@@ -486,6 +391,26 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             @Override
             public void onFailure(int errorCode, String message) {
                 marqueeTextView.setText("今日没有中奖信息");
+            }
+        });
+    }
+
+    /**
+     * 获取活动类型
+     */
+    private void getActivityType() {
+        this.appAction.getActivityType(new ActionCallbackListener() {
+            @Override
+            public void onSuccess(ResponseBO data) {
+                activityTypeBOs = data.getObjList();
+                typeLlayout.setVisibility(View.VISIBLE);
+                ImageLoader.getInstance().displayImage(activityTypeBOs.get(0).getPicture(), commodityImg);
+                ImageLoader.getInstance().displayImage(activityTypeBOs.get(1).getPicture(), serviceImg);
+            }
+
+            @Override
+            public void onFailure(int errorCode, String message) {
+
             }
         });
     }
@@ -587,11 +512,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         if (!MyUtil.isLogin(getActivity()))
             return;
 
-//        if (!application.getLocateCity().equals(application.getCurrCity())) {
-//            MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-//            return;
-//        }
-
         if (adapter.getItemList().get(position).getStatus() == 1) {
             Bundle pBundle = new Bundle();
             pBundle.putInt(getString(R.string.intent_activeId), adapter.getItemList().get(position).getActiveId());
@@ -622,17 +542,34 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 openActivity(WinInformationActivity.class);
                 break;
 
-//            case R.id.llayout_remind:
-//                if (!application.getLocateCity().equals(application.getCurrCity())) {
-//                    MyUtil.showToast(getActivity().getApplicationContext(), application.getLocateCity() + "不能参加" + application.getCurrCity() + "的活动!");
-//                    return;
-//                }
-//                if (tipFlag)//提醒
-//                    setDate();
-//                else//取消提醒
-//                    cancelTip();
-//                break;
+            case R.id.img_commodity:
+                if (CommodityFragment.instance == null)
+                    CommodityFragment.instance = new CommodityFragment();
+                switchFragment(CommodityFragment.instance);
+                break;
+
+            case R.id.img_service:
+                if (ServiceFragment.instance == null)
+                    ServiceFragment.instance = new ServiceFragment();
+                switchFragment(ServiceFragment.instance);
+                break;
         }
+    }
+
+    /**
+     * 切换fragment
+     *
+     * @param to
+     */
+    public void switchFragment(Fragment to) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (!to.isAdded()) { // 先判断是否被add过
+            fragmentTransaction.hide(this).add(R.id.fragment_manage_frameLayout, to); // 隐藏当前的fragment，add下一个到Activity中
+        } else {
+            fragmentTransaction.hide(this).show(to); // 隐藏当前的fragment，显示下一个
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -645,11 +582,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 currCityTxt.setText(application.getCurrCity());
                 grabBOList = new ArrayList<>();
                 adapter.setItems(grabBOList);
-                currPage=1;
-                LogUtils.i(TAG,"onResume  getGrabList");
+                currPage = 1;
+                LogUtils.i(TAG, "onResume  getGrabList");
                 getGrabList(true);
                 getAd();
                 getWinnerList();
+                getActivityType();
             }
             currCity = application.getCurrCity();
         }
@@ -670,13 +608,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         option.setPriority(LocationClientOption.GpsFirst);    // 当gps可用，而且获取了定位结果时，不再发起网络请求，直接返回给用户坐标。这个选项适合希望得到准确坐标位置的用户。如果gps不可用，再发起网络请求，进行定位。
         mLocationClient.setLocOption(option);
     }
-
-    //    @Override
-//    public void onRefresh(PullDownScrollView view) {
-//        getGrabList(true);
-//        getWinnerList();
-//    }
-
 
     @Override
     public void onRefresh() {
@@ -700,87 +631,20 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 currCityTxt.setText(location.getCity());
                 application.setLocateCity(location.getCity());
                 application.setCurrCity(location.getCity());
-                currPage=1;
+                currPage = 1;
                 getGrabList(true);
                 getWinnerList();
                 getAd();
                 getInform();
                 getMessage();
+                getActivityType();
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);
         }
     }
 
-
-//    public void hideFloatingActionButton() {
-//        isShow = false;
-//        float width = remindLlayout.getWidth();
-//        float off = middleLlayout.getWidth() - width / 3f;
-//        LogUtils.i(TAG, "隐藏:" + width + " " + off);
-//        ObjectAnimator translationLeft = ObjectAnimator.ofFloat(remindLlayout, "X", off);
-//        AnimatorSet as = new AnimatorSet();
-//        as.play(translationLeft);
-//        as.setDuration(1000);
-//        as.start();
-//    }
-
-//    public void showFloatingActionButton() {
-//        isShow = true;
-//        float width = remindLlayout.getWidth();
-//        float off = middleLlayout.getWidth() - width;
-//        ObjectAnimator translationRight = ObjectAnimator.ofFloat(remindLlayout, "X", off);
-//        AnimatorSet as = new AnimatorSet();
-//        as.play(translationRight);
-//        as.setDuration(1000);
-//        as.start();
-//    }
-
-
-    /**
-     * 设置闹钟时间
-     */
-    private void setDate() {
-        // 显示窗口
-        timePopupWindow.showAtLocation(getActivity().findViewById(R.id.llayout_main),
-                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
-    }
-
-    private void initPopWindow() {
-        timePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
-        timePopupWindow.setFocusable(true);
-        timePopupWindow.setFocusable(true);
-
-        mMenuView.setFocusable(true);
-        mMenuView.setFocusableInTouchMode(true);
-        mMenuView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // TODO Auto-generated method stub
-                LogUtils.i(TAG, "点击返回键");
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (timePopupWindow != null) {
-                        timePopupWindow.dismiss();
-                    }
-                }
-                return true;
-            }
-        });
-        mMenuView.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                int height_top = mMenuView.findViewById(R.id.popup_time_layout).getTop();
-                int height_bottom = mMenuView.findViewById(R.id.popup_time_layout).getBottom();
-                int y = (int) event.getY();
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (y < height_top || y > height_bottom) {
-                        timePopupWindow.dismiss();
-                    }
-                }
-                return true;
-            }
-        });
-    }
-
+    /*设置提醒*/
     private static String calanderURL = "content://com.android.calendar/calendars";
     private static String calanderEventURL = "content://com.android.calendar/events";
     private static String calanderRemiderURL = "content://com.android.calendar/reminders";
