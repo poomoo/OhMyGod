@@ -49,8 +49,6 @@ public class ServiceFragment extends BaseFragment implements OnItemClickListener
     private PullToRefreshLayout fragment_service_layout;
     private ImageView backImg;
     private LinearLayout toCommodityLlayout;
-    private RelativeLayout refreshRlayout;
-    private RelativeLayout loadRlayout;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
     public static GrabAdapter adapter;
@@ -84,8 +82,6 @@ public class ServiceFragment extends BaseFragment implements OnItemClickListener
 
         backImg = (ImageView) getActivity().findViewById(R.id.img_service_back);
         toCommodityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_toCommodity);
-        refreshRlayout = (RelativeLayout) getActivity().findViewById(R.id.refresh);
-        loadRlayout = (RelativeLayout) getActivity().findViewById(R.id.load);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_service);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad_service);
 
@@ -94,8 +90,6 @@ public class ServiceFragment extends BaseFragment implements OnItemClickListener
         toCommodityLlayout.setOnClickListener(this);
 
         slideShowView.setVisibility(View.GONE);
-        refreshRlayout.setVisibility(View.GONE);
-        loadRlayout.setVisibility(View.GONE);
 
 
         adapter = new GrabAdapter(getActivity(), this);
@@ -194,8 +188,6 @@ public class ServiceFragment extends BaseFragment implements OnItemClickListener
                             }
                         }
                         slideShowView.setVisibility(View.VISIBLE);
-                        refreshRlayout.setVisibility(View.VISIBLE);
-                        loadRlayout.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -211,8 +203,6 @@ public class ServiceFragment extends BaseFragment implements OnItemClickListener
                         if (isRefreshable) {
                             fragment_service_layout.refreshFinish(PullToRefreshLayout.FAIL);
                             slideShowView.setVisibility(View.GONE);
-                            refreshRlayout.setVisibility(View.GONE);
-                            loadRlayout.setVisibility(View.GONE);
                             MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
                         } else {
                             if (message.contains("无数据"))

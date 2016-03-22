@@ -51,8 +51,6 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
     private PullToRefreshLayout fragment_commodity_layout;
     private ImageView backImg;
     private LinearLayout toServiceLlayout;
-    private RelativeLayout refreshRlayout;
-    private RelativeLayout loadRlayout;
     private NoScrollListView listView;
     private SlideShowView slideShowView;
     public static GrabAdapter adapter;
@@ -86,8 +84,6 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
 
         backImg = (ImageView) getActivity().findViewById(R.id.img_commodity_back);
         toServiceLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_toService);
-        refreshRlayout = (RelativeLayout) getActivity().findViewById(R.id.refresh);
-        loadRlayout = (RelativeLayout) getActivity().findViewById(R.id.load);
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_commodity);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad_commodity);
 
@@ -96,8 +92,6 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
         toServiceLlayout.setOnClickListener(this);
 
         slideShowView.setVisibility(View.GONE);
-        refreshRlayout.setVisibility(View.GONE);
-        loadRlayout.setVisibility(View.GONE);
 
         adapter = new GrabAdapter(getActivity(), this);
         listView.setAdapter(adapter);
@@ -195,8 +189,6 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
                             }
                         }
                         slideShowView.setVisibility(View.VISIBLE);
-                        refreshRlayout.setVisibility(View.VISIBLE);
-                        loadRlayout.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -212,8 +204,6 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
                         if (isRefreshable) {
                             fragment_commodity_layout.refreshFinish(PullToRefreshLayout.FAIL);
                             slideShowView.setVisibility(View.GONE);
-                            refreshRlayout.setVisibility(View.GONE);
-                            loadRlayout.setVisibility(View.GONE);
                             MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
                         } else {
                             if (message.contains("无数据"))

@@ -76,8 +76,6 @@ import java.util.TimerTask;
  * 日期: 2015/11/11 16:26.
  */
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, AlarmtListener, PullToRefreshLayout.OnRefreshListener {
-    private View mMenuView;
-    private ListView timeList;
     private LinearLayout viewsLlayout;
     private PullToRefreshLayout fragment_grab_layout;
     private LinearLayout typeLlayout;
@@ -85,8 +83,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private TextView noWinningInfoTxt;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
-    private RelativeLayout refreshRlayout;
-    private RelativeLayout loadRlayout;
     private ImageView avatarImg;
     private TextView currCityTxt;
     private TextView countTxt;
@@ -117,7 +113,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private List<MessageInfo> infoList = new ArrayList<>();
     private ActivityInfo activityInfo;
     private List<ActivityInfo> activityInfos = new ArrayList<>();
-    private ActivityTypeBO activityTypeBO;
     private List<ActivityTypeBO> activityTypeBOs = new ArrayList<>();
     public static GrabFragment instance;
     private String eventId;
@@ -137,12 +132,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     }
 
     private void initView() {
-        mMenuView = LayoutInflater.from(getActivity()).inflate(R.layout.popupwindow_time, null);
-        timeList = (ListView) mMenuView.findViewById(R.id.list_time);
         fragment_grab_layout = (PullToRefreshLayout) getActivity().findViewById(R.id.fragment_grab_layout);
-
-        refreshRlayout = (RelativeLayout) getActivity().findViewById(R.id.refresh);
-        loadRlayout = (RelativeLayout) getActivity().findViewById(R.id.load);
 
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
@@ -167,8 +157,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         winnerRlayout.setVisibility(View.GONE);
         viewsLlayout.setVisibility(View.GONE);
         typeLlayout.setVisibility(View.GONE);
-        refreshRlayout.setVisibility(View.GONE);
-        loadRlayout.setVisibility(View.GONE);
 
         winnerRlayout.setOnClickListener(this);
         currCityLlayout.setOnClickListener(this);
@@ -330,8 +318,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                         winnerRlayout.setVisibility(View.VISIBLE);
                         viewsLlayout.setVisibility(View.VISIBLE);
                         slideShowView.setVisibility(View.VISIBLE);
-                        refreshRlayout.setVisibility(View.VISIBLE);
-                        loadRlayout.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -350,8 +336,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             winnerRlayout.setVisibility(View.GONE);
                             typeLlayout.setVisibility(View.GONE);
                             viewsLlayout.setVisibility(View.GONE);
-                            refreshRlayout.setVisibility(View.GONE);
-                            loadRlayout.setVisibility(View.GONE);
                             MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
                         } else {
                             if (message.contains("无数据"))
@@ -399,6 +383,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
      * 获取活动类型
      */
     private void getActivityType() {
+        typeLlayout.setVisibility(View.GONE);
         this.appAction.getActivityType(new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
