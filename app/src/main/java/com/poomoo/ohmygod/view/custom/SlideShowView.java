@@ -182,8 +182,6 @@ public class SlideShowView extends FrameLayout {
     private class MyPagerAdapter extends PagerAdapter {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-//            LogUtils.i(TAG, "destroyItem:" + position);
-//            container.removeView(imageViewsList.get(position));
             container.removeView((ImageView) object);
         }
 

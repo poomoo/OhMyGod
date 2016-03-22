@@ -79,7 +79,7 @@ public class MainFragmentActivity extends
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 //        grabFrament = new GrabFragment();
-        grabManageFragment=new GrabManageFragment();
+        grabManageFragment = new GrabManageFragment();
         curFragment = grabManageFragment;
         fragmentTransaction.add(R.id.activity_main_frameLayout, grabManageFragment);
         fragmentTransaction.commit();
