@@ -18,6 +18,7 @@ public class CodeBO {
     private String headPic = "";//头像，无则取默认值
     private int isGot;//0:未领取，1已经消费领取
     private String winNumber = "";//中奖号码
+    private String tel = "";//电话号码
 
     public String getPlay_dt() {
         return play_dt;
@@ -91,18 +92,12 @@ public class CodeBO {
         this.winNumber = winNumber;
     }
 
-    @Override
-    public String toString() {
-        return "CodeBO{" +
-                "play_dt='" + play_dt + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", activeId=" + activeId +
-                ", userId=" + userId +
-                ", activeName='" + activeName + '\'' +
-                ", realName='" + realName + '\'' +
-                ", headPic='" + headPic + '\'' +
-                ", isGot=" + isGot +
-                ", winNumber='" + winNumber + '\'' +
-                '}';
+    public String getTel() {
+        return tel;
     }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
 }

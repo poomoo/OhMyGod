@@ -58,7 +58,7 @@ public class CodeStatusListAdapter extends MyBaseAdapter<CodeBO> {
         codeBO = itemList.get(position);
         ImageLoader.getInstance().displayImage(codeBO.getHeadPic(), viewHolder.avatarImg, defaultOptions);
         viewHolder.nameTxt.setText(codeBO.getNickName());
-//        viewHolder.telTxt.setText(codeBO.get);
+        viewHolder.telTxt.setText(codeBO.getTel());
         viewHolder.activeNameTxt.setText(codeBO.getActiveName());
         viewHolder.dateTimeTxt.setText(codeBO.getPlay_dt());
         if (codeBO.getIsGot() == 0)//未领取
