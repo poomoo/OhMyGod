@@ -80,7 +80,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private PullToRefreshLayout fragment_grab_layout;
     private LinearLayout typeLlayout;
     private LinearLayout currCityLlayout;
-    private TextView noWinningInfoTxt;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
     private ImageView avatarImg;
@@ -137,7 +136,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         avatarRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_avatar);
         winnerRlayout = (RelativeLayout) getActivity().findViewById(R.id.rlayout_grab_winner);
         currCityLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_currCity);
-        noWinningInfoTxt = (TextView) getActivity().findViewById(R.id.txt_noWinningInfo);
         currCityTxt = (TextView) getActivity().findViewById(R.id.txt_currCity);
         countTxt = (TextView) getActivity().findViewById(R.id.txt_inform_count);
         browseTxt = (TextView) getActivity().findViewById(R.id.txt_view);//总浏览量
@@ -351,12 +349,10 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private void getWinnerList() {
         winnerRlayout.setClickable(false);
         avatarRlayout.setVisibility(View.GONE);
-        noWinningInfoTxt.setVisibility(View.VISIBLE);
         this.appAction.getWinnerList(application.getCurrCity(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 winnerRlayout.setClickable(true);
-                noWinningInfoTxt.setVisibility(View.GONE);
                 avatarRlayout.setVisibility(View.VISIBLE);
                 marqueeTextView.setVisibility(View.VISIBLE);
                 winnerBOList = data.getObjList();

@@ -645,7 +645,7 @@ public class MyUtil {
         int remainder = len % 4;//余数
         String temp = "";
         for (int i = 0; i < quotient; i++) {
-            temp += s.substring(0, i + 4) + " ";
+            temp += s.substring(i * 4, i * 4 + 4) + " ";
         }
         if (remainder > 0)
             temp += " " + s.substring(s.length() - 1 - remainder, s.length() - 1);

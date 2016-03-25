@@ -2,12 +2,16 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -37,6 +41,11 @@ public class CommodityInformation2Activity extends BaseActivity {
     private TextView startDate;//开抢时间
     private WebView commodityWeb;//商品详情
     private ImageView detailsImg;
+    private TextView shopNameTxt;//店铺名称
+    private TextView shopAddressTxt;//店铺地址
+    private LinearLayout merchantInfoLlayout;//商家信息
+    private LinearLayout merchantInfoLlayout2;//底部商家信息
+
 
     private CommodityBO commodityBO;
 
@@ -63,6 +72,11 @@ public class CommodityInformation2Activity extends BaseActivity {
         slideShowView = (SlideShowView) findViewById(R.id.flipper_commodity);
         commodityWeb = (WebView) findViewById(R.id.web_commodity);
         detailsImg = (ImageView) findViewById(R.id.img_commodityDetail);
+
+        shopNameTxt = (TextView) findViewById(R.id.txt_shopName);
+        shopAddressTxt = (TextView) findViewById(R.id.txt_shopAddress);
+        merchantInfoLlayout = (LinearLayout) findViewById(R.id.llayout_merchantInfo);
+        merchantInfoLlayout2 = (LinearLayout) findViewById(R.id.llayout_merchantInfo2);
 
     }
 
@@ -113,6 +127,13 @@ public class CommodityInformation2Activity extends BaseActivity {
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
         ImageLoader.getInstance().displayImage(commodityBO.getSmallPic(), detailsImg, defaultOptions);
+        if (TextUtils.isEmpty(commodityBO.getShopsName()) || TextUtils.isEmpty(commodityBO.getShopsAddress())) {
+            merchantInfoLlayout.setVisibility(View.GONE);
+            merchantInfoLlayout2.setVisibility(View.GONE);
+        } else {
+            shopNameTxt.setText(commodityBO.getShopsName());
+            shopAddressTxt.setText(commodityBO.getShopsAddress());
+        }
 
         //商品详情
 //        commodityWeb.getSettings().setUseWideViewPort(true);
@@ -123,6 +144,13 @@ public class CommodityInformation2Activity extends BaseActivity {
         // 添加js交互接口类，并起别名 imagelistner
         commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");
         commodityWeb.setWebViewClient(new MyWebViewClient());
+        commodityWeb.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100)
+                    merchantInfoLlayout2.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     protected void initTitleBar() {
@@ -188,6 +216,7 @@ public class CommodityInformation2Activity extends BaseActivity {
 
     // 监听
     private class MyWebViewClient extends WebViewClient {
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -229,5 +258,28 @@ public class CommodityInformation2Activity extends BaseActivity {
         startActivity(intent);
     }
 
+    /**
+     * 跳转到地图
+     *
+     * @param view
+     */
+    public void toPosition(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putDouble(getString(R.string.intent_latitude), Double.parseDouble(commodityBO.getShopsLat()));
+        bundle.putDouble(getString(R.string.intent_longitude), Double.parseDouble(commodityBO.getShopsLng()));
+        bundle.putString(getString(R.string.intent_shopName), commodityBO.getShopsName());
+        openActivity(MapActivity.class, bundle);
+    }
+
+    /**
+     * 联系商家
+     *
+     * @param view
+     */
+    public void toContact(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
 }
