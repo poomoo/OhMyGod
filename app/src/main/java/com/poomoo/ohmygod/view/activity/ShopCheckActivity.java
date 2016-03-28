@@ -211,10 +211,6 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
      * @param view
      */
     public void toSelectActiveType(View view) {
-//        Bundle pBundle = new Bundle();
-//        pBundle.putString(getString(R.string.intent_parent), getString(R.string.intent_activeName));
-//        pBundle.putSerializable("activeList", list_activeType);
-//        openActivityForResult(SelectActivity.class, pBundle, MyConfig.ACTIVE);
         show();
     }
 
@@ -407,7 +403,8 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     PopupWindow popupWindow;
 
     private void show() {
-        popupWindow.showAsDropDown(findViewById(R.id.llayout_shopCheck));
+        if (popupWindow != null)
+            popupWindow.showAsDropDown(findViewById(R.id.llayout_shopCheck));
     }
 
     private void initPopWindow() {

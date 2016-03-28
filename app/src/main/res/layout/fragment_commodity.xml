@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="服务区"
-                android:textColor="@color/gray"
+                android:textColor="@color/gray1"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="visible" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp_10"
                 android:padding="@dimen/dp_inform_padding"
-                android:src="@drawable/ic_arrow_right2" />
+                android:src="@drawable/ic_arrow_right1" />
         </LinearLayout>
     </RelativeLayout>
 

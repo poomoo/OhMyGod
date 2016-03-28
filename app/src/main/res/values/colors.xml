@@ -18,4 +18,5 @@
     <color name="btn_reply">#DADADA</color>
     <color name="bg_reply">#EEF3FA</color>
     <color name="gray">#E4E4E4</color>
+    <color name="gray1">#919191</color>
 </resources>

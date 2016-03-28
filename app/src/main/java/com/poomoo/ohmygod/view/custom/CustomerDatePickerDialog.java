@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,9 +69,10 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
         TextView tvTitle = new TextView(context);
         tvTitle.setText("请选择日期");
         tvTitle.setGravity(Gravity.CENTER);
-        tvTitle.setPadding(10, 10, 10, 10);
+//        tvTitle.setPadding(10, 10, 10, 10);
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        tvTitle.setTextSize((int) (12f * dm.density));
+//        tvTitle.setTextSize((int) (12f * dm.density));
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         tvTitle.setTextColor(context.getResources().getColor(R.color.themeRed));
         tvTitle.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         llTitleBar.addView(tvTitle);
@@ -83,7 +85,7 @@ public class CustomerDatePickerDialog extends DatePickerDialog {
 
         dpView.addView(llTitleBar);
         FrameLayout.LayoutParams lp = (android.widget.FrameLayout.LayoutParams) llFirst.getLayoutParams();
-        lp.setMargins(0, (int) (12f * dm.density), 0, 0);
+//        lp.setMargins(0, (int) (12f * dm.density), 0, 0);
     }
 
 
