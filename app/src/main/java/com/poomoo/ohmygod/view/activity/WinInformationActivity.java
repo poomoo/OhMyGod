@@ -59,7 +59,9 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
 
         adapter = new ActiveWinnerInfoListAdapter(this);
         listView.setAdapter(adapter);
+        LogUtils.i(TAG,"setOnItemClickListener");
         listView.setOnItemClickListener(this);
+        LogUtils.i(TAG,"setOnItemClickListener2");
     }
 
     protected void initTitleBar() {
@@ -114,10 +116,11 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Bundle bundle = new Bundle();
-//        bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
-//        bundle.putString(getString(R.string.intent_activityName), list.get(position).getTitle());
-//        openActivity(CommodityInformation2Activity.class, bundle);
+        LogUtils.i(TAG,"onItemClick");
+        Bundle bundle = new Bundle();
+        bundle.putInt(getString(R.string.intent_activeId), list.get(position).getActiveId());
+        bundle.putString(getString(R.string.intent_activityName), list.get(position).getGoodsName());
+        openActivity(CommodityInformation2Activity.class, bundle);
     }
 
     @Override

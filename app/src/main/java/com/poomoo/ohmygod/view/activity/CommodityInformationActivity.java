@@ -62,7 +62,7 @@ import java.util.TimerTask;
 
 /**
  * 商品详情
- * <p/>
+ * <p>
  * 作者: 李苜菲
  * 日期: 2015/11/13 16:15.
  */
@@ -392,9 +392,9 @@ public class CommodityInformationActivity extends BaseActivity {
         // 添加js交互接口类，并起别名 imagelistner
         commodityWeb.addJavascriptInterface(new JavascriptInterface(), "imagelistner");
         commodityWeb.setWebViewClient(new MyWebViewClient());
-        LogUtils.i(TAG,"设置了setWebChromeClient1");
+        LogUtils.i(TAG, "设置了setWebChromeClient1");
         commodityWeb.setWebChromeClient(new MyWebChromeClient());
-        LogUtils.i(TAG,"设置了setWebChromeClient2");
+        LogUtils.i(TAG, "设置了setWebChromeClient2");
 //        if (1 == 1) {
 //            llayout_anim.setVisibility(View.VISIBLE);
 //            succeedAnim = MyConfig.carSuccess;
@@ -903,7 +903,7 @@ public class CommodityInformationActivity extends BaseActivity {
         private CustomViewCallback myCallback = null;
 
         public void onProgressChanged(WebView view, int progress) {
-            LogUtils.i(TAG,"onProgressChanged");
+            LogUtils.i(TAG, "onProgressChanged");
             if (progress == 100) {
                 merchantInfoLlayout2.setVisibility(View.VISIBLE);
                 if (isGrab) {
@@ -917,7 +917,7 @@ public class CommodityInformationActivity extends BaseActivity {
         @Override
         public void onShowCustomView(View view, CustomViewCallback callback) {
             // TODO Auto-generated method stub
-            LogUtils.i(TAG,"onShowCustomView");
+            LogUtils.i(TAG, "onShowCustomView");
             if (myCallback != null) {
                 myCallback.onCustomViewHidden();
                 myCallback = null;
@@ -938,7 +938,7 @@ public class CommodityInformationActivity extends BaseActivity {
         }
 
         public void onHideCustomView() {
-            LogUtils.i(TAG,"onHideCustomView");
+            LogUtils.i(TAG, "onHideCustomView");
             long id = Thread.currentThread().getId();
             if (myView != null) {
                 if (myCallback != null) {
@@ -1032,9 +1032,19 @@ public class CommodityInformationActivity extends BaseActivity {
      * @param view
      */
     public void toContact(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        Dialog dialog = new AlertDialog.Builder(this).setMessage("拨打电话" + commodityBO.getShopsTel()).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        }).create();
+        dialog.show();
     }
 
 }

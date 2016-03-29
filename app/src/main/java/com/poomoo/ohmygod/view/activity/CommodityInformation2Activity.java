@@ -1,5 +1,8 @@
 package com.poomoo.ohmygod.view.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +26,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 
@@ -30,7 +34,7 @@ import java.util.ArrayList;
 
 /**
  * 商品详情(不能抢)
- * <p/>
+ * <p>
  * 作者: 李苜菲
  * 日期: 2015/11/13 16:15.
  */
@@ -277,9 +281,19 @@ public class CommodityInformation2Activity extends BaseActivity {
      * @param view
      */
     public void toContact(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        Dialog dialog = new AlertDialog.Builder(this).setMessage("拨打电话" + commodityBO.getShopsTel()).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + commodityBO.getShopsTel()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        }).create();
+        dialog.show();
     }
 
 }
