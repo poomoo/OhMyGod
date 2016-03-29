@@ -103,6 +103,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_check);
+        addActivityToArrayList(this);
         initView();
     }
 
@@ -133,8 +134,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         showProgressDialog(getString(R.string.dialog_message));
         isLoad = false;
         getData();
-        dateTxt.setText(cal.get(Calendar.YEAR) + "年" + (cal.get(Calendar.MONTH) + 1) + "月" + cal.get(Calendar.DAY_OF_MONTH) + "日");
-//        initTestData();
+        dateTxt.setText("全部");
     }
 
     private void initTestData() {
@@ -314,10 +314,16 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
                         int length = activeList.length();
                         list_activeType = new ArrayList<>();
                         HashMap<String, String> item;
+                        item = new HashMap<>();
+                        item.put("activeId", "0");
+                        item.put("activeName", "全部");
+                        list_activeType.add(item);
+                        strings.add("全部");
                         for (int i = 0; i < length; i++) {
                             item = new HashMap<>();
                             item.put("activeId", activeList.getJSONObject(i).getInt("activeId") + "");
                             item.put("activeName", activeList.getJSONObject(i).getString("activeName"));
+
                             list_activeType.add(item);
                             strings.add(activeList.getJSONObject(i).getString("activeName") + "");
                             LogUtils.i(TAG, "strings:" + strings.get(i));
@@ -335,6 +341,10 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
             @Override
             public void onFailure(int errorCode, String message) {
                 closeProgressDialog();
+                if (errorCode == 0) {
+                    totalNumTxt.setText("0");
+                    checkedNumTxt.setText("0");
+                }
                 //超时
                 if (errorCode == -3) {
                     MyUtil.showToast(getApplicationContext(), message);
@@ -458,6 +468,8 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         adapter.setItems(codeBOList);
         currPage = 1;
         isLoad = false;
+        playDt = null;
+        dateTxt.setText("全部");
         getData();
         popupWindow.dismiss();
         activeListView.setSelection(0);
