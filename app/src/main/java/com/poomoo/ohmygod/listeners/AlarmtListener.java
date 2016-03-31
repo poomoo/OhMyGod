@@ -9,5 +9,5 @@ import android.widget.ImageView;
  * 日期: 2015/11/11 11:11.
  */
 public interface AlarmtListener {
-    void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag);
+    void setAlarm(String title, int activeId, String startDt, String endDt, ImageView imageView);
 }

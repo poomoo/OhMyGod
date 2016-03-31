@@ -7,12 +7,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.SparseArray;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.poomoo.model.GrabBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.listeners.AlarmtListener;
-import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
@@ -73,8 +70,11 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
         LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
 
-//        if (position == 0)
-//            grabBO.setStatus(1);
+        if (position == 0) {
+            grabBO.setStatus(1);
+            grabBO.setStartCountdown(10 * 60 * 1000);
+        }
+
 
         if (grabBO.getStatus() == 1) {
             if (viewHolder.txt.getTag() == null) {
@@ -93,10 +93,10 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
             viewHolder.llayout_remind.setVisibility(View.VISIBLE);
             LogUtils.i(TAG, grabBO.getActiveId() + ":" + "MyUtil.isRemind(grabBO.getActiveId())" + MyUtil.isRemind(grabBO.getActiveId()));
             if (MyUtil.isRemind(grabBO.getActiveId())) {
-                viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), false, viewHolder.img_bg_remind));
+                viewHolder.llayout_remind.setOnClickListener(new alarmClickListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), viewHolder.img_bg_remind));
                 viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
             } else {
-                viewHolder.llayout_remind.setOnClickListener(new alarmClikListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), true, viewHolder.img_bg_remind));
+                viewHolder.llayout_remind.setOnClickListener(new alarmClickListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), viewHolder.img_bg_remind));
                 viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
             }
         } else {
@@ -118,34 +118,24 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
         private ProgressSeekBar progressBar;
     }
 
-    public class alarmClikListener implements View.OnClickListener {
+    public class alarmClickListener implements View.OnClickListener {
         String title;
         int activeId;
         String startDt;
         String endDt;
-        boolean flag;
         ImageView img_bg_remind;
 
-        public alarmClikListener(String title, int activeId, String startDt, String endDt, boolean flag, ImageView img_bg_remind) {
+        public alarmClickListener(String title, int activeId, String startDt, String endDt, ImageView img_bg_remind) {
             this.title = title;
             this.activeId = activeId;
             this.startDt = startDt;
             this.endDt = endDt;
-            this.flag = flag;
             this.img_bg_remind = img_bg_remind;
         }
 
         @Override
         public void onClick(View v) {
-            alarmtListener.setAlarm(title, activeId, startDt, endDt, flag);
-            if (flag) {
-                img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
-                flag = false;
-            } else {
-                img_bg_remind.setImageResource(R.drawable.ic_grab_tip_no);
-                flag = true;
-            }
-
+            alarmtListener.setAlarm(title, activeId, startDt, endDt, img_bg_remind);
         }
     }
 

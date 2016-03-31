@@ -11,17 +11,26 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.poomoo.api.Config;
 import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.core.ErrorEvent;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.model.UserBO;
+import com.poomoo.ohmygod.Network;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 登陆
@@ -76,6 +85,44 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         phoneNum = phoneNumEdt.getText().toString().trim();
         passWord = passWordEdt.getText().toString().trim();
         showProgressDialog("登录中...");
+//        Map<String, String> paramMap = new HashMap<>();
+//        paramMap.put("bizName", "10000");
+//        paramMap.put("method", "10005");
+//        paramMap.put("tel", phoneNum);
+//        paramMap.put("password", passWord);
+//        paramMap.put("channelId", "123");
+//        String data = new Gson().toJson(paramMap);
+//        LogUtils.d("data:" + data);
+//        Network.getApi().login("10000","10005", phoneNum, passWord, "123")
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<UserBO>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        closeProgressDialog();
+//                        MyUtil.showToast(getApplicationContext(), e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(UserBO userBO) {
+//                        closeProgressDialog();
+//                        SPUtils.put(getApplicationContext(), getString(R.string.sp_isLogin), true);
+//                        if (rememberPassWordChk.isChecked()) {
+//                            SPUtils.put(getApplicationContext(), getString(R.string.sp_rememberPassWord), true);
+//                            SPUtils.put(getApplicationContext(), getString(R.string.sp_passWord), passWord);
+//                        }
+//                        Log.i(TAG, "data:" + userBO);
+//                        setAppInfo(userBO);
+//                        openActivity(MainFragmentActivity.class);
+//                        finish();
+//                    }
+//                });
+
         this.appAction.logIn(phoneNum, passWord, application.getChannelId(), new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {

@@ -11,10 +11,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.CalendarContract;
+import android.support.v4.app.NotificationCompatSideChannelService;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +48,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.model.WinnerBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.GrabAdapter;
+import com.poomoo.ohmygod.adapter.TimeAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.database.ActivityInfo;
 import com.poomoo.ohmygod.database.MessageInfo;
@@ -76,6 +82,8 @@ import java.util.TimerTask;
  * 日期: 2015/11/11 16:26.
  */
 public class GrabFragment extends BaseFragment implements OnItemClickListener, OnClickListener, AlarmtListener, PullToRefreshLayout.OnRefreshListener {
+    private View mMenuView;
+    private ListView timeList;
     private LinearLayout viewsLlayout;
     private PullToRefreshLayout fragment_grab_layout;
     private LinearLayout typeLlayout;
@@ -117,6 +125,14 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private String eventId;
     private String browseNum = "";//总浏览量
     private int currPage = 1;//当前页
+    private TimeAdapter timeAdapter;
+    private PopupWindow timePopupWindow;
+    //设置闹钟需要的参数
+    private int activeId;
+    private String title;
+    private String startDt;
+    private String endDt;
+    private ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -188,6 +204,24 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 .cacheOnDisk(false) //
                 .bitmapConfig(Bitmap.Config.RGB_565)// 设置最低配置
                 .build();//
+
+        mMenuView = LayoutInflater.from(getActivity()).inflate(R.layout.popupwindow_time, null);
+        timeList = (ListView) mMenuView.findViewById(R.id.list_time);
+        timeAdapter = new TimeAdapter(getActivity());
+        List<Integer> integerList = new ArrayList<>();
+        int len = MyConfig.time.length;
+        for (int i = 0; i < len; i++)
+            integerList.add(MyConfig.time[i]);
+        timeAdapter.setItems(integerList);
+        timeList.setAdapter(timeAdapter);
+        timeList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                timePopupWindow.dismiss();
+                insertCalendar(activeId, title, startDt, endDt, MyConfig.time[position]);
+            }
+        });
+        initPopWindow();
     }
 
     Handler handler = new Handler() {
@@ -625,20 +659,69 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         }
     }
 
+    /**
+     * 设置闹钟时间
+     */
+    private void setDate() {
+        // 显示窗口
+        timePopupWindow.showAtLocation(getActivity().findViewById(R.id.llayout_main),
+                Gravity.CENTER, 0, 0); // 设置layout在genderWindow中显示的位置
+    }
+
+    private void initPopWindow() {
+        timePopupWindow = new PopupWindow(mMenuView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        timePopupWindow.setFocusable(true);
+        timePopupWindow.setFocusable(true);
+
+        mMenuView.setFocusable(true);
+        mMenuView.setFocusableInTouchMode(true);
+        mMenuView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // TODO Auto-generated method stub
+                LogUtils.i(TAG, "点击返回键");
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (timePopupWindow != null) {
+                        timePopupWindow.dismiss();
+                    }
+                }
+                return true;
+            }
+        });
+        mMenuView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int height_top = mMenuView.findViewById(R.id.popup_time_layout).getTop();
+                int height_bottom = mMenuView.findViewById(R.id.popup_time_layout).getBottom();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < height_top || y > height_bottom) {
+                        timePopupWindow.dismiss();
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
     /*设置提醒*/
     private static String calanderURL = "content://com.android.calendar/calendars";
     private static String calanderEventURL = "content://com.android.calendar/events";
     private static String calanderRemiderURL = "content://com.android.calendar/reminders";
 
     @Override
-    public void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag) {
-        if (flag)
-            insertCalendar(activeId, title, startDt, endDt, flag);
+    public void setAlarm(String title, int activeId, String startDt, String endDt, ImageView imageView) {
+        this.title = title;
+        this.activeId = activeId;
+        this.startDt = startDt;
+        this.endDt = endDt;
+        this.imageView = imageView;
+        if (!MyUtil.isRemind(activeId))
+            setDate();
         else
             delete(activeId);
     }
 
-    private void insertCalendar(int activeId, String title, String startDt, String endDt, boolean flag) {
+    private void insertCalendar(int activeId, String title, String startDt, String endDt, int mins) {
         String calId = "";
         Cursor userCursor = getActivity().getContentResolver().query(Uri.parse(calanderURL), null, CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
         LogUtils.i(TAG, "userCursor.getCount():" + userCursor.getCount());
@@ -683,11 +766,12 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         ContentValues values = new ContentValues();
 
         values.put(CalendarContract.Reminders.EVENT_ID, id);
-        values.put(CalendarContract.Reminders.MINUTES, 5);
+        values.put(CalendarContract.Reminders.MINUTES, mins);
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         getActivity().getContentResolver().insert(Uri.parse(calanderRemiderURL), values);
-        MyUtil.showToast(getActivity().getApplicationContext(), "设置成功,将在活动开抢前5分钟提醒您!");
-        MyUtil.updateActivityInfo(activeId, flag, eventId);//更新活动状态
+        MyUtil.showToast(getActivity().getApplicationContext(), "设置成功,将在活动开抢前" + mins + "分钟提醒您!");
+        MyUtil.updateActivityInfo(activeId, true, eventId);//更新活动状态
+        imageView.setImageResource(R.drawable.ic_grab_tip_yes);
     }
 
     //添加账户
@@ -722,5 +806,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         getActivity().getContentResolver().delete(Uri.parse(calanderEventURL), CalendarContract.Events._ID + "='" + MyUtil.getEventId(activeId) + "'", null);
         MyUtil.showToast(getActivity().getApplicationContext(), "取消提醒成功!");
         MyUtil.updateActivityInfo(activeId, false, "");
+        imageView.setImageResource(R.drawable.ic_grab_tip_no);
     }
 }

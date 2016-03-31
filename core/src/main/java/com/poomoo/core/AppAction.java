@@ -361,7 +361,7 @@ public interface AppAction {
      * @param winNumber
      * @param listener
      */
-    void checkWinNum(String winNumber, ActionCallbackListener listener);
+    void checkWinNum(String userId, String winNumber, ActionCallbackListener listener);
 
     /**
      * 查询app加载页面和引导页面接口

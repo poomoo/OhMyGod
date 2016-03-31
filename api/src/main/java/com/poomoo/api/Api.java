@@ -5,7 +5,7 @@ import com.poomoo.model.ResponseBO;
 
 /**
  * Api接口
- * <p/>
+ * <p>
  * 作者: 李苜菲
  * 日期: 2015/11/11 11:06.
  */
@@ -85,7 +85,7 @@ public interface Api {
 
     ResponseBO getMerchantInfo(String userId, int activeId, String playDt, String winNumber, String isGot, int currPage, int pageSize);
 
-    ResponseBO checkWinNum(String winNumber);
+    ResponseBO checkWinNum(String userId, String winNumber);
 
     ResponseBO getBootPics(int type);
 

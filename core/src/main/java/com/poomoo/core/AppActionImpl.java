@@ -713,7 +713,12 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-
+        if (passWord1.length() < 6) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "新密码不能少于6位");
+            }
+            return;
+        }
         if (!passWord1.equals(passWord2)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "两次输入的密码不一致");
@@ -954,7 +959,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void checkWinNum(final String winNumber, final ActionCallbackListener listener) {
+    public void checkWinNum(final String userId, final String winNumber, final ActionCallbackListener listener) {
         // 参数检查
         if (TextUtils.isEmpty(winNumber)) {
             if (listener != null) {
@@ -966,7 +971,7 @@ public class AppActionImpl implements AppAction {
         new AsyncTask<Void, Void, ResponseBO<Void>>() {
             @Override
             protected ResponseBO<Void> doInBackground(Void... params) {
-                return api.checkWinNum(winNumber);
+                return api.checkWinNum(userId, winNumber);
             }
 
             @Override

@@ -235,7 +235,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
 //        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         winNumber = codeEdt.getText().toString().trim();
         showProgressDialog(getString(R.string.dialog_message));
-        this.appAction.checkWinNum(winNumber, new ActionCallbackListener() {
+        this.appAction.checkWinNum(application.getUserId(), winNumber, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 closeProgressDialog();

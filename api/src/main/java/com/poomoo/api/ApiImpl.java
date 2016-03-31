@@ -636,10 +636,11 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public ResponseBO checkWinNum(String winNumber) {
+    public ResponseBO checkWinNum(String userId, String winNumber) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("bizName", Config.ACTIVITYACTION);
         paramMap.put("method", Config.CHECKWINNUM);
+        paramMap.put("userId", Config.CHECKWINNUM);
         paramMap.put("winNumber", winNumber);
 
         try {

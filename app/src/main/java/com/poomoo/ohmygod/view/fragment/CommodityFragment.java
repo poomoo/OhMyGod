@@ -253,14 +253,14 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
     private static String calanderRemiderURL = "content://com.android.calendar/reminders";
 
     @Override
-    public void setAlarm(String title, int activeId, String startDt, String endDt, boolean flag) {
-        if (flag)
-            insertCalendar(activeId, title, startDt, endDt, flag);
+    public void setAlarm(String title, int activeId, String startDt, String endDt, ImageView imageView) {
+        if (!MyUtil.isRemind(activeId))
+            insertCalendar(activeId, title, startDt, endDt);
         else
             delete(activeId);
     }
 
-    private void insertCalendar(int activeId, String title, String startDt, String endDt, boolean flag) {
+    private void insertCalendar(int activeId, String title, String startDt, String endDt) {
         String calId = "";
         Cursor userCursor = getActivity().getContentResolver().query(Uri.parse(calanderURL), null, CalendarContract.Calendars.ACCOUNT_NAME + "='ohmygod@gmail.com'", null, null);
         LogUtils.i(TAG, "userCursor.getCount():" + userCursor.getCount());
@@ -309,7 +309,7 @@ public class CommodityFragment extends BaseFragment implements OnItemClickListen
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
         getActivity().getContentResolver().insert(Uri.parse(calanderRemiderURL), values);
         MyUtil.showToast(getActivity().getApplicationContext(), "设置成功,将在活动开抢前5分钟提醒您!");
-        MyUtil.updateActivityInfo(activeId, flag, eventId);//更新活动状态
+        MyUtil.updateActivityInfo(activeId, true, eventId);//更新活动状态
     }
 
     //添加账户
