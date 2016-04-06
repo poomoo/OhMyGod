@@ -44,12 +44,13 @@ dependencies {
     compile files('libs/android-support-v4.jar')
     compile project(':core')
     compile project(':model')
+    compile 'com.android.support:appcompat-v7:23.2.1'
 //    compile 'com.google.android.exoplayer:exoplayer:r1.4.1'
 //    compile ':playersdk@aar'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+//    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'io.reactivex:rxjava:1.1.0'
+//    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+//    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+//    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
+//    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
 }

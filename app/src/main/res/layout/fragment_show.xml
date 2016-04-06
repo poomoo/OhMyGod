@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/themeRed"
         android:padding="@dimen/dp_8">
         <!--显示标题-->
         <TextView
@@ -19,6 +19,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/title_show_and_share"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
         <TextView
@@ -32,7 +33,7 @@
             android:paddingRight="4dp"
             android:singleLine="true"
             android:text="@string/title_show_now"
-            android:textColor="@color/themeRed"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </RelativeLayout>
 

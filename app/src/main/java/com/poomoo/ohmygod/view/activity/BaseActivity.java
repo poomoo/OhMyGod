@@ -7,23 +7,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.poomoo.core.AppAction;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.application.MyApplication;
-import com.poomoo.ohmygod.utils.SPUtils;
 
 /**
  * Activity基类
  * 作者: 李苜菲
  * 日期: 2015/11/11 11:30.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
     // 上下文实例
     public Context context;
     // 应用全局的实例

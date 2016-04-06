@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/themeRed"
         android:padding="@dimen/dp_8">
 
         <ImageView
@@ -38,6 +38,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/title_personal_center"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
         <!--右边菜单按钮-->

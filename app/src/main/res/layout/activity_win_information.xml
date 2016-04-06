@@ -15,8 +15,6 @@
         <ListView
             android:id="@+id/activity_win_information_listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/themeRed"
-            android:dividerHeight="4dp" />
+            android:layout_height="wrap_content" />
     </com.poomoo.ohmygod.view.custom.RefreshLayout>
 </LinearLayout>

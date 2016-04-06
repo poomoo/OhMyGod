@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/themeRed"
     android:padding="8dp">
 
     <!--显示标题-->
@@ -14,6 +14,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/app_name"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_20" />
 
 

@@ -1,24 +1,16 @@
 package com.poomoo.ohmygod.view.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -34,9 +26,11 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ViewPagerAdapter;
 import com.poomoo.ohmygod.utils.LogUtils;
-import com.poomoo.ohmygod.utils.MyUtil;
-import com.poomoo.ohmygod.utils.SPUtils;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IndexViewPagerActivity extends BaseActivity implements
@@ -46,10 +40,6 @@ public class IndexViewPagerActivity extends BaseActivity implements
     private ViewPagerAdapter vpAdapter;
     private MyPagerAdapter myPagerAdapter;
     private List<View> views;
-
-    // 引导图片资源
-    private static final int[] pics = {R.drawable.index1, R.drawable.index2, R.drawable.index3};
-    private static final int lenth = pics.length;
 
     // 底部小店图片
     private ImageView[] dots;
@@ -126,9 +116,9 @@ public class IndexViewPagerActivity extends BaseActivity implements
                 // 初始化Adapter
                 vpAdapter = new ViewPagerAdapter(views);
                 vp.setAdapter(vpAdapter);
-                views.get(pics.length - 1).setOnClickListener(this);
+                views.get(index - 1).setOnClickListener(this);
                 if (PARENT.equals("index"))
-                    views.get(pics.length - 1).setOnTouchListener(this);
+                    views.get(index - 1).setOnTouchListener(this);
             }
 
             // 初始化底部小点
@@ -136,21 +126,21 @@ public class IndexViewPagerActivity extends BaseActivity implements
         }
     }
 
-    private void initDots() {
-        LinearLayout ll = (LinearLayout) findViewById(R.id.viewpager_ll);
-        dots = new ImageView[lenth];
-
-        // 循环取得小点图片
-        for (int i = 0; i < lenth; i++) {
-            dots[i] = (ImageView) ll.getChildAt(i);
-            dots[i].setEnabled(false);// 都设为灰色
-            dots[i].setOnClickListener(this);
-            dots[i].setTag(i);// 设置位置tag，方便取出与当前位置对应
-        }
-
-        currentIndex = 0;
-        dots[currentIndex].setEnabled(true);// 设置为白色，即选中状态
-    }
+//    private void initDots() {
+//        LinearLayout ll = (LinearLayout) findViewById(R.id.viewpager_ll);
+//        dots = new ImageView[lenth];
+//
+//        // 循环取得小点图片
+//        for (int i = 0; i < lenth; i++) {
+//            dots[i] = (ImageView) ll.getChildAt(i);
+//            dots[i].setEnabled(false);// 都设为灰色
+//            dots[i].setOnClickListener(this);
+//            dots[i].setTag(i);// 设置位置tag，方便取出与当前位置对应
+//        }
+//
+//        currentIndex = 0;
+//        dots[currentIndex].setEnabled(true);// 设置为白色，即选中状态
+//    }
 
     /**
      * 设置当前的引导页
@@ -165,14 +155,14 @@ public class IndexViewPagerActivity extends BaseActivity implements
     /**
      * 当前引导小点的选中
      */
-    private void setCurDot(int positon) {
-        if (positon < 0 || positon > lenth - 1 || currentIndex == positon) {
-            return;
-        }
-        dots[positon].setEnabled(true);
-        dots[currentIndex].setEnabled(false);
-        currentIndex = positon;
-    }
+//    private void setCurDot(int positon) {
+//        if (positon < 0 || positon > lenth - 1 || currentIndex == positon) {
+//            return;
+//        }
+//        dots[positon].setEnabled(true);
+//        dots[currentIndex].setEnabled(false);
+//        currentIndex = positon;
+//    }
 
     // 当滑动状态改变时调用
     @Override

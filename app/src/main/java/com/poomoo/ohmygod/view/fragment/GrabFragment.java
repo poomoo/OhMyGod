@@ -86,7 +86,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     private ListView timeList;
     private LinearLayout viewsLlayout;
     private PullToRefreshLayout fragment_grab_layout;
-    private LinearLayout typeLlayout;
+//    private LinearLayout typeLlayout;
     private LinearLayout currCityLlayout;
     private RelativeLayout avatarRlayout;
     private RelativeLayout winnerRlayout;
@@ -160,7 +160,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         listView = (NoScrollListView) getActivity().findViewById(R.id.list_grab);
         slideShowView = (SlideShowView) getActivity().findViewById(R.id.flipper_ad);
         viewsLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_views);
-        typeLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_type);
+//        typeLlayout = (LinearLayout) getActivity().findViewById(R.id.llayout_type);
         commodityImg = (ImageView) getActivity().findViewById(R.id.img_commodity);
         serviceImg = (ImageView) getActivity().findViewById(R.id.img_service);
         fragment_grab_layout.setOnRefreshListener(this);
@@ -170,7 +170,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
         slideShowView.setVisibility(View.GONE);
         winnerRlayout.setVisibility(View.GONE);
         viewsLlayout.setVisibility(View.GONE);
-        typeLlayout.setVisibility(View.GONE);
+//        typeLlayout.setVisibility(View.GONE);
 
         winnerRlayout.setOnClickListener(this);
         currCityLlayout.setOnClickListener(this);
@@ -194,7 +194,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
             getMessage();
             getGrabList(true);
             getWinnerList();
-            getActivityType();
         }
 
         defaultOptions = new DisplayImageOptions.Builder() //
@@ -366,7 +365,7 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                             fragment_grab_layout.refreshFinish(PullToRefreshLayout.FAIL);
                             slideShowView.setVisibility(View.GONE);
                             winnerRlayout.setVisibility(View.GONE);
-                            typeLlayout.setVisibility(View.GONE);
+//                            typeLlayout.setVisibility(View.GONE);
                             viewsLlayout.setVisibility(View.GONE);
                             MyUtil.showToast(application.getApplicationContext(), "当前城市:" + application.getCurrCity() + " 没有开启活动");
                         } else {
@@ -412,23 +411,23 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
     /**
      * 获取活动类型
      */
-    private void getActivityType() {
-        typeLlayout.setVisibility(View.GONE);
-        this.appAction.getActivityType(new ActionCallbackListener() {
-            @Override
-            public void onSuccess(ResponseBO data) {
-                activityTypeBOs = data.getObjList();
-                typeLlayout.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(activityTypeBOs.get(0).getPicture(), commodityImg);
-                ImageLoader.getInstance().displayImage(activityTypeBOs.get(1).getPicture(), serviceImg);
-            }
-
-            @Override
-            public void onFailure(int errorCode, String message) {
-
-            }
-        });
-    }
+//    private void getActivityType() {
+//        typeLlayout.setVisibility(View.GONE);
+//        this.appAction.getActivityType(new ActionCallbackListener() {
+//            @Override
+//            public void onSuccess(ResponseBO data) {
+//                activityTypeBOs = data.getObjList();
+//                typeLlayout.setVisibility(View.VISIBLE);
+//                ImageLoader.getInstance().displayImage(activityTypeBOs.get(0).getPicture(), commodityImg);
+//                ImageLoader.getInstance().displayImage(activityTypeBOs.get(1).getPicture(), serviceImg);
+//            }
+//
+//            @Override
+//            public void onFailure(int errorCode, String message) {
+//
+//            }
+//        });
+//    }
 
     /**
      * 获取公共消息
@@ -557,17 +556,17 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 openActivity(WinInformationActivity.class);
                 break;
 
-            case R.id.img_commodity:
-                if (CommodityFragment.instance == null)
-                    CommodityFragment.instance = new CommodityFragment();
-                switchFragment(CommodityFragment.instance);
-                break;
-
-            case R.id.img_service:
-                if (ServiceFragment.instance == null)
-                    ServiceFragment.instance = new ServiceFragment();
-                switchFragment(ServiceFragment.instance);
-                break;
+//            case R.id.img_commodity:
+//                if (CommodityFragment.instance == null)
+//                    CommodityFragment.instance = new CommodityFragment();
+//                switchFragment(CommodityFragment.instance);
+//                break;
+//
+//            case R.id.img_service:
+//                if (ServiceFragment.instance == null)
+//                    ServiceFragment.instance = new ServiceFragment();
+//                switchFragment(ServiceFragment.instance);
+//                break;
         }
     }
 
@@ -602,7 +601,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 getGrabList(true);
                 getAd();
                 getWinnerList();
-                getActivityType();
             }
             currCity = application.getCurrCity();
         }
@@ -652,7 +650,6 @@ public class GrabFragment extends BaseFragment implements OnItemClickListener, O
                 getAd();
                 getInform();
                 getMessage();
-                getActivityType();
             } else
                 MyUtil.showToast(getActivity().getApplicationContext(), "定位失败");
             mLocationClient.unRegisterLocationListener(mMyLocationListener);
