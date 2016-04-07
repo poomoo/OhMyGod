@@ -29,6 +29,7 @@ import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 import java.util.regex.Matcher;
@@ -59,7 +60,7 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        StatusBarUtil.setTransparent(this);
         initView();
     }
 

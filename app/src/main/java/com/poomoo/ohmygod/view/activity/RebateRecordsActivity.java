@@ -15,6 +15,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.MyRebateAdapter;
 import com.poomoo.ohmygod.adapter.MyWithdrawDepositAdapter;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class RebateRecordsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_rebate_records);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         getData();

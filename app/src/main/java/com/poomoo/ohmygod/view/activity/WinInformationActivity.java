@@ -18,6 +18,7 @@ import com.poomoo.ohmygod.adapter.WinInformationAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class WinInformationActivity extends BaseActivity implements RefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_information);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));

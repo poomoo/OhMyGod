@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 提现详情
@@ -23,6 +24,7 @@ public class WithdrawDepositDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_deposit_details);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

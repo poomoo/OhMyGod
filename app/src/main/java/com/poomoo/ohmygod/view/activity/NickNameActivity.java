@@ -14,6 +14,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,7 @@ public class NickNameActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nick_name);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

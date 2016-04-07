@@ -47,6 +47,7 @@ import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.popupwindow.SelectPicsPopupWindow;
@@ -92,6 +93,7 @@ public class CompleteUserInformationActivity extends BaseActivity implements OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_user_information);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

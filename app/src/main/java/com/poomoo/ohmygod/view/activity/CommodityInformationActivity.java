@@ -49,6 +49,7 @@ import com.poomoo.ohmygod.utils.Code;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SoundUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
@@ -135,6 +136,7 @@ public class CommodityInformationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_information);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         addActivityToArrayList(this);
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));

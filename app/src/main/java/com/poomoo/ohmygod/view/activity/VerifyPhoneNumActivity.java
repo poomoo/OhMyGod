@@ -19,6 +19,7 @@ import com.poomoo.ohmygod.other.CountDownListener;
 import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
@@ -39,6 +40,7 @@ public class VerifyPhoneNumActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_phone_num);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

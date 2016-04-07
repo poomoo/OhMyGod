@@ -166,7 +166,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements
      * @return
      */
     private boolean isPullUp() {
-        return (mYDown - mLastY) > (mXDown - mLastX) && (mYDown - mLastY) > 100;
+        return (mYDown - mLastY) > (mXDown - mLastX) && (mYDown - mLastY) > 200;
     }
 
     /**

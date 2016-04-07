@@ -26,6 +26,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 作者: 李苜菲
@@ -52,7 +53,7 @@ public class MapActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        StatusBarUtil.setTransparent(this);
         // 地图初始化
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();

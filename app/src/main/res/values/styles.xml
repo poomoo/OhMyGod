@@ -1,20 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/themeRed</item>
-        <item name="colorPrimaryDark">@color/themeRed</item>
-    </style>
+    <style name="AppTheme" parent="@style/NoTitleTheme" />
 
     <style name="NoTitleTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/themeRed</item>
         <item name="colorPrimaryDark">@color/themeRed</item>
     </style>
-    <!--<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
-    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-    <!--</style>-->
 
     <style name="PopupAnimation" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/popup_enter</item>

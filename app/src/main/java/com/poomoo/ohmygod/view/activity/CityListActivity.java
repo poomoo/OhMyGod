@@ -46,6 +46,7 @@ import com.poomoo.ohmygod.utils.DatabaseHelper;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.PingYinUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.MyLetterListView;
 import com.poomoo.ohmygod.view.custom.MyLetterListView.OnTouchingLetterChangedListener;
 
@@ -97,6 +98,7 @@ public class CityListActivity extends BaseActivity implements OnScrollListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_list);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

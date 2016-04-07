@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 身份证信息
@@ -18,6 +19,7 @@ public class IdCardInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_id_card_info);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

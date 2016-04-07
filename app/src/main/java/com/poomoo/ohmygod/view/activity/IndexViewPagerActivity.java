@@ -26,6 +26,7 @@ import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.ViewPagerAdapter;
 import com.poomoo.ohmygod.utils.LogUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 
 import java.io.File;
@@ -68,7 +69,7 @@ public class IndexViewPagerActivity extends BaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
-
+        StatusBarUtil.setTransparent(this);
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         clickInTxt = (TextView) findViewById(R.id.txt_clickIn);
 

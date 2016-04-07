@@ -18,6 +18,7 @@ import com.poomoo.ohmygod.adapter.ActivityWinnerListAdapter;
 import com.poomoo.ohmygod.adapter.ActivityWinnerListAdapterOld;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class WinnerListActivity extends BaseActivity implements RefreshLayout.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winnner_list);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         activeId = getIntent().getIntExtra(getString(R.string.intent_activeId), 0);

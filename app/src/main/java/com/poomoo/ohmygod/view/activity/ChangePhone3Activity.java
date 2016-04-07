@@ -14,6 +14,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
@@ -34,6 +35,7 @@ public class ChangePhone3Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_phone3);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

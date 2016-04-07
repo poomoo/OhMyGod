@@ -33,6 +33,7 @@ import com.poomoo.ohmygod.listeners.ReplyListener;
 import com.poomoo.ohmygod.listeners.ShareListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 import com.poomoo.ohmygod.view.popupwindow.CopyPopupWindow;
@@ -105,6 +106,7 @@ public class MyShowActivity extends BaseActivity implements OnRefreshListener, O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_show);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));

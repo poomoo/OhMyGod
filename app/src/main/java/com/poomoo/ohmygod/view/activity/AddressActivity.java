@@ -20,6 +20,7 @@ import com.poomoo.ohmygod.database.CityInfo;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class AddressActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));

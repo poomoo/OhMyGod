@@ -27,6 +27,7 @@ import com.poomoo.ohmygod.listeners.AdvertisementListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.bigimage.ImagePagerActivity;
 import com.poomoo.ohmygod.view.custom.SlideShowView;
 
@@ -60,6 +61,7 @@ public class CommodityInformation2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_information2);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         getData();

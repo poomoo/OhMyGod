@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 修改银行卡号
@@ -26,6 +27,7 @@ public class ChangeBankCardNumActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_bankcard_num);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

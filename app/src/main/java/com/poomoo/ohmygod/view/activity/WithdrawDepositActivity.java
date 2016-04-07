@@ -20,6 +20,7 @@ import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.ResponseBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 提现
@@ -39,6 +40,7 @@ public class WithdrawDepositActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdraw_deposit);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

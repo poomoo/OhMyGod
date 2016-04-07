@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.poomoo.model.WinningRecordsBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 作者: 李苜菲
@@ -31,6 +32,7 @@ public class WinningRecord2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winning_record2);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

@@ -14,6 +14,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.TimeCountDownUtil;
 
 /**
@@ -36,6 +37,7 @@ public class VerifyPhoneNum2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_phone_num2);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
 
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         if (PARENT.equals(getString(R.string.intent_phone)))

@@ -5,7 +5,10 @@
     android:background="@color/divider"
     android:orientation="vertical">
 
-    <include layout="@layout/pub_layout_title_bar" />
+    <include
+        layout="@layout/pub_layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <com.poomoo.ohmygod.view.custom.RefreshLayout
         android:id="@+id/refresh_snatch"

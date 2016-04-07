@@ -43,6 +43,7 @@ import com.poomoo.ohmygod.adapter.SelectAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.CustomerDatePickerDialog;
 import com.poomoo.ohmygod.view.custom.MyPullUpListView;
 
@@ -89,7 +90,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     private String activeName;
     private ArrayList<HashMap<String, String>> list_activeType;
     private String currStatus = "";//当前的isGot
-    private boolean isFirst = true;
+    //    private boolean isFirst = true;
     private Calendar cal = Calendar.getInstance();
     private int nYear;
     private int nMonth;
@@ -103,6 +104,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_check);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }
@@ -132,7 +134,7 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
         progressRlayout = (RelativeLayout) findViewById(R.id.rlayout_progress);
 
         showProgressDialog(getString(R.string.dialog_message));
-        isLoad = false;
+//        isLoad = false;
         getData();
         dateTxt.setText("全部");
     }
@@ -264,22 +266,23 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
     }
 
     private void getData() {
-        if (!isFirst && !isLoad) {
-            listView.setVisibility(View.GONE);
-            progressRlayout.setVisibility(View.VISIBLE);
-        }
-
+//        if (!isFirst && !isLoad) {
+//            listView.setVisibility(View.GONE);
+//            progressRlayout.setVisibility(View.VISIBLE);
+//        }
+        if (!isLoad)
+            showProgressDialog(getString(R.string.dialog_message));
         this.appAction.getMerchantInfo(application.getUserId(), activeId, playDt, "", isGot, currPage, MyConfig.PAGESIZE, new ActionCallbackListener() {
             @Override
             public void onSuccess(ResponseBO data) {
                 LogUtils.i(TAG, data.getOtherData());
                 closeProgressDialog();
-                if (!isFirst && !isLoad) {
-                    progressRlayout.setVisibility(View.GONE);
-                    listView.setVisibility(View.VISIBLE);
-                    LogUtils.i(TAG, "显示listview,隐藏进度条");
-                } else
-                    isFirst = false;
+//                if (!isFirst && !isLoad) {
+//                    progressRlayout.setVisibility(View.GONE);
+//                    listView.setVisibility(View.VISIBLE);
+//                    LogUtils.i(TAG, "显示listview,隐藏进度条");
+//                } else
+//                    isFirst = false;
 
                 // 更新完后调用该方法结束刷新
                 if (isLoad) {
@@ -350,11 +353,11 @@ public class ShopCheckActivity extends BaseActivity implements MyPullUpListView.
                     MyUtil.showToast(getApplicationContext(), message);
                     return;
                 }
-                if (!isFirst && !isLoad) {
-                    progressRlayout.setVisibility(View.GONE);
-                    listView.setVisibility(View.VISIBLE);
-                } else
-                    isFirst = false;
+//                if (!isFirst && !isLoad) {
+//                    progressRlayout.setVisibility(View.GONE);
+//                    listView.setVisibility(View.VISIBLE);
+//                } else
+//                    isFirst = false;
                 if (!TextUtils.isEmpty(message))
                     MyUtil.showToast(getApplicationContext(), message);
             }

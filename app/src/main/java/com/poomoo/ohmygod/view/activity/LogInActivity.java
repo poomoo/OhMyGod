@@ -18,6 +18,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +44,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        StatusBarUtil.setTransparent(this);
         instance = this;
         addActivityToArrayList(this);
         initView();

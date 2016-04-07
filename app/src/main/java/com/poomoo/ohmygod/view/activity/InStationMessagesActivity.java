@@ -18,6 +18,7 @@ import com.poomoo.ohmygod.adapter.InStationMessagesAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
@@ -46,6 +47,7 @@ public class InStationMessagesActivity extends BaseActivity implements OnLoadLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_station_messages);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         PARENT = getIntent().getStringExtra(getString(R.string.intent_parent));
         initView();

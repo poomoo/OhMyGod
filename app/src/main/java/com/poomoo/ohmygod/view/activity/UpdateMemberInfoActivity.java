@@ -28,6 +28,7 @@ import com.poomoo.ohmygod.adapter.TimeAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class UpdateMemberInfoActivity extends BaseActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_member_information);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

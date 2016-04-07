@@ -17,6 +17,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.service.Check_Status_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.fragment.GrabFragment;
 import com.poomoo.ohmygod.view.fragment.GrabManageFragment;
 import com.poomoo.ohmygod.view.fragment.MyFragment;
@@ -54,6 +55,7 @@ public class MainFragmentActivity extends
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         if (savedInstanceState != null) {
             if (Check_Status_Service.dialog != null && Check_Status_Service.dialog.isShowing())
                 Check_Status_Service.dialog.dismiss();

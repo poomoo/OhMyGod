@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.SelectAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class SelectActivity extends BaseActivity implements AdapterView.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
-
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         initView();
     }
 

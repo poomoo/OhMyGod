@@ -32,9 +32,8 @@ import com.poomoo.ohmygod.service.Get_UserInfo_Service;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
 import com.poomoo.ohmygod.utils.SPUtils;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
-
-import junit.framework.Test;
 
 import org.litepal.tablemanager.Connector;
 
@@ -72,7 +71,7 @@ public class SplashActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
-
+        StatusBarUtil.setTransparent(this);
         bgImg = (ImageView) findViewById(R.id.img_bg);
         File f = new File(bootPicPath);
         if (f.exists()) {

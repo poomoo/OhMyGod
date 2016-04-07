@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.poomoo.core.ErrorEvent;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +29,7 @@ public class ChangePhone2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_phone2);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

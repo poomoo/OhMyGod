@@ -23,6 +23,7 @@ import com.poomoo.ohmygod.adapter.WinningRecordAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class WinningRecordActivity extends BaseActivity implements OnItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_winning_record);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         instance = this;
         addActivityToArrayList(this);
         initView();

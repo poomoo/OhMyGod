@@ -38,6 +38,7 @@ import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.AddPicsAdapter;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.utils.picUtils.Bimp;
 import com.poomoo.ohmygod.utils.picUtils.FileUtils;
 import com.poomoo.ohmygod.view.activity.pics.PhotoActivity;
@@ -79,6 +80,7 @@ public class ShowAndShareActivity extends BaseActivity implements OnItemClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_and_share);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
     }

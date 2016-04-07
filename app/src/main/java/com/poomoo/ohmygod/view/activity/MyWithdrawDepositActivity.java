@@ -13,6 +13,7 @@ import com.poomoo.model.WithdrawDepositBO;
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.adapter.MyWithdrawDepositAdapter;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class MyWithdrawDepositActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_withdraw_deposit);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         addActivityToArrayList(this);
         initView();
         getData();

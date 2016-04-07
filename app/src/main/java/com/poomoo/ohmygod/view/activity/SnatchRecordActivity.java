@@ -5,10 +5,6 @@ package com.poomoo.ohmygod.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +18,7 @@ import com.poomoo.ohmygod.adapter.SnatchAdapter;
 import com.poomoo.ohmygod.config.MyConfig;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 import com.poomoo.ohmygod.view.custom.RefreshLayout;
 import com.poomoo.ohmygod.view.custom.RefreshLayout.OnLoadListener;
 
@@ -46,6 +43,7 @@ public class SnatchRecordActivity extends BaseActivity implements OnLoadListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snatch_record);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed),0);
         addActivityToArrayList(this);
         initView();
         showProgressDialog(getString(R.string.dialog_message));

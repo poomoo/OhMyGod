@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.utils.StatusBarUtil;
 
 /**
  * 银行卡
@@ -17,6 +18,7 @@ public class BankCardActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.themeRed), 0);
         setContentView(R.layout.activity_bank_card);
         addActivityToArrayList(this);
         initView();
