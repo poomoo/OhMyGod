@@ -182,10 +182,6 @@
             android:name=".view.activity.IndexViewPagerActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.TestActivity"
-            android:exported="false"
-            android:hardwareAccelerated="true" />
-        <activity
             android:name=".view.activity.MapActivity"
             android:exported="false" />
         <activity

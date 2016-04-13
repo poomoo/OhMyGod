@@ -2,21 +2,16 @@ package com.poomoo.ohmygod.utils;
 
 import android.graphics.Color;
 import android.os.CountDownTimer;
-import android.provider.CalendarContract;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.poomoo.ohmygod.R;
 import com.poomoo.ohmygod.other.CountDownListener;
-
-import org.w3c.dom.Text;
+import com.poomoo.ohmygod.view.custom.ProgressSeekBar;
 
 import java.util.List;
 
@@ -34,6 +29,7 @@ public class TimeCountDownUtil extends CountDownTimer {
     private boolean isList;//是否传入list
     private String flag = "";//1-活动倒计时 2-其他倒计时
     private ImageView imageView;//活动提醒图标
+    private ProgressSeekBar progressBar;
 
     // 在这个构造方法里需要传入三个参数，一个是Activity，一个是总的时间millisInFuture，一个是countDownInterval，然后就是你在哪个按钮上做这个事，就把这个按钮传过来就可以了
     public TimeCountDownUtil(long millisInFuture, long countDownInterval, List<TextView> textViewList, final CountDownListener countDownListener) {
@@ -50,12 +46,13 @@ public class TimeCountDownUtil extends CountDownTimer {
         this.flag = flag;
     }
 
-    public TimeCountDownUtil(long millisInFuture, long countDownInterval, View view, String flag, ImageView imageView) {
+    public TimeCountDownUtil(long millisInFuture, long countDownInterval, View view, String flag, ImageView imageView, ProgressSeekBar progressBar) {
         super(millisInFuture, countDownInterval);
         this.view = view;
         this.isList = false;
         this.flag = flag;
         this.imageView = imageView;
+        this.progressBar = progressBar;
     }
 
     public void setTextViewList(List<TextView> textViewList, final CountDownListener countDownListener) {
@@ -130,6 +127,7 @@ public class TimeCountDownUtil extends CountDownTimer {
             if (view instanceof TextView) {
                 if (flag.equals("1")) {
                     imageView.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
                     ((TextView) view).setText("活动已开始");
                     ((TextView) view).setTextColor(Color.parseColor("#E81540"));
                 } else {
@@ -137,21 +135,6 @@ public class TimeCountDownUtil extends CountDownTimer {
                     ((TextView) view).setText("重新获取");
                 }
             }
-//                if (view.getTag().equals("TextView")) {
-//                    view.setClickable(true);// 设置点击
-//                    ((TextView) view).setText("重新获取");
-//                } else {
-//                    ((TextView) view).setText("活动已开始");
-//                    ((TextView) view).setTextColor(Color.parseColor("#E81540"));
-//                }
-
-
-//            if (view instanceof Button) {
-//                ((Button) view).setText("重新获取");
-//                view.setClickable(true);// 重新获得点击
-//                view.setBackgroundResource(R.drawable.selector_get_code_button);// 还原背景色
-//                ((Button) view).setTextColor(Color.parseColor("#FFFFFF"));
-//            }
         }
 
     }

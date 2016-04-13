@@ -30,15 +30,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.poomoo.core.ActionCallbackListener;
 import com.poomoo.model.CommentBO;
+import com.poomoo.model.GrabBO;
 import com.poomoo.model.ReplyBO;
+import com.poomoo.model.ResponseBO;
 import com.poomoo.model.ShowBO;
 import com.poomoo.ohmygod.R;
+import com.poomoo.ohmygod.adapter.GrabAdapter;
 import com.poomoo.ohmygod.adapter.ShowAdapter;
 import com.poomoo.ohmygod.alarm.CallAlarm;
 import com.poomoo.ohmygod.config.MyConfig;
+import com.poomoo.ohmygod.database.ActivityInfo;
+import com.poomoo.ohmygod.listeners.AlarmtListener;
 import com.poomoo.ohmygod.utils.LogUtils;
 import com.poomoo.ohmygod.utils.MyUtil;
+import com.poomoo.ohmygod.view.custom.NoScrollListView;
+import com.poomoo.ohmygod.view.custom.pullable.PullToRefreshLayout;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -56,6 +64,9 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,7 +79,7 @@ import java.util.TimerTask;
  * 作者: 李苜菲
  * 日期: 2015/11/26 10:22.
  */
-public class  TestActivity extends BaseActivity {
+public class TestActivity extends BaseActivity implements AlarmtListener {
 
     private EditText replyEdt;
     private Button replyBtn;
@@ -121,23 +132,27 @@ public class  TestActivity extends BaseActivity {
     private static String calanderRemiderURL = "content://com.android.calendar/reminders";
     private Uri queryUri;
 
+    private NoScrollListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
+        listView = (NoScrollListView) findViewById(R.id.list_test);
+        adapter = new GrabAdapter(this, this);
+        listView.setAdapter(adapter);
 //        mView = new MyCustomView(this);
-        webView = (WebView) findViewById(R.id.web_test);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        webView = (WebView) findViewById(R.id.web_test);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
 //        webView.getSettings().setPluginsEnabled(true);//可以使用插件
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setDefaultTextEncodingName("UTF-8");
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.setVisibility(View.VISIBLE);
-        webView.loadUrl("http://v.qq.com/page/w/0/6/w01802c0ov6.html");//http://player.youku.com/embed/XNTM5MTUwNDA0 http://v.youku.com/v_show/id_XMTQ5NTE0OTQ3Ng
+//        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//        webView.getSettings().setAllowFileAccess(true);
+//        webView.getSettings().setDefaultTextEncodingName("UTF-8");
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        webView.getSettings().setUseWideViewPort(true);
+//        webView.setVisibility(View.VISIBLE);
+//        webView.loadUrl("http://v.qq.com/page/w/0/6/w01802c0ov6.html");//http://player.youku.com/embed/XNTM5MTUwNDA0 http://v.youku.com/v_show/id_XMTQ5NTE0OTQ3Ng
         //html自适应
 //        WebSettings webSettings = webView.getSettings();
 //        webSettings.setUseWideViewPort(true);
@@ -165,9 +180,63 @@ public class  TestActivity extends BaseActivity {
 //        configPlatforms();
         // 设置分享内容
 //        shareContent();
+        getGrabList(true);
 
     }
 
+    @Override
+    public void setAlarm(String title, int activeId, String startDt, String endDt, ImageView imageView) {
+    }
+
+    private List<GrabBO> grabBOList = new ArrayList<>();
+    private int currPage = 1;//当前页
+    private GrabAdapter adapter;
+
+    private void getGrabList(final boolean isRefreshable) {
+        LogUtils.i(TAG, "getGrabList:" + currPage);
+        this.appAction.getGrabList("贵阳市", currPage, 15, new ActionCallbackListener() {
+                    @Override
+                    public void onSuccess(ResponseBO data) {
+                        if (isRefreshable) {
+                            grabBOList = new ArrayList<>();
+                            grabBOList = data.getObjList();
+                            for (int i = 0; i < 3; i++) {
+                                GrabBO grabBO = new GrabBO();
+                                grabBO.setActiveId(1000 + i);
+                                grabBO.setStatus(1);
+                                grabBO.setTotalWinNum(10 + i);
+                                grabBO.setCurrWinNum(1 + i);
+                                grabBO.setPicture(i + "");
+                                grabBOList.add(grabBO);
+                            }
+
+                            int len = grabBOList.size();
+                            if (len > 0) {
+                                currPage++;
+                                for (int i = 0; i < len; i++) {
+                                    grabBOList.get(i).setStartCountdown(15 * 1000 + i * 5 * 1000);
+                                    LogUtils.i("test", "i:" + i + "len:" + len);
+                                }
+
+                                adapter.setItems(grabBOList);
+                            }
+                        } else {
+                            grabBOList = data.getObjList();
+                            int len = grabBOList.size();
+                            if (len > 0) {
+                                currPage++;
+                                adapter.addItems(grabBOList);
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(int errorCode, String message) {
+                    }
+                }
+        );
+    }
 
     public void toOk(View view) {
 //        setAlarm();

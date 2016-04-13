@@ -69,23 +69,18 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
         ImageLoader.getInstance().displayImage(grabBO.getPicture(), viewHolder.image, defaultOptions);
         LogUtils.i(TAG, "活动状态:" + grabBO.getStatus() + " position:" + position);
-
         if (grabBO.getStatus() == 1) {
+            viewHolder.progressBar.setProgress(grabBO.getCurrWinNum());
+            viewHolder.progressBar.setMax(grabBO.getTotalWinNum());
             if (viewHolder.txt.getTag() == null) {
                 viewHolder.txt.setTag(grabBO.getPicture());
-                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1", viewHolder.img_bg_remind);
-                LogUtils.i(TAG, "tag:" + viewHolder.txt.getTag() + " pic:" + grabBO.getPicture());
+                TimeCountDownUtil timeCountDownUtil = new TimeCountDownUtil(grabBO.getStartCountdown(), 1000, viewHolder.txt, "1", viewHolder.img_bg_remind, viewHolder.progressBar);
+                LogUtils.i(TAG, "设置倒计时:" + "tag:" + viewHolder.txt.getTag() + " pic:" + grabBO.getPicture());
                 timeCountDownUtil.start();
                 getCountDownUtils().put(position, timeCountDownUtil);
             }
-            LogUtils.i(TAG, "活动已开始" + " position:" + position + " 内容:" + viewHolder.txt.getText().toString());
-            viewHolder.progressBar.setVisibility(View.VISIBLE);
-            viewHolder.progressBar.setVisibility(View.VISIBLE);
-            viewHolder.progressBar.setProgress(grabBO.getCurrWinNum());
-            viewHolder.progressBar.setMax(grabBO.getTotalWinNum());
 
             viewHolder.llayout_remind.setVisibility(View.VISIBLE);
-            LogUtils.i(TAG, grabBO.getActiveId() + ":" + "MyUtil.isRemind(grabBO.getActiveId())" + MyUtil.isRemind(grabBO.getActiveId()));
             if (MyUtil.isRemind(grabBO.getActiveId())) {
                 viewHolder.llayout_remind.setOnClickListener(new alarmClickListener(grabBO.getTitle(), grabBO.getActiveId(), grabBO.getStartDt(), grabBO.getEndDt(), viewHolder.img_bg_remind));
                 viewHolder.img_bg_remind.setImageResource(R.drawable.ic_grab_tip_yes);
@@ -139,5 +134,20 @@ public class GrabAdapter extends MyBaseAdapter<GrabBO> {
 
     public static SparseArray<RelativeLayout> getLayoutSparseArray() {
         return layoutSparseArray;
+    }
+
+    /**
+     * 局部刷新
+     *
+     * @param view
+     * @param itemIndex
+     */
+    public void updateView(View view, int itemIndex) {
+        if (view == null) {
+            return;
+        }
+        //从view中取得holder
+        ViewHolder holder = (ViewHolder) view.getTag();
+        holder.progressBar.setVisibility(View.VISIBLE);
     }
 }

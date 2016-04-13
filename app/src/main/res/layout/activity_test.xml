@@ -5,19 +5,41 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_test"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:src="@drawable/decoratesuccess"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
 
-    <WebView
-        android:id="@+id/web_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="djkfd jafkldjfk djfldjsla jfdkljasf dksjfdklsj fkdlsj fdjsklafj l "
+                android:textSize="20sp"
+                android:visibility="visible"/>
+
+            <com.poomoo.ohmygod.view.custom.NoScrollListView
+                android:id="@+id/list_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+    <!--<ImageView-->
+    <!--android:id="@+id/img_test"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:adjustViewBounds="true"-->
+    <!--android:src="@drawable/decoratesuccess"-->
+    <!--android:visibility="gone" />-->
+
+    <!--<WebView-->
+    <!--android:id="@+id/web_test"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="visible" />-->
     <!--    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
